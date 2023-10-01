@@ -5,18 +5,18 @@
 
 ## Team Information
 
-| Seminar Group | Team |
-|-------------- | ---- |
-| PV168/0X      | Y    | <!--- FIXME: fill in the seminar group and team identification -->
+| Seminar Group |     Team    |
+|-------------- | ------------|
+| PV168/10      | optional    | <!--- FIXME: fill in the seminar group and team identification -->
 
 ### Members
 
-| Role           | Person               |
-|----------------|----------------------|
-|Team Lead       | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
-|Member          | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
-|Member          | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
-|Member          | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
+| Role                  | Person               |
+|-----------------------|----------------------|
+|Team Lead              | [Filip Škvára](https://is.muni.cz/auth/osoba/536666) |
+|Requirement specialist | [Adam Kattan Rahmani](https://is.muni.cz/auth/osoba/536521) | <!--- FIXME: fill in the name and UCO -->
+|Member                 | [Lukáš Krejčí](https://is.muni.cz/auth/osoba/536345) | <!--- FIXME: fill in the name and UCO -->
+|Member                 | [Adam Juhás]](https://is.muni.cz/auth/osoba/536413) | <!--- FIXME: fill in the name and UCO -->
 
 ### Evaluators
 
