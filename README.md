@@ -1,7 +1,7 @@
-# PV168 Project: {{ PROJECT NAME }}
+# PV168 Project: {{ EASY FOOD }}
 
-<!--- FIXME: fill in the PROJECT NAME above and include short description of what the project is about -->
-{{ PROJECT DESCRIPTION }}
+
+{{ Full fledged Windows app for EASY FOOD - The new way to save recipes!}}
 
 ## Team Information
 
