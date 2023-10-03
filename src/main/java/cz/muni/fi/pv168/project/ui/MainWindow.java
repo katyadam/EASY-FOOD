@@ -25,7 +25,7 @@ public class MainWindow {
     public MainWindow() {
 
         layout = new GUI_layout();
-        frame = new JFrame("GUI_layout");
+        frame = new JFrame("EasyFood");
         frame.setSize(1920,1080);
         frame.setContentPane(layout.getPanel1());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
