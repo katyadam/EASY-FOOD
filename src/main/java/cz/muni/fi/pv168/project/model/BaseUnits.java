@@ -1,6 +1,8 @@
 package cz.muni.fi.pv168.project.model;
 
-public enum BaseUnits {
+public enum BaseUnits implements Unit{
+
+
     TEASPOON("teaspoon", "tsp"),
     TABLESPOON("tablespoon", "tbsp"),
     CUP("cup", "c"),
@@ -17,24 +19,21 @@ public enum BaseUnits {
     DROP("drop", "drop"),
     PIECE("piece", "pc");
 
-    private final String fullName;
-    private final String abbreviation;
+    private String fullName;
+    private String abbreviation;
 
     BaseUnits(String fullName, String abbreviation) {
         this.fullName = fullName;
         this.abbreviation = abbreviation;
     }
 
+    @Override
     public String getFullName() {
         return fullName;
     }
 
+    @Override
     public String getAbbreviation() {
         return abbreviation;
-    }
-
-    @Override
-    public String toString() {
-        return fullName;
     }
 }

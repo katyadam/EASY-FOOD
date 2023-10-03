@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.model;
 
-public class customUnit {
-    private String unitName;
+public class customUnit implements Unit {
+    private final String unitName;
+
+    private String abbreviation = "";
 
     private double amount;
 
@@ -13,9 +15,20 @@ public class customUnit {
         this.baseUnit = baseUnit;
     }
 
-    public customUnit(String unitName, long amount, BaseUnits baseUnit) {
-        this.unitName = unitName;
-        this.amount = (double) amount;
-        this.baseUnit = baseUnit;
+    public customUnit(String unitName, double amount, BaseUnits baseUnit, String abbreviation) {
+        this(unitName, amount, baseUnit);
+        this.abbreviation = abbreviation;
+    }
+
+
+
+    @Override
+    public String getFullName() {
+        return unitName;
+    }
+
+    @Override
+    public String getAbbreviation() {
+        return null;
     }
 }
