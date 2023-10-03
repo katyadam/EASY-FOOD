@@ -1,21 +1,24 @@
 package cz.muni.fi.pv168.project;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GUI_layout {
     private JPanel panel1;
-    private JTextField textField1;
-    private JButton button4;
-    private JButton button5;
-    private JButton button6;
-    private JButton button7;
-    private JButton button8;
-    private JButton button9;
-    private JComboBox comboBox1;
-    private JComboBox comboBox2;
+    private JTextField searchRecipesTextField;
     private JTabbedPane tabbedPane1;
+    private JComboBox comboBox2;
+    private JComboBox comboBox1;
+    private JList list1;
+    private JList list2;
+    private JList list3;
+    private JList list4;
+    private JScrollBar scrollBar1;
+    private JToolBar toolBarBottom;
+    private JToolBar toolBarTop;
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    public JPanel getPanel1() {
+        return panel1;
     }
 }
+
