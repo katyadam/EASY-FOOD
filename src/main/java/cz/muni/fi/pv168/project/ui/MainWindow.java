@@ -1,20 +1,16 @@
 package cz.muni.fi.pv168.project.ui;
 
-import cz.muni.fi.pv168.project.GUI_layout;
-import cz.muni.fi.pv168.project.model.Employee;
-import cz.muni.fi.pv168.project.model.Gender;
-import cz.muni.fi.pv168.project.ui.model.EmployeeTableModel;
+import cz.muni.fi.pv168.project.GUILayout;
+
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class MainWindow {
 
     private final JFrame frame;
-    private final GUI_layout layout;
+    private final GUILayout layout;
     private boolean isCleared = false;
 
 //    private final Action quitAction = new QuitAction();
@@ -24,7 +20,7 @@ public class MainWindow {
 
     public MainWindow() {
 
-        layout = new GUI_layout();
+        layout = new GUILayout();
         frame = new JFrame("EasyFood");
         frame.setSize(1920,1080);
         frame.setContentPane(layout.getMainPanel());

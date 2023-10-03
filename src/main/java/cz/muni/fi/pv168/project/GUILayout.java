@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project;
 
 import javax.swing.*;
 
-public class GUI_layout {
+public class GUILayout {
     private JPanel mainPanel;
     private JTextField searchRecipesTextField;
     private JTabbedPane tabbedPanels;
