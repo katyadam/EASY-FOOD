@@ -10,20 +10,9 @@ import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.project.ui.model.DepartmentListModel;
 
-import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.List;
 
 public class MainWindow {
@@ -37,6 +26,9 @@ public class MainWindow {
 
     public MainWindow() {
         frame = createFrame();
+
+        frame.setSize(1920,1080);
+
         var testDataGenerator = new TestDataGenerator();
         var employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
         var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
@@ -45,9 +37,11 @@ public class MainWindow {
         editAction = new EditAction(employeeTable, departmentListModel);
         employeeTable.setComponentPopupMenu(createEmployeeTablePopupMenu());
         frame.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
+
+
+
         frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
-        frame.pack();
     }
 
     public void show() {
