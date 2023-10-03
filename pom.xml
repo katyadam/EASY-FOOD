@@ -20,6 +20,13 @@
         <version.mockito>3.12.4</version.mockito>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -48,6 +55,16 @@
             <groupId>io.github.lzh0379</groupId>
             <artifactId>jdatepicker</artifactId>
             <version>2.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf-intellij-themes</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Dansoftowner</groupId>
+            <artifactId>jSystemThemeDetector</artifactId>
+            <version>3.6</version>
         </dependency>
     </dependencies>
 
