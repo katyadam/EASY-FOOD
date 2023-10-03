@@ -25,14 +25,19 @@ public final class DeleteAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        EmployeeTableModel employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
-        Arrays.stream(employeeTable.getSelectedRows())
-                // view row index must be converted to model row index
-                .map(employeeTable::convertRowIndexToModel)
-                .boxed()
-                // We need to delete rows in descending order to not change index of rows
-                // which are not deleted yet
-                .sorted(Comparator.reverseOrder())
-                .forEach(employeeTableModel::deleteRow);
+        return;
     }
+
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        EmployeeTableModel employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
+//        Arrays.stream(employeeTable.getSelectedRows())
+//                // view row index must be converted to model row index
+//                .map(employeeTable::convertRowIndexToModel)
+//                .boxed()
+//                // We need to delete rows in descending order to not change index of rows
+//                // which are not deleted yet
+//                .sorted(Comparator.reverseOrder())
+//                .forEach(employeeTableModel::deleteRow);
+//    }
 }
