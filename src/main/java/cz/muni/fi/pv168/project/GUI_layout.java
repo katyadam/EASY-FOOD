@@ -13,12 +13,14 @@ public class GUI_layout {
     private JList list2;
     private JList list3;
     private JList list4;
-    private JScrollBar scrollBar1;
-    private JToolBar toolBarBottom;
     private JToolBar toolBarTop;
 
     public JPanel getPanel1() {
         return panel1;
+    }
+
+    public JTextField getSearchRecipesTextField() {
+        return searchRecipesTextField;
     }
 }
 
