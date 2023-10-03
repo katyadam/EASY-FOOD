@@ -1,26 +1,71 @@
 package cz.muni.fi.pv168.project;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GUI_layout {
-    private JPanel panel1;
+    private JPanel mainPanel;
     private JTextField searchRecipesTextField;
-    private JTabbedPane tabbedPane1;
-    private JComboBox comboBox2;
-    private JComboBox comboBox1;
-    private JList list1;
-    private JList list2;
-    private JList list3;
-    private JList list4;
+    private JTabbedPane tabbedPanels;
+    private JComboBox comboBoxFilters;
+    private JComboBox comboBoxCategories;
+    private JList recipeList;
+    private JList ingredientList;
+    private JList unitList;
+    private JList categoryList;
+    private JPanel recipeTab;
+    private JPanel ingredientTab;
+    private JPanel unitTab;
+    private JPanel categoryTab;
     private JToolBar toolBarTop;
+    private JPanel sidePanel;
 
-    public JPanel getPanel1() {
-        return panel1;
+
+
+
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
 
     public JTextField getSearchRecipesTextField() {
         return searchRecipesTextField;
+    }
+
+    public JList getRecipeList() {
+        return recipeList;
+    }
+
+    public JList getIngerdientList() {
+        return ingredientList;
+    }
+
+    public JList getUnitList() {
+        return unitList;
+    }
+
+    public JList getCategoryList() {
+        return categoryList;
+    }
+
+
+
+    public JTabbedPane getTabbedPanels() {
+        return tabbedPanels;
+    }
+
+    public JComboBox getComboBoxFilters() {
+        return comboBoxFilters;
+    }
+
+    public JComboBox getComboBoxCategories() {
+        return comboBoxCategories;
+    }
+
+    public JToolBar getToolBarTop() {
+        return toolBarTop;
+    }
+
+    public JPanel getSidePanel() {
+        return sidePanel;
     }
 }
 
