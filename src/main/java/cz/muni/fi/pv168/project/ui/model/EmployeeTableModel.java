@@ -33,7 +33,7 @@ public class EmployeeTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        var employee = getEntity(rowIndex);
+        Employee employee = getEntity(rowIndex);
         return columns.get(columnIndex).getValue(employee);
     }
 
@@ -54,7 +54,7 @@ public class EmployeeTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        var employee = getEntity(rowIndex);
+        Employee employee = getEntity(rowIndex);
         columns.get(columnIndex).setValue(value, employee);
     }
 

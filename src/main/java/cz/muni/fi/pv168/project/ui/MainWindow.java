@@ -54,15 +54,15 @@ public class MainWindow {
 //        return frame;
 //    }
 
-    private JTable createEmployeeTable(List<Employee> employees) {
-        var model = new EmployeeTableModel(employees);
-        var table = new JTable(model);
-        table.setAutoCreateRowSorter(true);
-        table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
-        var genderComboBox = new JComboBox<>(Gender.values());
-        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
-        return table;
-    }
+//    private JTable createEmployeeTable(List<Employee> employees) {
+//        var model = new EmployeeTableModel(employees);
+//        var table = new JTable(model);
+//        table.setAutoCreateRowSorter(true);
+//        table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+//        var genderComboBox = new JComboBox<>(Gender.values());
+//        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
+//        return table;
+//    }
 
 //    private JPopupMenu createEmployeeTablePopupMenu() {
 //        var menu = new JPopupMenu();
@@ -89,8 +89,8 @@ public class MainWindow {
 //        return toolbar;
 //    }
 
-    private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
-        var selectionModel = (ListSelectionModel) listSelectionEvent.getSource();
-        // here you can put the code for handling selection change
-    }
+//    private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
+//        var selectionModel = (ListSelectionModel) listSelectionEvent.getSource();
+//        // here you can put the code for handling selection change
+//    }
 }

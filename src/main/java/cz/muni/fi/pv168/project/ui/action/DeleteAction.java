@@ -25,7 +25,7 @@ public final class DeleteAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
+        EmployeeTableModel employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
         Arrays.stream(employeeTable.getSelectedRows())
                 // view row index must be converted to model row index
                 .map(employeeTable::convertRowIndexToModel)

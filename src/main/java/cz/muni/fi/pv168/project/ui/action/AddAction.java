@@ -31,8 +31,8 @@ public final class AddAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
-        var dialog = new EmployeeDialog(testDataGenerator.createTestEmployee(), departmentListModel);
+        EmployeeTableModel employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
+        EmployeeDialog dialog = new EmployeeDialog(testDataGenerator.createTestEmployee(), departmentListModel);
         dialog.show(employeeTable, "Add Employee")
                 .ifPresent(employeeTableModel::addRow);
     }

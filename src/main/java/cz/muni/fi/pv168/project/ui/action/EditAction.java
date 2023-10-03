@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.model.Employee;
 import cz.muni.fi.pv168.project.model.Department;
 import cz.muni.fi.pv168.project.ui.dialog.EmployeeDialog;
 import cz.muni.fi.pv168.project.ui.model.EmployeeTableModel;
@@ -35,10 +36,10 @@ public final class EditAction extends AbstractAction {
         if (employeeTable.isEditing()) {
             employeeTable.getCellEditor().cancelCellEditing();
         }
-        var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
+        EmployeeTableModel employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
         int modelRow = employeeTable.convertRowIndexToModel(selectedRows[0]);
-        var employee = employeeTableModel.getEntity(modelRow);
-        var dialog = new EmployeeDialog(employee, departmentListModel);
+        Employee employee = employeeTableModel.getEntity(modelRow);
+        EmployeeDialog dialog = new EmployeeDialog(employee, departmentListModel);
         dialog.show(employeeTable, "Edit Employee")
                 .ifPresent(employeeTableModel::updateRow);
     }
