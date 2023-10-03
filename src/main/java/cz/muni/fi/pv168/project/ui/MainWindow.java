@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui;
 
+import cz.muni.fi.pv168.project.GUI_layout;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.model.Employee;
 import cz.muni.fi.pv168.project.model.Gender;
@@ -18,41 +19,47 @@ import java.util.List;
 public class MainWindow {
 
     private final JFrame frame;
+    private final GUI_layout layout;
 
-    private final Action quitAction = new QuitAction();
-    private final Action addAction;
-    private final Action deleteAction;
-    private final Action editAction;
+//    private final Action quitAction = new QuitAction();
+//    private final Action addAction;
+//    private final Action deleteAction;
+//    private final Action editAction;
 
     public MainWindow() {
-        frame = createFrame();
+        // Employee Template Ghost
+//        frame = createFrame();
+//        var testDataGenerator = new TestDataGenerator();
+//        var employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
+//        var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
+//        addAction = new AddAction(employeeTable, testDataGenerator, departmentListModel);
+//        deleteAction = new DeleteAction(employeeTable);
+//        editAction = new EditAction(employeeTable, departmentListModel);
+//        employeeTable.setComponentPopupMenu(createEmployeeTablePopupMenu());
+//        frame.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
+//        frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
+//        frame.setJMenuBar(createMenuBar());
 
+
+        layout = new GUI_layout();
+        frame = new JFrame("GUI_layout");
         frame.setSize(1920,1080);
-
-        var testDataGenerator = new TestDataGenerator();
-        var employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
-        var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
-        addAction = new AddAction(employeeTable, testDataGenerator, departmentListModel);
-        deleteAction = new DeleteAction(employeeTable);
-        editAction = new EditAction(employeeTable, departmentListModel);
-        employeeTable.setComponentPopupMenu(createEmployeeTablePopupMenu());
-        frame.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
+        frame.setContentPane(layout.getPanel1());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
 
-
-        frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
-        frame.setJMenuBar(createMenuBar());
     }
 
     public void show() {
         frame.setVisible(true);
     }
-
-    private JFrame createFrame() {
-        var frame = new JFrame("Employee records");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        return frame;
-    }
+//
+//    private JFrame createFrame() {
+//        var frame = new JFrame("Employee records");
+//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        return frame;
+//    }
 
     private JTable createEmployeeTable(List<Employee> employees) {
         var model = new EmployeeTableModel(employees);
@@ -64,30 +71,30 @@ public class MainWindow {
         return table;
     }
 
-    private JPopupMenu createEmployeeTablePopupMenu() {
-        var menu = new JPopupMenu();
-        menu.add(deleteAction);
-        menu.add(editAction);
-        return menu;
-    }
+//    private JPopupMenu createEmployeeTablePopupMenu() {
+//        var menu = new JPopupMenu();
+//        menu.add(deleteAction);
+//        menu.add(editAction);
+//        return menu;
+//    }
 
-    private JMenuBar createMenuBar() {
-        var menuBar = new JMenuBar();
-        var editMenu = new JMenu("Edit");
-        editMenu.setMnemonic('e');
-        editMenu.add(addAction);
-        editMenu.addSeparator();
-        editMenu.add(quitAction);
-        menuBar.add(editMenu);
-        return menuBar;
-    }
+//    private JMenuBar createMenuBar() {
+//        var menuBar = new JMenuBar();
+//        var editMenu = new JMenu("Edit");
+//        editMenu.setMnemonic('e');
+//        editMenu.add(addAction);
+//        editMenu.addSeparator();
+//        editMenu.add(quitAction);
+//        menuBar.add(editMenu);
+//        return menuBar;
+//    }
 
-    private JToolBar createToolbar() {
-        var toolbar = new JToolBar();
-        toolbar.add(quitAction);
-        toolbar.addSeparator();
-        return toolbar;
-    }
+//    private JToolBar createToolbar() {
+//        var toolbar = new JToolBar();
+//        toolbar.add(quitAction);
+//        toolbar.addSeparator();
+//        return toolbar;
+//    }
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         var selectionModel = (ListSelectionModel) listSelectionEvent.getSource();
