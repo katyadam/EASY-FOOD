@@ -1,25 +1,21 @@
 package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUI_layout;
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.model.Employee;
 import cz.muni.fi.pv168.project.model.Gender;
-import cz.muni.fi.pv168.project.ui.action.AddAction;
-import cz.muni.fi.pv168.project.ui.action.DeleteAction;
-import cz.muni.fi.pv168.project.ui.action.EditAction;
-import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.model.EmployeeTableModel;
-import cz.muni.fi.pv168.project.ui.model.DepartmentListModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class MainWindow {
 
     private final JFrame frame;
     private final GUI_layout layout;
+    private boolean isCleared = false;
 
 //    private final Action quitAction = new QuitAction();
 //    private final Action addAction;
@@ -27,28 +23,25 @@ public class MainWindow {
 //    private final Action editAction;
 
     public MainWindow() {
-        // Employee Template Ghost
-//        frame = createFrame();
-//        var testDataGenerator = new TestDataGenerator();
-//        var employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
-//        var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
-//        addAction = new AddAction(employeeTable, testDataGenerator, departmentListModel);
-//        deleteAction = new DeleteAction(employeeTable);
-//        editAction = new EditAction(employeeTable, departmentListModel);
-//        employeeTable.setComponentPopupMenu(createEmployeeTablePopupMenu());
-//        frame.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
-//        frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
-//        frame.setJMenuBar(createMenuBar());
-
 
         layout = new GUI_layout();
-        frame = new JFrame("GUI_layout");
+        frame = new JFrame("EasyFood");
         frame.setSize(1920,1080);
         frame.setContentPane(layout.getPanel1());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
 
+        // removes text from Search Bar after typing
+        layout.getSearchRecipesTextField().addKeyListener(new ClearTextFieldKeyListener());
+    }
 
+    private class ClearTextFieldKeyListener extends KeyAdapter {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (!isCleared) {
+                layout.getSearchRecipesTextField().setText("");
+                isCleared = true;
+            }
+        }
     }
 
     public void show() {
