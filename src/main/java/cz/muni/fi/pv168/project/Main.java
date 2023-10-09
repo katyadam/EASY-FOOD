@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project;
 
-import com.jthemedetecor.OsThemeDetector;
+
 import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import javax.swing.*;
@@ -18,13 +18,9 @@ public class Main {
     private static void initLookAndFeel() {
 
         try {
-            final OsThemeDetector detector = OsThemeDetector.getDetector();
-            final boolean isDarkThemeUsed = detector.isDark();
-            if (isDarkThemeUsed) {
-                UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme");
-            } else {
-                UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme");
-            }
+            // UITHEME
+            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme");
+
 
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Nimbus layout initialization failed", ex);
