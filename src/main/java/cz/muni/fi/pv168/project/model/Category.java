@@ -4,12 +4,11 @@ import java.awt.*;
 
 public class Category {
     private String name;
-
     private Color color;
 
     public Category(String name, Color color) {
-        name = name;
-        color = color;
+        this.name = name;
+        this.color = color;
     }
 
     public String getName() {

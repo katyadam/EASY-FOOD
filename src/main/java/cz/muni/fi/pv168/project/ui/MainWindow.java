@@ -2,7 +2,6 @@ package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;

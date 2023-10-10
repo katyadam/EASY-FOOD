@@ -1,8 +1,6 @@
 package cz.muni.fi.pv168.project.model;
 
-public enum BaseUnits implements Unit{
-
-
+public enum BaseUnits implements Unit {
     TEASPOON("teaspoon", "tsp"),
     TABLESPOON("tablespoon", "tbsp"),
     CUP("cup", "c"),

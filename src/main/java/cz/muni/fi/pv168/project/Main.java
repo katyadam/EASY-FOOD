@@ -4,7 +4,7 @@ package cz.muni.fi.pv168.project;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import javax.swing.*;
-import java.awt.EventQueue;
+import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
