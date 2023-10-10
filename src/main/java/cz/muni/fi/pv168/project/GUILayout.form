@@ -40,8 +40,6 @@
         </border>
         <children>
           <grid id="eaf64" binding="recipeTab" layout-manager="FormLayout">
-            <rowspec value="center:d:noGrow"/>
-            <colspec value="fill:d:noGrow"/>
             <constraints>
               <tabbedpane title="Recipes"/>
             </constraints>
@@ -53,21 +51,9 @@
             <border type="line">
               <color color="-16768961"/>
             </border>
-            <children>
-              <component id="f45c1" class="javax.swing.JList" binding="recipeList">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                  <forms defaultalign-vert="false"/>
-                </constraints>
-                <properties/>
-              </component>
-            </children>
+            <children/>
           </grid>
           <grid id="ca9f5" binding="ingredientTab" layout-manager="FormLayout">
-            <rowspec value="center:d:noGrow"/>
-            <colspec value="fill:d:noGrow"/>
             <constraints>
               <tabbedpane title="Ingredients"/>
             </constraints>
@@ -79,21 +65,9 @@
             <border type="line">
               <color color="-16768961"/>
             </border>
-            <children>
-              <component id="23911" class="javax.swing.JList" binding="ingredientList">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                  <forms defaultalign-vert="false"/>
-                </constraints>
-                <properties/>
-              </component>
-            </children>
+            <children/>
           </grid>
           <grid id="787b7" binding="unitTab" layout-manager="FormLayout">
-            <rowspec value="center:d:noGrow"/>
-            <colspec value="fill:d:noGrow"/>
             <constraints>
               <tabbedpane title="Custom Units"/>
             </constraints>
@@ -106,17 +80,7 @@
               <title-color color="-4473925"/>
               <color color="-16768961"/>
             </border>
-            <children>
-              <component id="1c714" class="javax.swing.JList" binding="unitList">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
-                  <forms defaultalign-vert="false"/>
-                </constraints>
-                <properties/>
-              </component>
-            </children>
+            <children/>
           </grid>
         </children>
       </tabbedpane>
