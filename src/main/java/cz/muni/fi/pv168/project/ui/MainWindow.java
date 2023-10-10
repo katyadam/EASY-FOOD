@@ -25,10 +25,7 @@ public class MainWindow {
         frame.setSize(1920, 1080);
         frame.setContentPane(layout.getMainPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        layout.getAddButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        layout.getEditButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        layout.getDeleteButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        setCursors();
 
         // removes text from Search Bar after typing
         layout.getSearchRecipesTextField().addKeyListener(new ClearTextFieldKeyListener());
@@ -44,6 +41,13 @@ public class MainWindow {
         }
     }
 
+    private void setCursors() {
+        layout.getAddButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getEditButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getDeleteButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getTabbedPanels().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getComboBoxCategories().setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
 
     public void show() {
         frame.setVisible(true);
