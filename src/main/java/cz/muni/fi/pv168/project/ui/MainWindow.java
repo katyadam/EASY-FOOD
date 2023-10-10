@@ -9,9 +9,12 @@ import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.*;
-import java.awt.event.KeyAdapter;
+
+import java.awt.Cursor;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
+import java.util.List;
+
 
 public class MainWindow {
 
@@ -21,7 +24,7 @@ public class MainWindow {
 
     private final ActionFactory actions;
 
-    private final java.util.List<Recipe> recipesList;
+    private final List<Recipe> recipesList;
 
     private final JTable recipeTable;
 
@@ -77,7 +80,7 @@ public class MainWindow {
         return frame;
     }
 
-    private JTable createRecipeTable(java.util.List<Recipe> recipes) {
+    private JTable createRecipeTable(List<Recipe> recipes) {
         RecipeTableModel model = new RecipeTableModel(recipes);
         JTable table = new JTable(model);
         table.setAutoCreateRowSorter(true);

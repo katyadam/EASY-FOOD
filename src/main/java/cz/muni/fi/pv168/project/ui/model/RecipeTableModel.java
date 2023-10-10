@@ -37,8 +37,8 @@ public class RecipeTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Recipe Recipe = getEntity(rowIndex);
-        return columns.get(columnIndex).getValue(Recipe);
+        Recipe recipe = getEntity(rowIndex);
+        return columns.get(columnIndex).getValue(recipe);
     }
 
     @Override
@@ -58,8 +58,8 @@ public class RecipeTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        Recipe Recipe = getEntity(rowIndex);
-        columns.get(columnIndex).setValue(value, Recipe);
+        Recipe recipe = getEntity(rowIndex);
+        columns.get(columnIndex).setValue(value, recipe);
     }
 
     public void deleteRow(int rowIndex) {
@@ -67,14 +67,14 @@ public class RecipeTableModel extends AbstractTableModel {
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
-    public void addRow(Recipe Recipe) {
+    public void addRow(Recipe recipe) {
         int newRowIndex = recipes.size();
-        recipes.add(Recipe);
+        recipes.add(recipe);
         fireTableRowsInserted(newRowIndex, newRowIndex);
     }
 
-    public void updateRow(Recipe Recipe) {
-        int rowIndex = recipes.indexOf(Recipe);
+    public void updateRow(Recipe recipe) {
+        int rowIndex = recipes.indexOf(recipe);
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
 
