@@ -10,7 +10,7 @@ import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 
-import java.awt.Cursor;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.util.List;
@@ -28,6 +28,8 @@ public class MainWindow {
 
     private final JTable recipeTable;
 
+    private final JScrollPane recipeScroll;
+
     private JMenuBar menuBar;
 
     public MainWindow() {
@@ -40,8 +42,8 @@ public class MainWindow {
         recipesList = testDataGen.createTestEmployees(10);
         this.recipeTable = createRecipeTable(recipesList);
 
-
-        layout.getTabbedPanels().add("Recipes", recipeTable);
+        recipeScroll =  new JScrollPane(recipeTable);
+        layout.getTabbedPanels().add("Recipes", recipeScroll);
         actions = new ActionFactory(recipeTable, testDataGen);
 
         menuBar = createMenuBar();
@@ -116,7 +118,6 @@ public class MainWindow {
     }
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
-        Object selectionModel = listSelectionEvent.getSource();
-        // here you can put the code for handling selection change TODO
+        return;
     }
 }

@@ -13,9 +13,6 @@ public class GUILayout {
     private JList ingredientList;
     private JList unitList;
     private JList categoryList;
-    private JPanel recipeTab;
-    private JPanel ingredientTab;
-    private JPanel unitTab;
     private JToolBar toolBarTop;
     private JPanel sidePanel;
     private JButton addButton;

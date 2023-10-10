@@ -38,51 +38,7 @@
         <border type="line">
           <color color="-16768961"/>
         </border>
-        <children>
-          <grid id="eaf64" binding="recipeTab" layout-manager="FormLayout">
-            <constraints>
-              <tabbedpane title="Recipes"/>
-            </constraints>
-            <properties>
-              <background color="-8141915"/>
-              <foreground color="-5378095"/>
-              <toolTipText value="Recipe Tab"/>
-            </properties>
-            <border type="line">
-              <color color="-16768961"/>
-            </border>
-            <children/>
-          </grid>
-          <grid id="ca9f5" binding="ingredientTab" layout-manager="FormLayout">
-            <constraints>
-              <tabbedpane title="Ingredients"/>
-            </constraints>
-            <properties>
-              <background color="-8141915"/>
-              <foreground color="-5378095"/>
-              <toolTipText value="Ingerdient Tab"/>
-            </properties>
-            <border type="line">
-              <color color="-16768961"/>
-            </border>
-            <children/>
-          </grid>
-          <grid id="787b7" binding="unitTab" layout-manager="FormLayout">
-            <constraints>
-              <tabbedpane title="Custom Units"/>
-            </constraints>
-            <properties>
-              <background color="-8141915"/>
-              <foreground color="-5378095"/>
-              <toolTipText value="Custom Units Tab"/>
-            </properties>
-            <border type="line">
-              <title-color color="-4473925"/>
-              <color color="-16768961"/>
-            </border>
-            <children/>
-          </grid>
-        </children>
+        <children/>
       </tabbedpane>
       <grid id="705ca" binding="sidePanel" layout-manager="FormLayout">
         <rowspec value="center:max(d;4px):noGrow"/>
