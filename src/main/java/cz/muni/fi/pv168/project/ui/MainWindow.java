@@ -20,13 +20,15 @@ public class MainWindow {
 //    private final Action editAction;
 
     public MainWindow() {
-
         layout = new GUILayout();
         frame = new JFrame("EasyFood");
-        frame.setSize(1920,1080);
+        frame.setSize(1920, 1080);
         frame.setContentPane(layout.getMainPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         layout.getAddButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getEditButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getDeleteButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // removes text from Search Bar after typing
         layout.getSearchRecipesTextField().addKeyListener(new ClearTextFieldKeyListener());
@@ -41,6 +43,7 @@ public class MainWindow {
             }
         }
     }
+
 
     public void show() {
         frame.setVisible(true);
