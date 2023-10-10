@@ -16,7 +16,6 @@ public class GUILayout {
     private JPanel recipeTab;
     private JPanel ingredientTab;
     private JPanel unitTab;
-    private JPanel categoryTab;
     private JToolBar toolBarTop;
     private JPanel sidePanel;
     private JButton addButton;
