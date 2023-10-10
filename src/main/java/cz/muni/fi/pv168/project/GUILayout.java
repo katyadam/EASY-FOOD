@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GUILayout {
     private JPanel mainPanel;
@@ -17,9 +18,9 @@ public class GUILayout {
     private JPanel unitTab;
     private JToolBar toolBarTop;
     private JPanel sidePanel;
-
-
-
+    private JButton addButton;
+    private JButton editButton;
+    private JButton deleteButton;
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -46,7 +47,6 @@ public class GUILayout {
     }
 
 
-
     public JTabbedPane getTabbedPanels() {
         return tabbedPanels;
     }
@@ -66,5 +66,18 @@ public class GUILayout {
     public JPanel getSidePanel() {
         return sidePanel;
     }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public JButton getEditButton() {
+        return editButton;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
 }
 
