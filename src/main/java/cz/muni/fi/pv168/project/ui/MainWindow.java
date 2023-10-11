@@ -4,15 +4,13 @@ import cz.muni.fi.pv168.project.GUILayout;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
-import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 
@@ -32,21 +30,19 @@ public class MainWindow {
 
     private JMenuBar menuBar;
 
+    private TestDataGenerator testDataGen = new TestDataGenerator();
+
     public MainWindow() {
-        layout = new GUILayout();
-        frame = createFrame();
-        setCursors();
-
-
-        TestDataGenerator testDataGen = new TestDataGenerator();
-        recipesList = testDataGen.createTestEmployees(10);
+        this.layout = new GUILayout();
+        this.frame = createFrame();
+        this.recipesList = testDataGen.createTestEmployees(10);
         this.recipeTable = createRecipeTable(recipesList);
+        this.actions = new ActionFactory(recipeTable, testDataGen);
+        this.recipeScroll = new JScrollPane(recipeTable);
+        this.menuBar = createMenuBar();
 
-        recipeScroll =  new JScrollPane(recipeTable);
+        setActiveButtons();
         layout.getTabbedPanels().add("Recipes", recipeScroll);
-        actions = new ActionFactory(recipeTable, testDataGen);
-
-        menuBar = createMenuBar();
 
         // removes text from Search Bar after typing
         layout.getSearchRecipesTextField().addKeyListener(new ClearTextFieldKeyListener());
@@ -62,11 +58,18 @@ public class MainWindow {
         }
     }
 
-    private void setCursors() {
+    private void setActiveButtons() {
         layout.getAddButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getAddButton().setAction(actions.getAddAction());
+
         layout.getEditButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getEditButton().setAction(actions.getEditAction());
+
         layout.getDeleteButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getDeleteButton().setAction(actions.getDeleteAction());
+
         layout.getTabbedPanels().setCursor(new Cursor(Cursor.HAND_CURSOR));
+
         layout.getComboBoxCategories().setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 

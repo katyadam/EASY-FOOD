@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GUILayout {
     private JPanel mainPanel;
