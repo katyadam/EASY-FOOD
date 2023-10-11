@@ -24,7 +24,7 @@ public class CustomUnit implements Unit {
     }
 
     public String getBaseAmount() {
-        return amount + " " + baseUnit.getAbbreviation();
+        return String.format("%.2f", amount) + " " + baseUnit.getAbbreviation();
     }
 
     public void setUnitName(String unitName) {
