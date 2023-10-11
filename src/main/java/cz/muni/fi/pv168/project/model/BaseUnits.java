@@ -1,5 +1,10 @@
 package cz.muni.fi.pv168.project.model;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 public enum BaseUnits implements Unit {
     TEASPOON("teaspoon", "tsp"),
     TABLESPOON("tablespoon", "tbsp"),
@@ -33,5 +38,10 @@ public enum BaseUnits implements Unit {
     @Override
     public String getAbbreviation() {
         return abbreviation;
+    }
+
+    public static List<BaseUnits> getBaseUnitList(){
+        return List.of(TEASPOON,TABLESPOON,CUP,FLUID_OUNCE,PINT,QUART,
+                GALLON,MILLILITER,LITER,GRAM,KILOGRAM,OUNCE,POUND,DROP,PIECE);
     }
 }

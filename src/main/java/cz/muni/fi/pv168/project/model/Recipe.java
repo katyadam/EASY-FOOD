@@ -11,7 +11,7 @@ public class Recipe {
     private LocalTime preparationTime;
 
     private int portions;
-    private Category category;
+    private Category category = null;
 
     private ArrayList<Ingredient> ingredientList;
 
@@ -20,12 +20,13 @@ public class Recipe {
 
 
 
-    public Recipe(String recipeName, LocalTime preparationTime, int portions, ArrayList<Ingredient> ingredientList) {
+    public Recipe(String recipeName, LocalTime preparationTime, int portions, ArrayList<Ingredient> ingredientList, Category category) {
         this.recipeName = recipeName;
         this.preparationTime = preparationTime;
         this.portions = portions;
         this.ingredientList = ingredientList; // TODO have something like Dictionary
         this.nutritionalValue = 0;
+        this.category = category;
         //this.nutritionalValue = calculateNutritionalValue(ingredientList); TODO
     }
 

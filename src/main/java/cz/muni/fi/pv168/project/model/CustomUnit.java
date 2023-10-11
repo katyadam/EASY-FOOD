@@ -1,20 +1,16 @@
 package cz.muni.fi.pv168.project.model;
 
 public class CustomUnit implements Unit {
-    private final String unitName;
-    private String abbreviation = "";
+    private  String unitName;
+    private String abbreviation;
     private double amount;
-    private BaseUnits baseUnit;
+    private  BaseUnits baseUnit;
 
-    public CustomUnit(String unitName, double amount, BaseUnits baseUnit) {
+    public CustomUnit(String unitName, String abbreviation, double amount, BaseUnits baseUnit) {
         this.unitName = unitName;
+        this.abbreviation = abbreviation;
         this.amount = amount;
         this.baseUnit = baseUnit;
-    }
-
-    public CustomUnit(String unitName, double amount, BaseUnits baseUnit, String abbreviation) {
-        this(unitName, amount, baseUnit);
-        this.abbreviation = abbreviation;
     }
 
     @Override
@@ -24,6 +20,26 @@ public class CustomUnit implements Unit {
 
     @Override
     public String getAbbreviation() {
-        return null;
+        return abbreviation;
+    }
+
+    public String getBaseAmount() {
+        return amount + " " + baseUnit.getAbbreviation();
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setBaseUnit(BaseUnits baseUnit) {
+        this.baseUnit = baseUnit;
     }
 }
