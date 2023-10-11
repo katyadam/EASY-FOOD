@@ -11,9 +11,9 @@ public class CustomUnitTableModel extends AbstractTableModel {
     private final List<CustomUnit> customUnits;
 
     private final List<Column<CustomUnit, ?>> columns = List.of(
-            Column.readonly("CustomUnit name", String.class, CustomUnit::getFullName),
-            Column.readonly("CustomUnit Abbreviation", String.class, CustomUnit::getAbbreviation),
-            Column.readonly("CustomUnit Abbreviation", String.class, CustomUnit::getBaseAmount)
+            Column.readonly("Name", String.class, CustomUnit::getFullName),
+            Column.readonly("Abbreviation", String.class, CustomUnit::getAbbreviation),
+            Column.readonly("BaseAmount", String.class, CustomUnit::getBaseAmount)
     );
 
     public CustomUnitTableModel(List<CustomUnit> customUnits) {

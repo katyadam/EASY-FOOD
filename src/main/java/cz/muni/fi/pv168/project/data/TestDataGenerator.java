@@ -113,7 +113,7 @@ public final class TestDataGenerator {
         int position = random.nextInt(CUSTOM_UNIT_NAMES.size());
         String customUnitName = CUSTOM_UNIT_NAMES.get(position);
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
-        double amount = random.nextDouble();
+        double amount = random.nextDouble()*100;
         BaseUnits baseUnit = selectRandom(baseUnits);
 
         return new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
