@@ -14,7 +14,7 @@ public class RecipeTableModel extends AbstractTableModel {
 
     private final List<Column<Recipe, ?>> columns = List.of(
             Column.editable("Recipe name", String.class, Recipe::getRecipeName, Recipe::setRecipeName),
-            Column.editable("Category name", Category.class, Recipe::getCategory, Recipe::setCategory),
+            Column.readonly("Category name", String.class, Recipe::getCategoryName),
             Column.readonly("Nutritional value", int.class, Recipe::getNutritionalValue),
             Column.editable("Portions", int.class, Recipe::getPortions, Recipe::setPortions),
             Column.editable("Time to prepare", LocalTime.class, Recipe::getPreparationTime, Recipe::setPreparationTime)
