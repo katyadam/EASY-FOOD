@@ -16,7 +16,7 @@ public class IngredientTableModel extends AbstractTableModel {
     private final List<Column<Ingredient, ?>> columns = List.of(
             Column.readonly("Ingredient name", String.class, Ingredient::getName),
             Column.readonly("Nutritional value", int.class, Ingredient::getNutritionalValue),
-            Column.readonly("Nutritional value", String.class, Ingredient::getUnitAbbreviation)
+            Column.readonly("Abbreviation", String.class, Ingredient::getUnitAbbreviation)
     );
 
     public IngredientTableModel(List<Ingredient> ingredients) {
