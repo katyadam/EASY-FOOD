@@ -1,13 +1,21 @@
 package cz.muni.fi.pv168.project.data;
 
 
+import cz.muni.fi.pv168.project.model.BaseUnits;
 import cz.muni.fi.pv168.project.model.Category;
+import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.model.Unit;
 
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -23,21 +31,93 @@ public final class TestDataGenerator {
     private static final List<String> RECIPE_NAMES = List.of("Smažák", "Pizza", "Vývar", "Guláš", "Mýchané vajíčka",
             "Hranolky", "Řízek", "Americké brambory", "Pečené kuře", "Grilled cheese");
 
-//    private static final Map<Gender, List<String>> LAST_NAMES = Map.of(
-//            Gender.MALE, List.of("Novák", "Novotný", "Dvořák", "Černý", "Procházka", "Šťastný", "Veselý", "Horák", "Němec", "Pokorný"),
-//            Gender.FEMALE, List.of("Nováková", "Novotná", "Dvořáková", "Černá", "Procházková", "Šťastná", "Veselá", "Horáková", "Němcová", "Pokorná")
-//    );
+    private static final List<String> INGREDIENT_NAMES = List.of("Paprika", "Brambory", "Máslo", "Rýže", "Vejce",
+            "Hovězí maso", "Kuřecí maso", "Eidam", "Mouka", "Špagety", "Bílý jogurt", "Fazole", "Sůl", "Cukr", "Pepř", "Kari");
 
-//    private static final List<Department> DEPARTMENTS = List.of(
-//            new Department("IT", "007"),
-//            new Department("Sales", "666"),
-//            new Department("HR", "112")
-//    );
+    private static final List<String> CUSTOM_UNIT_NAMES = new ArrayList<>();
+    private static final List<String> CUSTOM_UNIT_ABBREVIATIONS = new ArrayList<>();
+
+    public List<BaseUnits> getBaseUnits() {
+        return baseUnits;
+    }
+
+    public List<CustomUnit> getTestCustomUnits() {
+        return testCustomUnits;
+    }
+
+    static {
+        CUSTOM_UNIT_NAMES.add("pinch");
+        CUSTOM_UNIT_ABBREVIATIONS.add("pn");
+        CUSTOM_UNIT_NAMES.add("slice");
+        CUSTOM_UNIT_ABBREVIATIONS.add("sl");
+        CUSTOM_UNIT_NAMES.add("handful");
+        CUSTOM_UNIT_ABBREVIATIONS.add("hd");
+        CUSTOM_UNIT_NAMES.add("sprig");
+        CUSTOM_UNIT_ABBREVIATIONS.add("spg");
+        CUSTOM_UNIT_NAMES.add("strip");
+        CUSTOM_UNIT_ABBREVIATIONS.add("str");
+        CUSTOM_UNIT_NAMES.add("slab");
+        CUSTOM_UNIT_ABBREVIATIONS.add("slb");
+        CUSTOM_UNIT_NAMES.add("bunch");
+        CUSTOM_UNIT_ABBREVIATIONS.add("bnch");
+        CUSTOM_UNIT_NAMES.add("packet");
+        CUSTOM_UNIT_ABBREVIATIONS.add("pkt");
+        // Add more custom units as needed
+    }
+
+    private final List<Recipe> testRecipes;
+    private final List<Ingredient> testIngredients;
+    private final List<BaseUnits> baseUnits = BaseUnits.getBaseUnitList();
+    private final List<CustomUnit> testCustomUnits;
+
+
+    public TestDataGenerator() {
+        this.testCustomUnits = createTestCustomUnits(5);
+        this.testIngredients = createTestIngredients(10);
+        this.testRecipes = createTestRecipes(10);
+
+    }
+
+
 
 //    private static final LocalDate MIN_BIRTH_DATE = LocalDate.of(1950, JANUARY, 1);
 //    private static final LocalDate MAX_BIRTH_DATE = LocalDate.of(2002, DECEMBER, 31);
 
     private final Random random = new Random(2L);
+
+    private List<Recipe> createTestRecipes(int count) {
+        return Stream
+                .generate(this::createTestRecipe)
+                .limit(count)
+                .collect(Collectors.toList());
+    }
+
+
+
+    public List<Ingredient> createTestIngredients(int count) {
+        return Stream
+                .generate(this::createTestIngredient)
+                .limit(count)
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomUnit> createTestCustomUnits(int count) {
+        return Stream
+                .generate(this::createTestCustomUnit)
+                .limit(count)
+                .collect(Collectors.toList());
+
+    }
+
+    private CustomUnit createTestCustomUnit() {
+        int position = random.nextInt(CUSTOM_UNIT_NAMES.size());
+        String customUnitName = CUSTOM_UNIT_NAMES.get(position);
+        String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
+        double amount = random.nextDouble()*100;
+        BaseUnits baseUnit = selectRandom(baseUnits);
+
+        return new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
+    }
 
     public Recipe createTestRecipe() {
 
@@ -46,15 +126,17 @@ public final class TestDataGenerator {
         int portions = random.nextInt(10);
         Category category = new Category("None", new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
 
-        return new Recipe(recipeName, preparationTime, portions, null);
+        return new Recipe(recipeName, preparationTime, portions, null, category);
     }
+    private Ingredient createTestIngredient() {
+        String ingredientName = selectRandom(INGREDIENT_NAMES);
+        int nutritionalValue = random.nextInt(10000);
+        Unit unit = selectRandom(testCustomUnits);
+        return new Ingredient(ingredientName, nutritionalValue, unit);
+    }
+    
 
-    public List<Recipe> createTestEmployees(int count) {
-        return Stream
-                .generate(this::createTestRecipe)
-                .limit(count)
-                .collect(Collectors.toList());
-    }
+
 
 
     private <T> T selectRandom(List<T> data) {
@@ -67,4 +149,14 @@ public final class TestDataGenerator {
         int days = random.nextInt(maxDays);
         return min.plusDays(days);
     }
+
+    public List<Recipe> getTestRecipes() {
+        return testRecipes;
+    }
+
+    public List<Ingredient> getTestIngredients() {
+        return testIngredients;
+    }
+
+
 }

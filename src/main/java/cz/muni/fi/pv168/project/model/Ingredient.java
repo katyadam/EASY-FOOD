@@ -2,18 +2,21 @@ package cz.muni.fi.pv168.project.model;
 
 public class Ingredient {
     private String name;
-    private long nutritionalValue;
+    private int nutritionalValue;
 
-    public Ingredient(String name, long nutritionalValue) {
+    private Unit unitType;
+
+    public Ingredient(String name, int nutritionalValue, Unit unitType) {
         this.name = name;
         this.nutritionalValue = nutritionalValue;
+        this.unitType = unitType;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setNutritionalValue(long nutritionalValue) {
+    public void setNutritionalValue(int nutritionalValue) {
         this.nutritionalValue = nutritionalValue;
     }
 
@@ -21,7 +24,19 @@ public class Ingredient {
         return name;
     }
 
-    public long getNutritionalValue() {
+    public int getNutritionalValue() {
         return nutritionalValue;
+    }
+
+    public Unit getUnitType() {
+        return unitType;
+    }
+
+    public String getUnitAbbreviation() {
+        return unitType.getAbbreviation();
+    }
+
+    public void setUnitType(Unit unitType) {
+        this.unitType = unitType;
     }
 }

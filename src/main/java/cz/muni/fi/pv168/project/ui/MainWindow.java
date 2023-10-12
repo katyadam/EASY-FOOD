@@ -2,8 +2,12 @@ package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
+import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
+import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
+import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
@@ -20,15 +24,22 @@ public class MainWindow {
 
     private final JFrame frame;
     private final GUILayout layout;
+
     private boolean isCleared = false;
 
     private final ActionFactory actions;
 
     private final List<Recipe> recipesList;
+    private final List<Ingredient> ingredientList;
+    private final List<CustomUnit> customUnitList;
 
     private final JTable recipeTable;
+    private final JTable ingredientTable;
+    private final JTable customUnitTable;
 
     private final JScrollPane recipeScroll;
+    private final JScrollPane ingredientScroll;
+    private final JScrollPane customUnitScroll;
 
     private JMenuBar menuBar;
 
@@ -37,14 +48,26 @@ public class MainWindow {
     public MainWindow() {
         this.layout = new GUILayout();
         this.frame = createFrame();
-        this.recipesList = testDataGen.createTestEmployees(10);
+        this.recipesList = testDataGen.getTestRecipes();
+        this.ingredientList = testDataGen.getTestIngredients();
+        this.customUnitList = testDataGen.getTestCustomUnits();
+
         this.recipeTable = createRecipeTable(recipesList);
+        this.ingredientTable = createIngredientTable(ingredientList);
+        this.customUnitTable = createCustomUnitTable(customUnitList);
+
+
         this.actions = new ActionFactory(recipeTable, testDataGen);
+
         this.recipeScroll = new JScrollPane(recipeTable);
+        this.ingredientScroll = new JScrollPane(ingredientTable);
+        this.customUnitScroll = new JScrollPane(customUnitTable);
         this.menuBar = createMenuBar();
 
         setActiveButtons();
         layout.getTabbedPanels().add("Recipes", recipeScroll);
+        layout.getTabbedPanels().add("Ingredients", ingredientScroll);
+        layout.getTabbedPanels().add("Custom Units", customUnitScroll);
 
         // removes text from Search Bar after typing
         layout.getSearchRecipesTextField().addFocusListener(new ClearTextFieldKeyListener());
@@ -93,6 +116,23 @@ public class MainWindow {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
 //        JComboBox genderComboBox = new JComboBox<>(Gender.values());
 //        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
+        return table;
+    }
+
+    private JTable createCustomUnitTable(List<CustomUnit> customUnitList) {
+        CustomUnitTableModel model = new CustomUnitTableModel(customUnitList);
+        JTable table = new JTable(model);
+        table.setAutoCreateRowSorter(true);
+        table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+
+        return table;
+    }
+
+    private JTable createIngredientTable(List<Ingredient> ingredientList) {
+        IngredientTableModel model = new IngredientTableModel(ingredientList);
+        JTable table = new JTable(model);
+        table.setAutoCreateRowSorter(true);
+        table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         return table;
     }
 
