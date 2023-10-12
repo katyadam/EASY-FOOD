@@ -45,6 +45,7 @@ public class Recipe {
     public void setPortions(int portions) {
         this.portions = portions;
     }
+    public void setNutritionalValue(int value) {this.nutritionalValue = value;}
 
     public void setIngredientList(ArrayList<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
@@ -74,7 +75,7 @@ public class Recipe {
     }
 
     public String getCategoryName() {
-        return category.getName();
+        return category != null ? category.getName() : "";
     }
 
     public int getNutritionalValue() {

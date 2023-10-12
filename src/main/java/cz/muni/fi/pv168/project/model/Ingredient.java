@@ -39,4 +39,9 @@ public class Ingredient {
     public void setUnitType(Unit unitType) {
         this.unitType = unitType;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

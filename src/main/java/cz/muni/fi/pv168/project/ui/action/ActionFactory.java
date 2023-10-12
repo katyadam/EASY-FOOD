@@ -5,19 +5,19 @@ import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import javax.swing.*;
 
 public class ActionFactory {
-    private final AbstractAction addAction;
-    private final AbstractAction deleteAction;
-    private final AbstractAction editAction;
-    private final AbstractAction quitAction;
+    private final AddAction addAction;
+    private final DeleteAction deleteAction;
+    private final EditAction editAction;
+    private final QuitAction quitAction;
 
-    public ActionFactory(JTable recipeTable, TestDataGenerator testDataGenerator) {
-        this.addAction = new AddAction(recipeTable, testDataGenerator);
-        this.deleteAction = new DeleteAction(recipeTable);
-        this.editAction = new EditAction(recipeTable);
+    public ActionFactory(JTable recipeTable, JTable ingredientsTable,JTable unitsTable) {
+        this.addAction = new AddAction(recipeTable,ingredientsTable,unitsTable);
+        this.deleteAction = new DeleteAction(recipeTable,ingredientsTable,unitsTable);
+        this.editAction = new EditAction(recipeTable,ingredientsTable,unitsTable);
         this.quitAction = new QuitAction();
     }
 
-    public AbstractAction getAddAction() {
+    public AddAction getAddAction() {
         return addAction;
     }
 

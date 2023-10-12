@@ -13,19 +13,18 @@ import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class EditAction extends AbstractAction {
+public final class EditAction extends ContextAction {
 
 
-    private final JTable recipeTable;
+    public EditAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable){
+        super(recipeTable,ingredientTable,unitsTable,"Edit", Icons.EDIT_ICON);
 
-    public EditAction(JTable recipeTable){
-        super("Edit", Icons.EDIT_ICON);
-        this.recipeTable = recipeTable;
 //        this.departmentListModel = departmentListModel; might use similar for ingredients
         putValue(SHORT_DESCRIPTION, "Edits selected recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {

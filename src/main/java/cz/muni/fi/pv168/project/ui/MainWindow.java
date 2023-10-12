@@ -11,6 +11,8 @@ import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
@@ -57,7 +59,7 @@ public class MainWindow {
         this.customUnitTable = createCustomUnitTable(customUnitList);
 
 
-        this.actions = new ActionFactory(recipeTable, testDataGen);
+        this.actions = new ActionFactory(recipeTable, ingredientTable , customUnitTable);
 
         this.recipeScroll = new JScrollPane(recipeTable);
         this.ingredientScroll = new JScrollPane(ingredientTable);
@@ -68,9 +70,21 @@ public class MainWindow {
         layout.getTabbedPanels().add("Recipes", recipeScroll);
         layout.getTabbedPanels().add("Ingredients", ingredientScroll);
         layout.getTabbedPanels().add("Custom Units", customUnitScroll);
+        layout.getTabbedPanels().addChangeListener( new TabbedChange());
 
         // removes text from Search Bar after typing
         layout.getSearchRecipesTextField().addFocusListener(new ClearTextFieldKeyListener());
+
+    }
+
+    private class TabbedChange implements ChangeListener {
+
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            int activeTab = layout.getTabbedPanels().getSelectedIndex();
+            actions.getAddAction().setActiveTab(activeTab);
+
+        }
     }
 
 

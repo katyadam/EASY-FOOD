@@ -11,13 +11,12 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public final class DeleteAction extends AbstractAction {
+public final class DeleteAction extends ContextAction {
 
-    private final JTable recipeTable;
 
-    public DeleteAction(JTable recipeTable) {
-        super("Delete", Icons.DELETE_ICON);
-        this.recipeTable = recipeTable;
+    public DeleteAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
+        super(recipeTable,ingredientTable,unitsTable, "Delete", Icons.DELETE_ICON);
+
         putValue(SHORT_DESCRIPTION, "Deletes selected employees");
         putValue(MNEMONIC_KEY, KeyEvent.VK_D);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl D"));
