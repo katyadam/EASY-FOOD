@@ -13,6 +13,8 @@ import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -68,18 +70,15 @@ public class MainWindow {
         layout.getTabbedPanels().add("Custom Units", customUnitScroll);
 
         // removes text from Search Bar after typing
-        layout.getSearchRecipesTextField().addKeyListener(new ClearTextFieldKeyListener());
+        layout.getSearchRecipesTextField().addFocusListener(new ClearTextFieldKeyListener());
     }
 
 
-
-    private class ClearTextFieldKeyListener extends KeyAdapter {
+    private class ClearTextFieldKeyListener extends FocusAdapter {
         @Override
-        public void keyTyped(KeyEvent e) {
-            if (!isCleared) {
-                layout.getSearchRecipesTextField().setText("");
-                isCleared = true;
-            }
+        public void focusGained(FocusEvent e) {
+            super.focusGained(e);
+            layout.getSearchRecipesTextField().setText("");
         }
     }
 
