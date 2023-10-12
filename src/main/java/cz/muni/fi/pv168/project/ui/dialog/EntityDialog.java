@@ -3,12 +3,9 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Optional;
 
-import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
-import static javax.swing.JOptionPane.OK_OPTION;
-import static javax.swing.JOptionPane.PLAIN_MESSAGE;
+import static javax.swing.JOptionPane.*;
 
 abstract class EntityDialog<E> {
 
@@ -24,19 +21,21 @@ abstract class EntityDialog<E> {
         panel.add(component, "wmin 250lp, grow, span 3");
     }
 
-    void add(JComponent component1,JComponent component2,JComponent component3, JComponent component4) {
+    void add(JComponent component1, JComponent component2, JComponent component3, JComponent component4) {
         panel.add(component1);
         panel.add(component2);
         panel.add(component3);
         panel.add(component4);
     }
+
     void add(String ingredient) {
         JLabel label = new JLabel(ingredient);
         panel.add(label, "span 3, grow, wmin 250lp");
 
     }
+
     void add(JComponent scrollPane) {
-        panel.add(scrollPane,"span 40");
+        panel.add(scrollPane, "span 40");
     }
 
     abstract E getEntity();

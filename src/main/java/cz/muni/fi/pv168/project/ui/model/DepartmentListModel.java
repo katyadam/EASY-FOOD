@@ -3,8 +3,7 @@ package cz.muni.fi.pv168.project.ui.model;
 
 import cz.muni.fi.pv168.project.model.Recipe;
 
-import javax.swing.AbstractListModel;
-import java.util.List;
+import javax.swing.*;
 
 public class DepartmentListModel extends AbstractListModel<Recipe> {
     @Override

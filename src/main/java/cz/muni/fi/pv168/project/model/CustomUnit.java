@@ -1,10 +1,10 @@
 package cz.muni.fi.pv168.project.model;
 
 public class CustomUnit implements Unit {
-    private  String unitName;
+    private String unitName;
     private String abbreviation;
     private double amount;
-    private  BaseUnits baseUnit;
+    private BaseUnits baseUnit;
 
     public CustomUnit(String unitName, String abbreviation, double amount, BaseUnits baseUnit) {
         this.unitName = unitName;

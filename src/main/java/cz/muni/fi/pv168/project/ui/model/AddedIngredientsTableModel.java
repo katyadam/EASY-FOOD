@@ -39,7 +39,7 @@ public class AddedIngredientsTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Triplet<Ingredient,Double,Unit> row = data.get(rowIndex);
+        Triplet<Ingredient, Double, Unit> row = data.get(rowIndex);
         switch (columnIndex) {
             case 0:
                 return row.getA();
@@ -50,7 +50,8 @@ public class AddedIngredientsTableModel extends AbstractTableModel {
         }
         return null;
     }
-    public AddedIngredientsTableModel addRow(Triplet<Ingredient,Double,Unit> row) {
+
+    public AddedIngredientsTableModel addRow(Triplet<Ingredient, Double, Unit> row) {
         data.add(row);
         return this;
     }

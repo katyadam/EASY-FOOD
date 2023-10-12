@@ -1,9 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.ui.resources.Icons;
-
 import javax.swing.*;
-import java.util.List;
 
 /**
  * @author Filip Skvara
@@ -22,7 +19,7 @@ abstract public class ContextAction extends AbstractAction {
         this.unitsTable = unitsTable;
     }
 
-    public void setActiveTab( int i ) {
+    public void setActiveTab(int i) {
         activeTab = i;
     }
 }

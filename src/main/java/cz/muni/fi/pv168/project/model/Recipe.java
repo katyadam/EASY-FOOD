@@ -1,23 +1,15 @@
 package cz.muni.fi.pv168.project.model;
 
-import java.awt.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Recipe {
     private String recipeName;
-
     private LocalTime preparationTime;
-
     private int portions;
     private Category category = null;
-
     private ArrayList<Ingredient> ingredientList;
-
     private int nutritionalValue = 0;
-
-
 
 
     public Recipe(String recipeName, LocalTime preparationTime, int portions, ArrayList<Ingredient> ingredientList, Category category) {
@@ -45,7 +37,10 @@ public class Recipe {
     public void setPortions(int portions) {
         this.portions = portions;
     }
-    public void setNutritionalValue(int value) {this.nutritionalValue = value;}
+
+    public void setNutritionalValue(int value) {
+        this.nutritionalValue = value;
+    }
 
     public void setIngredientList(ArrayList<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
@@ -62,8 +57,16 @@ public class Recipe {
         return recipeName;
     }
 
+    private LocalTime getParsePreparationTime() {
+        int hours = preparationTime.getHour();
+        int minutes = preparationTime.getMinute();
+        int seconds = preparationTime.getSecond();
+
+        return LocalTime.of(hours, minutes, seconds);
+    }
+
     public LocalTime getPreparationTime() {
-        return preparationTime;
+        return getParsePreparationTime();
     }
 
     public int getPortions() {
