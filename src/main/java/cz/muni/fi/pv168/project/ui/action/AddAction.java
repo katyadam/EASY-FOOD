@@ -42,7 +42,7 @@ public final class AddAction extends ContextAction {
         switch ( activeTab ) {
             case 0:
                 RecipeTableModel recipeTableModel = (RecipeTableModel) recipeTable.getModel();
-                RecipeDialog recipeDialog = new RecipeDialog(null);
+                RecipeDialog recipeDialog = new RecipeDialog(null, (IngredientTableModel) ingredientTable.getModel());
                 recipeDialog.show(recipeTable, "Add Employee")
                         .ifPresent(recipeTableModel::addRow);
                 break;

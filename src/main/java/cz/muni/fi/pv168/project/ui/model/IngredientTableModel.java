@@ -5,6 +5,8 @@ import cz.muni.fi.pv168.project.model.Category;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Ingredient;
 
+import javax.swing.*;
+import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -78,5 +80,8 @@ public class IngredientTableModel extends AbstractTableModel {
 
     public Ingredient getEntity(int rowIndex) {
         return ingredients.get(rowIndex);
+    }
+    public Ingredient[] toArray() {
+        return ingredients.toArray(new Ingredient[ingredients.size()]);
     }
 }

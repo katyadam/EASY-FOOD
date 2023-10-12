@@ -2,10 +2,8 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Optional;
 
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
@@ -17,13 +15,28 @@ abstract class EntityDialog<E> {
     private final JPanel panel = new JPanel();
 
     EntityDialog() {
-        panel.setLayout(new MigLayout("wrap 2"));
+        panel.setLayout(new MigLayout("wrap 4"));
     }
 
     void add(String labelText, JComponent component) {
         JLabel label = new JLabel(labelText);
         panel.add(label);
-        panel.add(component, "wmin 250lp, grow");
+        panel.add(component, "wmin 250lp, grow, span 3");
+    }
+
+    void add(JComponent component1,JComponent component2,JComponent component3, JComponent component4) {
+        panel.add(component1);
+        panel.add(component2);
+        panel.add(component3);
+        panel.add(component4);
+    }
+    void add(String ingredient) {
+        JLabel label = new JLabel(ingredient);
+        panel.add(label, "span 3, grow, wmin 250lp");
+
+    }
+    void add(JComponent scrollPane) {
+        panel.add(scrollPane,"span 40");
     }
 
     abstract E getEntity();

@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
@@ -38,7 +39,7 @@ public final class EditAction extends ContextAction {
         RecipeTableModel employeeTableModel = (RecipeTableModel) recipeTable.getModel();
         int modelRow = recipeTable.convertRowIndexToModel(selectedRows[0]);
         Recipe recipe = employeeTableModel.getEntity(modelRow);
-        RecipeDialog dialog = new RecipeDialog(recipe);
+        RecipeDialog dialog = new RecipeDialog(recipe,(IngredientTableModel) ingredientTable.getModel());
         dialog.show(recipeTable, "Edit Employee")
                 .ifPresent(employeeTableModel::updateRow);
     }

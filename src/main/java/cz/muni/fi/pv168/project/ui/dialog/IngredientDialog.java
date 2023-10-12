@@ -15,7 +15,7 @@ public class IngredientDialog extends EntityDialog<Ingredient>{
     private Ingredient ingredient;
     private JTextField nameField = new JTextField();
     private final JSpinner nutritionalValueSpinner = new JSpinner( new SpinnerNumberModel(0,0,50000,20));
-    private JComboBox<BaseUnits> ingredientJComboBox = new JComboBox<>(); // insert array of base units here
+    private JComboBox<BaseUnits> ingredientJComboBox = new JComboBox<>(BaseUnits.values()); // insert array of base units here
 
     public IngredientDialog(Ingredient ingredient) {
         this.ingredient = ingredient;
@@ -36,12 +36,14 @@ public class IngredientDialog extends EntityDialog<Ingredient>{
     private void setFields() {
         nameField.setText(ingredient.getName());
         nutritionalValueSpinner.setModel(new SpinnerNumberModel(ingredient.getNutritionalValue(),0,50000,20));
+        ingredientJComboBox.setSelectedItem(ingredient.getUnitType());
     }
 
     @Override
     Ingredient getEntity() {
         ingredient.setName(nameField.getText());
         ingredient.setNutritionalValue((int) nutritionalValueSpinner.getValue());
+        ingredient.setUnitType((Unit) ingredientJComboBox.getSelectedItem());
         return ingredient;
     }
 }
