@@ -94,7 +94,6 @@ public class MainWindow {
 
         layout.getTabbedPanels().setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        layout.getComboBoxCategories().setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public void show() {
