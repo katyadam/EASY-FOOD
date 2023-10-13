@@ -197,7 +197,17 @@ public class MainWindow {
         editMenu.add(actions.getAddAction());
         editMenu.addSeparator();
         editMenu.add(actions.getQuitAction());
+
+        JMenu importMenu = new JMenu("Import");
+        editMenu.setMnemonic('i');
+
+        JMenu exportMenu = new JMenu("Export");
+        editMenu.setMnemonic('x');
+
         menuBar.add(editMenu);
+        menuBar.add(importMenu);
+        menuBar.add(exportMenu);
+
         return menuBar;
     }
 
