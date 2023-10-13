@@ -14,6 +14,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -73,7 +75,36 @@ public class MainWindow {
         // removes text from Search Bar after typing
         layout.getSearchRecipesTextField().addFocusListener(new ClearTextFieldKeyListener());
 
+        JToolBar statistics = (JToolBar) layout.getMainPanel().getComponent(3);
+        recipeTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable,0,"Total recipes: ",statistics));
+        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable,2,"Total ingredients: ",statistics));
+        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable,4,"Total units: ",statistics));
+
+        ((JLabel) statistics.getComponent(0))
+                .setText("Total recipes: " + recipeTable.getModel().getRowCount());
+        ((JLabel) statistics.getComponent(2))
+                .setText("Total ingredients: " + ingredientTable.getModel().getRowCount());
+        ((JLabel) statistics.getComponent(4))
+                .setText("Total units: " + customUnitTable.getModel().getRowCount());
     }
+    private class StatisticsUpdater implements TableModelListener{
+        private JTable table;
+        private int componentIndex;
+        private String text;
+        private JToolBar statistics;
+        public StatisticsUpdater(JTable table, int componentIndex, String text,JToolBar statistics) {
+            this.table = table;
+            this.componentIndex = componentIndex;
+            this.text = text;
+            this.statistics = statistics;
+        }
+        @Override
+        public void tableChanged(TableModelEvent e) {
+            ((JLabel) statistics.getComponent(componentIndex))
+                    .setText(text + table.getModel().getRowCount());
+        }
+    }
+
 
     private class TabbedChange implements ChangeListener {
 
