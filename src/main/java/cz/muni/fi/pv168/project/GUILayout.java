@@ -17,6 +17,8 @@ public class GUILayout {
     private JButton addButton;
     private JButton editButton;
     private JButton deleteButton;
+    private JButton showRecipeButton;
+    private JButton filterButton;
 
     public JPanel getMainPanel() {
         return mainPanel;
