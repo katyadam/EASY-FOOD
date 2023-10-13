@@ -10,6 +10,7 @@ import cz.muni.fi.pv168.project.ui.action.ContextAction;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -135,6 +136,9 @@ public class MainWindow {
 
         layout.getDeleteButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         layout.getDeleteButton().setAction(actions.getDeleteAction());
+
+        layout.getFilterButton().setIcon(Icons.FILTER_ICON);
+        layout.getShowRecipeButton().setIcon(Icons.SHOW_ICON);
 
         layout.getTabbedPanels().setCursor(new Cursor(Cursor.HAND_CURSOR));
 

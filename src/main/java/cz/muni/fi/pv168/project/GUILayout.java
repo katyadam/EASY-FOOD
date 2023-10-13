@@ -40,6 +40,14 @@ public class GUILayout {
         return unitList;
     }
 
+    public JButton getShowRecipeButton() {
+        return showRecipeButton;
+    }
+
+    public JButton getFilterButton() {
+        return filterButton;
+    }
+
     public JList getCategoryList() {
         return categoryList;
     }
