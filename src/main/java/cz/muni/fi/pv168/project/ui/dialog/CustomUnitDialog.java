@@ -11,7 +11,6 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
 
     private final JTextField customUnitNameField = new JTextField();
     private final JTextField customUnitAbbreviationField = new JTextField();
-
     private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 50000.0, 1.0));
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
 
@@ -29,7 +28,7 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
     private void setValues() {
         customUnitNameField.setText(customUnit.getFullName());
         customUnitAbbreviationField.setText(customUnit.getAbbreviation());
-        customUnitAmount.setModel(new SpinnerNumberModel(Integer.parseInt(customUnit.getBaseAmount()), 1, 200, 1));
+        customUnitAmount.setValue(Integer.parseInt(customUnit.getBaseAmount()));
     }
 
     private void addFields() {

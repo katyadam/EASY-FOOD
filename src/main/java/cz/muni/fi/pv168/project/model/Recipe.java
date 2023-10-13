@@ -60,9 +60,9 @@ public class Recipe {
     private LocalTime getParsePreparationTime() {
         int hours = preparationTime.getHour();
         int minutes = preparationTime.getMinute();
-        int seconds = preparationTime.getSecond();
+        //int seconds = preparationTime.getSecond();
 
-        return LocalTime.of(hours, minutes, seconds);
+        return LocalTime.of(hours, minutes);
     }
 
     public LocalTime getPreparationTime() {

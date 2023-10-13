@@ -11,6 +11,8 @@ import cz.muni.fi.pv168.project.ui.model.Triplet;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
 
@@ -18,7 +20,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JTextField recipeNameField = new JTextField();
     private final JSpinner recipePortionsField = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
     private final JSpinner recipeNutritionalValue = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
-    private final JTextField recipePrepareTime = new JTextField(); // make something better
+    private final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
     private JComboBox<Ingredient> ingredients;
     private Recipe recipe;
     private AddedIngredientsTableModel addedIngredientsTableModel = new AddedIngredientsTableModel();
@@ -35,6 +37,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         this.ingredientTableModel = ingredientTableModel;
         this.recipe = recipe;
         ingredients = new JComboBox<>(ingredientTableModel.toArray());
+        timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
 
         if (recipe != null) {
             setValues();
@@ -48,13 +51,13 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipeNameField.setText(recipe.getRecipeName());
         recipeNutritionalValue.setModel(new SpinnerNumberModel(recipe.getNutritionalValue(), 0, 50000, 20));
         recipePortionsField.setModel(new SpinnerNumberModel(recipe.getPortions(), 1, 200, 1));
-
     }
 
     private void addFields() {
         add("First Name:", recipeNameField);
         add("Portions", recipePortionsField);
         add("Nutritional Value", recipeNutritionalValue);
+        add("Preparation time:", timeSpinner);
         add(ingredients, amount, units, addIngredient);
         JScrollPane tmp = new JScrollPane();
         tmp.add(new JTable(addedIngredientsTableModel));
@@ -67,6 +70,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipe.setRecipeName(recipeNameField.getText());
         recipe.setPortions((int) recipePortionsField.getValue());
         recipe.setNutritionalValue((int) recipeNutritionalValue.getValue());
+        recipe.setPreparationTime(LocalTime.parse(timeSpinner.getValue().toString().split(" ")[3], DateTimeFormatter.ofPattern("HH:mm:ss")));
         return recipe;
     }
 }
