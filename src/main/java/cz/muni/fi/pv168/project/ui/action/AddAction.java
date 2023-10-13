@@ -48,7 +48,7 @@ public final class AddAction extends ContextAction {
                 break;
             case 2:
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) unitsTable.getModel();
-                CustomUnitDialog customUnitDialog = new CustomUnitDialog(null, (CustomUnitTableModel) unitsTable.getModel());
+                CustomUnitDialog customUnitDialog = new CustomUnitDialog(null);
                 customUnitDialog.show(unitsTable, "Add Custom Unit")
                         .ifPresent(customUnitTableModel::addRow);
                 break;
