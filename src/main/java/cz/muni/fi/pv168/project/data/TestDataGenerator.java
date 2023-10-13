@@ -133,7 +133,10 @@ public final class TestDataGenerator {
     }
 
     private Category createTestCategory() {
-        String categoryName = selectRandom(FOOD_CATEGORIES);
+        List<String> ALL_CATEGORIES = new ArrayList<>();
+        ALL_CATEGORIES.addAll(NATIONAL_CATEGORIES);
+        ALL_CATEGORIES.addAll(FOOD_CATEGORIES);
+        String categoryName = selectRandom(ALL_CATEGORIES);
         Color categoryColor = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
         return new Category(categoryName, categoryColor);
     }
