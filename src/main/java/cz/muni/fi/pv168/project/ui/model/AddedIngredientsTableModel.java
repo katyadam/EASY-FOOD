@@ -7,9 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Filip Skvara
- */
+
 public class AddedIngredientsTableModel extends AbstractTableModel {
 
     private List<Triplet<Ingredient, Double, Unit>> data = new ArrayList<>();

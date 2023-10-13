@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
 import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
@@ -35,7 +37,7 @@ public final class AddAction extends ContextAction {
             case 0:
                 RecipeTableModel recipeTableModel = (RecipeTableModel) recipeTable.getModel();
                 RecipeDialog recipeDialog = new RecipeDialog(null, (IngredientTableModel) ingredientTable.getModel());
-                recipeDialog.show(recipeTable, "Add Employee")
+                recipeDialog.show(recipeTable, "Add Recipe")
                         .ifPresent(recipeTableModel::addRow);
                 break;
             case 1:
@@ -45,6 +47,11 @@ public final class AddAction extends ContextAction {
                         .ifPresent(ingredientTableModel::addRow);
                 break;
             case 2:
+                CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) unitsTable.getModel();
+                CustomUnitDialog customUnitDialog = new CustomUnitDialog(null, (CustomUnitTableModel) unitsTable.getModel());
+                customUnitDialog.show(unitsTable, "Add Custom Unit")
+                        .ifPresent(customUnitTableModel::addRow);
+                break;
         }
 
     }
