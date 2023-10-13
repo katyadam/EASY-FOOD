@@ -1,29 +1,32 @@
 package cz.muni.fi.pv168.project.ui.model;
 
+import cz.muni.fi.pv168.project.model.Ingredient;
+import cz.muni.fi.pv168.project.model.Unit;
+
 /**
  * @author Filip Skvara
  */
-public class Triplet<A, B, C> {
+public class Triplet {
 
-    private A a;
-    private B b;
-    private C c;
+    private Ingredient a;
+    private double b;
+    private Unit c;
 
-    public Triplet(A a, B b, C c) {
+    public Triplet(Ingredient a, double b, Unit c) {
         this.a = a;
         this.b = b;
         this.c = c;
     }
 
-    public A getA() {
+    public Ingredient getA() {
         return a;
     }
 
-    public B getB() {
+    public double getB() {
         return b;
     }
 
-    public C getC() {
+    public Unit getC() {
         return c;
     }
 }

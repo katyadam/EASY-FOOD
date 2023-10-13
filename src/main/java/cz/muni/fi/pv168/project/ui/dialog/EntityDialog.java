@@ -35,7 +35,7 @@ abstract class EntityDialog<E> {
     }
 
     void add(JComponent scrollPane) {
-        panel.add(scrollPane, "span 40");
+        panel.add(scrollPane, "span 20, grow");
     }
 
     abstract E getEntity();

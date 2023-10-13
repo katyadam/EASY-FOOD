@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.model.BaseUnits;
 import cz.muni.fi.pv168.project.model.CustomUnit;
-import cz.muni.fi.pv168.project.ui.model.AddedCustomUnitTableModel;
+
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
 
@@ -20,8 +20,6 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
     private final JTextField customUnitNameField = new JTextField();
     private final JTextField customUnitAbbreviationField = new JTextField();
 
-    private AddedCustomUnitTableModel addedCustomUnitTableModel =
-            new AddedCustomUnitTableModel().addRow(new Triplet<>("daco", "da", "10 " + BaseUnits.GRAM));
     private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 1));
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
 
@@ -48,10 +46,8 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
         add("Abbreviation", customUnitAbbreviationField);
         add("Base Amount", customUnitAmount);
         add("Base Unit", units);
-        JScrollPane tmp = new JScrollPane();
-        tmp.add(new JTable(addedCustomUnitTableModel));
+
         //JTable tmp = new JTable(addedIngredientsTableModel);
-        add(tmp);
     }
 
     @Override

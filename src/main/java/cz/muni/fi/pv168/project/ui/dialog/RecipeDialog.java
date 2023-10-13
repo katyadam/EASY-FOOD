@@ -21,13 +21,13 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JTextField recipePrepareTime = new JTextField(); // make something better
     private JComboBox<Ingredient> ingredients;
     private Recipe recipe;
-    private AddedIngredientsTableModel addedIngredientsTableModel = new AddedIngredientsTableModel().addRow(new Triplet<>(new Ingredient("baco", 5, BaseUnits.GRAM), Double.valueOf(5.0), BaseUnits.GRAM));
+    private AddedIngredientsTableModel addedIngredientsTableModel = new AddedIngredientsTableModel();
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
     private final JSpinner amount = new JSpinner(new SpinnerNumberModel(1, 0, 100000, 0.1));
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            addedIngredientsTableModel.addRow(new Triplet<>((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
+            addedIngredientsTableModel.addRow(new Triplet((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
         }
     });
 
