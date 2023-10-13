@@ -54,15 +54,8 @@ abstract class EntityDialog<E> {
     }
 
 
-    void add(JComponent component1, JComponent component2, JComponent component3, JComponent component4) {
-        panel.add(component1);
-        panel.add(component2);
-        panel.add(component3);
-        panel.add(component4);
-    }
-
     void addLeft(JComponent component1, JComponent component2, JComponent component3, JComponent component4) {
-        leftPanel.add(component1);
+        leftPanel.add(component1, "grow");
         leftPanel.add(component2);
         leftPanel.add(component3);
         leftPanel.add(component4);

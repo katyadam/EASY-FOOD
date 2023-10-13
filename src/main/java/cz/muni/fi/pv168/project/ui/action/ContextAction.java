@@ -23,7 +23,7 @@ abstract public class ContextAction extends AbstractAction {
         activeTab = i;
     }
 
-    protected JTable getActiveTable() {
+    public JTable getActiveTable() {
         switch ( activeTab ) {
             case 0: return recipeTable;
             case 1: return ingredientTable;

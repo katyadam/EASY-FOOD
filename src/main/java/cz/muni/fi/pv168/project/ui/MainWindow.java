@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.ui.Listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ContextAction;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
@@ -89,6 +91,12 @@ public class MainWindow {
                 .setText("Total ingredients: " + ingredientTable.getModel().getRowCount());
         ((JLabel) statistics.getComponent(4))
                 .setText("Total units: " + customUnitTable.getModel().getRowCount());
+
+        recipeTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions,recipeTable));
+        ingredientTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions,ingredientTable));
+        customUnitTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions,customUnitTable));
+        actions.getEditAction().setEnabled(false);
+        actions.getDeleteAction().setEnabled(false);
     }
     private class StatisticsUpdater implements TableModelListener{
         private JTable table;
@@ -114,6 +122,7 @@ public class MainWindow {
         @Override
         public void stateChanged(ChangeEvent e) {
             ContextAction.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
+            ButtonLocker.reload(actions, actions.getAddAction().getActiveTable());
         }
     }
 
