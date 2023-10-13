@@ -46,8 +46,6 @@ public class MainWindow {
     private TestDataGenerator testDataGen = new TestDataGenerator();
 
     public MainWindow() {
-        this.layout = new GUILayout();
-        this.frame = createFrame();
         this.recipesList = testDataGen.getTestRecipes();
         this.ingredientList = testDataGen.getTestIngredients();
         this.customUnitList = testDataGen.getTestCustomUnits();
@@ -62,7 +60,11 @@ public class MainWindow {
         this.recipeScroll = new JScrollPane(recipeTable);
         this.ingredientScroll = new JScrollPane(ingredientTable);
         this.customUnitScroll = new JScrollPane(customUnitTable);
+
+        this.layout = new GUILayout();
         this.menuBar = createMenuBar();
+        this.frame = createFrame();
+
 
         setActiveButtons();
         layout.getTabbedPanels().add("Recipes", recipeScroll);
@@ -116,7 +118,8 @@ public class MainWindow {
 
     private JFrame createFrame() {
         JFrame frame = new JFrame("Easy Food");
-        frame.setContentPane(layout.getMainPanel());
+        frame.add(menuBar, BorderLayout.NORTH);
+        frame.add(layout.getMainPanel(), BorderLayout.CENTER);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(1920, 1080);
         return frame;
