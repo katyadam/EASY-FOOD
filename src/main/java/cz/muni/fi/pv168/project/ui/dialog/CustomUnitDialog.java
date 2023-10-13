@@ -3,28 +3,19 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.model.BaseUnits;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 
-import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
-import cz.muni.fi.pv168.project.ui.model.Triplet;
-
 import javax.swing.*;
 
-/**
- * @author Adam Juhas
- */
 public class CustomUnitDialog extends EntityDialog<CustomUnit> {
 
     private CustomUnit customUnit;
 
-    CustomUnitTableModel customUnitTableModel;
-
     private final JTextField customUnitNameField = new JTextField();
     private final JTextField customUnitAbbreviationField = new JTextField();
 
-    private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 1));
+    private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 50000.0, 1.0));
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
 
-    public CustomUnitDialog(CustomUnit customUnit, CustomUnitTableModel customUnitTableModel) {
-        this.customUnitTableModel = customUnitTableModel;
+    public CustomUnitDialog(CustomUnit customUnit) {
         this.customUnit = customUnit;
 
         if (customUnit != null) {
@@ -46,8 +37,6 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
         add("Abbreviation", customUnitAbbreviationField);
         add("Base Amount", customUnitAmount);
         add("Base Unit", units);
-
-        //JTable tmp = new JTable(addedIngredientsTableModel);
     }
 
     @Override
