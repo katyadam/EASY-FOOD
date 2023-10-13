@@ -10,7 +10,7 @@ abstract public class ContextAction extends AbstractAction {
     protected final JTable ingredientTable;
     protected final JTable unitsTable;
 
-    protected int activeTab = 0;
+    protected static int activeTab = 0;
 
     public ContextAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, String name, Icon icon) {
         super(name, icon);
@@ -19,7 +19,7 @@ abstract public class ContextAction extends AbstractAction {
         this.unitsTable = unitsTable;
     }
 
-    public void setActiveTab(int i) {
+    public static void setActiveTab(int i) {
         activeTab = i;
     }
 

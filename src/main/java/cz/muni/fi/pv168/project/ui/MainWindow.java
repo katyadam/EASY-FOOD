@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
+import cz.muni.fi.pv168.project.ui.action.ContextAction;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
@@ -112,11 +113,7 @@ public class MainWindow {
 
         @Override
         public void stateChanged(ChangeEvent e) {
-            int activeTab = layout.getTabbedPanels().getSelectedIndex();
-            actions.getAddAction().setActiveTab(activeTab);
-            actions.getEditAction().setActiveTab(activeTab);
-            actions.getDeleteAction().setActiveTab(activeTab);
-
+            ContextAction.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
         }
     }
 
