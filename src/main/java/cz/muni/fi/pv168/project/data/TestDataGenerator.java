@@ -12,18 +12,11 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.time.Month.DECEMBER;
-import static java.time.Month.JANUARY;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public final class TestDataGenerator {
@@ -33,6 +26,13 @@ public final class TestDataGenerator {
 
     private static final List<String> INGREDIENT_NAMES = List.of("Paprika", "Brambory", "Máslo", "Rýže", "Vejce",
             "Hovězí maso", "Kuřecí maso", "Eidam", "Mouka", "Špagety", "Bílý jogurt", "Fazole", "Sůl", "Cukr", "Pepř", "Kari");
+
+    public static final List<String> NATIONAL_CATEGORIES = List.of("Italian", "French", "Chinese",
+            "Mexican", "Japanese", "Indian", "Thai", "Greek", "Spanish",
+            "Middle Eastern");
+
+    public static final List<String> FOOD_CATEGORIES = List.of("Appetizers", "Pizza", "Soup", "Stew", "Egg Dishes",
+            "Side Dishes", "Potato Dishes", "Chicken", "Sandwiches", "Vegan", "Non-vegan", "Main Course", "Lunch", "Desert");
 
     private static final List<String> CUSTOM_UNIT_NAMES = new ArrayList<>();
     private static final List<String> CUSTOM_UNIT_ABBREVIATIONS = new ArrayList<>();
@@ -79,7 +79,6 @@ public final class TestDataGenerator {
     }
 
 
-
 //    private static final LocalDate MIN_BIRTH_DATE = LocalDate.of(1950, JANUARY, 1);
 //    private static final LocalDate MAX_BIRTH_DATE = LocalDate.of(2002, DECEMBER, 31);
 
@@ -91,7 +90,6 @@ public final class TestDataGenerator {
                 .limit(count)
                 .collect(Collectors.toList());
     }
-
 
 
     public List<Ingredient> createTestIngredients(int count) {
@@ -113,7 +111,7 @@ public final class TestDataGenerator {
         int position = random.nextInt(CUSTOM_UNIT_NAMES.size());
         String customUnitName = CUSTOM_UNIT_NAMES.get(position);
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
-        double amount = random.nextDouble()*100;
+        double amount = random.nextDouble() * 100;
         BaseUnits baseUnit = selectRandom(baseUnits);
 
         return new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
@@ -124,19 +122,21 @@ public final class TestDataGenerator {
         String recipeName = selectRandom(RECIPE_NAMES);
         LocalTime preparationTime = LocalTime.now();
         int portions = random.nextInt(10);
-        Category category = new Category("None", new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
-
-        return new Recipe(recipeName, preparationTime, portions, null, category);
+        return new Recipe(recipeName, preparationTime, portions, null, createTestCategory());
     }
+
     private Ingredient createTestIngredient() {
         String ingredientName = selectRandom(INGREDIENT_NAMES);
         int nutritionalValue = random.nextInt(10000);
         Unit unit = selectRandom(testCustomUnits);
         return new Ingredient(ingredientName, nutritionalValue, unit);
     }
-    
 
-
+    private Category createTestCategory() {
+        String categoryName = selectRandom(FOOD_CATEGORIES);
+        Color categoryColor = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        return new Category(categoryName, categoryColor);
+    }
 
 
     private <T> T selectRandom(List<T> data) {
