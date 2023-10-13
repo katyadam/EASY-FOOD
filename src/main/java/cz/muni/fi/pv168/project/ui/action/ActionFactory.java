@@ -19,15 +19,15 @@ public class ActionFactory {
         return addAction;
     }
 
-    public AbstractAction getDeleteAction() {
+    public DeleteAction getDeleteAction() {
         return deleteAction;
     }
 
-    public AbstractAction getEditAction() {
+    public EditAction getEditAction() {
         return editAction;
     }
 
-    public AbstractAction getQuitAction() {
+    public QuitAction getQuitAction() {
         return quitAction;
     }
 }

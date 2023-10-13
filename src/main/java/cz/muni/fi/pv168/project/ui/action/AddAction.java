@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public final class AddAction extends ContextAction {
-    private int activeTab = 0;
+
 
 //    private final ListModel<Recipe> departmentListModel;
 
@@ -25,10 +25,6 @@ public final class AddAction extends ContextAction {
         putValue(SHORT_DESCRIPTION, "Adds new recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
-    }
-
-    public void setActiveTab(int i) {
-        activeTab = i;
     }
 
     @Override

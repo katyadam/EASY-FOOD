@@ -34,7 +34,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
     private JComboBox<Ingredient> ingredients;
     private Recipe recipe;
-    private AddedIngredientsTableModel addedIngredientsTableModel = new AddedIngredientsTableModel();
+    private AddedIngredientsTableModel addedIngredientsTableModel;
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
 
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
@@ -56,6 +56,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         } else {
             this.recipe = new Recipe(null, null, 1, null, null);
         }
+        addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addFields();
     }
 

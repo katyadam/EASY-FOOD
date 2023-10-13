@@ -81,6 +81,8 @@ public class MainWindow {
         public void stateChanged(ChangeEvent e) {
             int activeTab = layout.getTabbedPanels().getSelectedIndex();
             actions.getAddAction().setActiveTab(activeTab);
+            actions.getEditAction().setActiveTab(activeTab);
+            actions.getDeleteAction().setActiveTab(activeTab);
 
         }
     }

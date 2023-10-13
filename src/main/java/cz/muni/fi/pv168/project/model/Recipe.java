@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.model;
 
+import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -10,6 +12,8 @@ public class Recipe {
     private Category category = null;
     private ArrayList<Ingredient> ingredientList;
     private int nutritionalValue = 0;
+
+    private AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
 
 
     public Recipe(String recipeName, LocalTime preparationTime, int portions, ArrayList<Ingredient> ingredientList, Category category) {
@@ -84,5 +88,7 @@ public class Recipe {
     public int getNutritionalValue() {
         return nutritionalValue;
     }
+
+    public AddedIngredientsTableModel getUsedIngredients() {return usedIngredients;}
 
 }

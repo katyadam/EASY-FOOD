@@ -10,7 +10,7 @@ abstract public class ContextAction extends AbstractAction {
     protected final JTable ingredientTable;
     protected final JTable unitsTable;
 
-    private int activeTab = 0;
+    protected int activeTab = 0;
 
     public ContextAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, String name, Icon icon) {
         super(name, icon);
@@ -21,5 +21,13 @@ abstract public class ContextAction extends AbstractAction {
 
     public void setActiveTab(int i) {
         activeTab = i;
+    }
+
+    protected JTable getActiveTable() {
+        switch ( activeTab ) {
+            case 0: return recipeTable;
+            case 1: return ingredientTable;
+            default: return unitsTable;
+        }
     }
 }

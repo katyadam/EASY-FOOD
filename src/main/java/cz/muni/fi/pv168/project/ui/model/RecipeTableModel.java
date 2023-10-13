@@ -10,81 +10,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeTableModel extends AbstractTableModel {
-    private final List<Recipe> recipes;
-
-    private final List<Column<Recipe, ?>> columns = List.of(
-            Column.editable("Recipe name", String.class, Recipe::getRecipeName, Recipe::setRecipeName),
-            Column.readonly("Category name", String.class, Recipe::getCategoryName),
-            Column.readonly("Nutritional value", int.class, Recipe::getNutritionalValue),
-            Column.editable("Portions", int.class, Recipe::getPortions, Recipe::setPortions),
-            Column.editable(
-                    "Time to prepare",
-                    LocalTime.class,
-                    Recipe::getPreparationTime,
-                    Recipe::setPreparationTime
-            )
-
-    );
-
+public class RecipeTableModel extends AbstractEntityTableModel<Recipe> {
     public RecipeTableModel(List<Recipe> recipes) {
-        this.recipes = new ArrayList<>(recipes);
-    }
+       super(List.of(
+               Column.editable("Recipe name", String.class, Recipe::getRecipeName, Recipe::setRecipeName),
+               Column.readonly("Category name", String.class, Recipe::getCategoryName),
+               Column.readonly("Nutritional value", int.class, Recipe::getNutritionalValue),
+               Column.editable("Portions", int.class, Recipe::getPortions, Recipe::setPortions),
+               Column.editable(
+                       "Time to prepare",
+                       LocalTime.class,
+                       Recipe::getPreparationTime,
+                       Recipe::setPreparationTime
+               )
 
-    @Override
-    public int getRowCount() {
-        return recipes.size();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return columns.size();
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Recipe recipe = getEntity(rowIndex);
-        return columns.get(columnIndex).getValue(recipe);
-    }
-
-    @Override
-    public String getColumnName(int columnIndex) {
-        return columns.get(columnIndex).getName();
-    }
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        return columns.get(columnIndex).getColumnType();
-    }
-
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columns.get(columnIndex).isEditable();
-    }
-
-    @Override
-    public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        Recipe recipe = getEntity(rowIndex);
-        columns.get(columnIndex).setValue(value, recipe);
-    }
-
-    public void deleteRow(int rowIndex) {
-        recipes.remove(rowIndex);
-        fireTableRowsDeleted(rowIndex, rowIndex);
-    }
-
-    public void addRow(Recipe recipe) {
-        int newRowIndex = recipes.size();
-        recipes.add(recipe);
-        fireTableRowsInserted(newRowIndex, newRowIndex);
-    }
-
-    public void updateRow(Recipe recipe) {
-        int rowIndex = recipes.indexOf(recipe);
-        fireTableRowsUpdated(rowIndex, rowIndex);
-    }
-
-    public Recipe getEntity(int rowIndex) {
-        return recipes.get(rowIndex);
+       ),recipes);
     }
 }

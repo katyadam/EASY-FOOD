@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
@@ -20,16 +20,19 @@ public final class DeleteAction extends ContextAction {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl D"));
     }
 
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        RecipeTableModel employeeTableModel = (RecipeTableModel) recipeTable.getModel();
-        Arrays.stream(recipeTable.getSelectedRows())
+        JTable activeTable = getActiveTable();
+        AbstractEntityTableModel tableModel = (AbstractEntityTableModel) activeTable.getModel();
+        Arrays.stream(activeTable.getSelectedRows())
                 // view row index must be converted to model row index
-                .map(recipeTable::convertRowIndexToModel)
+                .map(activeTable::convertRowIndexToModel)
                 .boxed()
                 // We need to delete rows in descending order to not change index of rows
                 // which are not deleted yet
                 .sorted(Comparator.reverseOrder())
-                .forEach(employeeTableModel::deleteRow);
+                .forEach(tableModel::deleteRow);
     }
 }
