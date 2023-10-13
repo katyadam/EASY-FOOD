@@ -28,6 +28,7 @@ abstract class EntityDialog<E> {
             panel.add(leftPanel, BorderLayout.WEST);
             panel.add(rightPanel, BorderLayout.EAST);
             leftPanel.setLayout(new MigLayout("wrap 4"));
+            rightPanel.setLayout(new MigLayout("fill"));
         }
     }
 

@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.model.Unit;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private AddedIngredientsTableModel addedIngredientsTableModel;
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
 
-    private JTextField recipeDescriptionTextField = new JTextField();
+    private JTextArea recipeDescriptionTextField = new JTextArea();
 
     private JScrollPane textScrollPane = new JScrollPane();
 
@@ -84,7 +85,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         addLeft("Preparation time:", timeSpinner);
         addLeft(ingredients, amount, units, addIngredient);
         addLeft("Ingredients",  new JScrollPane(new JTable(addedIngredientsTableModel)));
-        addRight("Description", new JScrollPane(recipeDescriptionTextField), "w 250lp, h 500lp, grow, span 3");
+        addRight("Description", new JScrollPane(recipeDescriptionTextField), "w 250lp, h 500lp, grow");
     }
 
     @Override
