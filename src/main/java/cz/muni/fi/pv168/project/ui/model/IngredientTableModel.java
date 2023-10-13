@@ -12,6 +12,6 @@ public class IngredientTableModel extends AbstractEntityTableModel<Ingredient> {
         ),ingredients);
     }
     public Ingredient[] toArray() {
-        return data.toArray(new Ingredient[0]);
+        return data.toArray(new Ingredient[data.size()]);
     }
 }

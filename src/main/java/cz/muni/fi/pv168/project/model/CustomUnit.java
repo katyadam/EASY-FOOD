@@ -23,6 +23,10 @@ public class CustomUnit implements Unit {
         return abbreviation;
     }
 
+    public String getBaseAmountNumber() {
+        return amount + "";
+    }
+
     public String getBaseAmount() {
         return String.format("%.2f", amount) + " " + baseUnit.getAbbreviation();
     }

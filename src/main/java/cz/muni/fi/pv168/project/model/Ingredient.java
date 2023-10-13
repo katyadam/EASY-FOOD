@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.model;
 
+import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+
 public class Ingredient {
     private String name;
     private int nutritionalValue;
@@ -44,4 +46,5 @@ public class Ingredient {
     public String toString() {
         return name;
     }
+
 }
