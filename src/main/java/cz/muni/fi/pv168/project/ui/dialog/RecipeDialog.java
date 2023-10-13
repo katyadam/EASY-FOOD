@@ -21,7 +21,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
     private final IngredientTableModel ingredientTableModel;
     private final JTextField recipeNameField = new JTextField();
-<<<<<<< HEAD
     private final JSpinner recipePortionsField = new JSpinner(
             new SpinnerNumberModel(1, 1, 200, 1)
     );
@@ -31,11 +30,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JSpinner amount = new JSpinner(
             new SpinnerNumberModel(1, 0, 100000, 0.1)
     );
-=======
     private final JTextField categoryNameField = new JTextField();
-    private final JSpinner recipePortionsField = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
-    private final JSpinner recipeNutritionalValue = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
->>>>>>> 5c0b334a7b80bea4fe6eba66a26f826753f26769
     private final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
     private JComboBox<Ingredient> ingredients;
     private Recipe recipe;
