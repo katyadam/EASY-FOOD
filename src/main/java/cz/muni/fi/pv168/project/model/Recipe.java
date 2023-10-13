@@ -11,7 +11,12 @@ public class Recipe {
     private int portions;
     private Category category = null;
     private ArrayList<Ingredient> ingredientList;
+
+
+
     private int nutritionalValue = 0;
+
+    private String description = "No recipe description";
 
     private AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
 
@@ -59,6 +64,10 @@ public class Recipe {
      */
     public String getRecipeName() {
         return recipeName;
+    }
+
+    public String getDesription() {
+        return description;
     }
 
     private LocalTime getParsePreparationTime() {

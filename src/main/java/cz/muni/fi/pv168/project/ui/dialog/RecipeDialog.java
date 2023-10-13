@@ -37,6 +37,11 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private AddedIngredientsTableModel addedIngredientsTableModel;
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
 
+    private JTextField recipeDescriptionTextField = new JTextField();
+
+    private JScrollPane textScrollPane = new JScrollPane();
+
+
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -45,6 +50,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     });
 
     public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel) {
+        super(true);
         this.ingredientTableModel = ingredientTableModel;
         this.recipe = recipe;
         ingredients = new JComboBox<>(ingredientTableModel.toArray());
@@ -65,16 +71,20 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         categoryNameField.setText(recipe.getCategoryName());
         recipeNutritionalValue.setModel(new SpinnerNumberModel(recipe.getNutritionalValue(), 0, 50000, 20));
         recipePortionsField.setModel(new SpinnerNumberModel(recipe.getPortions(), 1, 200, 1));
+        recipeDescriptionTextField.setText(recipe.getDesription());
+
     }
 
     private void addFields() {
-        add("First Name:", recipeNameField);
-        add("Category Name:", categoryNameField);
-        add("Nutritional Value", recipeNutritionalValue);
-        add("Portions", recipePortionsField);
-        add("Preparation time:", timeSpinner);
-        add(ingredients, amount, units, addIngredient);
-        add("Ingredients",  new JScrollPane(new JTable(addedIngredientsTableModel)));
+
+        addLeft("First Name:", recipeNameField);
+        addLeft("Category Name:", categoryNameField);
+        addLeft("Nutritional Value", recipeNutritionalValue);
+        addLeft("Portions", recipePortionsField);
+        addLeft("Preparation time:", timeSpinner);
+        addLeft(ingredients, amount, units, addIngredient);
+        addLeft("Ingredients",  new JScrollPane(new JTable(addedIngredientsTableModel)));
+        addRight("Description", new JScrollPane(recipeDescriptionTextField), "w 250lp, h 500lp, grow, span 3");
     }
 
     @Override
