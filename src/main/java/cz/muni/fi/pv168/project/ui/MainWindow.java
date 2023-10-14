@@ -6,20 +6,20 @@ import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.Listeners.ButtonLocker;
+import cz.muni.fi.pv168.project.ui.Listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ContextAction;
+import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -214,7 +214,37 @@ public class MainWindow {
         toolbar.addSeparator();
         return toolbar;
     }
-
+    private JComponent createRecipeTab() {
+        JPanel recipePanel = new JPanel(new MigLayout("fillx"));
+        JComboBox<Ingredient> ingredientFilter = new JComboBox<>(ingredientList.toArray(new Ingredient[0]));
+        JComboBox<String> categoryFilter = new JComboBox<>(new String[0]);
+        JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
+        JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
+        JSpinner portionsMinFilter = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
+        JSpinner portionsMaxFilter = new JSpinner(new SpinnerNumberModel(200, 1, 200, 1));
+        JLabel ingredients = new JLabel("Ingredients:");
+        JLabel categories = new JLabel("Categories:");
+        JLabel nutritions = new JLabel("Calories min");
+        JLabel max = new JLabel("max");
+        JLabel max2 = new JLabel("max");
+        JLabel portions = new JLabel("Portions min");
+        JButton fireFilter = new JButton(new FilterRecipesAction(ingredientFilter, categoryFilter, caloriesMinFilter, caloriesMaxFilter, portionsMinFilter, portionsMaxFilter));
+        recipePanel.add(ingredients);
+        recipePanel.add(ingredientFilter);
+        recipePanel.add(categories, "gapleft 3%, al right");
+        recipePanel.add(categoryFilter, ", gapright 3%");
+        recipePanel.add(nutritions, "right");
+        recipePanel.add(caloriesMinFilter);
+        recipePanel.add(max2, "al left");
+        recipePanel.add(caloriesMaxFilter, "al left, gapright 3%");
+        recipePanel.add(portions, "al right");
+        recipePanel.add(portionsMinFilter);
+        recipePanel.add(max, "al left");
+        recipePanel.add(portionsMaxFilter, "al left, gapright 25%");
+        recipePanel.add(fireFilter, "al right,wrap");
+        recipePanel.add(recipeScroll, "span 13, grow");
+        return recipePanel;
+    }
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         return;
     }
