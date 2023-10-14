@@ -17,7 +17,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
@@ -82,9 +81,9 @@ public class MainWindow {
         layout.getSearchRecipesTextField().addFocusListener(new ClearTextFieldKeyListener());
 
         JToolBar statistics = (JToolBar) layout.getMainPanel().getComponent(3);
-        recipeTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable,0,"Total recipes: ",statistics));
-        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable,2,"Total ingredients: ",statistics));
-        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable,4,"Total units: ",statistics));
+        recipeTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable, 0, "Total recipes: ", statistics));
+        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable, 2, "Total ingredients: ", statistics));
+        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable, 4, "Total units: ", statistics));
 
         ((JLabel) statistics.getComponent(0))
                 .setText("Total recipes: " + recipeTable.getModel().getRowCount());
@@ -93,23 +92,27 @@ public class MainWindow {
         ((JLabel) statistics.getComponent(4))
                 .setText("Total units: " + customUnitTable.getModel().getRowCount());
 
-        recipeTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions,recipeTable));
-        ingredientTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions,ingredientTable));
-        customUnitTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions,customUnitTable));
+        recipeTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions, recipeTable));
+        ingredientTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions, ingredientTable));
+        customUnitTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions, customUnitTable));
         actions.getEditAction().setEnabled(false);
         actions.getDeleteAction().setEnabled(false);
+        actions.getShowAction().setEnabled(false);
     }
-    private class StatisticsUpdater implements TableModelListener{
+
+    private class StatisticsUpdater implements TableModelListener {
         private JTable table;
         private int componentIndex;
         private String text;
         private JToolBar statistics;
-        public StatisticsUpdater(JTable table, int componentIndex, String text,JToolBar statistics) {
+
+        public StatisticsUpdater(JTable table, int componentIndex, String text, JToolBar statistics) {
             this.table = table;
             this.componentIndex = componentIndex;
             this.text = text;
             this.statistics = statistics;
         }
+
         @Override
         public void tableChanged(TableModelEvent e) {
             ((JLabel) statistics.getComponent(componentIndex))
@@ -137,6 +140,9 @@ public class MainWindow {
     }
 
     private void setActiveButtons() {
+        layout.getShowRecipeButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
+        layout.getShowRecipeButton().setAction(actions.getShowAction());
+
         layout.getAddButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         layout.getAddButton().setAction(actions.getAddAction());
 
