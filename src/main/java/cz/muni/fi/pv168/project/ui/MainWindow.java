@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.ui.Listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.Listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ContextAction;
+import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
 import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
@@ -75,7 +76,7 @@ public class MainWindow {
         setActiveButtons();
         ///layout.getTabbedPanels().add("Recipes", recipeScroll);
         layout.getTabbedPanels().add("Recipes",createRecipeTab());
-        layout.getTabbedPanels().add("Ingredients", ingredientScroll);
+        layout.getTabbedPanels().add("Ingredients", createIngredientsTab());
         layout.getTabbedPanels().add("Custom Units", customUnitScroll);
         layout.getTabbedPanels().addChangeListener(new TabbedChange());
 
@@ -244,6 +245,22 @@ public class MainWindow {
         recipePanel.add(fireFilter, "al right,wrap");
         recipePanel.add(recipeScroll, "span 13, grow");
         return recipePanel;
+    }
+    private JComponent createIngredientsTab() {
+        JPanel ingredientsPanel = new JPanel(new MigLayout("fillx"));
+        JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
+        JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
+        JLabel nutritions = new JLabel("Calories min");
+        JLabel max = new JLabel("max");
+        JButton fireFilter = new JButton(new FilterIngredientsAction());
+
+        ingredientsPanel.add(nutritions, "left");
+        ingredientsPanel.add(caloriesMinFilter,"left");
+        ingredientsPanel.add(max, " left");
+        ingredientsPanel.add(caloriesMaxFilter, "left, gapright 50%");
+        ingredientsPanel.add(fireFilter, "right, wrap");
+        ingredientsPanel.add(ingredientScroll, "span 5, grow");
+        return ingredientsPanel;
     }
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         return;
