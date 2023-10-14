@@ -1,5 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
+import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
@@ -9,7 +13,7 @@ import java.awt.event.KeyEvent;
 /**
  * @author Adam Juhas
  */
-public class ShowAction extends ContextAction{
+public class ShowAction extends ContextAction {
     public ShowAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
         super(recipeTable, ingredientTable, unitsTable, "Show Recipe", Icons.SHOW_ICON);
         putValue(SHORT_DESCRIPTION, "Shows recipe");
@@ -27,6 +31,14 @@ public class ShowAction extends ContextAction{
         if (activeTable.isEditing()) {
             activeTable.getCellEditor().cancelCellEditing();
         }
+        RecipeTableModel recipeTableModel = (RecipeTableModel) activeTable.getModel();
+        int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
+        Recipe recipe = recipeTableModel.getEntity(modelRow);
 
+        // Create a RecipeDialog with the selected recipe and ingredient table model
+        RecipeDialog recipeDialog = new RecipeDialog(recipe, (IngredientTableModel) ingredientTable.getModel());
+
+        // Show the recipe details using the showDialog method
+        recipeDialog.showDialog();
     }
 }
