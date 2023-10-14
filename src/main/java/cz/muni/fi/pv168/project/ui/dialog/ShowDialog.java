@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.ui.model.Triplet;
 
 import javax.swing.*;
 import java.time.format.DateTimeFormatter;
@@ -22,17 +23,15 @@ public class ShowDialog {
         recipeString.append("Category Name: ").append(recipe.getCategory().getName()).append("\n");
         recipeString.append("Nutritional Value: ").append(recipe.getNutritionalValue()).append("\n");
         recipeString.append("Portions: ").append(recipe.getPortions()).append("\n");
-        System.out.println(recipe.getPreparationTime());
-        recipeString.append("Preparation Time: ").append(recipe.getPreparationTime().format(DateTimeFormatter.ofPattern("HH:mm"))).append("\n");
-
+        recipeString.append("Preparation Time: ").append(recipe.getPreparationTime().getHour()).append(" hodin ")
+                .append(recipe.getPreparationTime().getMinute()).append(" minut").append("\n").append("\n");
         recipeString.append("Ingredients:\n");
-
-        /**
-         for (Triplet ingredient : recipe.getUsedIngredients()) {
-         recipeString.append("- ").append(ingredient.getA().getName())
-         .append(" - ").append(ingredient.getB()).append(" ").append(ingredient.getC()).append("\n");
-         }
-         **/
+        for (int i = 0; i < recipe.getUsedIngredients().getRowCount(); i++) {
+            Triplet ingredient = recipe.getUsedIngredients().getEntity(i);
+            recipeString.append("-> ").append(ingredient.getA().getName())
+                    .append("  ").append(ingredient.getB()).append(" ").append(ingredient.getC()).append("\n");
+        }
+        recipeString.append("\n");
 
         recipeString.append("Description:").append("\n").append(recipe.getDesription()).append("\n");
 
