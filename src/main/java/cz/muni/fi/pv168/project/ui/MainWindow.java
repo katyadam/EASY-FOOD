@@ -48,7 +48,9 @@ public class MainWindow {
     private JScrollPane ingredientScroll;
     private JScrollPane customUnitScroll;
 
-    private final JMenuBar menuBar;
+    private JMenuBar menuBar;
+
+    private JPopupMenu popupMenu;
 
     private final TestDataGenerator testDataGen = new TestDataGenerator();
 
@@ -66,11 +68,17 @@ public class MainWindow {
         setTabbedPannels();
         setStatistics();
         setButtonListeners();
-        createRecipePopupMenu();
-
+        setPopUpMenus();
 
         // removes text from Search Bar after typing
         layout.getSearchRecipesTextField().addFocusListener(new ClearTextFieldKeyListener());
+    }
+
+    private void setPopUpMenus() {
+        this.popupMenu = createRecipePopupMenu();
+        recipeTable.setComponentPopupMenu(popupMenu);
+        ingredientTable.setComponentPopupMenu(popupMenu);
+        customUnitTable.setComponentPopupMenu(popupMenu);
     }
 
     private void createScrollPanes() {
