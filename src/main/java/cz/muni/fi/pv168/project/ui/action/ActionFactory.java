@@ -7,11 +7,13 @@ public class ActionFactory {
     private final DeleteAction deleteAction;
     private final EditAction editAction;
     private final QuitAction quitAction;
+    private final ShowAction showAction;
 
     public ActionFactory(JTable recipeTable, JTable ingredientsTable, JTable unitsTable) {
         this.addAction = new AddAction(recipeTable, ingredientsTable, unitsTable);
         this.deleteAction = new DeleteAction(recipeTable, ingredientsTable, unitsTable);
         this.editAction = new EditAction(recipeTable, ingredientsTable, unitsTable);
+        this.showAction = new ShowAction(recipeTable, ingredientsTable, unitsTable);
         this.quitAction = new QuitAction();
     }
 
@@ -29,5 +31,9 @@ public class ActionFactory {
 
     public QuitAction getQuitAction() {
         return quitAction;
+    }
+
+    public ShowAction getShowAction() {
+        return showAction;
     }
 }

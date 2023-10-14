@@ -1,0 +1,44 @@
+package cz.muni.fi.pv168.project.ui.action;
+
+import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
+import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+import cz.muni.fi.pv168.project.ui.resources.Icons;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+/**
+ * @author Adam Juhas
+ */
+public class ShowAction extends ContextAction {
+    public ShowAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
+        super(recipeTable, ingredientTable, unitsTable, "Show Recipe", Icons.SHOW_ICON);
+        putValue(SHORT_DESCRIPTION, "Shows recipe");
+        putValue(MNEMONIC_KEY, KeyEvent.VK_S);
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl S"));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JTable activeTable = getActiveTable();
+        int[] selectedRows = activeTable.getSelectedRows();
+        if (selectedRows.length != 1) {
+            throw new IllegalStateException("Invalid selected rows count (must be 1): " + selectedRows.length);
+        }
+        if (activeTable.isEditing()) {
+            activeTable.getCellEditor().cancelCellEditing();
+        }
+        RecipeTableModel recipeTableModel = (RecipeTableModel) activeTable.getModel();
+        int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
+        Recipe recipe = recipeTableModel.getEntity(modelRow);
+
+        // Create a RecipeDialog with the selected recipe and ingredient table model
+        RecipeDialog recipeDialog = new RecipeDialog(recipe, (IngredientTableModel) ingredientTable.getModel());
+
+        // Show the recipe details using the showDialog method
+        recipeDialog.showDialog();
+    }
+}
