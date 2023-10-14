@@ -19,10 +19,7 @@ public class ButtonLocker implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        int selected = table.getSelectedRowCount();
-        buttons.getDeleteAction().setEnabled(selected > 0);
-        buttons.getEditAction().setEnabled(selected == 1);
-        buttons.getShowAction().setEnabled(selected == 1 && table.getModel().getClass().equals(RecipeTableModel.class));
+        reload(buttons,table);
     }
 
     public static void reload(ActionFactory buttons, JTable table) {

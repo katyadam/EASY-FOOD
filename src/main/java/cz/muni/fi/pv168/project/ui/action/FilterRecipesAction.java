@@ -17,13 +17,15 @@ public class FilterRecipesAction extends AbstractAction {
     JSpinner caloriesMaxFilter;
     JSpinner portionsMinFilter;
     JSpinner portionsMaxFilter;
+    JTable recipeTable;
 
     public FilterRecipesAction(JComboBox<Ingredient> ingredeintFilter,
                                JComboBox<String> categoryFilter,
                                JSpinner caloriesMinFilter,
                                JSpinner caloriesMaxFilter,
                                JSpinner portionsMinFilter,
-                               JSpinner portionsMaxFilter) {
+                               JSpinner portionsMaxFilter,
+                               JTable recipeTable) {
         super("",Icons.FILTER_ICON);
         this.ingredeintFilter = ingredeintFilter;
         this.categoryFilter = categoryFilter;
@@ -31,6 +33,7 @@ public class FilterRecipesAction extends AbstractAction {
         this.caloriesMaxFilter = caloriesMaxFilter;
         this.portionsMinFilter = portionsMinFilter;
         this.portionsMaxFilter = portionsMaxFilter;
+        this.recipeTable =recipeTable;
 
         putValue(SHORT_DESCRIPTION, "Adds new recipe");
     }

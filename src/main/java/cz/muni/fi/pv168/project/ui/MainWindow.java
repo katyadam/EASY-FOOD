@@ -228,7 +228,7 @@ public class MainWindow {
         JLabel max = new JLabel("max");
         JLabel max2 = new JLabel("max");
         JLabel portions = new JLabel("Portions min");
-        JButton fireFilter = new JButton(new FilterRecipesAction(ingredientFilter, categoryFilter, caloriesMinFilter, caloriesMaxFilter, portionsMinFilter, portionsMaxFilter));
+        JButton fireFilter = new JButton(new FilterRecipesAction(ingredientFilter, categoryFilter, caloriesMinFilter, caloriesMaxFilter, portionsMinFilter, portionsMaxFilter,recipeTable));
         recipePanel.add(ingredients);
         recipePanel.add(ingredientFilter);
         recipePanel.add(categories, "gapleft 3%, al right");
