@@ -9,16 +9,16 @@ public class Recipe {
     private String recipeName;
     private LocalTime preparationTime;
     private int portions;
-    private Category category = null;
+    private Category category;
     private ArrayList<Ingredient> ingredientList;
 
 
 
-    private int nutritionalValue = 0;
+    private int nutritionalValue;
 
-    private String description = "No recipe description";
+    private final String description = "No recipe description";
 
-    private AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
+    private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
 
 
     public Recipe(String recipeName, LocalTime preparationTime, int portions, ArrayList<Ingredient> ingredientList, Category category) {
