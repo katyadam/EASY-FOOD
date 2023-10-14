@@ -243,7 +243,7 @@ public class MainWindow {
         recipePanel.add(max, "al left");
         recipePanel.add(portionsMaxFilter, "al left, gapright 25%");
         recipePanel.add(fireFilter, "al right,wrap");
-        recipePanel.add(recipeScroll, "span 13, grow");
+        recipePanel.add(recipeScroll, "span 13, grow, height 99% ");
         return recipePanel;
     }
     private JComponent createIngredientsTab() {
@@ -259,7 +259,7 @@ public class MainWindow {
         ingredientsPanel.add(max, "left");
         ingredientsPanel.add(caloriesMaxFilter, "left, gapright 78%");
         ingredientsPanel.add(fireFilter, "right, wrap");
-        ingredientsPanel.add(ingredientScroll, "span 5, grow");
+        ingredientsPanel.add(ingredientScroll, "span 5, grow, height 99%");
         return ingredientsPanel;
     }
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
