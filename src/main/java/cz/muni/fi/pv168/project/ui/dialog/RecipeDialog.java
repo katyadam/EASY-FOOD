@@ -60,7 +60,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            this.recipe = new Recipe(null, null, 1, null, null);
+            this.recipe = new Recipe(null, null, 1, null);
         }
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addFields();
@@ -74,16 +74,19 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipeString.append("Category Name: ").append(recipe.getCategory().getName()).append("\n");
         recipeString.append("Nutritional Value: ").append(recipe.getNutritionalValue()).append("\n");
         recipeString.append("Portions: ").append(recipe.getPortions()).append("\n");
+        System.out.println(recipe.getPreparationTime());
         recipeString.append("Preparation Time: ").append(recipe.getPreparationTime().format(DateTimeFormatter.ofPattern("HH:mm"))).append("\n");
 
         recipeString.append("Ingredients:\n");
+
         /**
-         for (Triplet<Ingredient, Double, Unit> ingredient : recipe.getUsedIngredients().getIngredients()) {
-         recipeString.append("- ").append(ingredient.getFirst().getName())
-         .append(" - ").append(ingredient.getSecond()).append(" ").append(ingredient.getThird()).append("\n");
+         for (Triplet ingredient : recipe.getUsedIngredients()) {
+         recipeString.append("- ").append(ingredient.getA().getName())
+         .append(" - ").append(ingredient.getB()).append(" ").append(ingredient.getC()).append("\n");
          }
          **/
-        recipeString.append("Description: ").append(recipe.getDesription()).append("\n");
+
+        recipeString.append("Description:").append("\n").append(recipe.getDesription()).append("\n");
 
         JTextArea textArea = new JTextArea(recipeString.toString());
         textArea.setEditable(false);
@@ -98,7 +101,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipeNutritionalValue.setModel(new SpinnerNumberModel(recipe.getNutritionalValue(), 0, 50000, 20));
         recipePortionsField.setModel(new SpinnerNumberModel(recipe.getPortions(), 1, 200, 1));
         recipeDescriptionTextField.setText(recipe.getDesription());
-
     }
 
     private void addFields() {
@@ -121,7 +123,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipe.setNutritionalValue((int) recipeNutritionalValue.getValue());
         String stringDate = timeSpinner.getValue().toString().split(" ")[3];
         recipe.setPreparationTime(LocalTime.parse(stringDate, DateTimeFormatter.ofPattern("HH:mm:ss")));
-        //recipe.set
+        recipe.setDescription(recipeDescriptionTextField.getText());
         return recipe;
     }
 }

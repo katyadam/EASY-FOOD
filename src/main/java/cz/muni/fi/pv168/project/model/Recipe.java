@@ -3,29 +3,25 @@ package cz.muni.fi.pv168.project.model;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class Recipe {
     private String recipeName;
     private LocalTime preparationTime;
     private int portions;
-    private Category category;
-    private ArrayList<Ingredient> ingredientList;
+    private Category category = null;
 
 
+    private int nutritionalValue = 0;
 
-    private int nutritionalValue;
+    private String description = "No recipe description";
 
-    private final String description = "No recipe description";
-
-    private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
+    private AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
 
 
-    public Recipe(String recipeName, LocalTime preparationTime, int portions, ArrayList<Ingredient> ingredientList, Category category) {
+    public Recipe(String recipeName, LocalTime preparationTime, int portions, Category category) {
         this.recipeName = recipeName;
         this.preparationTime = preparationTime;
         this.portions = portions;
-        this.ingredientList = ingredientList; // TODO have something like Dictionary
         this.nutritionalValue = 0;
         this.category = category;
         //this.nutritionalValue = calculateNutritionalValue(ingredientList); TODO
@@ -51,12 +47,12 @@ public class Recipe {
         this.nutritionalValue = value;
     }
 
-    public void setIngredientList(ArrayList<Ingredient> ingredientList) {
-        this.ingredientList = ingredientList;
-    }
-
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /*
@@ -98,6 +94,8 @@ public class Recipe {
         return nutritionalValue;
     }
 
-    public AddedIngredientsTableModel getUsedIngredients() {return usedIngredients;}
+    public AddedIngredientsTableModel getUsedIngredients() {
+        return usedIngredients;
+    }
 
 }

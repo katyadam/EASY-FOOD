@@ -122,7 +122,7 @@ public final class TestDataGenerator {
         String recipeName = selectRandom(RECIPE_NAMES);
         LocalTime preparationTime = LocalTime.now();
         int portions = random.nextInt(10);
-        return new Recipe(recipeName, preparationTime, portions, null, createTestCategory());
+        return new Recipe(recipeName, preparationTime, portions, createTestCategory());
     }
 
     private Ingredient createTestIngredient() {
