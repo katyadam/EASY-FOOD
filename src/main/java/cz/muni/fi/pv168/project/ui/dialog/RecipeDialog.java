@@ -76,7 +76,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
     private void addFields() {
 
-        addLeft("First Name:", recipeNameField);
+        addLeft("Recipe Name:", recipeNameField);
         addLeft("Category Name:", categoryNameField);
         addLeft("Nutritional Value", recipeNutritionalValue);
         addLeft("Portions", recipePortionsField);
