@@ -161,7 +161,6 @@ public class MainWindow {
         layout.getDeleteButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
         layout.getDeleteButton().setAction(actions.getDeleteAction());
 
-        layout.getFilterButton().setIcon(Icons.FILTER_ICON);
         layout.getShowRecipeButton().setIcon(Icons.SHOW_ICON);
 
         layout.getTabbedPanels().setCursor(new Cursor(Cursor.HAND_CURSOR));
