@@ -19,7 +19,7 @@ public class ButtonLocker implements ListSelectionListener {
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        reload(buttons,table);
+        reload(buttons, table);
     }
 
     public static void reload(ActionFactory buttons, JTable table) {

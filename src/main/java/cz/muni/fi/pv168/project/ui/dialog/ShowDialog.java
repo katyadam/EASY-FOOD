@@ -4,11 +4,7 @@ import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
 
 import javax.swing.*;
-import java.time.format.DateTimeFormatter;
 
-/**
- * @author Adam Juhas
- */
 public class ShowDialog {
 
     private final Recipe recipe;

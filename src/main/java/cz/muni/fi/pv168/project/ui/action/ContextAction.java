@@ -2,9 +2,6 @@ package cz.muni.fi.pv168.project.ui.action;
 
 import javax.swing.*;
 
-/**
- * @author Filip Skvara
- */
 abstract public class ContextAction extends AbstractAction {
     protected final JTable recipeTable;
     protected final JTable ingredientTable;
@@ -24,10 +21,13 @@ abstract public class ContextAction extends AbstractAction {
     }
 
     public JTable getActiveTable() {
-        switch ( activeTab ) {
-            case 0: return recipeTable;
-            case 1: return ingredientTable;
-            default: return unitsTable;
+        switch (activeTab) {
+            case 0:
+                return recipeTable;
+            case 1:
+                return ingredientTable;
+            default:
+                return unitsTable;
         }
     }
 }

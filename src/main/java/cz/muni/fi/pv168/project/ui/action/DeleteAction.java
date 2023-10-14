@@ -21,7 +21,6 @@ public final class DeleteAction extends ContextAction {
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         JTable activeTable = getActiveTable();

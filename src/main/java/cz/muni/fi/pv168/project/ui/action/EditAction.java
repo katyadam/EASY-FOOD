@@ -20,8 +20,6 @@ public final class EditAction extends ContextAction {
 
     public EditAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
         super(recipeTable, ingredientTable, unitsTable, "Edit", Icons.EDIT_ICON);
-
-//        this.departmentListModel = departmentListModel; might use similar for ingredients
         putValue(SHORT_DESCRIPTION, "Edits selected recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));

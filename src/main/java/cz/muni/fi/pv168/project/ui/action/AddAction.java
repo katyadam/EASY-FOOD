@@ -15,13 +15,8 @@ import java.awt.event.KeyEvent;
 public final class AddAction extends ContextAction {
 
 
-//    private final ListModel<Recipe> departmentListModel;
-
     public AddAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
         super(recipeTable, ingredientTable, unitsTable, "Add", Icons.ADD_ICON);
-
-
-//        this.departmentListModel = departmentListModel;
         putValue(SHORT_DESCRIPTION, "Adds new recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));

@@ -1,9 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
 import cz.muni.fi.pv168.project.ui.dialog.ShowDialog;
-import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 

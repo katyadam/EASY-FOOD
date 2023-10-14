@@ -6,9 +6,7 @@ import cz.muni.fi.pv168.project.model.Unit;
 
 import javax.swing.*;
 
-/**
- * @author Filip Skvara
- */
+
 public class IngredientDialog extends EntityDialog<Ingredient> {
 
     private Ingredient ingredient;

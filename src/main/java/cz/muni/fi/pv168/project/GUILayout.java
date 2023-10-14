@@ -52,7 +52,6 @@ public class GUILayout {
         return categoryList;
     }
 
-
     public JTabbedPane getTabbedPanels() {
         return tabbedPanels;
     }

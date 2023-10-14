@@ -1,7 +1,5 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.model.Ingredient;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +16,7 @@ public abstract class AbstractEntityTableModel<T> extends AbstractTableModel {
         this.columns = columns;
         this.data = new ArrayList<>(data);
     }
+
     @Override
     public int getRowCount() {
         return data.size();

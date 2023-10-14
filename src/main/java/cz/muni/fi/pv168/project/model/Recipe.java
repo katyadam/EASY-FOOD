@@ -8,7 +8,7 @@ public class Recipe {
     private String recipeName;
     private LocalTime preparationTime;
     private int portions;
-    private Category category = null;
+    private Category category;
 
 
     private int nutritionalValue = 0;
@@ -27,10 +27,6 @@ public class Recipe {
         //this.nutritionalValue = calculateNutritionalValue(ingredientList); TODO
     }
 
-
-    /*
-    Setters
-     */
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
     }
@@ -55,9 +51,6 @@ public class Recipe {
         this.description = description;
     }
 
-    /*
-    Getters
-     */
     public String getRecipeName() {
         return recipeName;
     }
