@@ -250,14 +250,14 @@ public class MainWindow {
         JPanel ingredientsPanel = new JPanel(new MigLayout("fillx"));
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
-        JLabel nutritions = new JLabel("Calories min");
-        JLabel max = new JLabel("max");
+        JLabel nutritions = new JLabel("Calories");
+        JLabel max = new JLabel("-");
         JButton fireFilter = new JButton(new FilterIngredientsAction());
 
         ingredientsPanel.add(nutritions, "left");
         ingredientsPanel.add(caloriesMinFilter,"left");
-        ingredientsPanel.add(max, " left");
-        ingredientsPanel.add(caloriesMaxFilter, "left, gapright 50%");
+        ingredientsPanel.add(max, "left");
+        ingredientsPanel.add(caloriesMaxFilter, "left, gapright 78%");
         ingredientsPanel.add(fireFilter, "right, wrap");
         ingredientsPanel.add(ingredientScroll, "span 5, grow");
         return ingredientsPanel;
