@@ -56,6 +56,7 @@ public class MainWindow {
 
     //    SORTERS
     private final TableRowSorter<RecipeTableModel> recipeTableSorter;
+    private final TableRowSorter<IngredientTableModel> ingredientTableSorter;
 
 
     public MainWindow() {
@@ -63,6 +64,7 @@ public class MainWindow {
         this.recipeTableModel = new RecipeTableModel(this.recipesList);
         this.ingredientTableModel = new IngredientTableModel(this.ingredientList);
         this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
+        this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
         createTables();
         createScrollPanes();
 
@@ -211,6 +213,7 @@ public class MainWindow {
         JTable table = new JTable(this.ingredientTableModel);
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        table.setRowSorter(ingredientTableSorter);
         return table;
     }
 
@@ -290,7 +293,11 @@ public class MainWindow {
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
         JLabel nutritions = new JLabel("Calories");
         JLabel max = new JLabel("-");
-        JButton fireFilter = new JButton(new FilterIngredientsAction());
+        JButton fireFilter = new JButton(new FilterIngredientsAction(
+                ingredientTableSorter,
+                caloriesMinFilter,
+                caloriesMaxFilter
+        ));
 
         ingredientsPanel.add(nutritions, "left");
         ingredientsPanel.add(caloriesMinFilter, "left");

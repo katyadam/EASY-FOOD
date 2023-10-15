@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.ui.filters.FilterAttributes;
+import cz.muni.fi.pv168.project.ui.filters.recipes.RecipeFilterAttributes;
 import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.ui.filters.RecipeRowFilter;
+import cz.muni.fi.pv168.project.ui.filters.recipes.RecipeRowFilter;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
@@ -48,7 +48,7 @@ public class FilterRecipesAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FilterAttributes attributes = new FilterAttributes(
+        RecipeFilterAttributes attributes = new RecipeFilterAttributes(
                 (Ingredient) ingredientFilter.getSelectedItem(),
                 (Category) categoryFilter.getSelectedItem(),
                 (Integer) caloriesMinFilter.getValue(),

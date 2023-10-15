@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.filters;
+package cz.muni.fi.pv168.project.ui.filters.recipes;
 
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
@@ -8,8 +8,8 @@ public class RecipeRowFilter extends RowFilter<RecipeTableModel, Integer> {
 
     private final RecipeMatcher matcher;
 
-    public RecipeRowFilter(FilterAttributes filterAttributes) {
-        this.matcher = new RecipeMatcher(filterAttributes);
+    public RecipeRowFilter(RecipeFilterAttributes recipeFilterAttributes) {
+        this.matcher = new RecipeMatcher(recipeFilterAttributes);
     }
 
     @Override

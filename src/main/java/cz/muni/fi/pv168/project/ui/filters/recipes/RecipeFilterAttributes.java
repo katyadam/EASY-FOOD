@@ -1,9 +1,9 @@
-package cz.muni.fi.pv168.project.ui.filters;
+package cz.muni.fi.pv168.project.ui.filters.recipes;
 
 import cz.muni.fi.pv168.project.model.Category;
 import cz.muni.fi.pv168.project.model.Ingredient;
 
-public record FilterAttributes(
+public record RecipeFilterAttributes(
         Ingredient ingredient,
         Category category,
         Integer calMin,
