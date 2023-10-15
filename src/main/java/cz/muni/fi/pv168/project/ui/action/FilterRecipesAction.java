@@ -57,7 +57,5 @@ public class FilterRecipesAction extends AbstractAction {
                 (Integer) portionsMaxFilter.getValue()
         );
         recipeTableRowSorter.setRowFilter(new RecipeRowFilter(attributes));
-//        RecipeTableFilter recipeTableFilter = new RecipeTableFilter(new TableRowSorter<>(recipeTableModel));
-//        recipeTableFilter.filterRecipes(attributes);
     }
 }
