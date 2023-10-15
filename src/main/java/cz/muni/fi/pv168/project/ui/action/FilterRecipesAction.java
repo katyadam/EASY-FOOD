@@ -26,7 +26,7 @@ public class FilterRecipesAction extends AbstractAction {
         this.portionsMaxFilter = portionsMaxFilter;
         this.recipeTable = recipeTable;
 
-        putValue(SHORT_DESCRIPTION, "Adds new recipe");
+        putValue(SHORT_DESCRIPTION, "Filter recipes");
     }
 
 
