@@ -99,6 +99,9 @@ public class MainWindow {
         this.recipeTable = createRecipeTable();
         this.ingredientTable = createIngredientTable();
         this.customUnitTable = createCustomUnitTable(customUnitList);
+        recipeTable.getTableHeader().setReorderingAllowed(false);
+        ingredientTable.getTableHeader().setReorderingAllowed(false);
+        customUnitTable.getTableHeader().setReorderingAllowed(false);
     }
 
     private void setDataGeneration() {
@@ -112,6 +115,7 @@ public class MainWindow {
         layout.getTabbedPanels().add("Ingredients", createIngredientsTab());
         layout.getTabbedPanels().add("Custom Units", customUnitScroll);
         layout.getTabbedPanels().addChangeListener(new TabbedChange());
+
     }
 
     private void setButtonListeners() {
