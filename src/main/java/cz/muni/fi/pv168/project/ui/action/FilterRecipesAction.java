@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 
 public class FilterRecipesAction extends AbstractAction {
 
-    JComboBox<Ingredient> ingredeintFilter;
+    JComboBox<Ingredient> ingredientFilter;
     JComboBox<String> categoryFilter;
     JSpinner caloriesMinFilter;
     JSpinner caloriesMaxFilter;
@@ -18,7 +18,7 @@ public class FilterRecipesAction extends AbstractAction {
 
     public FilterRecipesAction(JComboBox<Ingredient> ingredientFilter, JComboBox<String> categoryFilter, JSpinner caloriesMinFilter, JSpinner caloriesMaxFilter, JSpinner portionsMinFilter, JSpinner portionsMaxFilter, JTable recipeTable) {
         super("", Icons.FILTER_ICON);
-        this.ingredeintFilter = ingredientFilter;
+        this.ingredientFilter = ingredientFilter;
         this.categoryFilter = categoryFilter;
         this.caloriesMinFilter = caloriesMinFilter;
         this.caloriesMaxFilter = caloriesMaxFilter;
