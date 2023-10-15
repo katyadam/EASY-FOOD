@@ -16,4 +16,13 @@ public class AddedIngredientsTableModel extends AbstractEntityTableModel<Triplet
                 Column.readonly("Unit", Unit.class, Triplet::getC)
         ), new ArrayList<>());
     }
+    
+    public boolean contains(Ingredient ingredient) {
+        for (Triplet triplet: data ) {
+            if ( triplet.getA() == ingredient) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

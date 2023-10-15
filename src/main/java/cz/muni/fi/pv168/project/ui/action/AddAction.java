@@ -33,7 +33,7 @@ public final class AddAction extends ContextAction {
                 break;
             case 1:
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) ingredientTable.getModel();
-                IngredientDialog ingredientDialog = new IngredientDialog(null);
+                IngredientDialog ingredientDialog = new IngredientDialog(null, (RecipeTableModel) recipeTable.getModel());
                 ingredientDialog.show(ingredientTable, "Add ingredient")
                         .ifPresent(ingredientTableModel::addRow);
                 break;
