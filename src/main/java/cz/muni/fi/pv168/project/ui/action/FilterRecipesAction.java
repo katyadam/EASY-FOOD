@@ -16,9 +16,9 @@ public class FilterRecipesAction extends AbstractAction {
     JSpinner portionsMaxFilter;
     JTable recipeTable;
 
-    public FilterRecipesAction(JComboBox<Ingredient> ingredeintFilter, JComboBox<String> categoryFilter, JSpinner caloriesMinFilter, JSpinner caloriesMaxFilter, JSpinner portionsMinFilter, JSpinner portionsMaxFilter, JTable recipeTable) {
+    public FilterRecipesAction(JComboBox<Ingredient> ingredientFilter, JComboBox<String> categoryFilter, JSpinner caloriesMinFilter, JSpinner caloriesMaxFilter, JSpinner portionsMinFilter, JSpinner portionsMaxFilter, JTable recipeTable) {
         super("", Icons.FILTER_ICON);
-        this.ingredeintFilter = ingredeintFilter;
+        this.ingredeintFilter = ingredientFilter;
         this.categoryFilter = categoryFilter;
         this.caloriesMinFilter = caloriesMinFilter;
         this.caloriesMaxFilter = caloriesMaxFilter;
