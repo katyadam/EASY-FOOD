@@ -5,12 +5,12 @@ import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
-import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ContextAction;
 import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
 import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
+import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
+import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
@@ -21,6 +21,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -49,8 +50,19 @@ public class MainWindow {
     private final JMenuBar menuBar;
     private final TestDataGenerator testDataGen = new TestDataGenerator();
 
+    //    MODELS
+    private final RecipeTableModel recipeTableModel;
+    private final IngredientTableModel ingredientTableModel;
+
+    //    SORTERS
+    private final TableRowSorter<RecipeTableModel> recipeTableSorter;
+
+
     public MainWindow() {
         setDataGeneration();
+        this.recipeTableModel = new RecipeTableModel(this.recipesList);
+        this.ingredientTableModel = new IngredientTableModel(this.ingredientList);
+        this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
         createTables();
         createScrollPanes();
 
@@ -58,7 +70,6 @@ public class MainWindow {
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
         this.frame = createFrame();
-
         setActiveButtons();
         setTabbedPannels();
         setStatistics();
@@ -83,8 +94,8 @@ public class MainWindow {
     }
 
     private void createTables() {
-        this.recipeTable = createRecipeTable(recipesList);
-        this.ingredientTable = createIngredientTable(ingredientList);
+        this.recipeTable = createRecipeTable();
+        this.ingredientTable = createIngredientTable();
         this.customUnitTable = createCustomUnitTable(customUnitList);
     }
 
@@ -180,11 +191,11 @@ public class MainWindow {
         return frame;
     }
 
-    private JTable createRecipeTable(List<Recipe> recipes) {
-        RecipeTableModel model = new RecipeTableModel(recipes);
-        JTable table = new JTable(model);
+    private JTable createRecipeTable() {
+        JTable table = new JTable(this.recipeTableModel);
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        table.setRowSorter(recipeTableSorter);
         return table;
     }
 
@@ -196,9 +207,8 @@ public class MainWindow {
         return table;
     }
 
-    private JTable createIngredientTable(List<Ingredient> ingredientList) {
-        IngredientTableModel model = new IngredientTableModel(ingredientList);
-        JTable table = new JTable(model);
+    private JTable createIngredientTable() {
+        JTable table = new JTable(this.ingredientTableModel);
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         return table;
@@ -254,7 +264,8 @@ public class MainWindow {
                 caloriesMaxFilter,
                 portionsMinFilter,
                 portionsMaxFilter,
-                recipeTable)
+                recipeTable,
+                recipeTableSorter)
         );
         recipePanel.add(ingredients);
         recipePanel.add(ingredientFilter);
