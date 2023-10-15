@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.Listeners;
+package cz.muni.fi.pv168.project.ui.listeners;
 
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;

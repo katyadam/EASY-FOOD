@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 
 public class FilterRecipesAction extends AbstractAction {
 
-    JComboBox<Ingredient> ingredeintFilter;
+    JComboBox<Ingredient> ingredientFilter;
     JComboBox<String> categoryFilter;
     JSpinner caloriesMinFilter;
     JSpinner caloriesMaxFilter;
@@ -16,9 +16,17 @@ public class FilterRecipesAction extends AbstractAction {
     JSpinner portionsMaxFilter;
     JTable recipeTable;
 
-    public FilterRecipesAction(JComboBox<Ingredient> ingredeintFilter, JComboBox<String> categoryFilter, JSpinner caloriesMinFilter, JSpinner caloriesMaxFilter, JSpinner portionsMinFilter, JSpinner portionsMaxFilter, JTable recipeTable) {
+    public FilterRecipesAction(
+            JComboBox<Ingredient> ingredientFilter,
+            JComboBox<String> categoryFilter,
+            JSpinner caloriesMinFilter,
+            JSpinner caloriesMaxFilter,
+            JSpinner portionsMinFilter,
+            JSpinner portionsMaxFilter,
+            JTable recipeTable
+    ) {
         super("", Icons.FILTER_ICON);
-        this.ingredeintFilter = ingredeintFilter;
+        this.ingredientFilter = ingredientFilter;
         this.categoryFilter = categoryFilter;
         this.caloriesMinFilter = caloriesMinFilter;
         this.caloriesMaxFilter = caloriesMaxFilter;
@@ -26,12 +34,13 @@ public class FilterRecipesAction extends AbstractAction {
         this.portionsMaxFilter = portionsMaxFilter;
         this.recipeTable = recipeTable;
 
-        putValue(SHORT_DESCRIPTION, "Adds new recipe");
+        putValue(SHORT_DESCRIPTION, "Filter recipes");
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println();
         return;
     }
 }
