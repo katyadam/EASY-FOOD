@@ -32,8 +32,6 @@ public class MainWindow {
     private final JFrame frame;
     private final GUILayout layout;
 
-    private boolean isCleared = false;
-
     private final ActionFactory actions;
 
     private List<Recipe> recipesList;
@@ -48,10 +46,7 @@ public class MainWindow {
     private JScrollPane ingredientScroll;
     private JScrollPane customUnitScroll;
 
-    private JMenuBar menuBar;
-
-    private JPopupMenu popupMenu;
-
+    private final JMenuBar menuBar;
     private final TestDataGenerator testDataGen = new TestDataGenerator();
 
     public MainWindow() {
@@ -75,7 +70,7 @@ public class MainWindow {
     }
 
     private void setPopUpMenus() {
-        this.popupMenu = createRecipePopupMenu();
+        JPopupMenu popupMenu = createRecipePopupMenu();
         recipeTable.setComponentPopupMenu(popupMenu);
         ingredientTable.setComponentPopupMenu(popupMenu);
         customUnitTable.setComponentPopupMenu(popupMenu);
@@ -118,9 +113,15 @@ public class MainWindow {
 
     private void setStatistics() {
         JToolBar statistics = (JToolBar) layout.getMainPanel().getComponent(3);
-        recipeTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable, 0, "Total recipes: ", statistics));
-        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable, 2, "Total ingredients: ", statistics));
-        ingredientTable.getModel().addTableModelListener(new StatisticsUpdater(recipeTable, 4, "Total units: ", statistics));
+        recipeTable.getModel().addTableModelListener(
+                new StatisticsUpdater(recipeTable, 0, "Total recipes: ", statistics)
+        );
+        ingredientTable.getModel().addTableModelListener(
+                new StatisticsUpdater(recipeTable, 2, "Total ingredients: ", statistics)
+        );
+        ingredientTable.getModel().addTableModelListener(
+                new StatisticsUpdater(recipeTable, 4, "Total units: ", statistics)
+        );
 
         ((JLabel) statistics.getComponent(0))
                 .setText("Total recipes: " + recipeTable.getModel().getRowCount());
@@ -164,7 +165,6 @@ public class MainWindow {
         layout.getShowRecipeButton().setIcon(Icons.SHOW_ICON);
 
         layout.getTabbedPanels().setCursor(new Cursor(Cursor.HAND_CURSOR));
-
     }
 
     public void show() {
@@ -247,7 +247,15 @@ public class MainWindow {
         JLabel max = new JLabel("max");
         JLabel max2 = new JLabel("max");
         JLabel portions = new JLabel("Portions min");
-        JButton fireFilter = new JButton(new FilterRecipesAction(ingredientFilter, categoryFilter, caloriesMinFilter, caloriesMaxFilter, portionsMinFilter, portionsMaxFilter, recipeTable));
+        JButton fireFilter = new JButton(new FilterRecipesAction(
+                ingredientFilter,
+                categoryFilter,
+                caloriesMinFilter,
+                caloriesMaxFilter,
+                portionsMinFilter,
+                portionsMaxFilter,
+                recipeTable)
+        );
         recipePanel.add(ingredients);
         recipePanel.add(ingredientFilter);
         recipePanel.add(categories, "gapleft 3%, al right");
