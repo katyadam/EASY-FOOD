@@ -56,6 +56,6 @@ public class FilterRecipesAction extends AbstractAction {
                 (Integer) portionsMinFilter.getValue(),
                 (Integer) portionsMaxFilter.getValue()
         );
-        recipeTableRowSorter.setRowFilter(new RecipeRowFilter(attributes));
+        recipeTableRowSorter.setRowFilter(new RecipeRowFilter(attributes, false));
     }
 }

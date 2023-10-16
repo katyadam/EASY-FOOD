@@ -5,10 +5,7 @@ import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.ui.action.ActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ContextAction;
-import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
-import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
+import cz.muni.fi.pv168.project.ui.action.*;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
@@ -274,6 +271,7 @@ public class MainWindow {
                 recipeTable,
                 recipeTableSorter)
         );
+        JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
         recipePanel.add(ingredients);
         recipePanel.add(ingredientFilter);
         recipePanel.add(categories, "gapleft 3%, al right");
@@ -286,7 +284,8 @@ public class MainWindow {
         recipePanel.add(portionsMinFilter);
         recipePanel.add(max, "al left");
         recipePanel.add(portionsMaxFilter, "al left, gapright 25%");
-        recipePanel.add(fireFilter, "al right,wrap");
+        recipePanel.add(fireFilter, "al right");
+        recipePanel.add(removeFilter, "al, wrap");
         recipePanel.add(recipeScroll, "span 13, grow, height 99% ");
         return recipePanel;
     }

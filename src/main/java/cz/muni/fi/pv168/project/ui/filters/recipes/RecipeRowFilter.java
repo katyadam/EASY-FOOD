@@ -8,12 +8,18 @@ public class RecipeRowFilter extends RowFilter<RecipeTableModel, Integer> {
 
     private final RecipeMatcher matcher;
 
-    public RecipeRowFilter(RecipeFilterAttributes recipeFilterAttributes) {
+    private final boolean removeActive;
+    public RecipeRowFilter(RecipeFilterAttributes recipeFilterAttributes, boolean removeActive) {
         this.matcher = new RecipeMatcher(recipeFilterAttributes);
+        this.removeActive = removeActive;
     }
 
     @Override
     public boolean include(Entry<? extends RecipeTableModel, ? extends Integer> entry) {
+        if (removeActive) {
+            return true;
+        }
+
         RecipeTableModel tableModel = entry.getModel();
 
         return matcher.evaluate(tableModel.getEntity(entry.getIdentifier()));
