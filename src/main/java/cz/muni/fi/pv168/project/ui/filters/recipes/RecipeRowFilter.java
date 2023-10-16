@@ -7,8 +7,8 @@ import javax.swing.*;
 public class RecipeRowFilter extends RowFilter<RecipeTableModel, Integer> {
 
     private final RecipeMatcher matcher;
-
     private final boolean removeActive;
+
     public RecipeRowFilter(RecipeFilterAttributes recipeFilterAttributes, boolean removeActive) {
         this.matcher = new RecipeMatcher(recipeFilterAttributes);
         this.removeActive = removeActive;

@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.action.*;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
+import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
@@ -76,7 +77,10 @@ public class MainWindow {
         setPopUpMenus();
 
         // removes text from Search Bar after typing
-        layout.getSearchRecipesTextField().addFocusListener(new ClearTextFieldKeyListener());
+        JTextField searchBar = layout.getSearchRecipesTextField();
+        searchBar.addFocusListener(new ClearTextFieldKeyListener());
+        searchBar.addKeyListener(new SearchBarListener(searchBar, recipeTableSorter));
+
     }
 
     private void setPopUpMenus() {
@@ -257,7 +261,7 @@ public class MainWindow {
         JSpinner portionsMaxFilter = new JSpinner(new SpinnerNumberModel(200, 1, 200, 1));
         JLabel ingredients = new JLabel("Ingredients:");
         JLabel categories = new JLabel("Categories:");
-        JLabel nutritions = new JLabel("Calories min");
+        JLabel nutrition = new JLabel("Calories min");
         JLabel max = new JLabel("max");
         JLabel max2 = new JLabel("max");
         JLabel portions = new JLabel("Portions min");
@@ -276,7 +280,7 @@ public class MainWindow {
         recipePanel.add(ingredientFilter);
         recipePanel.add(categories, "gapleft 3%, al right");
         recipePanel.add(categoryFilter, ", gapright 3%");
-        recipePanel.add(nutritions, "right");
+        recipePanel.add(nutrition, "right");
         recipePanel.add(caloriesMinFilter);
         recipePanel.add(max2, "al left");
         recipePanel.add(caloriesMaxFilter, "al left, gapright 3%");
