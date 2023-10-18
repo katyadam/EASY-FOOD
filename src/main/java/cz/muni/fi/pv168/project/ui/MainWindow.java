@@ -51,18 +51,23 @@ public class MainWindow {
     //    MODELS
     private final RecipeTableModel recipeTableModel;
     private final IngredientTableModel ingredientTableModel;
+    private final CustomUnitTableModel customUnitTableModel;
 
     //    SORTERS
     private final TableRowSorter<RecipeTableModel> recipeTableSorter;
     private final TableRowSorter<IngredientTableModel> ingredientTableSorter;
+    private final TableRowSorter<CustomUnitTableModel> customUnitTableSorter;
 
 
     public MainWindow() {
         setDataGeneration();
         this.recipeTableModel = new RecipeTableModel(this.recipesList);
         this.ingredientTableModel = new IngredientTableModel(this.ingredientList);
+        this.customUnitTableModel = new CustomUnitTableModel(this.customUnitList);
+
         this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
         this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
+        this.customUnitTableSorter = new TableRowSorter<>(customUnitTableModel);
         createTables();
         createScrollPanes();
 
@@ -79,7 +84,9 @@ public class MainWindow {
         // removes text from Search Bar after typing
         JTextField searchBar = layout.getSearchRecipesTextField();
         searchBar.addFocusListener(new ClearTextFieldKeyListener());
-        searchBar.addKeyListener(new SearchBarListener(searchBar, recipeTableSorter));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, ingredientTableSorter));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, customUnitTableSorter));
 
     }
 
@@ -99,7 +106,7 @@ public class MainWindow {
     private void createTables() {
         this.recipeTable = createRecipeTable();
         this.ingredientTable = createIngredientTable();
-        this.customUnitTable = createCustomUnitTable(customUnitList);
+        this.customUnitTable = createCustomUnitTable();
         recipeTable.getTableHeader().setReorderingAllowed(false);
         ingredientTable.getTableHeader().setReorderingAllowed(false);
         customUnitTable.getTableHeader().setReorderingAllowed(false);
@@ -206,11 +213,11 @@ public class MainWindow {
         return table;
     }
 
-    private JTable createCustomUnitTable(List<CustomUnit> customUnitList) {
-        CustomUnitTableModel model = new CustomUnitTableModel(customUnitList);
-        JTable table = new JTable(model);
+    private JTable createCustomUnitTable() {
+        JTable table = new JTable(this.customUnitTableModel);
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        table.setRowSorter(customUnitTableSorter);
         return table;
     }
 
