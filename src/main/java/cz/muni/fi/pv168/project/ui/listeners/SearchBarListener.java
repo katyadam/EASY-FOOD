@@ -14,10 +14,10 @@ public class SearchBarListener<TABLE_MODEL extends TableModel> extends KeyAdapte
 
     public SearchBarListener(
             JTextField searchBar,
-            TableRowSorter<TABLE_MODEL> recipeTableRowSorter
+            TableRowSorter<TABLE_MODEL> tableRowSorter
     ) {
         this.searchBar = searchBar;
-        this.tableRowSorter = recipeTableRowSorter;
+        this.tableRowSorter = tableRowSorter;
     }
 
     @Override

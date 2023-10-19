@@ -1,7 +1,5 @@
 package cz.muni.fi.pv168.project.ui.filters;
 
-import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
-
 import javax.swing.*;
 import javax.swing.table.TableModel;
 
