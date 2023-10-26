@@ -243,6 +243,11 @@ public class MainWindow {
         editMenu.setMnemonic('e');
         editMenu.add(actions.getAddAction());
         editMenu.addSeparator();
+        editMenu.add(actions.getEditAction());
+        editMenu.addSeparator();
+        editMenu.add(actions.getDeleteAction());
+        editMenu.addSeparator();
+
         editMenu.add(actions.getQuitAction());
 
         JMenu importMenu = new JMenu("Import");
