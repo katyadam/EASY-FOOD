@@ -31,7 +31,6 @@ public class FilterRecipesAction extends AbstractAction {
             JSpinner portionsMaxFilter,
             JTable recipeTable,
             TableRowSorter<RecipeTableModel> recipeTableRowSorter
-
     ) {
         super("", Icons.FILTER_ICON);
         this.ingredientFilter = ingredientFilter;

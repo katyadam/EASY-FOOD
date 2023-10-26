@@ -106,7 +106,7 @@ public class Recipe {
         }
         return IntStream.range(0, this.getUsedIngredients().getRowCount())
                 .mapToObj(i -> this.getUsedIngredients().getEntity(i))
-                .map(Triplet::getA)
+                .map(Triplet::ingredient)
                 .toList();
     }
 }

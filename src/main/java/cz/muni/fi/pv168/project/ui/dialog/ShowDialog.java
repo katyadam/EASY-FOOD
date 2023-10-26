@@ -24,8 +24,8 @@ public class ShowDialog {
         recipeString.append("Ingredients:\n");
         for (int i = 0; i < recipe.getUsedIngredients().getRowCount(); i++) {
             Triplet ingredient = recipe.getUsedIngredients().getEntity(i);
-            recipeString.append("-> ").append(ingredient.getA().getName())
-                    .append("  ").append(ingredient.getB()).append(" ").append(ingredient.getC()).append("\n");
+            recipeString.append("-> ").append(ingredient.ingredient().getName())
+                    .append("  ").append(ingredient.value()).append(" ").append(ingredient.unit()).append("\n");
         }
         recipeString.append("\n");
 

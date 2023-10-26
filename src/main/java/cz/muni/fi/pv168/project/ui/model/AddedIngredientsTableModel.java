@@ -11,15 +11,15 @@ public class AddedIngredientsTableModel extends AbstractEntityTableModel<Triplet
 
     public AddedIngredientsTableModel() {
         super(List.of(
-                Column.readonly("Ingredient", Ingredient.class, Triplet::getA),
-                Column.readonly("amount", double.class, Triplet::getB),
-                Column.readonly("Unit", Unit.class, Triplet::getC)
+                Column.readonly("Ingredient", Ingredient.class, Triplet::ingredient),
+                Column.readonly("amount", double.class, Triplet::value),
+                Column.readonly("Unit", Unit.class, Triplet::unit)
         ), new ArrayList<>());
     }
-    
+
     public boolean contains(Ingredient ingredient) {
-        for (Triplet triplet: data ) {
-            if ( triplet.getA() == ingredient) {
+        for (Triplet triplet : data) {
+            if (triplet.ingredient() == ingredient) {
                 return true;
             }
         }
