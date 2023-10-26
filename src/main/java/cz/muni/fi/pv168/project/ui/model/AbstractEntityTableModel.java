@@ -73,4 +73,8 @@ public abstract class AbstractEntityTableModel<T> extends AbstractTableModel {
     public T getEntity(int rowIndex) {
         return data.get(rowIndex);
     }
+
+    public List<T> getData() {
+        return data;
+    }
 }

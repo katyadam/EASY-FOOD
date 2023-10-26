@@ -13,25 +13,15 @@ import java.awt.event.ActionEvent;
 
 public class FilterRecipesAction extends AbstractAction {
 
-    private final JComboBox<Ingredient> ingredientFilter;
-    private final JComboBox<String> categoryFilter;
-    private final JSpinner caloriesMinFilter;
-    private final JSpinner caloriesMaxFilter;
-    private final JSpinner portionsMinFilter;
-    private final JSpinner portionsMaxFilter;
-    private final JTable recipeTable;
-    private final TableRowSorter<RecipeTableModel> recipeTableRowSorter;
+    JComboBox<Ingredient> ingredientFilter;
+    JComboBox<String> categoryFilter;
+    JSpinner caloriesMinFilter;
+    JSpinner caloriesMaxFilter;
+    JSpinner portionsMinFilter;
+    JSpinner portionsMaxFilter;
+    JTable recipeTable;
 
-    public FilterRecipesAction(
-            JComboBox<Ingredient> ingredientFilter,
-            JComboBox<String> categoryFilter,
-            JSpinner caloriesMinFilter,
-            JSpinner caloriesMaxFilter,
-            JSpinner portionsMinFilter,
-            JSpinner portionsMaxFilter,
-            JTable recipeTable,
-            TableRowSorter<RecipeTableModel> recipeTableRowSorter
-    ) {
+    public FilterRecipesAction(JComboBox<Ingredient> ingredientFilter, JComboBox<String> categoryFilter, JSpinner caloriesMinFilter, JSpinner caloriesMaxFilter, JSpinner portionsMinFilter, JSpinner portionsMaxFilter, JTable recipeTable) {
         super("", Icons.FILTER_ICON);
         this.ingredientFilter = ingredientFilter;
         this.categoryFilter = categoryFilter;

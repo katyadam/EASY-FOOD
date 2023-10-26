@@ -50,9 +50,10 @@ public final class EditAction extends ContextAction {
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Ingredient ingredient = ingredientTableModel.getEntity(modelRow);
-                IngredientDialog dialog = new IngredientDialog(ingredient);
+                IngredientDialog dialog = new IngredientDialog(ingredient, (RecipeTableModel) recipeTable.getModel());
                 dialog.show(activeTable, "Edit Ingredient")
                         .ifPresent(ingredientTableModel::updateRow);
+                break;
             }
             case 2: {
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) activeTable.getModel();
