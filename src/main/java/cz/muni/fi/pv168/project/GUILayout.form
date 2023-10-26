@@ -20,8 +20,8 @@
         <properties>
           <background color="-2432542"/>
           <foreground color="-16777216"/>
-          <text value="Search recipes"/>
-          <toolTipText value="Search recipes"/>
+          <text value="Search..."/>
+          <toolTipText value="Search..."/>
           <verifyInputWhenFocusTarget value="true"/>
           <visible value="true"/>
         </properties>

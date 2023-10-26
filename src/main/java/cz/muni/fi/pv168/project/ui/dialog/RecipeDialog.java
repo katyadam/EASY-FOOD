@@ -60,7 +60,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            this.recipe = new Recipe(null, null, 1, null);
+            this.recipe = new Recipe(null, null, 1, 0, LocalTime.now());
         }
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addFields();

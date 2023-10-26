@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.Listeners;
+package cz.muni.fi.pv168.project.ui.listeners;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
