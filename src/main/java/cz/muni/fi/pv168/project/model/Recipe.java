@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public class Recipe {
     private String recipeName;
-    private LocalTime preparationTime;
+    private PreparationTime preparationTime;
     private int portions;
     private Category category;
 
@@ -26,7 +26,7 @@ public class Recipe {
             Category category,
             int calories,
             int portions,
-            LocalTime preparationTime
+            PreparationTime preparationTime
     ) {
         this.recipeName = recipeName;
         this.preparationTime = preparationTime;
@@ -40,7 +40,7 @@ public class Recipe {
         this.recipeName = recipeName;
     }
 
-    public void setPreparationTime(LocalTime preparationTime) {
+    public void setPreparationTime(PreparationTime preparationTime) {
         this.preparationTime = preparationTime;
     }
 
@@ -68,16 +68,10 @@ public class Recipe {
         return description;
     }
 
-    private LocalTime getParsePreparationTime() {
-        int hours = preparationTime.getHour();
-        int minutes = preparationTime.getMinute();
-        //int seconds = preparationTime.getSecond();
-
-        return LocalTime.of(hours, minutes);
-    }
-
-    public LocalTime getPreparationTime() {
-        return getParsePreparationTime();
+    public PreparationTime getPreparationTime() {
+        int hours = preparationTime.hours();
+        int minutes = preparationTime.minutes();
+        return new PreparationTime(hours, minutes);
     }
 
     public int getPortions() {

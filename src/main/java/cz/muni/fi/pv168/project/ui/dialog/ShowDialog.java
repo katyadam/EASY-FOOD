@@ -19,8 +19,8 @@ public class ShowDialog {
         recipeString.append("Category Name: ").append(recipe.getCategory().getName()).append("\n");
         recipeString.append("Nutritional Value: ").append(recipe.getNutritionalValue()).append("\n");
         recipeString.append("Portions: ").append(recipe.getPortions()).append("\n");
-        recipeString.append("Preparation Time: ").append(recipe.getPreparationTime().getHour()).append(" hodin ")
-                .append(recipe.getPreparationTime().getMinute()).append(" minut").append("\n").append("\n");
+        recipeString.append("Preparation Time: ").append(recipe.getPreparationTime().hours()).append(" hours ")
+                .append(recipe.getPreparationTime().minutes()).append(" minutes").append("\n").append("\n");
         recipeString.append("Ingredients:\n");
         for (int i = 0; i < recipe.getUsedIngredients().getRowCount(); i++) {
             Triplet ingredient = recipe.getUsedIngredients().getEntity(i);

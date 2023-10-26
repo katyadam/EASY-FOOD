@@ -1,12 +1,7 @@
 package cz.muni.fi.pv168.project.data;
 
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.CustomUnit;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.model.Unit;
+import cz.muni.fi.pv168.project.model.*;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -120,7 +115,7 @@ public final class TestDataGenerator {
     public Recipe createTestRecipe() {
 
         String recipeName = selectRandom(RECIPE_NAMES);
-        LocalTime preparationTime = LocalTime.now();
+        PreparationTime preparationTime = new PreparationTime(LocalTime.now().getHour(), LocalTime.now().getMinute());
         int portions = random.nextInt(10);
         return new Recipe(recipeName, createTestCategory(), 0, portions, preparationTime);
     }

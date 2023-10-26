@@ -9,8 +9,6 @@ import cz.muni.fi.pv168.project.ui.model.Triplet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
@@ -28,14 +26,14 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     );
     private final JTextField categoryNameField = new JTextField();
     private final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
-    private JComboBox<Ingredient> ingredients;
+    private final JComboBox<Ingredient> ingredients;
     private Recipe recipe;
-    private AddedIngredientsTableModel addedIngredientsTableModel;
+    private final AddedIngredientsTableModel addedIngredientsTableModel;
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
 
-    private JTextArea recipeDescriptionTextField = new JTextArea();
+    private final JTextArea recipeDescriptionTextField = new JTextArea();
 
-    private JScrollPane textScrollPane = new JScrollPane();
+    private final JScrollPane textScrollPane = new JScrollPane();
 
 
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
@@ -56,7 +54,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            this.recipe = new Recipe(null, null, 1, 0, LocalTime.now());
+            this.recipe = new Recipe(null, null, 1, 0, new PreparationTime(1, 50));
         }
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addFields();
@@ -88,8 +86,10 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipe.setCategory(new Category(categoryNameField.getText(), new Color(123, 123, 123)));
         recipe.setPortions((int) recipePortionsField.getValue());
         recipe.setNutritionalValue((int) recipeNutritionalValue.getValue());
-        String stringDate = timeSpinner.getValue().toString().split(" ")[3];
-        recipe.setPreparationTime(LocalTime.parse(stringDate, DateTimeFormatter.ofPattern("HH:mm:ss")));
+        recipe.setPreparationTime(new PreparationTime(
+                ((Date) timeSpinner.getValue()).getHours(),
+                ((Date) timeSpinner.getValue()).getMinutes()
+        ));
         recipe.setDescription(recipeDescriptionTextField.getText());
         return recipe;
     }

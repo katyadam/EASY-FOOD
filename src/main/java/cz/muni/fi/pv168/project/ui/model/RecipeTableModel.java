@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.model;
 
 
+import cz.muni.fi.pv168.project.model.PreparationTime;
 import cz.muni.fi.pv168.project.model.Recipe;
 
 import java.time.LocalTime;
@@ -15,7 +16,7 @@ public class RecipeTableModel extends AbstractEntityTableModel<Recipe> {
                 Column.editable("Portions", int.class, Recipe::getPortions, Recipe::setPortions),
                 Column.editable(
                         "Time to prepare",
-                        LocalTime.class,
+                        PreparationTime.class,
                         Recipe::getPreparationTime,
                         Recipe::setPreparationTime
                 )
