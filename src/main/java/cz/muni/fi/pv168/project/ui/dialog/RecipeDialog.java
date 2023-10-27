@@ -13,7 +13,6 @@ import cz.muni.fi.pv168.project.ui.model.Triplet;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 
@@ -50,10 +49,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
             addedIngredientsTableModel.addRow(new Triplet((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
         }
     });
-
-    private static boolean isRGBColor(Color color) {
-        return color.getColorSpace().isCS_sRGB();
-    }
 
     public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel) {
         super(true);
@@ -96,7 +91,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         addLeft("Category Color:", categoryColor);
         addLeft("Nutritional Value", recipeNutritionalValue);
         addLeft("Portions", recipePortionsField);
-        addLeft("Preparation time:", timeSpinner);
+        addLeft("Preparation time: [HH:SS]", timeSpinner);
         addLeft(ingredients, amount, units, addIngredient);
         addLeft("Ingredients", new JScrollPane(new JTable(addedIngredientsTableModel)));
         addRight("Description", new JScrollPane(recipeDescriptionTextField), "w 250lp, h 500lp, grow");

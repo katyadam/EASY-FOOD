@@ -9,9 +9,6 @@ import javax.swing.*;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 
-/**
- * @author Filip Skvara
- */
 public class FilterIngredientsAction extends AbstractAction {
 
     private final TableRowSorter<IngredientTableModel> ingredientTableSorter;

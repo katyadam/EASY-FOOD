@@ -11,6 +11,10 @@ public class Category {
         this.color = color;
     }
 
+    public String getColorCode() {
+        return String.format("RGB(%d, %d, %d)", color.getRed(), color.getGreen(), color.getBlue());
+    }
+
     public String getName() {
         return name;
     }

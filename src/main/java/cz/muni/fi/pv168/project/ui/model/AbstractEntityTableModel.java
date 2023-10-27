@@ -4,9 +4,6 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Filip Skvara
- */
 public abstract class AbstractEntityTableModel<T> extends AbstractTableModel {
 
     protected final List<T> data;

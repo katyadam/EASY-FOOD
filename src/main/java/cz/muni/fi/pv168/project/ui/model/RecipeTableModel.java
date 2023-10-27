@@ -4,7 +4,6 @@ package cz.muni.fi.pv168.project.ui.model;
 import cz.muni.fi.pv168.project.model.PreparationTime;
 import cz.muni.fi.pv168.project.model.Recipe;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public class RecipeTableModel extends AbstractEntityTableModel<Recipe> {

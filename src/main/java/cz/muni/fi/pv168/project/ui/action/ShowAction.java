@@ -9,9 +9,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-/**
- * @author Adam Juhas
- */
 public class ShowAction extends ContextAction {
     public ShowAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
         super(recipeTable, ingredientTable, unitsTable, categoryTable, "Show Recipe", Icons.SHOW_ICON);
