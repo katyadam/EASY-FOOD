@@ -1,21 +1,26 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
 import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.CustomUnit;
 
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 public class CategoryDialog extends EntityDialog<Category> {
 
     private Category category;
 
     private final JTextField categoryNameField = new JTextField();
-    private final JTextField categoryColor = new JTextField();
+    private final JColorChooser categoryColor = new JColorChooser();
 
     public CategoryDialog(Category category) {
         this.category = category;
+
+        for (AbstractColorChooserPanel panel : categoryColor.getChooserPanels()) {
+            if (!panel.getDisplayName().equals("RGB")) {
+                categoryColor.removeChooserPanel(panel);
+            }
+        }
+        categoryColor.setPreviewPanel(new JPanel());
 
         if (category != null) {
             setValues();
@@ -27,7 +32,7 @@ public class CategoryDialog extends EntityDialog<Category> {
 
     private void setValues() {
         categoryNameField.setText(category.getName());
-        categoryColor.setText(category.getColor().toString());
+        categoryColor.setColor(category.getColor());
     }
 
     private void addFields() {
@@ -38,8 +43,7 @@ public class CategoryDialog extends EntityDialog<Category> {
     @Override
     Category getEntity() {
         category.setName(categoryNameField.getText());
-        category.setColor(new Color(255, 255, 255));
-        //TODO category.setColor((Color) categoryColor.getText());
+        category.setColor(categoryColor.getColor());
         return category;
     }
 }
