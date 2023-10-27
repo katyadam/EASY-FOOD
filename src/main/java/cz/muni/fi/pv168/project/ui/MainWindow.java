@@ -67,6 +67,7 @@ public class MainWindow {
     private final TableRowSorter<RecipeTableModel> recipeTableSorter;
     private final TableRowSorter<IngredientTableModel> ingredientTableSorter;
     private final TableRowSorter<CustomUnitTableModel> customUnitTableSorter;
+    private final TableRowSorter<CategoryTableModel> categoryTableSorter;
 
 
     public MainWindow() {
@@ -79,6 +80,7 @@ public class MainWindow {
         this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
         this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
         this.customUnitTableSorter = new TableRowSorter<>(customUnitTableModel);
+        this.categoryTableSorter = new TableRowSorter<>(categoryTableModel);
         createTables();
         createScrollPanes();
 
@@ -98,6 +100,7 @@ public class MainWindow {
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, ingredientTableSorter));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, customUnitTableSorter));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, categoryTableSorter));
 
     }
 
@@ -242,7 +245,7 @@ public class MainWindow {
         JTable table = new JTable(this.categoryTableModel);
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
-        //TODO table.setRowSorter(customUnitTableSorter);
+        table.setRowSorter(categoryTableSorter);
         return table;
     }
 
