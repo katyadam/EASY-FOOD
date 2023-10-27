@@ -9,11 +9,11 @@ public class ActionFactory {
     private final QuitAction quitAction;
     private final ShowAction showAction;
 
-    public ActionFactory(JTable recipeTable, JTable ingredientsTable, JTable unitsTable) {
-        this.addAction = new AddAction(recipeTable, ingredientsTable, unitsTable);
-        this.deleteAction = new DeleteAction(recipeTable, ingredientsTable, unitsTable);
-        this.editAction = new EditAction(recipeTable, ingredientsTable, unitsTable);
-        this.showAction = new ShowAction(recipeTable, ingredientsTable, unitsTable);
+    public ActionFactory(JTable recipeTable, JTable ingredientsTable, JTable unitsTable, JTable categoryTable) {
+        this.addAction = new AddAction(recipeTable, ingredientsTable, unitsTable, categoryTable);
+        this.deleteAction = new DeleteAction(recipeTable, ingredientsTable, unitsTable, categoryTable);
+        this.editAction = new EditAction(recipeTable, ingredientsTable, unitsTable, categoryTable);
+        this.showAction = new ShowAction(recipeTable, ingredientsTable, unitsTable, categoryTable);
         this.quitAction = new QuitAction();
     }
 

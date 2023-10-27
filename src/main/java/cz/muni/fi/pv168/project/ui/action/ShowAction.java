@@ -13,8 +13,8 @@ import java.awt.event.KeyEvent;
  * @author Adam Juhas
  */
 public class ShowAction extends ContextAction {
-    public ShowAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
-        super(recipeTable, ingredientTable, unitsTable, "Show Recipe", Icons.SHOW_ICON);
+    public ShowAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Show Recipe", Icons.SHOW_ICON);
         putValue(SHORT_DESCRIPTION, "Shows recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_S);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl S"));

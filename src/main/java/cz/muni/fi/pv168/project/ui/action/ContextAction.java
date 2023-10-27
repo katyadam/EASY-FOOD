@@ -6,14 +6,16 @@ abstract public class ContextAction extends AbstractAction {
     protected final JTable recipeTable;
     protected final JTable ingredientTable;
     protected final JTable unitsTable;
+    protected final JTable categoryTable;
 
     protected static int activeTab = 0;
 
-    public ContextAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, String name, Icon icon) {
+    public ContextAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable, String name, Icon icon) {
         super(name, icon);
         this.recipeTable = recipeTable;
         this.ingredientTable = ingredientTable;
         this.unitsTable = unitsTable;
+        this.categoryTable = categoryTable;
     }
 
     public static void setActiveTab(int i) {
@@ -26,8 +28,10 @@ abstract public class ContextAction extends AbstractAction {
                 return recipeTable;
             case 1:
                 return ingredientTable;
-            default:
+            case 2:
                 return unitsTable;
+            default:
+                return categoryTable;
         }
     }
 }

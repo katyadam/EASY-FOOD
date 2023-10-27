@@ -1,8 +1,10 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
 import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
@@ -15,8 +17,8 @@ import java.awt.event.KeyEvent;
 public final class AddAction extends ContextAction {
 
 
-    public AddAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
-        super(recipeTable, ingredientTable, unitsTable, "Add", Icons.ADD_ICON);
+    public AddAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Add", Icons.ADD_ICON);
         putValue(SHORT_DESCRIPTION, "Adds new recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
@@ -43,6 +45,11 @@ public final class AddAction extends ContextAction {
                 customUnitDialog.show(unitsTable, "Add Custom Unit")
                         .ifPresent(customUnitTableModel::addRow);
                 break;
+            case 3:
+                CategoryTableModel categoryTableModel = (CategoryTableModel) categoryTable.getModel();
+                CategoryDialog categoryDialog = new CategoryDialog(null);
+                categoryDialog.show(categoryTable, "Add Category")
+                        .ifPresent(categoryTableModel::addRow);
         }
 
     }

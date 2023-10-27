@@ -1,11 +1,14 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.model.Category;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
 import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
@@ -18,8 +21,8 @@ import java.awt.event.KeyEvent;
 public final class EditAction extends ContextAction {
 
 
-    public EditAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable) {
-        super(recipeTable, ingredientTable, unitsTable, "Edit", Icons.EDIT_ICON);
+    public EditAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Edit", Icons.EDIT_ICON);
         putValue(SHORT_DESCRIPTION, "Edits selected recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
@@ -60,8 +63,16 @@ public final class EditAction extends ContextAction {
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 CustomUnit customUnit = customUnitTableModel.getEntity(modelRow);
                 CustomUnitDialog dialog = new CustomUnitDialog(customUnit);
-                dialog.show(activeTable, "Edit custom unit")
+                dialog.show(activeTable, "Edit Custom Unit")
                         .ifPresent(customUnitTableModel::updateRow);
+            }
+            case 3: {
+                CategoryTableModel categoryTableModel = (CategoryTableModel) activeTable.getModel();
+                int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
+                Category category = categoryTableModel.getEntity(modelRow);
+                CategoryDialog categoryDialog = new CategoryDialog(category);
+                categoryDialog.show(activeTable, "Edit Category")
+                        .ifPresent(categoryTableModel::updateRow);
             }
         }
     }

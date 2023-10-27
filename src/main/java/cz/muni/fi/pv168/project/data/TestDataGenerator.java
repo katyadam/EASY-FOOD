@@ -1,7 +1,13 @@
 package cz.muni.fi.pv168.project.data;
 
 
-import cz.muni.fi.pv168.project.model.*;
+import cz.muni.fi.pv168.project.model.BaseUnits;
+import cz.muni.fi.pv168.project.model.Category;
+import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.model.Ingredient;
+import cz.muni.fi.pv168.project.model.PreparationTime;
+import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.model.Unit;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -40,6 +46,14 @@ public final class TestDataGenerator {
         return testCustomUnits;
     }
 
+    public List<Category> getTestCategories() {
+        List<Category> categories = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            categories.add(createTestCategory());
+        }
+        return categories;
+    }
+
     static {
         CUSTOM_UNIT_NAMES.add("pinch");
         CUSTOM_UNIT_ABBREVIATIONS.add("pn");
@@ -70,7 +84,6 @@ public final class TestDataGenerator {
         this.testCustomUnits = createTestCustomUnits(5);
         this.testIngredients = createTestIngredients(10);
         this.testRecipes = createTestRecipes(10);
-
     }
 
 

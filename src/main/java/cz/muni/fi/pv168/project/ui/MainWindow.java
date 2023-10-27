@@ -2,13 +2,19 @@ package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
+import cz.muni.fi.pv168.project.model.Category;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.ui.action.*;
+import cz.muni.fi.pv168.project.ui.action.ActionFactory;
+import cz.muni.fi.pv168.project.ui.action.ContextAction;
+import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
+import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
+import cz.muni.fi.pv168.project.ui.action.RemoveRecipesFilterAction;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
+import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
@@ -36,14 +42,17 @@ public class MainWindow {
     private List<Recipe> recipesList;
     private List<Ingredient> ingredientList;
     private List<CustomUnit> customUnitList;
+    private List<Category> categoryList;
 
     private JTable recipeTable;
     private JTable ingredientTable;
     private JTable customUnitTable;
+    private JTable categoryTable;
 
     private JScrollPane recipeScroll;
     private JScrollPane ingredientScroll;
     private JScrollPane customUnitScroll;
+    private JScrollPane categoryScroll;
 
     private final JMenuBar menuBar;
     private final TestDataGenerator testDataGen = new TestDataGenerator();
@@ -52,6 +61,7 @@ public class MainWindow {
     private final RecipeTableModel recipeTableModel;
     private final IngredientTableModel ingredientTableModel;
     private final CustomUnitTableModel customUnitTableModel;
+    private final CategoryTableModel categoryTableModel;
 
     //    SORTERS
     private final TableRowSorter<RecipeTableModel> recipeTableSorter;
@@ -64,6 +74,7 @@ public class MainWindow {
         this.recipeTableModel = new RecipeTableModel(this.recipesList);
         this.ingredientTableModel = new IngredientTableModel(this.ingredientList);
         this.customUnitTableModel = new CustomUnitTableModel(this.customUnitList);
+        this.categoryTableModel = new CategoryTableModel(this.categoryList);
 
         this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
         this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
@@ -71,7 +82,7 @@ public class MainWindow {
         createTables();
         createScrollPanes();
 
-        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable);
+        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable);
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
         this.frame = createFrame();
@@ -95,41 +106,47 @@ public class MainWindow {
         recipeTable.setComponentPopupMenu(popupMenu);
         ingredientTable.setComponentPopupMenu(popupMenu);
         customUnitTable.setComponentPopupMenu(popupMenu);
+        categoryTable.setComponentPopupMenu(popupMenu);
     }
 
     private void createScrollPanes() {
         this.recipeScroll = new JScrollPane(recipeTable);
         this.ingredientScroll = new JScrollPane(ingredientTable);
         this.customUnitScroll = new JScrollPane(customUnitTable);
+        this.categoryScroll = new JScrollPane(categoryTable);
     }
 
     private void createTables() {
         this.recipeTable = createRecipeTable();
         this.ingredientTable = createIngredientTable();
         this.customUnitTable = createCustomUnitTable();
+        this.categoryTable = createCategoryTable();
         recipeTable.getTableHeader().setReorderingAllowed(false);
         ingredientTable.getTableHeader().setReorderingAllowed(false);
         customUnitTable.getTableHeader().setReorderingAllowed(false);
+        categoryTable.getTableHeader().setReorderingAllowed(false);
     }
 
     private void setDataGeneration() {
         this.recipesList = testDataGen.getTestRecipes();
         this.ingredientList = testDataGen.getTestIngredients();
         this.customUnitList = testDataGen.getTestCustomUnits();
+        this.categoryList = testDataGen.getTestCategories();
     }
 
     private void setTabbedPannels() {
         layout.getTabbedPanels().add("Recipes", createRecipeTab());
         layout.getTabbedPanels().add("Ingredients", createIngredientsTab());
         layout.getTabbedPanels().add("Custom Units", customUnitScroll);
+        layout.getTabbedPanels().add("Categories", categoryScroll);
         layout.getTabbedPanels().addChangeListener(new TabbedChange());
-
     }
 
     private void setButtonListeners() {
         recipeTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions, recipeTable));
         ingredientTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions, ingredientTable));
         customUnitTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions, customUnitTable));
+        categoryTable.getSelectionModel().addListSelectionListener(new ButtonLocker(actions, categoryTable));
 
         actions.getEditAction().setEnabled(false);
         actions.getDeleteAction().setEnabled(false);
@@ -218,6 +235,14 @@ public class MainWindow {
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setRowSorter(customUnitTableSorter);
+        return table;
+    }
+
+    private JTable createCategoryTable() {
+        JTable table = new JTable(this.categoryTableModel);
+        table.setAutoCreateRowSorter(true);
+        table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        //TODO table.setRowSorter(customUnitTableSorter);
         return table;
     }
 
