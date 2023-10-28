@@ -69,8 +69,6 @@ public class MainWindow {
     private final TableRowSorter<CustomUnitTableModel> customUnitTableSorter;
     private final TableRowSorter<CategoryTableModel> categoryTableSorter;
 
-    private final JTextField seachBar = new JTextField("Search...");
-
 
     public MainWindow() {
         setDataGeneration();
@@ -98,11 +96,12 @@ public class MainWindow {
 
         // removes text from Search Bar after typing
         //JTextField searchBar = layout.getSearchRecipesTextField();
-        seachBar.addFocusListener(new ClearTextFieldKeyListener());
+        /*
+        seachBar.addFocusListener(new ClearTextFieldKeyListener(seachBar));
         seachBar.addKeyListener(new SearchBarListener<>(seachBar, recipeTableSorter));
         seachBar.addKeyListener(new SearchBarListener<>(seachBar, ingredientTableSorter));
         seachBar.addKeyListener(new SearchBarListener<>(seachBar, customUnitTableSorter));
-        seachBar.addKeyListener(new SearchBarListener<>(seachBar, categoryTableSorter));
+        seachBar.addKeyListener(new SearchBarListener<>(seachBar, categoryTableSorter));*/
 
     }
 
@@ -189,10 +188,23 @@ public class MainWindow {
 
 
     private class ClearTextFieldKeyListener extends FocusAdapter {
+        private final JTextField bar;
+
+        public ClearTextFieldKeyListener(JTextField field) {
+            bar = field;
+        }
         @Override
         public void focusGained(FocusEvent e) {
             super.focusGained(e);
-            seachBar.setText("");
+            bar.setText("");
+        }
+
+        @Override
+        public void focusLost(FocusEvent e){
+            super.focusLost(e);
+            if (bar.getText().equals("")){
+                bar.setText("Search...");
+            }
         }
     }
 
@@ -223,7 +235,8 @@ public class MainWindow {
         frame.add(menuBar, BorderLayout.NORTH);
         frame.add(layout.getMainPanel(), BorderLayout.CENTER);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
+        frame.setMinimumSize(new Dimension(1100,500));
+        frame.setSize(1300,600);
         return frame;
     }
 
@@ -294,7 +307,7 @@ public class MainWindow {
     }
 
     private JComponent createRecipeTab() {
-        JPanel recipePanel = new JPanel(new MigLayout("fillx, debug, insets 2","nogrid"));
+        JPanel recipePanel = new JPanel(new MigLayout("fillx, insets 2"));
         JComboBox<Ingredient> ingredientFilter = new JComboBox<>(ingredientList.toArray(new Ingredient[0]));
         JComboBox<String> categoryFilter = new JComboBox<>(new String[0]);
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
@@ -307,6 +320,9 @@ public class MainWindow {
         JLabel max = new JLabel("max");
         JLabel max2 = new JLabel("max");
         JLabel portions = new JLabel("Portions min");
+        JTextField searchBar = new JTextField("Search...");
+        searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
         JButton fireFilter = new JButton(new FilterRecipesAction(
                 ingredientFilter,
                 categoryFilter,
@@ -318,37 +334,40 @@ public class MainWindow {
                 recipeTableSorter)
         );
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
-        recipePanel.add(seachBar, "al left, grow");
-        recipePanel.add(ingredients, "al right" );
+        recipePanel.add(searchBar, " left, grow, wmin 90");
+        recipePanel.add(ingredients, " right, split 2" );
         recipePanel.add(ingredientFilter);
-        recipePanel.add(categories, " al right");
+        recipePanel.add(categories, " right, split 2");
         recipePanel.add(categoryFilter);
-        recipePanel.add(nutrition, "right");
-        recipePanel.add(caloriesMinFilter);
-        recipePanel.add(max2, "al left");
-        recipePanel.add(caloriesMaxFilter, "al left, ");
-        recipePanel.add(portions, "al right");
-        recipePanel.add(portionsMinFilter);
-        recipePanel.add(max, "al left");
-        recipePanel.add(portionsMaxFilter, "al left");
-        recipePanel.add(fireFilter, "al r, gapright 0%, split 2");
-        recipePanel.add(removeFilter, "al r, wrap");
-        recipePanel.add(recipeScroll, "span 14, grow, height 99% ");
+        recipePanel.add(nutrition, "right, split 4");
+        recipePanel.add(caloriesMinFilter, "wmax 80");
+        recipePanel.add(max2);
+        recipePanel.add(caloriesMaxFilter, "wmax 80" );
+        recipePanel.add(portions, "al right, split 4");
+        recipePanel.add(portionsMinFilter, "wmax 70");
+        recipePanel.add(max);
+        recipePanel.add(portionsMaxFilter, "wmax 70");
+        recipePanel.add(fireFilter, " r, split 2");
+        recipePanel.add(removeFilter, " wrap");
+        recipePanel.add(recipeScroll, "span 9, grow, height 99% ");
         return recipePanel;
     }
 
     private JComponent createIngredientsTab() {
-        JPanel ingredientsPanel = new JPanel(new MigLayout("fillx, debug"));
+        JPanel ingredientsPanel = new JPanel(new MigLayout("fillx, insets 2"));
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
         JLabel nutritions = new JLabel("Calories");
         JLabel max = new JLabel("-");
+        JTextField searchBar = new JTextField("Search...");
+        searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, ingredientTableSorter));
         JButton fireFilter = new JButton(new FilterIngredientsAction(
                 ingredientTableSorter,
                 caloriesMinFilter,
                 caloriesMaxFilter
         ));
-        ingredientsPanel.add(seachBar, " grow, width 18%");
+        ingredientsPanel.add(searchBar, " grow, width 18%");
         ingredientsPanel.add(nutritions, "left, split 4");
         ingredientsPanel.add(caloriesMinFilter, "left");
         ingredientsPanel.add(max, "left");
