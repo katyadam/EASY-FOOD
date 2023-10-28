@@ -69,6 +69,8 @@ public class MainWindow {
     private final TableRowSorter<CustomUnitTableModel> customUnitTableSorter;
     private final TableRowSorter<CategoryTableModel> categoryTableSorter;
 
+    private final JTextField seachBar = new JTextField("Search...");
+
 
     public MainWindow() {
         setDataGeneration();
@@ -95,12 +97,12 @@ public class MainWindow {
         setPopUpMenus();
 
         // removes text from Search Bar after typing
-        JTextField searchBar = layout.getSearchRecipesTextField();
-        searchBar.addFocusListener(new ClearTextFieldKeyListener());
-        searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
-        searchBar.addKeyListener(new SearchBarListener<>(searchBar, ingredientTableSorter));
-        searchBar.addKeyListener(new SearchBarListener<>(searchBar, customUnitTableSorter));
-        searchBar.addKeyListener(new SearchBarListener<>(searchBar, categoryTableSorter));
+        //JTextField searchBar = layout.getSearchRecipesTextField();
+        seachBar.addFocusListener(new ClearTextFieldKeyListener());
+        seachBar.addKeyListener(new SearchBarListener<>(seachBar, recipeTableSorter));
+        seachBar.addKeyListener(new SearchBarListener<>(seachBar, ingredientTableSorter));
+        seachBar.addKeyListener(new SearchBarListener<>(seachBar, customUnitTableSorter));
+        seachBar.addKeyListener(new SearchBarListener<>(seachBar, categoryTableSorter));
 
     }
 
@@ -157,7 +159,7 @@ public class MainWindow {
     }
 
     private void setStatistics() {
-        JToolBar statistics = (JToolBar) layout.getMainPanel().getComponent(3);
+        JToolBar statistics = (JToolBar) layout.getMainPanel().getComponent(2);
         recipeTable.getModel().addTableModelListener(
                 new StatisticsUpdater(recipeTable, 0, "Total recipes: ", statistics)
         );
@@ -190,7 +192,7 @@ public class MainWindow {
         @Override
         public void focusGained(FocusEvent e) {
             super.focusGained(e);
-            layout.getSearchRecipesTextField().setText("");
+            seachBar.setText("");
         }
     }
 
@@ -292,7 +294,7 @@ public class MainWindow {
     }
 
     private JComponent createRecipeTab() {
-        JPanel recipePanel = new JPanel(new MigLayout("fillx"));
+        JPanel recipePanel = new JPanel(new MigLayout("fillx, debug, insets 2","nogrid"));
         JComboBox<Ingredient> ingredientFilter = new JComboBox<>(ingredientList.toArray(new Ingredient[0]));
         JComboBox<String> categoryFilter = new JComboBox<>(new String[0]);
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
@@ -316,7 +318,7 @@ public class MainWindow {
                 recipeTableSorter)
         );
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
-        recipePanel.add(ingredients);
+        recipePanel.add(ingredients, "al right" );
         recipePanel.add(ingredientFilter);
         recipePanel.add(categories, "gapleft 3%, al right");
         recipePanel.add(categoryFilter, ", gapright 3%");
@@ -327,10 +329,10 @@ public class MainWindow {
         recipePanel.add(portions, "al right");
         recipePanel.add(portionsMinFilter);
         recipePanel.add(max, "al left");
-        recipePanel.add(portionsMaxFilter, "al left, gapright 25%");
-        recipePanel.add(fireFilter, "al right");
-        recipePanel.add(removeFilter, "al, wrap");
-        recipePanel.add(recipeScroll, "span 13, grow, height 99% ");
+        recipePanel.add(portionsMaxFilter, "al left, gapright 10% push");
+        recipePanel.add(fireFilter, "al r, gapright 0%, split 2");
+        recipePanel.add(removeFilter, "al r, wrap");
+        recipePanel.add(recipeScroll, "span 14, grow, height 99% ");
         return recipePanel;
     }
 
