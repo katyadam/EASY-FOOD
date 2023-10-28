@@ -53,12 +53,12 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel) {
         super(true);
 
-        for (AbstractColorChooserPanel panel : categoryColor.getChooserPanels()) {
+       /* for (AbstractColorChooserPanel panel : categoryColor.getChooserPanels()) {
             if (!panel.getDisplayName().equals("RGB")) {
                 categoryColor.removeChooserPanel(panel);
             }
-        }
-        categoryColor.setPreviewPanel(new JPanel());
+        }*/
+        //categoryColor.setPreviewPanel(new JPanel());
 
         this.ingredientTableModel = ingredientTableModel;
         this.recipe = recipe;
@@ -88,7 +88,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
         addLeft("Recipe Name:", recipeNameField);
         addLeft("Category Name:", categoryNameField);
-        addLeft("Category Color:", categoryColor);
+        //addLeft("Category Color:", categoryColor);
         addLeft("Nutritional Value", recipeNutritionalValue);
         addLeft("Portions", recipePortionsField);
         addLeft("Preparation time: [HH:SS]", timeSpinner);

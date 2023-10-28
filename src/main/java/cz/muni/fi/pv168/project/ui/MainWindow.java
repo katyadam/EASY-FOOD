@@ -318,18 +318,19 @@ public class MainWindow {
                 recipeTableSorter)
         );
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
+        recipePanel.add(seachBar, "al left, grow");
         recipePanel.add(ingredients, "al right" );
         recipePanel.add(ingredientFilter);
-        recipePanel.add(categories, "gapleft 3%, al right");
-        recipePanel.add(categoryFilter, ", gapright 3%");
+        recipePanel.add(categories, " al right");
+        recipePanel.add(categoryFilter);
         recipePanel.add(nutrition, "right");
         recipePanel.add(caloriesMinFilter);
         recipePanel.add(max2, "al left");
-        recipePanel.add(caloriesMaxFilter, "al left, gapright 3%");
+        recipePanel.add(caloriesMaxFilter, "al left, ");
         recipePanel.add(portions, "al right");
         recipePanel.add(portionsMinFilter);
         recipePanel.add(max, "al left");
-        recipePanel.add(portionsMaxFilter, "al left, gapright 10% push");
+        recipePanel.add(portionsMaxFilter, "al left");
         recipePanel.add(fireFilter, "al r, gapright 0%, split 2");
         recipePanel.add(removeFilter, "al r, wrap");
         recipePanel.add(recipeScroll, "span 14, grow, height 99% ");
@@ -337,7 +338,7 @@ public class MainWindow {
     }
 
     private JComponent createIngredientsTab() {
-        JPanel ingredientsPanel = new JPanel(new MigLayout("fillx"));
+        JPanel ingredientsPanel = new JPanel(new MigLayout("fillx, debug"));
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
         JLabel nutritions = new JLabel("Calories");
@@ -347,13 +348,13 @@ public class MainWindow {
                 caloriesMinFilter,
                 caloriesMaxFilter
         ));
-
-        ingredientsPanel.add(nutritions, "left");
+        ingredientsPanel.add(seachBar, " grow, width 18%");
+        ingredientsPanel.add(nutritions, "left, split 4");
         ingredientsPanel.add(caloriesMinFilter, "left");
         ingredientsPanel.add(max, "left");
-        ingredientsPanel.add(caloriesMaxFilter, "left, gapright 78%");
-        ingredientsPanel.add(fireFilter, "right, wrap");
-        ingredientsPanel.add(ingredientScroll, "span 5, grow, height 99%");
+        ingredientsPanel.add(caloriesMaxFilter, "left, gapright push");
+        ingredientsPanel.add(fireFilter, "al right, wrap");
+        ingredientsPanel.add(ingredientScroll, "span 3, grow, height 99%");
         return ingredientsPanel;
     }
 
