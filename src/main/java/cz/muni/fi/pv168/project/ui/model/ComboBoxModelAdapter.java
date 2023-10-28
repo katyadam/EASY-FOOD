@@ -1,8 +1,6 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
-import javax.swing.ListModel;
+import javax.swing.*;
 import javax.swing.event.ListDataListener;
 import java.util.Objects;
 

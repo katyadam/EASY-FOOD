@@ -1,45 +1,79 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.model.Department;
-import cz.muni.fi.pv168.project.ui.dialog.EmployeeDialog;
-import cz.muni.fi.pv168.project.ui.model.EmployeeTableModel;
+import cz.muni.fi.pv168.project.model.Category;
+import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.model.Ingredient;
+import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
+import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
+import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
+import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
+import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
+import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
-import javax.swing.AbstractAction;
-import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.ListModel;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class EditAction extends AbstractAction {
+public final class EditAction extends ContextAction {
 
-    private final JTable employeeTable;
-    private final ListModel<Department> departmentListModel;
 
-    public EditAction(JTable employeeTable, ListModel<Department> departmentListModel) {
-        super("Edit", Icons.EDIT_ICON);
-        this.employeeTable = employeeTable;
-        this.departmentListModel = departmentListModel;
-        putValue(SHORT_DESCRIPTION, "Edits selected employee");
+    public EditAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Edit", Icons.EDIT_ICON);
+        putValue(SHORT_DESCRIPTION, "Edits selected recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        int[] selectedRows = employeeTable.getSelectedRows();
+        JTable activeTable = getActiveTable();
+        int[] selectedRows = activeTable.getSelectedRows();
         if (selectedRows.length != 1) {
             throw new IllegalStateException("Invalid selected rows count (must be 1): " + selectedRows.length);
         }
-        if (employeeTable.isEditing()) {
-            employeeTable.getCellEditor().cancelCellEditing();
+        if (activeTable.isEditing()) {
+            activeTable.getCellEditor().cancelCellEditing();
         }
-        var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
-        int modelRow = employeeTable.convertRowIndexToModel(selectedRows[0]);
-        var employee = employeeTableModel.getEntity(modelRow);
-        var dialog = new EmployeeDialog(employee, departmentListModel);
-        dialog.show(employeeTable, "Edit Employee")
-                .ifPresent(employeeTableModel::updateRow);
+        switch (activeTab) {
+            case 0: {
+                RecipeTableModel recipeTableModel = (RecipeTableModel) activeTable.getModel();
+                int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
+                Recipe recipe = recipeTableModel.getEntity(modelRow);
+                RecipeDialog dialog = new RecipeDialog(recipe, (IngredientTableModel) ingredientTable.getModel());
+                dialog.show(activeTable, "Edit Recipe")
+                        .ifPresent(recipeTableModel::updateRow);
+                break;
+            }
+            case 1: {
+                IngredientTableModel ingredientTableModel = (IngredientTableModel) activeTable.getModel();
+                int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
+                Ingredient ingredient = ingredientTableModel.getEntity(modelRow);
+                IngredientDialog dialog = new IngredientDialog(ingredient, (RecipeTableModel) recipeTable.getModel());
+                dialog.show(activeTable, "Edit Ingredient")
+                        .ifPresent(ingredientTableModel::updateRow);
+                break;
+            }
+            case 2: {
+                CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) activeTable.getModel();
+                int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
+                CustomUnit customUnit = customUnitTableModel.getEntity(modelRow);
+                CustomUnitDialog dialog = new CustomUnitDialog(customUnit);
+                dialog.show(activeTable, "Edit Custom Unit")
+                        .ifPresent(customUnitTableModel::updateRow);
+            }
+            case 3: {
+                CategoryTableModel categoryTableModel = (CategoryTableModel) activeTable.getModel();
+                int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
+                Category category = categoryTableModel.getEntity(modelRow);
+                CategoryDialog categoryDialog = new CategoryDialog(category);
+                categoryDialog.show(activeTable, "Edit Category")
+                        .ifPresent(categoryTableModel::updateRow);
+            }
+        }
     }
 }
