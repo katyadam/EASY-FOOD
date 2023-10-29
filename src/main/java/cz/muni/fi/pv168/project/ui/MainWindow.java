@@ -141,8 +141,8 @@ public class MainWindow {
     private void setTabbedPannels() {
         layout.getTabbedPanels().add("Recipes", createRecipeTab());
         layout.getTabbedPanels().add("Ingredients", createIngredientsTab());
-        layout.getTabbedPanels().add("Custom Units", customUnitScroll);
-        layout.getTabbedPanels().add("Categories", categoryScroll);
+        layout.getTabbedPanels().add("Custom Units", createUnitsTab());
+        layout.getTabbedPanels().add("Categories", createCategoryTab());
         layout.getTabbedPanels().addChangeListener(new TabbedChange());
     }
 
@@ -375,6 +375,28 @@ public class MainWindow {
         ingredientsPanel.add(fireFilter, "al right, wrap");
         ingredientsPanel.add(ingredientScroll, "span 3, grow, height 99%");
         return ingredientsPanel;
+    }
+
+    private JComponent createUnitsTab() {
+        JPanel panel = new JPanel(new MigLayout("fillx, insets 2"));
+        JTextField searchBar = new JTextField("Search...");
+        searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, customUnitTableSorter));
+
+        panel.add(searchBar, "grow, height 72, wrap, gapright 70%");
+        panel.add(customUnitScroll, " grow, height 99%");
+        return panel;
+    }
+
+    private JComponent createCategoryTab() {
+        JPanel panel = new JPanel(new MigLayout("fillx, insets 2"));
+        JTextField searchBar = new JTextField("Search...");
+        searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
+        searchBar.addKeyListener(new SearchBarListener<>(searchBar, categoryTableSorter));
+
+        panel.add(searchBar, "grow, height 72, wrap, gapright 70%");
+        panel.add(categoryScroll, " grow, height 99%");
+        return panel;
     }
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
