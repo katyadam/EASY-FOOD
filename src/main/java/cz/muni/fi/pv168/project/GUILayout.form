@@ -177,28 +177,6 @@
               <text value="Global Statistic: 1"/>
             </properties>
           </component>
-          <component id="cb262" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
-          </component>
-          <component id="7fb14" class="javax.swing.JLabel">
-            <constraints/>
-            <properties>
-              <horizontalAlignment value="4"/>
-              <text value="Global Statistic: 2"/>
-            </properties>
-          </component>
-          <component id="9d036" class="javax.swing.JToolBar$Separator">
-            <constraints/>
-            <properties/>
-          </component>
-          <component id="19ec5" class="javax.swing.JLabel">
-            <constraints/>
-            <properties>
-              <horizontalAlignment value="4"/>
-              <text value="Global Statistic: 3"/>
-            </properties>
-          </component>
         </children>
       </toolbar>
     </children>

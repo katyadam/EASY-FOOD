@@ -6,20 +6,22 @@ import javax.swing.event.TableModelListener;
 
 public class StatisticsUpdater implements TableModelListener {
     private JTable table;
-    private int componentIndex;
     private String text;
-    private JToolBar statistics;
+    private JLabel statistics;
 
-    public StatisticsUpdater(JTable table, int componentIndex, String text, JToolBar statistics) {
+    public StatisticsUpdater(JTable table, String text, JLabel statistics) {
         this.table = table;
-        this.componentIndex = componentIndex;
         this.text = text;
         this.statistics = statistics;
     }
 
     @Override
     public void tableChanged(TableModelEvent e) {
-        ((JLabel) statistics.getComponent(componentIndex))
-                .setText(text + table.getModel().getRowCount());
+        StringBuilder builder = new StringBuilder()
+                .append(text)
+                .append(table.getRowCount())
+                .append(" out of ")
+                .append(table.getModel().getRowCount());
+        statistics.setText(builder.toString());
     }
 }

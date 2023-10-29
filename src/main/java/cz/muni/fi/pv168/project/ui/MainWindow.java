@@ -25,6 +25,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
@@ -158,23 +160,18 @@ public class MainWindow {
     }
 
     private void setStatistics() {
-        JToolBar statistics = (JToolBar) layout.getMainPanel().getComponent(2);
+        JLabel statistics = (JLabel) ((JToolBar) layout.getMainPanel().getComponent(2)).getComponent(0);
         recipeTable.getModel().addTableModelListener(
-                new StatisticsUpdater(recipeTable, 0, "Total recipes: ", statistics)
+                new StatisticsUpdater(recipeTable, "Showing recipes ", statistics)
         );
         ingredientTable.getModel().addTableModelListener(
-                new StatisticsUpdater(recipeTable, 2, "Total ingredients: ", statistics)
+                new StatisticsUpdater(ingredientTable, "Showing ingredients ", statistics)
         );
-        ingredientTable.getModel().addTableModelListener(
-                new StatisticsUpdater(recipeTable, 4, "Total units: ", statistics)
+        customUnitTable.getModel().addTableModelListener(
+                new StatisticsUpdater(customUnitTable, "Showing units ", statistics)
         );
 
-        ((JLabel) statistics.getComponent(0))
-                .setText("Total recipes: " + recipeTable.getModel().getRowCount());
-        ((JLabel) statistics.getComponent(2))
-                .setText("Total ingredients: " + ingredientTable.getModel().getRowCount());
-        ((JLabel) statistics.getComponent(4))
-                .setText("Total units: " + customUnitTable.getModel().getRowCount());
+        statistics.setText("Showing recipes " + recipeTable.getRowCount() + " out of " + recipeTable.getModel().getRowCount());
     }
 
 
@@ -183,6 +180,8 @@ public class MainWindow {
         public void stateChanged(ChangeEvent e) {
             ContextAction.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
             ButtonLocker.reload(actions, actions.getAddAction().getActiveTable());
+            ((AbstractTableModel) actions.getAddAction().getActiveTable().getModel()).fireTableChanged(new TableModelEvent(actions.getAddAction().getActiveTable().getModel()));
+
         }
     }
 
