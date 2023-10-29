@@ -28,7 +28,7 @@ abstract class EntityDialog<E> {
             panel.add(leftPanel, BorderLayout.WEST);
             panel.add(rightPanel, BorderLayout.EAST);
             leftPanel.setLayout(new MigLayout("wrap 4"));
-            rightPanel.setLayout(new MigLayout("fill"));
+            rightPanel.setLayout(new MigLayout("fill "));
         }
     }
 
@@ -44,9 +44,13 @@ abstract class EntityDialog<E> {
         leftPanel.add(component, "wmin 250lp, grow, span 3");
     }
 
+    void addLeft(JComponent component, String constraints) {
+        leftPanel.add(component, constraints);
+    }
+
     void addRight(String labelText, JComponent component, String constraints) {
         JLabel label = new JLabel(labelText);
-        rightPanel.add(label, BorderLayout.NORTH);
+        rightPanel.add(label, "wrap");
         if (Objects.equals(constraints, "")) {
             constraints = "wmin 250lp, grow, span 3";
         }
@@ -54,11 +58,12 @@ abstract class EntityDialog<E> {
     }
 
 
-    void addLeft(JComponent component1, JComponent component2, JComponent component3, JComponent component4) {
-        leftPanel.add(component1, "grow");
+    void addLeft(JComponent component1, JComponent component2, JComponent component3, JComponent component4, JComponent component5) {
+        leftPanel.add(component1, "grow, split 5, span 5");
         leftPanel.add(component2);
         leftPanel.add(component3);
         leftPanel.add(component4);
+        leftPanel.add(component5);
     }
 
     void add(String ingredient) {

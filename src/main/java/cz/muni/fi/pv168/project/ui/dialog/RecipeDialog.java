@@ -13,7 +13,10 @@ import cz.muni.fi.pv168.project.ui.model.Triplet;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
@@ -36,11 +39,8 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private Recipe recipe;
     private final AddedIngredientsTableModel addedIngredientsTableModel;
     private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
-
     private final JTextArea recipeDescriptionTextField = new JTextArea();
-
-    private final JScrollPane textScrollPane = new JScrollPane();
-
+    private final JTable addedIngredientsTable = new JTable();
 
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override
@@ -49,32 +49,46 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
             addedIngredientsTableModel.addRow(new Triplet((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
         }
     });
+    private final JButton removeIngredient = new JButton(new AbstractAction("Remove ingredient") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println(addedIngredientsTable.getSelectedRows().length);
+            Arrays.stream(addedIngredientsTable.getSelectedRows())
+                    .map(addedIngredientsTable::convertRowIndexToModel)
+                    .boxed()
+                    .sorted(Comparator.reverseOrder())
+                    .forEach(addedIngredientsTableModel::deleteRow);
+        }
+    });
 
     public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel) {
         super(true);
-
-       /* for (AbstractColorChooserPanel panel : categoryColor.getChooserPanels()) {
-            if (!panel.getDisplayName().equals("RGB")) {
-                categoryColor.removeChooserPanel(panel);
-            }
-        }*/
-        //categoryColor.setPreviewPanel(new JPanel());
 
         this.ingredientTableModel = ingredientTableModel;
         this.recipe = recipe;
         ingredients = new JComboBox<>(ingredientTableModel.toArray());
         timeSpinner.setValue(new Date(0));
         timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
-
+        removeIngredient.setEnabled(false);
         if (recipe != null) {
             setValues();
         } else {
             this.recipe = new Recipe(null, null, 1, 0, new PreparationTime(1, 50));
         }
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
+        addedIngredientsTable.setModel(addedIngredientsTableModel);
+        addedIngredientsTable.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        addedIngredientsTable.setAutoCreateRowSorter(true);
         addFields();
     }
 
+    private void rowSelectionChanged(ListSelectionEvent e) {
+        if( addedIngredientsTable.getSelectedRows().length > 0 ){
+            removeIngredient.setEnabled(true);
+        } else {
+            removeIngredient.setEnabled(false);
+        }
+    }
     private void setValues() {
         recipeNameField.setText(recipe.getRecipeName());
         categoryNameField.setText(recipe.getCategoryName());
@@ -92,9 +106,9 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         addLeft("Nutritional Value", recipeNutritionalValue);
         addLeft("Portions", recipePortionsField);
         addLeft("Preparation time: [HH:SS]", timeSpinner);
-        addLeft(ingredients, amount, units, addIngredient);
-        addLeft("Ingredients", new JScrollPane(new JTable(addedIngredientsTableModel)));
-        addRight("Description", new JScrollPane(recipeDescriptionTextField), "w 250lp, h 500lp, grow");
+        addLeft(ingredients, amount, units, addIngredient, removeIngredient);
+        addLeft( new JScrollPane(addedIngredientsTable), "span 5, grow");
+        addRight("Description", new JScrollPane(recipeDescriptionTextField), "wmin 250lp, hmin 580lp, grow");
     }
 
     @Override
