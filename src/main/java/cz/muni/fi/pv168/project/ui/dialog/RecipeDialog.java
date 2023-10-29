@@ -12,7 +12,6 @@ import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
 
 import javax.swing.*;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 
@@ -52,14 +51,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
     public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel) {
         super(true);
-
-       /* for (AbstractColorChooserPanel panel : categoryColor.getChooserPanels()) {
-            if (!panel.getDisplayName().equals("RGB")) {
-                categoryColor.removeChooserPanel(panel);
-            }
-        }*/
-        //categoryColor.setPreviewPanel(new JPanel());
-
         this.ingredientTableModel = ingredientTableModel;
         this.recipe = recipe;
         ingredients = new JComboBox<>(ingredientTableModel.toArray());
@@ -88,7 +79,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
         addLeft("Recipe Name:", recipeNameField);
         addLeft("Category Name:", categoryNameField);
-        //addLeft("Category Color:", categoryColor);
         addLeft("Nutritional Value", recipeNutritionalValue);
         addLeft("Portions", recipePortionsField);
         addLeft("Preparation time: [HH:SS]", timeSpinner);
