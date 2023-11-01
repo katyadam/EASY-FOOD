@@ -1,13 +1,7 @@
 package cz.muni.fi.pv168.project.data;
 
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.CustomUnit;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.PreparationTime;
-import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.model.Unit;
+import cz.muni.fi.pv168.project.model.*;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -21,7 +15,7 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public final class TestDataGenerator {
-
+    private final GuidProvider uuidProvider = new UuidGuidProvider();
     private static final List<String> RECIPE_NAMES = List.of("Smažák", "Pizza", "Vývar", "Guláš", "Mýchané vajíčka",
             "Hranolky", "Řízek", "Americké brambory", "Pečené kuře", "Grilled cheese");
 
@@ -121,8 +115,9 @@ public final class TestDataGenerator {
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
         double amount = random.nextDouble() * 100;
         BaseUnits baseUnit = selectRandom(baseUnits);
-
-        return new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
+        CustomUnit customUnit = new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
+        customUnit.setGuid(uuidProvider.newGuid());
+        return customUnit;
     }
 
     public Recipe createTestRecipe() {
@@ -130,14 +125,18 @@ public final class TestDataGenerator {
         String recipeName = selectRandom(RECIPE_NAMES);
         PreparationTime preparationTime = new PreparationTime(LocalTime.now().getHour(), LocalTime.now().getMinute());
         int portions = random.nextInt(10);
-        return new Recipe(recipeName, createTestCategory(), portions, preparationTime);
+        Recipe recipe = new Recipe(recipeName, createTestCategory(), portions, preparationTime);
+        recipe.setGuid(uuidProvider.newGuid());
+        return recipe;
     }
 
     private Ingredient createTestIngredient() {
         String ingredientName = selectRandom(INGREDIENT_NAMES);
         int nutritionalValue = random.nextInt(10000);
         Unit unit = selectRandom(testCustomUnits);
-        return new Ingredient(ingredientName, nutritionalValue, unit);
+        Ingredient ingredient = new Ingredient(ingredientName, nutritionalValue, unit);
+        ingredient.setGuid(uuidProvider.newGuid());
+        return ingredient;
     }
 
     private Category createTestCategory() {
@@ -146,7 +145,9 @@ public final class TestDataGenerator {
         ALL_CATEGORIES.addAll(FOOD_CATEGORIES);
         String categoryName = selectRandom(ALL_CATEGORIES);
         Color categoryColor = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-        return new Category(categoryName, categoryColor);
+        Category category = new Category(categoryName, categoryColor);
+        category.setGuid(uuidProvider.newGuid());
+        return category;
     }
 
 

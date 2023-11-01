@@ -39,7 +39,7 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
 
     private int countIngredientUsage() {
         int result = 0;
-        List<Recipe> recipes = recipeData.getData();
+        List<Recipe> recipes = recipeData.getRecipes();
         for (Recipe recipe : recipes) {
             if (recipe.getUsedIngredients().contains(ingredient)) {
                 result++;

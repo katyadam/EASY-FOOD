@@ -1,9 +1,12 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
+import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -24,7 +27,7 @@ public final class DeleteAction extends ContextAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JTable activeTable = getActiveTable();
-        AbstractEntityTableModel tableModel = (AbstractEntityTableModel) activeTable.getModel();
+        EntityTableModel tableModel = (EntityTableModel) activeTable.getModel();
         Arrays.stream(activeTable.getSelectedRows())
                 // view row index must be converted to model row index
                 .map(activeTable::convertRowIndexToModel)

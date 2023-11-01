@@ -6,14 +6,13 @@ import cz.muni.fi.pv168.project.ui.model.Triplet;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Recipe extends Entity{
+public class Recipe extends Entity {
     private String recipeName;
     private PreparationTime preparationTime;
     private int portions;
     private Category category;
     private String description = "No recipe description";
     private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
-
 
     public Recipe(
             String recipeName,
@@ -90,5 +89,10 @@ public class Recipe extends Entity{
                 .mapToObj(i -> this.getUsedIngredients().getEntity(i))
                 .map(Triplet::ingredient)
                 .toList();
+    }
+
+    @Override
+    public String toString() {
+        return recipeName;
     }
 }

@@ -57,7 +57,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
         this.ingredientTableModel = ingredientTableModel;
         this.recipe = recipe;
-        ingredients = new JComboBox<>(ingredientTableModel.toArray());
+        ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
         timeSpinner.setValue(new Date(0));
         timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
         removeIngredient.setEnabled(false);

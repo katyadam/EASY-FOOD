@@ -65,6 +65,7 @@ public final class EditAction extends ContextAction {
                 CustomUnitDialog dialog = new CustomUnitDialog(customUnit);
                 dialog.show(activeTable, "Edit Custom Unit")
                         .ifPresent(customUnitTableModel::updateRow);
+                break;
             }
             case 3: {
                 CategoryTableModel categoryTableModel = (CategoryTableModel) activeTable.getModel();

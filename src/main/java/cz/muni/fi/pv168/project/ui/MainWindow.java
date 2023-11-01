@@ -2,15 +2,18 @@ package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.CustomUnit;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.ui.action.ActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ContextAction;
-import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
-import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
-import cz.muni.fi.pv168.project.ui.action.RemoveRecipesFilterAction;
+import cz.muni.fi.pv168.project.model.*;
+import cz.muni.fi.pv168.project.repository.Repository;
+import cz.muni.fi.pv168.project.service.crud.CategoryCrudService;
+import cz.muni.fi.pv168.project.service.crud.CustomUnitService;
+import cz.muni.fi.pv168.project.service.crud.IngredientCrudService;
+import cz.muni.fi.pv168.project.service.crud.RecipeCrudService;
+import cz.muni.fi.pv168.project.service.validation.CategoryValidator;
+import cz.muni.fi.pv168.project.service.validation.CustomUnitValidator;
+import cz.muni.fi.pv168.project.service.validation.IngredientValidator;
+import cz.muni.fi.pv168.project.service.validation.RecipeValidator;
+import cz.muni.fi.pv168.project.storage.InMemoryRepository;
+import cz.muni.fi.pv168.project.ui.action.*;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -71,13 +74,38 @@ public class MainWindow {
     private final TableRowSorter<CustomUnitTableModel> customUnitTableSorter;
     private final TableRowSorter<CategoryTableModel> categoryTableSorter;
 
+    // GuidProviders
+    private final GuidProvider uuidProvider = new UuidGuidProvider();
+
+    // Repositories
+    private final Repository<Recipe> recipeRepository;
+    private final Repository<Category> categoryRepository;
+    private final Repository<Ingredient> ingredientRepository;
+    private final Repository<CustomUnit> customUnitRepository;
+
+    // CRUD services
+    private final RecipeCrudService recipeCrudService;
+    private final CategoryCrudService categoryCrudService;
+    private final IngredientCrudService ingredientCrudService;
+    private final CustomUnitService customUnitService;
 
     public MainWindow() {
         setDataGeneration();
-        this.recipeTableModel = new RecipeTableModel(this.recipesList);
-        this.ingredientTableModel = new IngredientTableModel(this.ingredientList);
-        this.customUnitTableModel = new CustomUnitTableModel(this.customUnitList);
-        this.categoryTableModel = new CategoryTableModel(this.categoryList);
+        this.recipeRepository = new InMemoryRepository<>(this.recipesList);
+        this.recipeCrudService = new RecipeCrudService(recipeRepository, new RecipeValidator(), uuidProvider);
+        this.recipeTableModel = new RecipeTableModel(this.recipeCrudService);
+
+        this.ingredientRepository = new InMemoryRepository<>(this.ingredientList);
+        this.ingredientCrudService = new IngredientCrudService(ingredientRepository, new IngredientValidator(), uuidProvider);
+        this.ingredientTableModel = new IngredientTableModel(this.ingredientCrudService);
+
+        this.customUnitRepository = new InMemoryRepository<>(this.customUnitList);
+        this.customUnitService = new CustomUnitService(customUnitRepository, new CustomUnitValidator(), uuidProvider);
+        this.customUnitTableModel = new CustomUnitTableModel(this.customUnitService);
+
+        this.categoryRepository = new InMemoryRepository<>(this.categoryList);
+        this.categoryCrudService = new CategoryCrudService(categoryRepository, new CategoryValidator(), uuidProvider);
+        this.categoryTableModel = new CategoryTableModel(this.categoryCrudService);
 
         this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
         this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
@@ -192,6 +220,7 @@ public class MainWindow {
         public ClearTextFieldKeyListener(JTextField field) {
             bar = field;
         }
+
         @Override
         public void focusGained(FocusEvent e) {
             super.focusGained(e);
@@ -199,9 +228,9 @@ public class MainWindow {
         }
 
         @Override
-        public void focusLost(FocusEvent e){
+        public void focusLost(FocusEvent e) {
             super.focusLost(e);
-            if (bar.getText().equals("")){
+            if (bar.getText().equals("")) {
                 bar.setText("Search...");
             }
         }
@@ -234,8 +263,8 @@ public class MainWindow {
         frame.add(menuBar, BorderLayout.NORTH);
         frame.add(layout.getMainPanel(), BorderLayout.CENTER);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(1100,500));
-        frame.setSize(1300,600);
+        frame.setMinimumSize(new Dimension(1100, 500));
+        frame.setSize(1300, 600);
         return frame;
     }
 
@@ -334,14 +363,14 @@ public class MainWindow {
         );
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
         recipePanel.add(searchBar, " left, grow, wmin 90");
-        recipePanel.add(ingredients, " right, split 2" );
+        recipePanel.add(ingredients, " right, split 2");
         recipePanel.add(ingredientFilter);
         recipePanel.add(categories, " right, split 2");
         recipePanel.add(categoryFilter);
         recipePanel.add(nutrition, "right, split 4");
         recipePanel.add(caloriesMinFilter, "wmax 80");
         recipePanel.add(max2);
-        recipePanel.add(caloriesMaxFilter, "wmax 80" );
+        recipePanel.add(caloriesMaxFilter, "wmax 80");
         recipePanel.add(portions, "al right, split 4");
         recipePanel.add(portionsMinFilter, "wmax 70");
         recipePanel.add(max);

@@ -46,4 +46,9 @@ public class CustomUnit extends Entity implements Unit {
     public void setBaseUnit(BaseUnits baseUnit) {
         this.baseUnit = baseUnit;
     }
+
+    @Override
+    public String toString() {
+        return unitName;
+    }
 }
