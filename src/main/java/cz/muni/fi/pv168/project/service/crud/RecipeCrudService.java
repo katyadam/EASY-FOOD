@@ -36,7 +36,7 @@ public class RecipeCrudService implements CrudService<Recipe> {
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {
             newEntity.setGuid(guidProvider.newGuid());
         } else if (recipeRepository.existsByGuid(newEntity.getGuid())) {
-            throw new EntityAlreadyExistsException("Employee with given guid already exists: " + newEntity.getGuid());
+            throw new EntityAlreadyExistsException("Recipe with given guid already exists: " + newEntity.getGuid());
         }
         if (validationResult.isValid()) {
             recipeRepository.create(newEntity);

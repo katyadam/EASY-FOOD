@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.model;
 
-public class Ingredient {
+public class Ingredient extends Entity{
     private String name;
     private int nutritionalValue;
 
