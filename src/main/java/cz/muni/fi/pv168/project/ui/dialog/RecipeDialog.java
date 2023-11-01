@@ -103,7 +103,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         addLeft("Recipe Name:", recipeNameField);
         addLeft("Category Name:", categoryNameField);
         //addLeft("Category Color:", categoryColor);
-        addLeft("Nutritional Value", recipeNutritionalValue);
+        addLeft("Nutritional Value [KCAL]", recipeNutritionalValue);
         addLeft("Portions", recipePortionsField);
         addLeft("Preparation time: [HH:SS]", timeSpinner);
         addLeft(ingredients, amount, units, addIngredient, removeIngredient);

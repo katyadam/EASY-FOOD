@@ -47,7 +47,7 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
     private void addFields() {
         add("Name", nameField);
         add("Measurement unit", ingredientJComboBox);
-        add("Nutritional value", nutritionalValueSpinner);
+        add("Nutritional value [KCAL]", nutritionalValueSpinner);
         add("Ingredient used in " + statistic + " recipes");
     }
 
