@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.model;
 
-public class CustomUnit implements Unit {
+public class CustomUnit extends Entity implements Unit {
     private String unitName;
     private String abbreviation;
     private double amount;
