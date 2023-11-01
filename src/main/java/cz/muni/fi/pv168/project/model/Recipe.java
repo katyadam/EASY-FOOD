@@ -11,17 +11,13 @@ public class Recipe {
     private PreparationTime preparationTime;
     private int portions;
     private Category category;
-    private int nutritionalValue;
-
     private String description = "No recipe description";
-
     private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
 
 
     public Recipe(
             String recipeName,
             Category category,
-            int calories,
             int portions,
             PreparationTime preparationTime
     ) {
@@ -29,7 +25,6 @@ public class Recipe {
         this.preparationTime = preparationTime;
         this.portions = portions;
         this.category = category;
-        this.nutritionalValue = calories;
         //this.nutritionalValue = calculateNutritionalValue(ingredientList); TODO
     }
 
@@ -43,10 +38,6 @@ public class Recipe {
 
     public void setPortions(int portions) {
         this.portions = portions;
-    }
-
-    public void setNutritionalValue(int value) {
-        this.nutritionalValue = value;
     }
 
     public void setCategory(Category category) {
@@ -83,8 +74,8 @@ public class Recipe {
         return category != null ? category.getName() : "";
     }
 
-    public int getNutritionalValue() {
-        return nutritionalValue;
+    public int getRecipeNutritionalValue() {
+        return usedIngredients.getTotalNutritionalValue();
     }
 
     public AddedIngredientsTableModel getUsedIngredients() {

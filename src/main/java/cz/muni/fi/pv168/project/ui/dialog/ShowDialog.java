@@ -18,7 +18,7 @@ public class ShowDialog {
         recipeString.append("<p>");
         recipeString.append("<b>Recipe Name: </b>").append(recipe.getRecipeName()).append("<br>");
         recipeString.append("<b>Category Name:</b> ").append(recipe.getCategory().getName()).append("<br>");
-        recipeString.append("<b>Nutritional Value [KCAL]:</b> ").append(recipe.getNutritionalValue()).append("<br>");
+        recipeString.append("<b>Nutritional Value [KCAL]:</b> ").append(recipe.getRecipeNutritionalValue()).append("<br>");
         recipeString.append("<b>Portions:</b> ").append(recipe.getPortions()).append("<br>");
         recipeString.append("<b>Preparation Time:</b> ").append(recipe.getPreparationTime().hours()).append(" hours ")
                 .append(recipe.getPreparationTime().minutes()).append(" minutes").append("<br>").append("<br>");

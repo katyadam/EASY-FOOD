@@ -1,12 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.PreparationTime;
-import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.model.Unit;
+import cz.muni.fi.pv168.project.model.*;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
@@ -24,9 +19,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JTextField recipeNameField = new JTextField();
     private final JSpinner recipePortionsField = new JSpinner(
             new SpinnerNumberModel(1, 1, 200, 1)
-    );
-    private final JSpinner recipeNutritionalValue = new JSpinner(
-            new SpinnerNumberModel(0, 0, 50000, 20)
     );
     private final JSpinner amount = new JSpinner(
             new SpinnerNumberModel(1, 0, 100000, 0.1)
@@ -72,7 +64,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            this.recipe = new Recipe(null, null, 1, 0, new PreparationTime(1, 50));
+            this.recipe = new Recipe(null, null, 0, new PreparationTime(1, 50));
         }
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addedIngredientsTable.setModel(addedIngredientsTableModel);
@@ -82,17 +74,17 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     }
 
     private void rowSelectionChanged(ListSelectionEvent e) {
-        if( addedIngredientsTable.getSelectedRows().length > 0 ){
+        if (addedIngredientsTable.getSelectedRows().length > 0) {
             removeIngredient.setEnabled(true);
         } else {
             removeIngredient.setEnabled(false);
         }
     }
+
     private void setValues() {
         recipeNameField.setText(recipe.getRecipeName());
         categoryNameField.setText(recipe.getCategoryName());
         categoryColor.setColor(recipe.getCategory().getColor());
-        recipeNutritionalValue.setModel(new SpinnerNumberModel(recipe.getNutritionalValue(), 0, 50000, 20));
         recipePortionsField.setModel(new SpinnerNumberModel(recipe.getPortions(), 1, 200, 1));
         recipeDescriptionTextField.setText(recipe.getDescription());
     }
@@ -102,11 +94,10 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         addLeft("Recipe Name:", recipeNameField);
         addLeft("Category Name:", categoryNameField);
         //addLeft("Category Color:", categoryColor);
-        addLeft("Nutritional Value [KCAL]", recipeNutritionalValue);
         addLeft("Portions", recipePortionsField);
         addLeft("Preparation time: [HH:SS]", timeSpinner);
         addLeft(ingredients, amount, units, addIngredient, removeIngredient);
-        addLeft( new JScrollPane(addedIngredientsTable), "span 5, grow");
+        addLeft(new JScrollPane(addedIngredientsTable), "span 5, grow");
         addRight("Description", new JScrollPane(recipeDescriptionTextField), "wmin 250lp, hmin 580lp, grow");
     }
 
@@ -115,7 +106,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipe.setRecipeName(recipeNameField.getText());
         recipe.setCategory(new Category(categoryNameField.getText(), categoryColor.getColor()));
         recipe.setPortions((int) recipePortionsField.getValue());
-        recipe.setNutritionalValue((int) recipeNutritionalValue.getValue());
         recipe.setPreparationTime(new PreparationTime(
                 ((Date) timeSpinner.getValue()).getHours(),
                 ((Date) timeSpinner.getValue()).getMinutes()

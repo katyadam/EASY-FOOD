@@ -13,11 +13,14 @@ import java.util.List;
 public class IngredientDialog extends EntityDialog<Ingredient> {
 
     private Ingredient ingredient;
-
     private int statistic = 0;
-    private JTextField nameField = new JTextField();
-    private final JSpinner nutritionalValueSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
-    private JComboBox<BaseUnits> ingredientJComboBox = new JComboBox<>(BaseUnits.values()); // insert array of base units here
+    private final JTextField nameField = new JTextField();
+    private final JSpinner nutritionalValueSpinner = new JSpinner(
+            new SpinnerNumberModel(0, 0, 50000, 20)
+    );
+
+    // insert array of base units here
+    private final JComboBox<BaseUnits> ingredientJComboBox = new JComboBox<>(BaseUnits.values());
     private RecipeTableModel recipeData;
 
     public IngredientDialog(Ingredient ingredient, RecipeTableModel recipeTableModel) {
@@ -33,11 +36,12 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
         addFields();
 
     }
+
     private int countIngredientUsage() {
         int result = 0;
-        List<Recipe> recipes =  recipeData.getData();
-        for (Recipe recipe: recipes) {
-            if ( recipe.getUsedIngredients().contains(ingredient) ){
+        List<Recipe> recipes = recipeData.getData();
+        for (Recipe recipe : recipes) {
+            if (recipe.getUsedIngredients().contains(ingredient)) {
                 result++;
             }
         }

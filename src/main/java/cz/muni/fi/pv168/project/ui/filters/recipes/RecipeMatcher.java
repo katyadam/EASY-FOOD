@@ -39,8 +39,8 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
         if (recipeFilterAttributes.calMin() == null) {
             return true;
         }
-        return recipeFilterAttributes.calMin() <= recipe.getNutritionalValue()
-                && recipeFilterAttributes.calMax() >= recipe.getNutritionalValue();
+        return recipeFilterAttributes.calMin() <= recipe.getRecipeNutritionalValue()
+                && recipeFilterAttributes.calMax() >= recipe.getRecipeNutritionalValue();
     }
 
     private boolean portionsRangeMatch(Recipe recipe) {
