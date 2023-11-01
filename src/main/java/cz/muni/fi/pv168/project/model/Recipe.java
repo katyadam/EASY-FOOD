@@ -6,7 +6,7 @@ import cz.muni.fi.pv168.project.ui.model.Triplet;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class Recipe {
+public class Recipe extends Entity{
     private String recipeName;
     private PreparationTime preparationTime;
     private int portions;
