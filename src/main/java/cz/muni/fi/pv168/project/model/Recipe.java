@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.model;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -12,13 +11,11 @@ public class Recipe {
     private PreparationTime preparationTime;
     private int portions;
     private Category category;
-
-
     private int nutritionalValue;
 
     private String description = "No recipe description";
 
-    private AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
+    private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
 
 
     public Recipe(
@@ -64,7 +61,7 @@ public class Recipe {
         return recipeName;
     }
 
-    public String getDesription() {
+    public String getDescription() {
         return description;
     }
 
@@ -94,7 +91,7 @@ public class Recipe {
         return usedIngredients;
     }
 
-    public List<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredientList() {
         if (this.getUsedIngredients().getRowCount() == 0) {
             return List.of();
         }

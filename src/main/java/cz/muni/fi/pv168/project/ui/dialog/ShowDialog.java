@@ -31,7 +31,7 @@ public class ShowDialog {
         recipeString.append("<br>");
 
         recipeString.append("<b>Description: </b>").append("<br>");
-        for (String descriptionLine : recipe.getDesription().split("\n")) {
+        for (String descriptionLine : recipe.getDescription().split("\n")) {
             recipeString.append(descriptionLine).append("<br>");
         }
         recipeString.append("</p>");

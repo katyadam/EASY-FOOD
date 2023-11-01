@@ -12,7 +12,6 @@ import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
 
 import javax.swing.*;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
@@ -95,7 +94,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         categoryColor.setColor(recipe.getCategory().getColor());
         recipeNutritionalValue.setModel(new SpinnerNumberModel(recipe.getNutritionalValue(), 0, 50000, 20));
         recipePortionsField.setModel(new SpinnerNumberModel(recipe.getPortions(), 1, 200, 1));
-        recipeDescriptionTextField.setText(recipe.getDesription());
+        recipeDescriptionTextField.setText(recipe.getDescription());
     }
 
     private void addFields() {

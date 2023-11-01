@@ -25,7 +25,7 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
         if (recipeFilterAttributes.ingredient() == null) {
             return true;
         }
-        return recipe.getIngredients().contains(recipeFilterAttributes.ingredient());
+        return recipe.getIngredientList().contains(recipeFilterAttributes.ingredient());
     }
 
     private boolean categoryMatch(Recipe recipe) {
