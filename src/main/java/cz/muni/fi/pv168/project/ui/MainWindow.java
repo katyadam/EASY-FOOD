@@ -275,6 +275,7 @@ public class MainWindow {
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setRowSorter(recipeTableSorter);
+        table.getColumnModel().getColumn(2).setMaxWidth(50);
         TableColumn colorColumn = table.getColumnModel().getColumn(2);
         colorColumn.setCellRenderer(new ColorRenderer());
         return table;
