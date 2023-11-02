@@ -44,7 +44,7 @@ public final class EditAction extends ContextAction {
                 RecipeTableModel recipeTableModel = (RecipeTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Recipe recipe = recipeTableModel.getEntity(modelRow);
-                RecipeDialog dialog = new RecipeDialog(recipe, (IngredientTableModel) ingredientTable.getModel());
+                RecipeDialog dialog = new RecipeDialog(recipe, (IngredientTableModel) ingredientTable.getModel(), (CategoryTableModel) categoryTable.getModel());
                 dialog.show(activeTable, "Edit Recipe")
                         .ifPresent(recipeTableModel::updateRow);
                 break;

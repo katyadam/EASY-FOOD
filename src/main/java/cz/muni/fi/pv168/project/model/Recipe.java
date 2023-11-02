@@ -73,6 +73,7 @@ public class Recipe extends Entity {
     public String getCategoryName() {
         return category != null ? category.getName() : "";
     }
+
     public Color getCategoryColor() {
         return category != null ? category.getColor() : Color.black;
     }

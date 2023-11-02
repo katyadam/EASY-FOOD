@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.model.*;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
+import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 public final class RecipeDialog extends EntityDialog<Recipe> {
 
     private final IngredientTableModel ingredientTableModel;
+    private final CategoryTableModel categoryTableModel;
     private final JTextField recipeNameField = new JTextField();
     private final JSpinner recipePortionsField = new JSpinner(
             new SpinnerNumberModel(1, 1, 200, 1)
@@ -24,6 +26,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
             new SpinnerNumberModel(1, 0, 100000, 0.1)
     );
     private final JTextField categoryNameField = new JTextField();
+    private final JComboBox<Category> categoryJComboBox = new JComboBox<>();
     private final JColorChooser categoryColor = new JColorChooser();
     private final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
     private final JComboBox<Ingredient> ingredients;
@@ -52,10 +55,11 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         }
     });
 
-    public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel) {
+    public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel, CategoryTableModel categoryTableModel) {
         super(true);
 
         this.ingredientTableModel = ingredientTableModel;
+        this.categoryTableModel = categoryTableModel;
         this.recipe = recipe;
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
         timeSpinner.setValue(new Date(0));
@@ -66,6 +70,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         } else {
             this.recipe = new Recipe(null, null, 0, new PreparationTime(1, 50));
         }
+        categoryJComboBox.setModel(new DefaultComboBoxModel<>(categoryTableModel.getAllCategories().toArray(new Category[0])));
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addedIngredientsTable.setModel(addedIngredientsTableModel);
         addedIngredientsTable.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
@@ -74,11 +79,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     }
 
     private void rowSelectionChanged(ListSelectionEvent e) {
-        if (addedIngredientsTable.getSelectedRows().length > 0) {
-            removeIngredient.setEnabled(true);
-        } else {
-            removeIngredient.setEnabled(false);
-        }
+        removeIngredient.setEnabled(addedIngredientsTable.getSelectedRows().length > 0);
     }
 
     private void setValues() {
@@ -92,7 +93,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private void addFields() {
 
         addLeft("Recipe Name:", recipeNameField);
-        addLeft("Category Name:", categoryNameField);
+        addLeft("Category:", categoryJComboBox);
         addLeft("Portions", recipePortionsField);
         addLeft("Preparation time: [HH:SS]", timeSpinner);
         addLeft(ingredients, amount, units, addIngredient, removeIngredient);
@@ -103,7 +104,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     @Override
     Recipe getEntity() {
         recipe.setRecipeName(recipeNameField.getText());
-        recipe.setCategory(new Category(categoryNameField.getText(), categoryColor.getColor()));
+        recipe.setCategory((Category) categoryJComboBox.getSelectedItem());
         recipe.setPortions((int) recipePortionsField.getValue());
         recipe.setPreparationTime(new PreparationTime(
                 ((Date) timeSpinner.getValue()).getHours(),

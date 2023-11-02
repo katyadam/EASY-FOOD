@@ -57,7 +57,9 @@ public class CategoryTableModel extends AbstractTableModel implements EntityTabl
         this.categories = new ArrayList<>(categoryCrudService.findAll());
         fireTableDataChanged();
     }
-
+    public List<Category> getAllCategories() {
+        return categories;
+    }
     @Override
     public int getRowCount() {
         return categories.size();
