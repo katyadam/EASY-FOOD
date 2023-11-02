@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.ui.action;
 import javax.swing.*;
 
 abstract public class ContextAction extends AbstractAction {
-    protected static int activeTab = 0;
     protected final JTable recipeTable;
     protected final JTable ingredientTable;
     protected final JTable unitsTable;
@@ -17,20 +16,4 @@ abstract public class ContextAction extends AbstractAction {
         this.categoryTable = categoryTable;
     }
 
-    public static void setActiveTab(int i) {
-        activeTab = i;
-    }
-
-    public JTable getActiveTable() {
-        switch (activeTab) {
-            case 0:
-                return recipeTable;
-            case 1:
-                return ingredientTable;
-            case 2:
-                return unitsTable;
-            default:
-                return categoryTable;
-        }
-    }
 }

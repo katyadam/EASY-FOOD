@@ -161,6 +161,7 @@ public class MainWindow {
         ingredientTable.getTableHeader().setReorderingAllowed(false);
         customUnitTable.getTableHeader().setReorderingAllowed(false);
         categoryTable.getTableHeader().setReorderingAllowed(false);
+        TabbedPanelContext.setTables(this.recipeTable,this.ingredientTable,this.customUnitTable,this.categoryTable);
     }
 
     private void setDataGeneration() {
@@ -208,9 +209,9 @@ public class MainWindow {
     private class TabbedChange implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent e) {
-            ContextAction.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
-            ButtonLocker.reload(actions, actions.getAddAction().getActiveTable());
-            ((AbstractTableModel) actions.getAddAction().getActiveTable().getModel()).fireTableChanged(new TableModelEvent(actions.getAddAction().getActiveTable().getModel()));
+            TabbedPanelContext.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
+            ButtonLocker.reload(actions, TabbedPanelContext.getActiveTable());
+            ((AbstractTableModel) TabbedPanelContext.getActiveTable().getModel()).fireTableChanged( new TableModelEvent(TabbedPanelContext.getActiveTable().getModel()));
 
         }
     }

@@ -26,7 +26,7 @@ public final class AddAction extends ContextAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (activeTab) {
+        switch (TabbedPanelContext.getActiveTab()) {
             case 0:
                 RecipeTableModel recipeTableModel = (RecipeTableModel) recipeTable.getModel();
                 RecipeDialog recipeDialog = new RecipeDialog(null, (IngredientTableModel) ingredientTable.getModel(), (CategoryTableModel) categoryTable.getModel());

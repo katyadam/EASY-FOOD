@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AddedIngredientsTableModel extends AbstractEntityTableModel<Triplet> {
+public class AddedIngredientsTableModel extends AbstractEntityTableModel<AddedIngredient> {
 
     private Integer totalNutritionalValue = 0;
 
     public AddedIngredientsTableModel() {
         super(List.of(
-                Column.readonly("Ingredient", Ingredient.class, Triplet::ingredient),
-                Column.readonly("amount", double.class, Triplet::value),
-                Column.readonly("Unit", Unit.class, Triplet::unit)
+                Column.readonly("Ingredient", Ingredient.class, AddedIngredient::ingredient),
+                Column.readonly("amount", double.class, AddedIngredient::value),
+                Column.readonly("Unit", Unit.class, AddedIngredient::unit)
         ), new ArrayList<>());
     }
 
@@ -24,14 +24,14 @@ public class AddedIngredientsTableModel extends AbstractEntityTableModel<Triplet
     }
 
     @Override
-    public void addRow(Triplet entity) {
+    public void addRow(AddedIngredient entity) {
         totalNutritionalValue += entity.ingredient().getNutritionalValue();
         super.addRow(entity);
     }
 
     public boolean contains(Ingredient ingredient) {
-        for (Triplet triplet : data) {
-            if (triplet.ingredient() == ingredient) {
+        for (AddedIngredient addedIngredient : data) {
+            if (addedIngredient.ingredient() == ingredient) {
                 return true;
             }
         }

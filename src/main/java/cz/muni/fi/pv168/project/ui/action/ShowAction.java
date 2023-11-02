@@ -19,7 +19,7 @@ public class ShowAction extends ContextAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JTable activeTable = getActiveTable();
+        JTable activeTable = TabbedPanelContext.getActiveTable();
         int[] selectedRows = activeTable.getSelectedRows();
         if (selectedRows.length != 1) {
             throw new IllegalStateException("Invalid selected rows count (must be 1): " + selectedRows.length);

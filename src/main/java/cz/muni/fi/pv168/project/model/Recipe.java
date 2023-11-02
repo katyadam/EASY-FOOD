@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.model;
 
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
-import cz.muni.fi.pv168.project.ui.model.Triplet;
+import cz.muni.fi.pv168.project.ui.model.AddedIngredient;
 
 import java.awt.*;
 import java.util.List;
@@ -92,7 +92,7 @@ public class Recipe extends Entity {
         }
         return IntStream.range(0, this.getUsedIngredients().getRowCount())
                 .mapToObj(i -> this.getUsedIngredients().getEntity(i))
-                .map(Triplet::ingredient)
+                .map(AddedIngredient::ingredient)
                 .toList();
     }
 

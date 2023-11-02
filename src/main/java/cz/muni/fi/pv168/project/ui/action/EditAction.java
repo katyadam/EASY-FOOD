@@ -31,7 +31,7 @@ public final class EditAction extends ContextAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JTable activeTable = getActiveTable();
+        JTable activeTable = TabbedPanelContext.getActiveTable();
         int[] selectedRows = activeTable.getSelectedRows();
         if (selectedRows.length != 1) {
             throw new IllegalStateException("Invalid selected rows count (must be 1): " + selectedRows.length);
@@ -39,7 +39,7 @@ public final class EditAction extends ContextAction {
         if (activeTable.isEditing()) {
             activeTable.getCellEditor().cancelCellEditing();
         }
-        switch (activeTab) {
+        switch (TabbedPanelContext.getActiveTab()) {
             case 0: {
                 RecipeTableModel recipeTableModel = (RecipeTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
