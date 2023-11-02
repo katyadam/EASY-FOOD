@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.service.crud.CrudService;
 
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class RecipeTableModel extends AbstractTableModel implements EntityTableM
     private final List<Column<Recipe, ?>> columns = List.of(
             Column.editable("Recipe name", String.class, Recipe::getRecipeName, Recipe::setRecipeName),
             Column.readonly("Category name", String.class, Recipe::getCategoryName),
+            Column.readonly("Category color", Color.class, Recipe::getCategoryColor),
             Column.readonly("Nutritional value [KCAL]", int.class, Recipe::getRecipeNutritionalValue),
             Column.editable("Portions", int.class, Recipe::getPortions, Recipe::setPortions),
             Column.editable(

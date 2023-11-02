@@ -275,6 +275,8 @@ public class MainWindow {
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setRowSorter(recipeTableSorter);
+        TableColumn colorColumn = table.getColumnModel().getColumn(2);
+        colorColumn.setCellRenderer(new ColorRenderer());
         return table;
     }
 
@@ -291,8 +293,7 @@ public class MainWindow {
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setRowSorter(categoryTableSorter);
-        // Create a custom cell renderer for the "Color" column
-        TableColumn colorColumn = table.getColumnModel().getColumn(1); // Assuming the "Color" column is the second column (index 1)
+        TableColumn colorColumn = table.getColumnModel().getColumn(1);
         colorColumn.setCellRenderer(new ColorRenderer());
 
         return table;

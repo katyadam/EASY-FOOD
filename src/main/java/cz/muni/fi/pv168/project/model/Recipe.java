@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.model;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.Triplet;
 
+import java.awt.*;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -71,6 +72,9 @@ public class Recipe extends Entity {
 
     public String getCategoryName() {
         return category != null ? category.getName() : "";
+    }
+    public Color getCategoryColor() {
+        return category != null ? category.getColor() : Color.black;
     }
 
     public int getRecipeNutritionalValue() {
