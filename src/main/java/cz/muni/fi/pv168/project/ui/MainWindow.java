@@ -21,6 +21,7 @@ import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 import net.miginfocom.swing.MigLayout;
 
@@ -30,6 +31,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
@@ -289,6 +291,10 @@ public class MainWindow {
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setRowSorter(categoryTableSorter);
+        // Create a custom cell renderer for the "Color" column
+        TableColumn colorColumn = table.getColumnModel().getColumn(1); // Assuming the "Color" column is the second column (index 1)
+        colorColumn.setCellRenderer(new ColorRenderer());
+
         return table;
     }
 

@@ -2,8 +2,11 @@ package cz.muni.fi.pv168.project.ui.model;
 
 import cz.muni.fi.pv168.project.model.Category;
 import cz.muni.fi.pv168.project.service.crud.CrudService;
+import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +16,7 @@ public class CategoryTableModel extends AbstractTableModel implements EntityTabl
     public List<Category> categories;
     private final List<Column<Category, ?>> columns = List.of(
             Column.readonly("Name", String.class, Category::getName),
-            Column.readonly("Color", String.class, Category::getColorCode)
+            Column.readonly("Color", Color.class, Category::getColor)
     );
 
     public CategoryTableModel(CrudService<Category> categoryCrudService) {

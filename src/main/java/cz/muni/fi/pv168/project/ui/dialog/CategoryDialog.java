@@ -37,7 +37,7 @@ public class CategoryDialog extends EntityDialog<Category> {
 
     private void addFields() {
         add("Name:", categoryNameField);
-        add("Color", categoryColor);
+        add("Color");
     }
 
     @Override
