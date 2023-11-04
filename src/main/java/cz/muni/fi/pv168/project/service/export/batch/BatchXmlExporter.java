@@ -8,9 +8,7 @@ import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.service.export.DataManipulationException;
 import cz.muni.fi.pv168.project.service.export.format.Format;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -41,12 +39,12 @@ public class BatchXmlExporter implements BatchExporter{
 
     private void exportRecipe(Recipe recipe, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Recipe", bufferedWriter, tabs);
-        writeAtribute(recipe.getRecipeName(), "FullName", bufferedWriter, tabs + 1);
-        writeAtribute(recipe.getRecipeNutritionalValue(), "NutritionalValue", bufferedWriter, tabs + 1);
-        writeAtribute(recipe.getCategoryName(), "Category", bufferedWriter, tabs + 1);
-        writeAtribute(recipe.getPortions(), "Portions", bufferedWriter, tabs + 1);
-        writeAtribute(recipe.getPreparationTime().toString(), "PreparationTime", bufferedWriter, tabs + 1);
-        writeAtribute(recipe.getDescription(), "Description", bufferedWriter, tabs + 1);
+        writeAtributeString(recipe.getRecipeName(), "FullName", bufferedWriter, tabs + 1);
+        writeAtributeInt(recipe.getRecipeNutritionalValue(), "NutritionalValue", bufferedWriter, tabs + 1);
+        writeAtributeString(recipe.getCategoryName(), "Category", bufferedWriter, tabs + 1);
+        writeAtributeInt(recipe.getPortions(), "Portions", bufferedWriter, tabs + 1);
+        writeAtributeString(recipe.getPreparationTime().toString(), "PreparationTime", bufferedWriter, tabs + 1);
+        writeAtributeString(recipe.getDescription(), "Description", bufferedWriter, tabs + 1);
 
         exportAddedIngredients(recipe.getUsedIngredients().getEntities(), bufferedWriter, tabs + 1);
         writeEnd("Recipe", bufferedWriter, tabs);
@@ -62,9 +60,9 @@ public class BatchXmlExporter implements BatchExporter{
 
     private void exportAddedIngredient(AddedIngredient added, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Ingredient", bufferedWriter, tabs);
-        writeAtribute(added.getIngredient().getName(), "IngredientName", bufferedWriter, tabs + 1);
-        writeAtribute(added.getQuantity().toString(), "Quantity", bufferedWriter, tabs + 1);
-        writeAtribute(added.getUnit().getAbbreviation(), "Unit", bufferedWriter, tabs + 1);
+        writeAtributeString(added.getIngredient().getName(), "IngredientName", bufferedWriter, tabs + 1);
+        writeAtributeString(added.getQuantity().toString(), "Quantity", bufferedWriter, tabs + 1);
+        writeAtributeString(added.getUnit().getAbbreviation(), "Unit", bufferedWriter, tabs + 1);
         writeEnd("Ingredient", bufferedWriter, tabs);
     }
 
@@ -78,9 +76,9 @@ public class BatchXmlExporter implements BatchExporter{
 
     private void exportIngredient(Ingredient ingredient, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Ingredient", bufferedWriter, tabs);
-        writeAtribute(ingredient.getName(), "FullName", bufferedWriter, tabs + 1);
-        writeAtribute(ingredient.getUnitAbbreviation(), "FullName", bufferedWriter, tabs + 1);
-        writeAtribute(ingredient.getNutritionalValue(), "NutritionalValue", bufferedWriter, tabs + 1);
+        writeAtributeString(ingredient.getName(), "FullName", bufferedWriter, tabs + 1);
+        writeAtributeString(ingredient.getUnitAbbreviation(), "FullName", bufferedWriter, tabs + 1);
+        writeAtributeInt(ingredient.getNutritionalValue(), "NutritionalValue", bufferedWriter, tabs + 1);
         writeEnd("Ingredient", bufferedWriter, tabs);
     }
 
@@ -94,10 +92,10 @@ public class BatchXmlExporter implements BatchExporter{
 
     private void exportCustomUnit(CustomUnit customUnit, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("CustomUnit", bufferedWriter, tabs);
-        writeAtribute(customUnit.getFullName(), "FullName", bufferedWriter, tabs + 1);
-        writeAtribute(customUnit.getAbbreviation(), "Abbreviation", bufferedWriter, tabs + 1);
-        writeAtribute(customUnit.getBaseAmount(), "BaseAmount", bufferedWriter, tabs + 1);
-        writeAtribute(customUnit.getBaseAmountNumber(), "BaseAmountNumber", bufferedWriter, tabs + 1);
+        writeAtributeString(customUnit.getFullName(), "FullName", bufferedWriter, tabs + 1);
+        writeAtributeString(customUnit.getAbbreviation(), "Abbreviation", bufferedWriter, tabs + 1);
+        writeAtributeString(customUnit.getBaseAmount(), "BaseAmount", bufferedWriter, tabs + 1);
+        writeAtributeString(customUnit.getBaseAmountNumber(), "BaseAmountNumber", bufferedWriter, tabs + 1);
         writeEnd("CustomUnit", bufferedWriter, tabs);
     }
 
@@ -111,8 +109,8 @@ public class BatchXmlExporter implements BatchExporter{
 
     private void exportCategory(Category category, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Category", bufferedWriter, tabs);
-        writeAtribute(category.getName(), "Name", bufferedWriter, tabs + 1);
-        writeAtribute(category.getColorCode(), "Color", bufferedWriter, tabs + 1);
+        writeAtributeString(category.getName(), "Name", bufferedWriter, tabs + 1);
+        writeAtributeString(category.getColorCode(), "Color", bufferedWriter, tabs + 1);
         writeEnd("Category", bufferedWriter, tabs);
     }
 
@@ -126,15 +124,16 @@ public class BatchXmlExporter implements BatchExporter{
         bufferedWriter.write("</" + value + ">\n");
     }
 
-    private void writeAtribute(String value, String name, BufferedWriter bufferedWriter, int tabs) throws IOException {
+    private void writeAtributeString(String value, String name, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeTabs(tabs, bufferedWriter);
         bufferedWriter.write("<" + name + ">");
         bufferedWriter.write(value);
         writeEnd(name, bufferedWriter, 0);
     }
-    private void writeAtribute(int value, String name, BufferedWriter bufferedWriter, int tabs) throws IOException {
+    private void writeAtributeInt(int value, String name, BufferedWriter bufferedWriter, int tabs) throws IOException {
+        writeTabs(tabs, bufferedWriter);
         bufferedWriter.write("<" + name + ">");
-        bufferedWriter.write(value);
+        bufferedWriter.write(String.valueOf(value));
         writeEnd(name, bufferedWriter, 0);
     }
     private void writeTabs(int tabs, BufferedWriter bufferedWriter) throws IOException {

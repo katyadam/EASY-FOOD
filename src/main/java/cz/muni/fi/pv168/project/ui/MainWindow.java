@@ -161,7 +161,7 @@ public class MainWindow {
         ingredientTable.getTableHeader().setReorderingAllowed(false);
         customUnitTable.getTableHeader().setReorderingAllowed(false);
         categoryTable.getTableHeader().setReorderingAllowed(false);
-        TabbedPanelContext.setTables(this.recipeTable,this.ingredientTable,this.customUnitTable,this.categoryTable);
+        TabbedPanelContext.setTables(this.recipeTable, this.ingredientTable, this.customUnitTable, this.categoryTable);
     }
 
     private void setDataGeneration() {
@@ -320,15 +320,16 @@ public class MainWindow {
 
         editMenu.add(actions.getQuitAction());
 
-        JMenu importMenu = new JMenu("Import");
-        editMenu.setMnemonic('i');
+        JButton importButton = new JButton(new ExportAction("Import",
+                categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
 
-        JMenu exportMenu = new JMenu("Export");
-        editMenu.setMnemonic('x');
+        JButton exportButton = new JButton(new ExportAction("Export",
+                categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
+
 
         menuBar.add(editMenu);
-        menuBar.add(importMenu);
-        menuBar.add(exportMenu);
+        menuBar.add(importButton);
+        menuBar.add(exportButton);
 
         return menuBar;
     }
