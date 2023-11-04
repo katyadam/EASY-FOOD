@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.model;
+package cz.muni.fi.pv168.project.ui.model.unused;
 
 import javax.swing.*;
 import javax.swing.event.ListDataListener;

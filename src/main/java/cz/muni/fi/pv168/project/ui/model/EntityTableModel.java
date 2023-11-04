@@ -16,8 +16,10 @@ public interface EntityTableModel<E> extends TableModel {
      *                                   than number of items in the table
      */
     E getEntity(int rowIndex);
+
     void deleteRow(int rowIndex);
+
     void addRow(E entity);
+
     void updateRow(E entity);
-    void refresh();
 }

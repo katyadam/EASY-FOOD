@@ -1,9 +1,14 @@
 package cz.muni.fi.pv168.project.model;
 
+import cz.muni.fi.pv168.project.service.crud.AddedIngredientCrudService;
+import cz.muni.fi.pv168.project.service.crud.CrudService;
+import cz.muni.fi.pv168.project.service.validation.AddedIngredientValidator;
+import cz.muni.fi.pv168.project.storage.InMemoryRepository;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredient;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -13,7 +18,12 @@ public class Recipe extends Entity {
     private int portions;
     private Category category;
     private String description = "No recipe description";
-    private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel();
+    private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel(
+            new AddedIngredientCrudService(
+                    new InMemoryRepository<>(new ArrayList<>()),
+                    new AddedIngredientValidator(),
+                    new UuidGuidProvider()
+            ));
 
     public Recipe(
             String recipeName,

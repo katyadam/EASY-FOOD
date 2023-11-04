@@ -1,22 +1,27 @@
 package cz.muni.fi.pv168.project.ui.model;
 
+import cz.muni.fi.pv168.project.model.Entity;
+import cz.muni.fi.pv168.project.service.crud.CrudService;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractEntityTableModel<T> extends AbstractTableModel {
+public abstract class AbstractEntityTableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
 
-    protected final List<T> data;
+    private final List<T> entities;
     private final List<Column<T, ?>> columns;
+    private final CrudService<T> crudService;
 
-    public AbstractEntityTableModel(List<Column<T, ?>> columns, List<T> data) {
+    public AbstractEntityTableModel(List<Column<T, ?>> columns, List<T> entities, CrudService<T> crudService) {
         this.columns = columns;
-        this.data = new ArrayList<>(data);
+        this.entities = new ArrayList<>(entities);
+        this.crudService = crudService;
     }
 
     @Override
     public int getRowCount() {
-        return data.size();
+        return entities.size();
     }
 
     @Override
@@ -51,27 +56,33 @@ public abstract class AbstractEntityTableModel<T> extends AbstractTableModel {
         columns.get(columnIndex).setValue(value, entity);
     }
 
+
     public void deleteRow(int rowIndex) {
-        data.remove(rowIndex);
+        T entity = getEntity(rowIndex);
+        entities.remove(rowIndex);
+        crudService.deleteByGuid(entity.getGuid());
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
     public void addRow(T entity) {
-        int newRowIndex = data.size();
-        data.add(entity);
+        crudService.create(entity);
+        int newRowIndex = entities.size();
+        entities.add(entity);
         fireTableRowsInserted(newRowIndex, newRowIndex);
     }
 
     public void updateRow(T entity) {
-        int rowIndex = data.indexOf(entity);
+        crudService.update(entity).intoException();
+        int rowIndex = entities.indexOf(entity);
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
 
     public T getEntity(int rowIndex) {
-        return data.get(rowIndex);
+        return entities.get(rowIndex);
     }
 
-    public List<T> getData() {
-        return data;
+    public List<T> getEntities() {
+        return entities;
     }
+
 }
