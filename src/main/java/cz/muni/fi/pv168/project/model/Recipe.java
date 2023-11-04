@@ -1,16 +1,12 @@
 package cz.muni.fi.pv168.project.model;
 
 import cz.muni.fi.pv168.project.service.crud.AddedIngredientCrudService;
-import cz.muni.fi.pv168.project.service.crud.CrudService;
 import cz.muni.fi.pv168.project.service.validation.AddedIngredientValidator;
 import cz.muni.fi.pv168.project.storage.InMemoryRepository;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
-import cz.muni.fi.pv168.project.ui.model.AddedIngredient;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
 
 public class Recipe extends Entity {
     private String recipeName;

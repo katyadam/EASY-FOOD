@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.service.validation;
 
-import cz.muni.fi.pv168.project.ui.model.AddedIngredient;
+import cz.muni.fi.pv168.project.model.AddedIngredient;
 
 public class AddedIngredientValidator implements Validator<AddedIngredient> {
     @Override
