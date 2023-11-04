@@ -8,26 +8,26 @@ import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.service.export.DataManipulationException;
 import cz.muni.fi.pv168.project.service.export.format.Format;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class BatchXmlExporter implements BatchExporter{
     @Override
     public void exportBatch(Batch batch, String filePath) {
-        try {
-            FileWriter myWriter = new FileWriter(filePath);
-            BufferedWriter bufferedWriter = new BufferedWriter(myWriter);
-            writeStart("EasyFood", bufferedWriter, 0);
-            exportCategories(batch, bufferedWriter, 1);
-            exportCustomUnits(batch, bufferedWriter, 1);
-            exportIngredients(batch, bufferedWriter, 1);
-            exportRecipes(batch, bufferedWriter, 1);
-            writeEnd("EasyFood", bufferedWriter, 0);
-            bufferedWriter.close();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8))){
+            writeStart("EasyFood", bw, 0);
+            exportCategories(batch, bw, 1);
+            exportCustomUnits(batch, bw, 1);
+            exportIngredients(batch, bw, 1);
+            exportRecipes(batch, bw, 1);
+            writeEnd("EasyFood", bw, 0);
         } catch (IOException e) {
-            throw new DataManipulationException("Bad file");
+            throw new DataManipulationException("Cannot write into file");
         }
     }
 
