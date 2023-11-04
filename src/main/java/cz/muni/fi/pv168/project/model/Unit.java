@@ -2,9 +2,8 @@ package cz.muni.fi.pv168.project.model;
 
 public interface Unit {
 
-    public String getFullName();
+    String getFullName();
 
-    public String getAbbreviation();
-
+    String getAbbreviation();
 
 }

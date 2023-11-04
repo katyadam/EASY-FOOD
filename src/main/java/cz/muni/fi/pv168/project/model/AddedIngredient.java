@@ -1,9 +1,5 @@
 package cz.muni.fi.pv168.project.model;
 
-import cz.muni.fi.pv168.project.model.Entity;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.Unit;
-
 public class AddedIngredient extends Entity {
 
     private final Ingredient ingredient;

@@ -2,8 +2,7 @@ package cz.muni.fi.pv168.project.ui.renderers;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 
 public class ColorRenderer extends DefaultTableCellRenderer {
     @Override

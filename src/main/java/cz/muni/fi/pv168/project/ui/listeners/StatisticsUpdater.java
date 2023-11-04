@@ -3,10 +3,8 @@ package cz.muni.fi.pv168.project.ui.listeners;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
-public class StatisticsUpdater  {
+public class StatisticsUpdater {
     private JTable table;
     private String text;
     private static JLabel statistics;
@@ -35,7 +33,7 @@ public class StatisticsUpdater  {
         statistics.setText(builder.toString());
     }
 
-    public static void setLabel( JLabel label) {
+    public static void setLabel(JLabel label) {
         statistics = label;
     }
 }

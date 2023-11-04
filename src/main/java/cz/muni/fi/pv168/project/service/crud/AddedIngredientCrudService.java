@@ -1,10 +1,10 @@
 package cz.muni.fi.pv168.project.service.crud;
 
+import cz.muni.fi.pv168.project.model.AddedIngredient;
 import cz.muni.fi.pv168.project.model.GuidProvider;
 import cz.muni.fi.pv168.project.repository.Repository;
 import cz.muni.fi.pv168.project.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.service.validation.Validator;
-import cz.muni.fi.pv168.project.model.AddedIngredient;
 
 import java.util.List;
 

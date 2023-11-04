@@ -54,7 +54,7 @@ public class CategoryCrudService implements CrudService<Category> {
         if (validationResult.isValid()) {
             categoryRepository.update(entity);
         }
-        
+
         return validationResult;
     }
 

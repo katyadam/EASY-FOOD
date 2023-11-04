@@ -40,6 +40,6 @@ public enum BaseUnits implements Unit {
     }
 
     public static List<BaseUnits> getBaseUnitList() {
-        return List.of( MILLILITER, LITER, GRAM, KILOGRAM, PIECE);
+        return List.of(MILLILITER, LITER, GRAM, KILOGRAM, PIECE);
     }
 }

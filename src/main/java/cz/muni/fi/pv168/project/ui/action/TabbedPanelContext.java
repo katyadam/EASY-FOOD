@@ -13,7 +13,7 @@ public class TabbedPanelContext {
     protected static JTable categoryTable;
 
 
-    public static void setTables( JTable rt, JTable it, JTable ut, JTable ct){
+    public static void setTables(JTable rt, JTable it, JTable ut, JTable ct) {
         recipeTable = rt;
         ingredientTable = it;
         unitsTable = ut;
@@ -36,7 +36,8 @@ public class TabbedPanelContext {
                 return categoryTable;
         }
     }
-    public static int getActiveTab(){
+
+    public static int getActiveTab() {
         return activeTab;
     }
 

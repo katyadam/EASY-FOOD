@@ -5,7 +5,6 @@ import cz.muni.fi.pv168.project.model.*;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
-import cz.muni.fi.pv168.project.model.AddedIngredient;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
