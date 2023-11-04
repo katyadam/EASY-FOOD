@@ -2,13 +2,10 @@ package cz.muni.fi.pv168.project.service.export.batch;
 
 import cz.muni.fi.pv168.project.service.export.format.Format;
 
-/**
- * @author Adam Juhas
- */
-public class BatchCsvImporter implements BatchImporter{
+public class BatchXmlExporter implements BatchExporter{
     @Override
-    public Batch importBatch(String filePath) {
-        return null;
+    public void exportBatch(Batch batch, String filePath) {
+
     }
 
     @Override
