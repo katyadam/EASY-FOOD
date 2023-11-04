@@ -15,7 +15,7 @@ public class FilterRecipesAction extends AbstractAction {
 
     private final TableRowSorter<RecipeTableModel> recipeTableRowSorter;
     JComboBox<Ingredient> ingredientFilter;
-    JComboBox<String> categoryFilter;
+    JComboBox<Category> categoryFilter;
     JSpinner caloriesMinFilter;
     JSpinner caloriesMaxFilter;
     JSpinner portionsMinFilter;
@@ -24,7 +24,7 @@ public class FilterRecipesAction extends AbstractAction {
 
     public FilterRecipesAction(
             JComboBox<Ingredient> ingredientFilter,
-            JComboBox<String> categoryFilter,
+            JComboBox<Category> categoryFilter,
             JSpinner caloriesMinFilter,
             JSpinner caloriesMaxFilter,
             JSpinner portionsMinFilter,

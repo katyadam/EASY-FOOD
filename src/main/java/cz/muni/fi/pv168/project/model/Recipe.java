@@ -86,16 +86,6 @@ public class Recipe extends Entity {
         return usedIngredients;
     }
 
-    public List<Ingredient> getIngredientList() {
-        if (this.getUsedIngredients().getRowCount() == 0) {
-            return List.of();
-        }
-        return IntStream.range(0, this.getUsedIngredients().getRowCount())
-                .mapToObj(i -> this.getUsedIngredients().getEntity(i))
-                .map(AddedIngredient::ingredient)
-                .toList();
-    }
-
     @Override
     public String toString() {
         return recipeName;

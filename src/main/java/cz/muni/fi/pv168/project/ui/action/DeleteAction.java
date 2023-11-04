@@ -27,6 +27,7 @@ public final class DeleteAction extends ContextAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JTable activeTable = TabbedPanelContext.getActiveTable();
+        System.out.println(activeTable.getRowCount());
         EntityTableModel tableModel = (EntityTableModel) activeTable.getModel();
         Arrays.stream(activeTable.getSelectedRows())
                 // view row index must be converted to model row index

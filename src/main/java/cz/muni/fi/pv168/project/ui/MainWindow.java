@@ -346,7 +346,7 @@ public class MainWindow {
     private JComponent createRecipeTab() {
         JPanel recipePanel = new JPanel(new MigLayout("fillx, insets 2"));
         JComboBox<Ingredient> ingredientFilter = new JComboBox<>(ingredientList.toArray(new Ingredient[0]));
-        JComboBox<String> categoryFilter = new JComboBox<>(new String[0]);
+        JComboBox<Category> categoryFilter = new JComboBox<>(categoryList.toArray(new Category[0]));
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
         JSpinner portionsMinFilter = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
