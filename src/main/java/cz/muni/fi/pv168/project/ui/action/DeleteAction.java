@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
 import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
@@ -37,5 +38,7 @@ public final class DeleteAction extends ContextAction {
                 // which are not deleted yet
                 .sorted(Comparator.reverseOrder())
                 .forEach(tableModel::deleteRow);
+        StatisticsUpdater.reload();
+
     }
 }

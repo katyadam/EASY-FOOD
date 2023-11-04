@@ -192,16 +192,7 @@ public class MainWindow {
 
     private void setStatistics() {
         JLabel statistics = (JLabel) ((JToolBar) layout.getMainPanel().getComponent(2)).getComponent(0);
-        recipeTable.getModel().addTableModelListener(
-                new StatisticsUpdater(recipeTable, "Showing recipes ", statistics)
-        );
-        ingredientTable.getModel().addTableModelListener(
-                new StatisticsUpdater(ingredientTable, "Showing ingredients ", statistics)
-        );
-        customUnitTable.getModel().addTableModelListener(
-                new StatisticsUpdater(customUnitTable, "Showing units ", statistics)
-        );
-
+        StatisticsUpdater.setLabel(statistics);
         statistics.setText("Showing recipes " + recipeTable.getRowCount() + " out of " + recipeTable.getModel().getRowCount());
     }
 
@@ -211,8 +202,7 @@ public class MainWindow {
         public void stateChanged(ChangeEvent e) {
             TabbedPanelContext.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
             ButtonLocker.reload(actions, TabbedPanelContext.getActiveTable());
-            ((AbstractTableModel) TabbedPanelContext.getActiveTable().getModel()).fireTableChanged( new TableModelEvent(TabbedPanelContext.getActiveTable().getModel()));
-
+            StatisticsUpdater.reload();
         }
     }
 

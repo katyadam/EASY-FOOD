@@ -1,8 +1,11 @@
 package cz.muni.fi.pv168.project.ui.listeners;
 
 import cz.muni.fi.pv168.project.ui.filters.SearchBarRowFilter;
+import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.KeyAdapter;
@@ -27,5 +30,6 @@ public class SearchBarListener<TABLE_MODEL extends TableModel> extends KeyAdapte
                 searchBar.getText(),
                 searchBar.getText().isEmpty()
         ));
+        StatisticsUpdater.reload();
     }
 }
