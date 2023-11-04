@@ -4,9 +4,9 @@ import java.util.List;
 
 public enum BaseUnits implements Unit {
     PIECE("piece", "pc"),
-    TEASPOON("teaspoon", "tsp"),
-    TABLESPOON("tablespoon", "tbsp"),
-    CUP("cup", "c"),
+    //TEASPOON("teaspoon", "tsp"),
+    //TABLESPOON("tablespoon", "tbsp"),
+    //CUP("cup", "c"),
     //FLUID_OUNCE("fluid ounce", "fl oz"),
     //PINT("pint", "pt"),
     //QUART("quart", "qt"),
@@ -21,8 +21,8 @@ public enum BaseUnits implements Unit {
     //PIECE("piece", "pc");
 
 
-    private String fullName;
-    private String abbreviation;
+    private final String fullName;
+    private final String abbreviation;
 
     BaseUnits(String fullName, String abbreviation) {
         this.fullName = fullName;
@@ -40,6 +40,6 @@ public enum BaseUnits implements Unit {
     }
 
     public static List<BaseUnits> getBaseUnitList() {
-        return List.of(TEASPOON, TABLESPOON, CUP, MILLILITER, LITER, GRAM, KILOGRAM, PIECE);
+        return List.of( MILLILITER, LITER, GRAM, KILOGRAM, PIECE);
     }
 }
