@@ -2,13 +2,28 @@ package cz.muni.fi.pv168.project.model;
 
 public class AddedIngredient extends Entity {
 
-    private final Ingredient ingredient;
-    private final Double quantity;
-    private final Unit unit;
+    private Ingredient ingredient;
+    private Double quantity;
+    private Unit unit;
+
+    public AddedIngredient() {
+    }
 
     public AddedIngredient(Ingredient ingredient, Double quantity, Unit unit) {
         this.ingredient = ingredient;
         this.quantity = quantity;
+        this.unit = unit;
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 
@@ -23,4 +38,5 @@ public class AddedIngredient extends Entity {
     public Ingredient getIngredient() {
         return ingredient;
     }
+
 }

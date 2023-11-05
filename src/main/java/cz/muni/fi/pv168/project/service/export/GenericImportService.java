@@ -1,17 +1,15 @@
 package cz.muni.fi.pv168.project.service.export;
 
 
-
 import cz.muni.fi.pv168.project.model.Category;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.service.crud.CrudService;
-import cz.muni.fi.pv168.project.service.export.batch.BatchImporter;
 import cz.muni.fi.pv168.project.service.export.batch.BatchOperationException;
 import cz.muni.fi.pv168.project.service.export.format.Format;
 import cz.muni.fi.pv168.project.service.export.format.FormatMapping;
-import java.util.Collection;
+import cz.muni.fi.pv168.project.service.export.importer.BatchImporter;
 
 import java.util.Collection;
 
@@ -61,19 +59,21 @@ public class GenericImportService implements ImportService {
         recipeCrudService.create(recipe)
                 .intoException();
     }
+
     private void createIngredient(Ingredient ingredient) {
         ingredientCrudService.create(ingredient)
                 .intoException();
     }
+
     private void createCustomUnit(CustomUnit customUnit) {
         customUnitsCrudService.create(customUnit)
                 .intoException();
     }
+
     private void createCategory(Category category) {
         categoryCrudService.create(category)
                 .intoException();
     }
-
 
 
     @Override

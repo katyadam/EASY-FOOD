@@ -1,0 +1,40 @@
+<EasyFood>
+    <Categories>
+        <Category>
+            <CategoryName>Spanish</CategoryName>
+            <Color>94,232,235</Color>
+        </Category>
+    </Categories>
+    <CustomUnits>
+        <CustomUnit>
+            <CustomUnitName>sprig</CustomUnitName>
+            <Abbreviation>spg</Abbreviation>
+            <BaseAmount>85,47 pc</BaseAmount>
+            <BaseAmountNumber>85.46809551995536</BaseAmountNumber>
+            <BaseUnitAbbr>pc</BaseUnitAbbr>
+        </CustomUnit>
+    </CustomUnits>
+    <Ingredients>
+        <Ingredient>
+            <IngredientName>Paprika</IngredientName>
+            <IngredientUnit>spg</IngredientUnit>
+            <NutritionalValue>635</NutritionalValue>
+        </Ingredient>
+    </Ingredients>
+    <Recipes>
+        <Recipe>
+            <RecipeName>Gulas</RecipeName>
+            <RecipeCategory>Spanish</RecipeCategory>
+            <Portions>1</Portions>
+            <PreparationTime>1 hours 0 minutes</PreparationTime>
+            <Description>Description</Description>
+            <AddedIngredients>
+                <AddedIngredient>
+                    <AddedIngredientName>Paprika</AddedIngredientName>
+                    <Quantity>1.0</Quantity>
+                    <AddedUnit>spg</AddedUnit>
+                </AddedIngredient>
+            </AddedIngredients>
+        </Recipe>
+    </Recipes>
+</EasyFood>

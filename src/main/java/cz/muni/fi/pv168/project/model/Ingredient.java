@@ -6,6 +6,9 @@ public class Ingredient extends Entity {
 
     private Unit unitType;
 
+    public Ingredient() {
+    }
+
     public Ingredient(String name, int nutritionalValue, Unit unitType) {
         this.name = name;
         this.nutritionalValue = nutritionalValue;

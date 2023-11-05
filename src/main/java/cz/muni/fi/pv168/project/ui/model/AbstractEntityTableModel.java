@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class AbstractEntityTableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
 
-    private final List<T> entities;
+    private List<T> entities;
     private final List<Column<T, ?>> columns;
     private final CrudService<T> crudService;
 
@@ -83,6 +83,11 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
 
     public List<T> getEntities() {
         return entities;
+    }
+
+    public void refresh() {
+        this.entities = new ArrayList<>(crudService.findAll());
+        fireTableDataChanged();
     }
 
 }

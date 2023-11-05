@@ -29,8 +29,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
@@ -223,7 +221,7 @@ public class MainWindow {
         @Override
         public void focusLost(FocusEvent e) {
             super.focusLost(e);
-            if (bar.getText().equals("")) {
+            if (bar.getText().isEmpty()) {
                 bar.setText("Search...");
             }
         }
@@ -320,8 +318,14 @@ public class MainWindow {
 
         editMenu.add(actions.getQuitAction());
 
-        JButton importButton = new JButton(new ExportAction("Import",
-                categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
+        JButton importButton = new JButton(new ImportAction(
+                "Import",
+                categoryCrudService,
+                customUnitService,
+                ingredientCrudService,
+                recipeCrudService,
+                this::refresh
+        ));
 
         JButton exportButton = new JButton(new ExportAction("Export",
                 categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
@@ -429,5 +433,12 @@ public class MainWindow {
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         return;
+    }
+
+    private void refresh() {
+        ingredientTableModel.refresh();
+        recipeTableModel.refresh();
+        categoryTableModel.refresh();
+        customUnitTableModel.refresh();
     }
 }
