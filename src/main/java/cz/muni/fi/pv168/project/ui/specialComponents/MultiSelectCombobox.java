@@ -1,10 +1,15 @@
 package cz.muni.fi.pv168.project.ui.specialComponents;
 
 import cz.muni.fi.pv168.project.ui.resources.Icons;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.ComboBoxUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,29 +19,32 @@ import java.util.List;
 public class MultiSelectCombobox<T> extends JButton {
     private List<T> items;
     private List<T> selectedItems = new ArrayList<>();
-    private JPopupMenu menu;
+    private JScrollPopupMenu menu;
+    private JComboBox<T> coloring = new JComboBox<>();
+
+    private boolean showing = false;
 
     public MultiSelectCombobox(List<T> items, String name) {
         super(name);
+        super.setBorder(coloring.getBorder());
+        super.setBackground(coloring.getBackground());
         this.items = items;
         createMenu();
         addActionListener(e -> {
-            if (!menu.isVisible()) {
-                Point p = getLocationOnScreen();
-                menu.setInvoker(this);
-                menu.setLocation((int) p.getX(),
-                        (int) p.getY() + this.getHeight());
-                menu.setVisible(true);
-            } else {
-                menu.setVisible(false);
+            if (!showing) {
+                menu.show(this,0,this.getHeight());
+                showing = true;
+                return;
             }
+            showing = false;
 
         });
     }
     private JPopupMenu createMenu() {
-        menu = new JPopupMenu();
+        menu = new JScrollPopupMenu();
+        menu.setMaximumVisibleRows(6);
         for (T item : items) {
-            menu.add(new SelectedAction<>(selectedItems, item, menu, this));
+            menu.add( new SelectedAction<T>(selectedItems, item, menu, this));
         }
         return menu;
     }
@@ -57,7 +65,7 @@ class SelectedAction<T> extends AbstractAction {
     private final JButton button;
 
     private boolean selected = false;
-    public SelectedAction(List<T> selectedItems, T item, JPopupMenu menu, MultiSelectCombobox<T> button) {
+    public SelectedAction(List<T> selectedItems, T item, JScrollPopupMenu menu, MultiSelectCombobox<T> button) {
         super(item.toString());
         this.item = item;
         this.menu = menu;
