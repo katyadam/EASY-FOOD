@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.filters.recipes;
 
+import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.filters.EntityMatcher;
 
@@ -22,10 +23,15 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
     }
 
     private boolean ingredientMatch(Recipe recipe) {
-        if (recipeFilterAttributes.ingredient() == null) {
+        if (recipeFilterAttributes == null) {
             return true;
         }
-        return recipe.getUsedIngredients().contains(recipeFilterAttributes.ingredient());
+        for (Ingredient ingredient: recipeFilterAttributes.ingredients()) {
+            if ( !recipe.getUsedIngredients().contains(ingredient)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean categoryMatch(Recipe recipe) {

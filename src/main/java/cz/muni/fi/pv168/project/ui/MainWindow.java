@@ -23,17 +23,18 @@ import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
+import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.List;
@@ -90,6 +91,8 @@ public class MainWindow {
     private final CategoryCrudService categoryCrudService;
     private final IngredientCrudService ingredientCrudService;
     private final CustomUnitService customUnitService;
+
+    private MultiSelectCombobox<Ingredient> ingredientsFilter;
 
     public MainWindow() {
         setDataGeneration();
@@ -203,6 +206,7 @@ public class MainWindow {
             TabbedPanelContext.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
             ButtonLocker.reload(actions, TabbedPanelContext.getActiveTable());
             StatisticsUpdater.reload();
+            ingredientsFilter.reload(ingredientCrudService.findAll());
         }
     }
 
@@ -334,14 +338,13 @@ public class MainWindow {
     }
 
     private JComponent createRecipeTab() {
-        JPanel recipePanel = new JPanel(new MigLayout("fillx, insets 2"));
-        JComboBox<Ingredient> ingredientFilter = new JComboBox<>(ingredientList.toArray(new Ingredient[0]));
+        JPanel recipePanel = new JPanel(new MigLayout("fillx, insets 2, debug"));
+        ingredientsFilter = new MultiSelectCombobox<>(ingredientList, "Ingredients");
         JComboBox<Category> categoryFilter = new JComboBox<>(categoryList.toArray(new Category[0]));
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
         JSpinner portionsMinFilter = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
         JSpinner portionsMaxFilter = new JSpinner(new SpinnerNumberModel(200, 1, 200, 1));
-        JLabel ingredients = new JLabel("Ingredients:");
         JLabel categories = new JLabel("Categories:");
         JLabel nutrition = new JLabel("Calories min");
         JLabel max = new JLabel("max");
@@ -351,7 +354,7 @@ public class MainWindow {
         searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
         JButton fireFilter = new JButton(new FilterRecipesAction(
-                ingredientFilter,
+                ingredientsFilter,
                 categoryFilter,
                 caloriesMinFilter,
                 caloriesMaxFilter,
@@ -362,8 +365,7 @@ public class MainWindow {
         );
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
         recipePanel.add(searchBar, " left, grow, wmin 90");
-        recipePanel.add(ingredients, " right, split 2");
-        recipePanel.add(ingredientFilter);
+        recipePanel.add(ingredientsFilter, " right");
         recipePanel.add(categories, " right, split 2");
         recipePanel.add(categoryFilter);
         recipePanel.add(nutrition, "right, split 4");
@@ -425,6 +427,53 @@ public class MainWindow {
         panel.add(categoryScroll, " grow, height 99%");
         return panel;
     }
+
+   /* private JComponent createMultiselectComboBox() {
+        JPopupMenu menu = new JPopupMenu();
+        JButton button = new JButton("Ingredients");
+        for (Ingredient ingredient : ingredientList) {
+            menu.add(new SelectedIngredientAction(ingredient, menu, button));
+        }
+        button.addActionListener(e -> {
+            if (!menu.isVisible()) {
+                Point p = button.getLocationOnScreen();
+                menu.setInvoker(button);
+                menu.setLocation((int) p.getX(),
+                        (int) p.getY() + button.getHeight());
+                menu.setVisible(true);
+            } else {
+                menu.setVisible(false);
+            }
+
+        });
+        return button;
+    }
+    private class SelectedIngredientAction extends AbstractAction {
+
+        private final Ingredient ingredient;
+        private final JPopupMenu menu;
+        private final JButton button;
+
+        private boolean selected = false;
+        public SelectedIngredientAction( Ingredient ingredient, JPopupMenu menu, JButton button) {
+            super(ingredient.getName());
+            this.ingredient = ingredient;
+            this.menu = menu;
+            this.button = button;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            menu.show(button, 0, button.getHeight());
+            if ( selected ) {
+                putValue(Action.SMALL_ICON, null);
+                selected = false;
+            } else {
+                putValue(Action.SMALL_ICON, Icons.SELECTED_ICON);
+                selected = true;
+            }
+        }
+    }*/
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         return;
