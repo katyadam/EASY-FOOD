@@ -70,6 +70,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
             this.recipe = new Recipe(null, null, 0, new PreparationTime(1, 50));
         }
         categoryJComboBox.setModel(new DefaultComboBoxModel<>(categoryTableModel.getEntities().toArray(new Category[0])));
+        categoryJComboBox.setSelectedItem(this.recipe.getCategory());
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addedIngredientsTable.setModel(addedIngredientsTableModel);
         addedIngredientsTable.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
