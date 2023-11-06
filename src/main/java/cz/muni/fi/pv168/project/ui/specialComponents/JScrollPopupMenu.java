@@ -1,17 +1,11 @@
 package cz.muni.fi.pv168.project.ui.specialComponents;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.LayoutManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollBar;
 
 public class JScrollPopupMenu extends JPopupMenu {
     protected int maximumVisibleRows = 10;
@@ -28,7 +22,8 @@ public class JScrollPopupMenu extends JPopupMenu {
 
         super.add(getScrollBar());
         addMouseWheelListener(new MouseWheelListener() {
-            @Override public void mouseWheelMoved(MouseWheelEvent event) {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent event) {
                 JScrollBar scrollBar = getScrollBar();
                 int amount = (event.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL)
                         ? event.getUnitsToScroll() * scrollBar.getUnitIncrement()
@@ -41,11 +36,13 @@ public class JScrollPopupMenu extends JPopupMenu {
     }
 
     private JScrollBar popupScrollBar;
+
     protected JScrollBar getScrollBar() {
-        if(popupScrollBar == null) {
+        if (popupScrollBar == null) {
             popupScrollBar = new JScrollBar(JScrollBar.VERTICAL);
             popupScrollBar.addAdjustmentListener(new AdjustmentListener() {
-                @Override public void adjustmentValueChanged(AdjustmentEvent e) {
+                @Override
+                public void adjustmentValueChanged(AdjustmentEvent e) {
                     doLayout();
                     repaint();
                 }
@@ -65,7 +62,7 @@ public class JScrollPopupMenu extends JPopupMenu {
         this.maximumVisibleRows = maximumVisibleRows;
     }
 
-    public void paintChildren(Graphics g){
+    public void paintChildren(Graphics g) {
         Insets insets = getInsets();
         g.clipRect(insets.left, insets.top, getWidth(), getHeight() - insets.top - insets.bottom);
         super.paintChildren(g);
@@ -74,7 +71,7 @@ public class JScrollPopupMenu extends JPopupMenu {
     protected void addImpl(Component comp, Object constraints, int index) {
         super.addImpl(comp, constraints, index);
 
-        if(maximumVisibleRows < getComponentCount()-1) {
+        if (maximumVisibleRows < getComponentCount() - 1) {
             getScrollBar().setVisible(true);
         }
     }
@@ -85,27 +82,27 @@ public class JScrollPopupMenu extends JPopupMenu {
 
         super.remove(index);
 
-        if(maximumVisibleRows >= getComponentCount()-1) {
+        if (maximumVisibleRows >= getComponentCount() - 1) {
             getScrollBar().setVisible(false);
         }
     }
 
-    public void show(Component invoker, int x, int y){
+    public void show(Component invoker, int x, int y) {
         JScrollBar scrollBar = getScrollBar();
-        if(scrollBar.isVisible()){
+        if (scrollBar.isVisible()) {
             int extent = 0;
             int max = 0;
             int i = 0;
             int unit = -1;
             int width = 0;
-            for(Component comp : getComponents()) {
-                if(!(comp instanceof JScrollBar)) {
+            for (Component comp : getComponents()) {
+                if (!(comp instanceof JScrollBar)) {
                     Dimension preferredSize = comp.getPreferredSize();
                     width = Math.max(width, preferredSize.width);
-                    if(unit < 0){
+                    if (unit < 0) {
                         unit = preferredSize.height;
                     }
-                    if(i++ < maximumVisibleRows) {
+                    if (i++ < maximumVisibleRows) {
                         extent += preferredSize.height;
                     }
                     max += preferredSize.height;
@@ -128,20 +125,25 @@ public class JScrollPopupMenu extends JPopupMenu {
         super.show(invoker, x, y);
     }
 
-    protected static class ScrollPopupMenuLayout implements LayoutManager{
-        @Override public void addLayoutComponent(String name, Component comp) {}
-        @Override public void removeLayoutComponent(Component comp) {}
+    protected static class ScrollPopupMenuLayout implements LayoutManager {
+        @Override
+        public void addLayoutComponent(String name, Component comp) {
+        }
 
-        @Override public Dimension preferredLayoutSize(Container parent) {
+        @Override
+        public void removeLayoutComponent(Component comp) {
+        }
+
+        @Override
+        public Dimension preferredLayoutSize(Container parent) {
             int visibleAmount = Integer.MAX_VALUE;
             Dimension dim = new Dimension();
-            for(Component comp :parent.getComponents()){
-                if(comp.isVisible()) {
-                    if(comp instanceof JScrollBar){
+            for (Component comp : parent.getComponents()) {
+                if (comp.isVisible()) {
+                    if (comp instanceof JScrollBar) {
                         JScrollBar scrollBar = (JScrollBar) comp;
                         visibleAmount = scrollBar.getVisibleAmount();
-                    }
-                    else {
+                    } else {
                         Dimension pref = comp.getPreferredSize();
                         dim.width = Math.max(dim.width, pref.width);
                         dim.height += pref.height;
@@ -155,16 +157,16 @@ public class JScrollPopupMenu extends JPopupMenu {
             return dim;
         }
 
-        @Override public Dimension minimumLayoutSize(Container parent) {
+        @Override
+        public Dimension minimumLayoutSize(Container parent) {
             int visibleAmount = Integer.MAX_VALUE;
             Dimension dim = new Dimension();
-            for(Component comp : parent.getComponents()) {
-                if(comp.isVisible()){
-                    if(comp instanceof JScrollBar) {
+            for (Component comp : parent.getComponents()) {
+                if (comp.isVisible()) {
+                    if (comp instanceof JScrollBar) {
                         JScrollBar scrollBar = (JScrollBar) comp;
                         visibleAmount = scrollBar.getVisibleAmount();
-                    }
-                    else {
+                    } else {
                         Dimension min = comp.getMinimumSize();
                         dim.width = Math.max(dim.width, min.width);
                         dim.height += min.height;
@@ -178,7 +180,8 @@ public class JScrollPopupMenu extends JPopupMenu {
             return dim;
         }
 
-        @Override public void layoutContainer(Container parent) {
+        @Override
+        public void layoutContainer(Container parent) {
             Insets insets = parent.getInsets();
 
             int width = parent.getWidth() - insets.left - insets.right;
@@ -188,19 +191,19 @@ public class JScrollPopupMenu extends JPopupMenu {
             int y = insets.top;
             int position = 0;
 
-            for(Component comp : parent.getComponents()) {
-                if((comp instanceof JScrollBar) && comp.isVisible()) {
+            for (Component comp : parent.getComponents()) {
+                if ((comp instanceof JScrollBar) && comp.isVisible()) {
                     JScrollBar scrollBar = (JScrollBar) comp;
                     Dimension dim = scrollBar.getPreferredSize();
-                    scrollBar.setBounds(x + width-dim.width, y, dim.width, height);
+                    scrollBar.setBounds(x + width - dim.width, y, dim.width, height);
                     width -= dim.width;
                     position = scrollBar.getValue();
                 }
             }
 
             y -= position;
-            for(Component comp : parent.getComponents()) {
-                if(!(comp instanceof JScrollBar) && comp.isVisible()) {
+            for (Component comp : parent.getComponents()) {
+                if (!(comp instanceof JScrollBar) && comp.isVisible()) {
                     Dimension pref = comp.getPreferredSize();
                     comp.setBounds(x, y, width, pref.height);
                     y += pref.height;
