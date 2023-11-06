@@ -6,7 +6,7 @@
       <xy x="20" y="20" width="2492" height="656"/>
     </constraints>
     <properties>
-      <background color="-8141915"/>
+      <background color="-13524797"/>
     </properties>
     <border type="none"/>
     <children>
@@ -33,7 +33,7 @@
         <properties>
           <borderPainted value="true"/>
           <floatable value="false"/>
-          <foreground color="-5378095"/>
+          <foreground color="-13524797"/>
           <margin top="0" left="0" bottom="0" right="0"/>
         </properties>
         <border type="none" title=""/>

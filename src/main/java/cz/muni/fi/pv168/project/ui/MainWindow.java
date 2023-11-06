@@ -2,7 +2,12 @@ package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.model.*;
+import cz.muni.fi.pv168.project.model.Category;
+import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.model.GuidProvider;
+import cz.muni.fi.pv168.project.model.Ingredient;
+import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.repository.Repository;
 import cz.muni.fi.pv168.project.service.crud.CategoryCrudService;
 import cz.muni.fi.pv168.project.service.crud.CustomUnitService;
@@ -13,7 +18,11 @@ import cz.muni.fi.pv168.project.service.validation.CustomUnitValidator;
 import cz.muni.fi.pv168.project.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.storage.InMemoryRepository;
-import cz.muni.fi.pv168.project.ui.action.*;
+import cz.muni.fi.pv168.project.ui.action.ActionFactory;
+import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
+import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
+import cz.muni.fi.pv168.project.ui.action.RemoveRecipesFilterAction;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -29,8 +38,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
@@ -161,7 +168,7 @@ public class MainWindow {
         ingredientTable.getTableHeader().setReorderingAllowed(false);
         customUnitTable.getTableHeader().setReorderingAllowed(false);
         categoryTable.getTableHeader().setReorderingAllowed(false);
-        TabbedPanelContext.setTables(this.recipeTable,this.ingredientTable,this.customUnitTable,this.categoryTable);
+        TabbedPanelContext.setTables(this.recipeTable, this.ingredientTable, this.customUnitTable, this.categoryTable);
     }
 
     private void setDataGeneration() {
