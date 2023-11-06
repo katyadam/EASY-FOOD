@@ -23,9 +23,30 @@ public class StringValidator {
         return ValidationResult.failed();
     }
 
+    public static ValidationResult validateAlphaNumWhiteSapce (String string) {
+        if (string.matches("^[a-zA-Z0-9\\s]*$")) {
+            return ValidationResult.success();
+        }
+        return ValidationResult.failed();
+    }
+
     public static ValidationResult validateDouble(String string) {
         // 1.23e-4, 3.14159, 42.0
         if (string.matches("[-+]?(\\d*\\.\\d+|\\d+\\.\\d*|\\d+)([eE][-+]?)?")) {
+            return ValidationResult.success();
+        }
+        return ValidationResult.failed();
+    }
+
+    public static ValidationResult validateNum(String string) {
+        if (string.matches("\\d+")) {
+            return ValidationResult.success();
+        }
+        return ValidationResult.failed();
+    }
+
+    public static ValidationResult validateColor(String string) {
+        if (string.matches("^\\d{1,3},\\d{1,3},\\d{1,3}$")) {
             return ValidationResult.success();
         }
         return ValidationResult.failed();

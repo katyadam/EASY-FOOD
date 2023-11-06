@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.service.validation;
 import cz.muni.fi.pv168.project.model.CustomUnit;
 
 import static cz.muni.fi.pv168.project.service.validation.StringValidator.validateAlphaNum;
+import static cz.muni.fi.pv168.project.service.validation.StringValidator.validateAlphaNumWhiteSapce;
 import static cz.muni.fi.pv168.project.service.validation.StringValidator.validateDouble;
 
 public class CustomUnitValidator implements Validator<CustomUnit> {
@@ -10,7 +11,7 @@ public class CustomUnitValidator implements Validator<CustomUnit> {
     public ValidationResult validate(CustomUnit model) {
 
 
-        if (!validateAlphaNum(model.getFullName()).isValid()) {
+        if (!validateAlphaNumWhiteSapce(model.getFullName()).isValid()) {
             return ValidationResult.failed();
         }
         if (!validateAlphaNum(model.getAbbreviation()).isValid()) {
