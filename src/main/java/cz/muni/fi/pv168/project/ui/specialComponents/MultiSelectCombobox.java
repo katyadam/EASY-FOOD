@@ -14,12 +14,12 @@ public class MultiSelectCombobox<T> extends JButton {
     private List<T> items;
     private List<T> selectedItems = new ArrayList<>();
     private JScrollPopupMenu menu;
-    private JComboBox<T> coloring = new JComboBox<>();
 
     private boolean showing = false;
 
     public MultiSelectCombobox(List<T> items, String name) {
         super(name);
+        JComboBox<T> coloring = new JComboBox<>();
         super.setBorder(coloring.getBorder());
         super.setBackground(coloring.getBackground());
         this.items = items;
@@ -39,7 +39,7 @@ public class MultiSelectCombobox<T> extends JButton {
         menu = new JScrollPopupMenu();
         menu.setMaximumVisibleRows(6);
         for (T item : items) {
-            menu.add(new SelectedAction<T>(selectedItems, item, menu, this));
+            menu.add(new SelectedAction<>(selectedItems, item, menu, this));
         }
         return menu;
     }
