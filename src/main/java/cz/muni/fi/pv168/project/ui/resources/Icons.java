@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.resources;
 
-import javax.swing.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import java.net.URL;
 
 public final class Icons {
