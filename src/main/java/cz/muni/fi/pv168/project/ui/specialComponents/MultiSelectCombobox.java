@@ -54,7 +54,7 @@ public class MultiSelectCombobox<T> extends JButton {
         createMenu();
     }
     public List<T> reap() {
-        return items;
+        return selectedItems;
     }
 }
 class SelectedAction<T> extends AbstractAction {
