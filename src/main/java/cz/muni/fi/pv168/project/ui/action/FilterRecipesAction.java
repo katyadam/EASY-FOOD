@@ -7,16 +7,18 @@ import cz.muni.fi.pv168.project.ui.filters.recipes.RecipeRowFilter;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
+import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class FilterRecipesAction extends AbstractAction {
 
     private final TableRowSorter<RecipeTableModel> recipeTableRowSorter;
-    JComboBox<Ingredient> ingredientFilter;
-    JComboBox<Category> categoryFilter;
+    MultiSelectCombobox<Ingredient> ingredientFilter;
+    MultiSelectCombobox<Category> categoryFilter;
     JSpinner caloriesMinFilter;
     JSpinner caloriesMaxFilter;
     JSpinner portionsMinFilter;
@@ -24,8 +26,8 @@ public class FilterRecipesAction extends AbstractAction {
     JTable recipeTable;
 
     public FilterRecipesAction(
-            JComboBox<Ingredient> ingredientFilter,
-            JComboBox<Category> categoryFilter,
+            MultiSelectCombobox<Ingredient> ingredientFilter,
+            MultiSelectCombobox<Category> categoryFilter,
             JSpinner caloriesMinFilter,
             JSpinner caloriesMaxFilter,
             JSpinner portionsMinFilter,
@@ -51,8 +53,8 @@ public class FilterRecipesAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         RecipeFilterAttributes attributes = new RecipeFilterAttributes(
                 null,
-                (Ingredient) ingredientFilter.getSelectedItem(),
-                (Category) categoryFilter.getSelectedItem(),
+                ingredientFilter.getSelectedItems(),
+                categoryFilter.getSelectedItems(),
                 (Integer) caloriesMinFilter.getValue(),
                 (Integer) caloriesMaxFilter.getValue(),
                 (Integer) portionsMinFilter.getValue(),
