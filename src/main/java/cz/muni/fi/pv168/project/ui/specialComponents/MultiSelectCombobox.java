@@ -54,7 +54,7 @@ public class MultiSelectCombobox<T> extends JButton {
         createMenu();
     }
 
-    public List<T> reap() {
+    public List<T> getSelectedItems() {
         return selectedItems;
     }
 }
@@ -63,7 +63,7 @@ class SelectedAction<T> extends AbstractAction {
 
     public List<T> selectedItems;
     private final T item;
-    private final JPopupMenu menu;
+    private final JScrollPopupMenu menu;
     private final JButton button;
 
     private boolean selected = false;
@@ -78,7 +78,9 @@ class SelectedAction<T> extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        int value =  menu.getScrollBar().getValue();
         menu.show(button, 0, button.getHeight());
+        menu.getScrollBar().setValue(value);
         if (selected) {
             selectedItems.remove(item);
             putValue(Action.SMALL_ICON, null);

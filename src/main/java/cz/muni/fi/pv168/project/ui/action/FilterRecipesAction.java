@@ -18,7 +18,7 @@ public class FilterRecipesAction extends AbstractAction {
 
     private final TableRowSorter<RecipeTableModel> recipeTableRowSorter;
     MultiSelectCombobox<Ingredient> ingredientFilter;
-    JComboBox<Category> categoryFilter;
+    MultiSelectCombobox<Category> categoryFilter;
     JSpinner caloriesMinFilter;
     JSpinner caloriesMaxFilter;
     JSpinner portionsMinFilter;
@@ -27,7 +27,7 @@ public class FilterRecipesAction extends AbstractAction {
 
     public FilterRecipesAction(
             MultiSelectCombobox<Ingredient> ingredientFilter,
-            JComboBox<Category> categoryFilter,
+            MultiSelectCombobox<Category> categoryFilter,
             JSpinner caloriesMinFilter,
             JSpinner caloriesMaxFilter,
             JSpinner portionsMinFilter,
@@ -53,8 +53,8 @@ public class FilterRecipesAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         RecipeFilterAttributes attributes = new RecipeFilterAttributes(
                 null,
-                (List<Ingredient>) ingredientFilter.reap(),
-                (Category) categoryFilter.getSelectedItem(),
+                ingredientFilter.getSelectedItems(),
+                categoryFilter.getSelectedItems(),
                 (Integer) caloriesMinFilter.getValue(),
                 (Integer) caloriesMaxFilter.getValue(),
                 (Integer) portionsMinFilter.getValue(),

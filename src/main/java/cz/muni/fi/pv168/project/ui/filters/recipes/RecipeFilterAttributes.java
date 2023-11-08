@@ -8,7 +8,7 @@ import java.util.List;
 public record RecipeFilterAttributes(
         String recipeName,
         List<Ingredient> ingredients,
-        Category category,
+        List<Category> category,
         Integer calMin,
         Integer calMax,
         Integer portionsMin,

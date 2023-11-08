@@ -93,6 +93,7 @@ public class MainWindow {
     private final CustomUnitService customUnitService;
 
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
+    private MultiSelectCombobox<Category> categoriesFilter;
 
     public MainWindow() {
         setDataGeneration();
@@ -340,7 +341,7 @@ public class MainWindow {
     private JComponent createRecipeTab() {
         JPanel recipePanel = new JPanel(new MigLayout("fillx, insets 2"));
         ingredientsFilter = new MultiSelectCombobox<>(ingredientList, "Ingredients");
-        JComboBox<Category> categoryFilter = new JComboBox<>(categoryList.toArray(new Category[0]));
+        categoriesFilter = new MultiSelectCombobox<>(categoryList, "Categories");
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
         JSpinner portionsMinFilter = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
@@ -355,7 +356,7 @@ public class MainWindow {
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
         JButton fireFilter = new JButton(new FilterRecipesAction(
                 ingredientsFilter,
-                categoryFilter,
+                categoriesFilter,
                 caloriesMinFilter,
                 caloriesMaxFilter,
                 portionsMinFilter,
@@ -366,8 +367,7 @@ public class MainWindow {
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
         recipePanel.add(searchBar, " left, grow, wmin 90");
         recipePanel.add(ingredientsFilter, " right");
-        recipePanel.add(categories, " right, split 2");
-        recipePanel.add(categoryFilter);
+        recipePanel.add(categoriesFilter, "right");
         recipePanel.add(nutrition, "right, split 4");
         recipePanel.add(caloriesMinFilter, "wmax 80");
         recipePanel.add(max2);
