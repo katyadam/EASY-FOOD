@@ -237,7 +237,7 @@ public class MainWindow {
         @Override
         public void focusLost(FocusEvent e) {
             super.focusLost(e);
-            if (bar.getText().equals("")) {
+            if (bar.getText().isEmpty()) {
                 bar.setText("Search...");
             }
         }
@@ -334,15 +334,22 @@ public class MainWindow {
 
         editMenu.add(actions.getQuitAction());
 
-        JMenu importMenu = new JMenu("Import");
-        editMenu.setMnemonic('i');
+        JButton importButton = new JButton(new ImportAction(
+                "Import",
+                categoryCrudService,
+                customUnitService,
+                ingredientCrudService,
+                recipeCrudService,
+                this::refresh
+        ));
 
-        JMenu exportMenu = new JMenu("Export");
-        editMenu.setMnemonic('x');
+        JButton exportButton = new JButton(new ExportAction("Export",
+                categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
+
 
         menuBar.add(editMenu);
-        menuBar.add(importMenu);
-        menuBar.add(exportMenu);
+        menuBar.add(importButton);
+        menuBar.add(exportButton);
 
         return menuBar;
     }
@@ -486,5 +493,12 @@ public class MainWindow {
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         return;
+    }
+
+    private void refresh() {
+        ingredientTableModel.refresh();
+        recipeTableModel.refresh();
+        categoryTableModel.refresh();
+        customUnitTableModel.refresh();
     }
 }

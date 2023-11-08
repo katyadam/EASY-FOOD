@@ -4,7 +4,10 @@ public class CustomUnit extends Entity implements Unit {
     private String unitName;
     private String abbreviation;
     private double amount;
-    private BaseUnits baseUnit;
+    private Unit baseUnit;
+
+    public CustomUnit() {
+    }
 
     public CustomUnit(String unitName, String abbreviation, double amount, BaseUnits baseUnit) {
         this.unitName = unitName;
@@ -31,6 +34,10 @@ public class CustomUnit extends Entity implements Unit {
         return String.format("%.2f", amount) + " " + baseUnit.getAbbreviation();
     }
 
+    public Unit getBaseUnit() {
+        return baseUnit;
+    }
+
     public void setUnitName(String unitName) {
         this.unitName = unitName;
     }
@@ -43,7 +50,7 @@ public class CustomUnit extends Entity implements Unit {
         this.amount = amount;
     }
 
-    public void setBaseUnit(BaseUnits baseUnit) {
+    public void setBaseUnit(Unit baseUnit) {
         this.baseUnit = baseUnit;
     }
 

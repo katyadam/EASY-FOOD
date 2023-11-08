@@ -6,13 +6,16 @@ public class Category extends Entity {
     private String name;
     private Color color;
 
+    public Category() {
+    }
+
     public Category(String name, Color color) {
         this.name = name;
         this.color = color;
     }
 
     public String getColorCode() {
-        return String.format("RGB(%d, %d, %d)", color.getRed(), color.getGreen(), color.getBlue());
+        return String.format("%d,%d,%d", color.getRed(), color.getGreen(), color.getBlue());
     }
 
     public String getName() {

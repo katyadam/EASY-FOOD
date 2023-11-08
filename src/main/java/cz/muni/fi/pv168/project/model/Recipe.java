@@ -21,6 +21,9 @@ public class Recipe extends Entity {
                     new UuidGuidProvider()
             ));
 
+    public Recipe() {
+    }
+
     public Recipe(
             String recipeName,
             Category category,
