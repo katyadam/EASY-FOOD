@@ -400,12 +400,14 @@ public class MainWindow {
                 caloriesMinFilter,
                 caloriesMaxFilter
         ));
+        JButton removeFilter = new JButton(new RemoveRecipesFilterAction(ingredientTableSorter));
         ingredientsPanel.add(searchBar, " grow, width 18%");
         ingredientsPanel.add(nutritions, "left, split 4");
         ingredientsPanel.add(caloriesMinFilter, "left");
         ingredientsPanel.add(max, "left");
         ingredientsPanel.add(caloriesMaxFilter, "left, gapright push");
-        ingredientsPanel.add(fireFilter, "al right, wrap");
+        ingredientsPanel.add(fireFilter, "al right, split 2");
+        ingredientsPanel.add( removeFilter, "wrap");
         ingredientsPanel.add(ingredientScroll, "span 3, grow, height 99%");
         return ingredientsPanel;
     }
