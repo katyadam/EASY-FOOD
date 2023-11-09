@@ -36,7 +36,7 @@ public class BatchXmlExporter implements BatchExporter {
 
     private void exportRecipe(Recipe recipe, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Recipe", bufferedWriter, tabs);
-        writeAtributeString(recipe.getRecipeName(), "RecipeName", bufferedWriter, tabs + 1);
+        writeAtributeString(recipe.getName(), "RecipeName", bufferedWriter, tabs + 1);
         writeAtributeInt(recipe.getRecipeNutritionalValue(), "RecipeNutritionalValue", bufferedWriter, tabs + 1);
         writeAtributeString(recipe.getCategoryName(), "RecipeCategory", bufferedWriter, tabs + 1);
         writeAtributeInt(recipe.getPortions(), "Portions", bufferedWriter, tabs + 1);
@@ -91,7 +91,7 @@ public class BatchXmlExporter implements BatchExporter {
 
     private void exportCustomUnit(CustomUnit customUnit, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("CustomUnit", bufferedWriter, tabs);
-        writeAtributeString(customUnit.getFullName(), "CustomUnitName", bufferedWriter, tabs + 1);
+        writeAtributeString(customUnit.getName(), "CustomUnitName", bufferedWriter, tabs + 1);
         writeAtributeString(customUnit.getAbbreviation(), "Abbreviation", bufferedWriter, tabs + 1);
         writeAtributeString(customUnit.getBaseAmountNumber(), "BaseAmountNumber", bufferedWriter, tabs + 1);
         writeAtributeString(customUnit.getBaseUnit().getAbbreviation(), "BaseUnitAbbr", bufferedWriter, tabs + 1);

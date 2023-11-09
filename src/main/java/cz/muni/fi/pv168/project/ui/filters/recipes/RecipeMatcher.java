@@ -15,7 +15,7 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
     @Override
     public boolean evaluate(Recipe recipe) {
         if (recipeFilterAttributes.recipeName() != null) {
-            return recipe.getRecipeName().startsWith(recipeFilterAttributes.recipeName());
+            return recipe.getName().startsWith(recipeFilterAttributes.recipeName());
         }
         return ingredientMatch(recipe)
                 && categoryMatch(recipe)

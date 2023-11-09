@@ -11,7 +11,7 @@ public class CustomUnitValidator implements Validator<CustomUnit> {
     public ValidationResult validate(CustomUnit model) {
 
 
-        if (!validateAlphaNumWhiteSapce(model.getFullName()).isValid()) {
+        if (!validateAlphaNumWhiteSapce(model.getName()).isValid()) {
             return ValidationResult.failed();
         }
         if (!validateAlphaNum(model.getAbbreviation()).isValid()) {

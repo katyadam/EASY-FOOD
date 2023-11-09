@@ -14,7 +14,7 @@ public class RecipeTableModel extends AbstractEntityTableModel<Recipe> {
 
     public RecipeTableModel(CrudService<Recipe> recipeCrudService) {
         super(List.of(
-                Column.editable("Recipe name", String.class, Recipe::getRecipeName, Recipe::setRecipeName),
+                Column.editable("Recipe name", String.class, Recipe::getName, Recipe::setName),
                 Column.readonly("Category name", String.class, Recipe::getCategoryName),
                 Column.readonly("Color", Color.class, Recipe::getCategoryColor),
                 Column.readonly("Nutritional value [KCAL]", int.class, Recipe::getRecipeNutritionalValue),

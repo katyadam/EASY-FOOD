@@ -9,7 +9,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Recipe extends Entity {
-    private String recipeName;
     private PreparationTime preparationTime;
     private int portions;
     private Category category;
@@ -30,16 +29,13 @@ public class Recipe extends Entity {
             int portions,
             PreparationTime preparationTime
     ) {
-        this.recipeName = recipeName;
+        this.name = recipeName;
         this.preparationTime = preparationTime;
         this.portions = portions;
         this.category = category;
         //this.nutritionalValue = calculateNutritionalValue(ingredientList); TODO
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
-    }
 
     public void setPreparationTime(PreparationTime preparationTime) {
         this.preparationTime = preparationTime;
@@ -57,9 +53,6 @@ public class Recipe extends Entity {
         this.description = description;
     }
 
-    public String getRecipeName() {
-        return recipeName;
-    }
 
     public String getDescription() {
         return description;
@@ -97,6 +90,6 @@ public class Recipe extends Entity {
 
     @Override
     public String toString() {
-        return recipeName;
+        return name;
     }
 }

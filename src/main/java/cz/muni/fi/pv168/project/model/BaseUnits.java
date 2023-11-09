@@ -30,7 +30,7 @@ public enum BaseUnits implements Unit {
     }
 
     @Override
-    public String getFullName() {
+    public String getName() {
         return fullName;
     }
 

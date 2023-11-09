@@ -11,7 +11,7 @@ public class CustomUnitTableModel extends AbstractEntityTableModel<CustomUnit> {
 
     public CustomUnitTableModel(CrudService<CustomUnit> customUnitCrudService) {
         super(List.of(
-                Column.readonly("Name", String.class, CustomUnit::getFullName),
+                Column.readonly("Name", String.class, CustomUnit::getName),
                 Column.readonly("Abbreviation", String.class, CustomUnit::getAbbreviation),
                 Column.readonly("BaseAmount", String.class, CustomUnit::getBaseAmount)
         ), customUnitCrudService.findAll(), customUnitCrudService);

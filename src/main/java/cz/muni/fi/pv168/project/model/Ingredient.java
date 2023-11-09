@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.model;
 
 public class Ingredient extends Entity {
-    private String name;
     private int nutritionalValue;
 
     private Unit unitType;
@@ -15,17 +14,10 @@ public class Ingredient extends Entity {
         this.unitType = unitType;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setNutritionalValue(int nutritionalValue) {
         this.nutritionalValue = nutritionalValue;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public int getNutritionalValue() {
         return nutritionalValue;

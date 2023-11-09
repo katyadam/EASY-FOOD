@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.model.Entity;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 import static javax.swing.JOptionPane.*;
 
-abstract class EntityDialog<E> {
+abstract class EntityDialog<E extends Entity> {
 
     private final JPanel panel = new JPanel();
 
@@ -82,6 +83,10 @@ abstract class EntityDialog<E> {
         int result = JOptionPane.showOptionDialog(parentComponent, panel, title,
                 OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);
         if (result == OK_OPTION) {
+            if (getEntity().getName().isEmpty()) {
+                JOptionPane.showMessageDialog(parentComponent,"Name cannot be empty");
+                show(parentComponent,title);
+            }
             return Optional.of(getEntity());
         } else {
             return Optional.empty();

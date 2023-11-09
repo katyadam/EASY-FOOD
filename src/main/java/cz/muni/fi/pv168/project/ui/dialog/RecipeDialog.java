@@ -84,7 +84,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     }
 
     private void setValues() {
-        recipeNameField.setText(recipe.getRecipeName());
+        recipeNameField.setText(recipe.getName());
         categoryNameField.setText(recipe.getCategoryName());
         categoryColor.setColor(recipe.getCategory() == null
                         ? new Color(0, 0, 0)
@@ -106,7 +106,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
     @Override
     Recipe getEntity() {
-        recipe.setRecipeName(recipeNameField.getText());
+        recipe.setName(recipeNameField.getText());
         recipe.setCategory((Category) categoryJComboBox.getSelectedItem());
         recipe.setPortions((int) recipePortionsField.getValue());
         recipe.setPreparationTime(new PreparationTime(

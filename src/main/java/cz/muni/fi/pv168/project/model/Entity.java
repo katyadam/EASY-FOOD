@@ -6,6 +6,8 @@ public abstract class Entity {
 
     protected String guid;
 
+    protected String name;
+
     protected Entity(String guid) {
         this.guid = guid;
     }
@@ -22,6 +24,14 @@ public abstract class Entity {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

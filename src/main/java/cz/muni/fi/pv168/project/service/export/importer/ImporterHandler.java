@@ -71,14 +71,14 @@ public class ImporterHandler extends DefaultHandler {
             case RECIPE -> recipeList.add(activeRecipe);
             case "CategoryName" -> activeCategory.setName(elementValue.toString());
             case "Color" -> activeCategory.setColor(parseColor(elementValue.toString()));
-            case "CustomUnitName" -> activeCustomUnit.setUnitName(elementValue.toString());
+            case "CustomUnitName" -> activeCustomUnit.setName(elementValue.toString());
             case "Abbreviation" -> activeCustomUnit.setAbbreviation(elementValue.toString());
             case "BaseAmountNumber" -> activeCustomUnit.setAmount(Double.parseDouble(elementValue.toString()));
             case "BaseUnitAbbr" -> activeCustomUnit.setBaseUnit(parseUnit(elementValue.toString()));
             case "IngredientName" -> activeIngredient.setName(elementValue.toString());
             case "IngredientUnit" -> activeIngredient.setUnitType(parseUnit(elementValue.toString()));
             case "NutritionalValue" -> activeIngredient.setNutritionalValue(Integer.parseInt(elementValue.toString()));
-            case "RecipeName" -> activeRecipe.setRecipeName(elementValue.toString());
+            case "RecipeName" -> activeRecipe.setName(elementValue.toString());
             case "RecipeCategory" -> activeRecipe.setCategory(parseCategory(elementValue.toString()));
             case "Portions" -> activeRecipe.setPortions(Integer.parseInt(elementValue.toString()));
             case "PreparationTime" -> activeRecipe.setPreparationTime(parsePreparationTime(elementValue.toString()));

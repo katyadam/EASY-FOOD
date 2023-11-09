@@ -16,7 +16,7 @@ public class ShowDialog {
     public void getRecipeInstruction() {
         StringBuilder recipeString = new StringBuilder();
         recipeString.append("<p>");
-        recipeString.append("<b>Recipe Name: </b>").append(recipe.getRecipeName()).append("<br>");
+        recipeString.append("<b>Recipe Name: </b>").append(recipe.getName()).append("<br>");
         recipeString.append("<b>Category Name:</b> ").append(recipe.getCategory().getName()).append("<br>");
         recipeString.append("<b>Nutritional Value [KCAL]:</b> ").append(recipe.getRecipeNutritionalValue()).append("<br>");
         recipeString.append("<b>Portions:</b> ").append(recipe.getPortions()).append("<br>");

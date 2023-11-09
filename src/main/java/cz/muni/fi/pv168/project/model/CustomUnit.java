@@ -11,13 +11,14 @@ public class CustomUnit extends Entity implements Unit {
 
     public CustomUnit(String unitName, String abbreviation, double amount, BaseUnits baseUnit) {
         this.unitName = unitName;
+        this.name = unitName;
         this.abbreviation = abbreviation;
         this.amount = amount;
         this.baseUnit = baseUnit;
     }
 
     @Override
-    public String getFullName() {
+    public String getName() {
         return unitName;
     }
 
@@ -38,8 +39,10 @@ public class CustomUnit extends Entity implements Unit {
         return baseUnit;
     }
 
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
+    @Override
+    public void setName( String name) {
+        super.setName(name);
+        this.unitName = name;
     }
 
     public void setAbbreviation(String abbreviation) {
