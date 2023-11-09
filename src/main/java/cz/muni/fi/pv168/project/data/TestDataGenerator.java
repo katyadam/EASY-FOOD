@@ -31,22 +31,31 @@ public final class TestDataGenerator {
 
     private static final List<String> CUSTOM_UNIT_NAMES = new ArrayList<>();
     private static final List<String> CUSTOM_UNIT_ABBREVIATIONS = new ArrayList<>();
+    private final List<Category> categories;
+    private final List<CustomUnit> customUnits;
+    private final List<Ingredient> ingredients;
+    private final List<Recipe> recipes;
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public List<CustomUnit> getCustomUnits() {
+        return customUnits;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
 
     public List<BaseUnits> getBaseUnits() {
         return baseUnits;
     }
 
-    public List<CustomUnit> getTestCustomUnits() {
-        return testCustomUnits;
-    }
-
-    public List<Category> getTestCategories() {
-        List<Category> categories = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            categories.add(createTestCategory());
-        }
-        return categories;
-    }
 
     static {
         CUSTOM_UNIT_NAMES.add("pinch");
@@ -68,16 +77,14 @@ public final class TestDataGenerator {
         // Add more custom units as needed
     }
 
-    private final List<Recipe> testRecipes;
-    private final List<Ingredient> testIngredients;
     private final List<BaseUnits> baseUnits = BaseUnits.getBaseUnitList();
-    private final List<CustomUnit> testCustomUnits;
 
 
     public TestDataGenerator() {
-        this.testCustomUnits = createTestCustomUnits(5);
-        this.testIngredients = createTestIngredients(10);
-        this.testRecipes = createTestRecipes(10);
+        this.categories = createTestCategories();
+        this.customUnits = createTestCustomUnits(5);
+        this.ingredients = createTestIngredients(10);
+        this.recipes = createTestRecipes(10);
     }
 
 
@@ -85,6 +92,14 @@ public final class TestDataGenerator {
 //    private static final LocalDate MAX_BIRTH_DATE = LocalDate.of(2002, DECEMBER, 31);
 
     private final Random random = new Random(2L);
+
+    public List<Category> createTestCategories() {
+        List<Category> categories = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            categories.add(createTestCategory());
+        }
+        return categories;
+    }
 
     private List<Recipe> createTestRecipes(int count) {
         return Stream
@@ -125,15 +140,16 @@ public final class TestDataGenerator {
         String recipeName = selectRandom(RECIPE_NAMES);
         PreparationTime preparationTime = new PreparationTime(LocalTime.now().getHour(), LocalTime.now().getMinute());
         int portions = random.nextInt(10);
-        Recipe recipe = new Recipe(recipeName, createTestCategory(), portions, preparationTime);
+        Recipe recipe = new Recipe(recipeName, categories.get(random.nextInt(categories.size())), portions, preparationTime);
         recipe.setGuid(uuidProvider.newGuid());
+        recipe.setCategory(categories.get(random.nextInt(categories.size())));
         return recipe;
     }
 
     private Ingredient createTestIngredient() {
         String ingredientName = selectRandom(INGREDIENT_NAMES);
         int nutritionalValue = random.nextInt(10000);
-        Unit unit = selectRandom(testCustomUnits);
+        Unit unit = selectRandom(customUnits);
         Ingredient ingredient = new Ingredient(ingredientName, nutritionalValue, unit);
         ingredient.setGuid(uuidProvider.newGuid());
         return ingredient;
@@ -161,14 +177,5 @@ public final class TestDataGenerator {
         int days = random.nextInt(maxDays);
         return min.plusDays(days);
     }
-
-    public List<Recipe> getTestRecipes() {
-        return testRecipes;
-    }
-
-    public List<Ingredient> getTestIngredients() {
-        return testIngredients;
-    }
-
 
 }

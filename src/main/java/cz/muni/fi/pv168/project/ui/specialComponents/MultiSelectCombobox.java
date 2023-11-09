@@ -78,7 +78,7 @@ class SelectedAction<T> extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int value =  menu.getScrollBar().getValue();
+        int value = menu.getScrollBar().getValue();
         menu.show(button, 0, button.getHeight());
         menu.getScrollBar().setValue(value);
         if (selected) {

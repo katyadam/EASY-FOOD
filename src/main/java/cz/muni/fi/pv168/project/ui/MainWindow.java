@@ -167,10 +167,10 @@ public class MainWindow {
     }
 
     private void setDataGeneration() {
-        this.recipesList = testDataGen.getTestRecipes();
-        this.ingredientList = testDataGen.getTestIngredients();
-        this.customUnitList = testDataGen.getTestCustomUnits();
-        this.categoryList = testDataGen.getTestCategories();
+        this.recipesList = testDataGen.getRecipes();
+        this.ingredientList = testDataGen.getIngredients();
+        this.customUnitList = testDataGen.getCustomUnits();
+        this.categoryList = testDataGen.getCategories();
     }
 
     private void setTabbedPannels() {
@@ -313,6 +313,7 @@ public class MainWindow {
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu editMenu = new JMenu("Edit");
+        menuBar.setLayout(new MigLayout("","[]20[]20[]"));
         editMenu.setMnemonic('e');
         editMenu.add(actions.getAddAction());
         editMenu.addSeparator();
@@ -334,8 +335,6 @@ public class MainWindow {
 
         JButton exportButton = new JButton(new ExportAction("Export",
                 categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
-
-
         menuBar.add(editMenu);
         menuBar.add(importButton);
         menuBar.add(exportButton);

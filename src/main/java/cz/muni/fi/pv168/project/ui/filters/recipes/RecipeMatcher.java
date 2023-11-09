@@ -27,8 +27,8 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
         if (recipeFilterAttributes == null || recipeFilterAttributes.ingredients().isEmpty()) {
             return true;
         }
-        for (Ingredient ingredient: recipeFilterAttributes.ingredients()) {
-            if ( !recipe.getUsedIngredients().contains(ingredient)) {
+        for (Ingredient ingredient : recipeFilterAttributes.ingredients()) {
+            if (!recipe.getUsedIngredients().contains(ingredient)) {
                 return false;
             }
         }
@@ -36,14 +36,14 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
     }
 
     private boolean categoryMatch(Recipe recipe) {
-        if ( recipeFilterAttributes.category().isEmpty() ) { // TODO: zmenit na null check!!!
+        if (recipeFilterAttributes.category().isEmpty()) { // TODO: zmenit na null check!!!
             return true;
         }
-        if ( recipe.getCategory() == null ) {
+        if (recipe.getCategory() == null) {
             return false;
         }
-        for (Category category: recipeFilterAttributes.category()) {
-            if ( recipe.getCategory() == category) {
+        for (Category category : recipeFilterAttributes.category()) {
+            if (recipe.getCategory() == category) {
                 return true;
             }
         }

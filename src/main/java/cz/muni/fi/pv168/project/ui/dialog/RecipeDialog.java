@@ -8,6 +8,7 @@ import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -85,7 +86,9 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private void setValues() {
         recipeNameField.setText(recipe.getRecipeName());
         categoryNameField.setText(recipe.getCategoryName());
-        categoryColor.setColor(recipe.getCategory().getColor());
+        categoryColor.setColor(recipe.getCategory() == null
+                        ? new Color(0, 0, 0)
+                        : recipe.getCategory().getColor());
         recipePortionsField.setModel(new SpinnerNumberModel(recipe.getPortions(), 1, 200, 1));
         recipeDescriptionTextField.setText(recipe.getDescription());
     }
