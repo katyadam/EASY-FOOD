@@ -22,6 +22,7 @@ public class Main {
             UIManager.setLookAndFeel("com.formdev.flatlaf.FlatDarkLaf");
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Nimbus layout initialization failed", ex);
+            throw new IllegalStateException("Nimbus layout initialization failed");
         }
         JFrame.setDefaultLookAndFeelDecorated(true);
     }
