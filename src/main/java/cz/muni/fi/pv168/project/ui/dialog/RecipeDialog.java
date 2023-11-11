@@ -69,6 +69,11 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         unitList.addAll(List.of( BaseUnits.values()));
         unitList.addAll(unitTableModel.getEntities());
         units = new JComboBox<>(unitList.toArray( new Unit[0]));
+
+        List<Category> categories = new LinkedList<>( categoryTableModel.getEntities());
+        categories.add(0,null);
+        categoryJComboBox.setModel(new DefaultComboBoxModel<>(categories.toArray(new Category[0])));
+
         timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
         removeIngredient.setEnabled(false);
         if (recipe != null) {
@@ -80,9 +85,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         new_date.setHours(entity.getPreparationTime().hours());
         new_date.setMinutes(entity.getPreparationTime().minutes());
         timeSpinner.setValue(new_date);
-        List<Category> categories = categoryTableModel.getEntities();
-        categories.add(0,null);
-        categoryJComboBox.setModel(new DefaultComboBoxModel<>(categories.toArray(new Category[0])));
+
         categoryJComboBox.setSelectedItem(entity.getCategory());
         addedIngredientsTableModel = entity.getUsedIngredients();
         addedIngredientsTable.setModel(addedIngredientsTableModel);
