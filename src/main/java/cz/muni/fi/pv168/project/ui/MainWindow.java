@@ -313,7 +313,7 @@ public class MainWindow {
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu editMenu = new JMenu("Edit");
-        menuBar.setLayout(new MigLayout("","[]20[]20[]"));
+        //menuBar.setLayout(new MigLayout("","[]20[]20[]"));
         editMenu.setMnemonic('e');
         editMenu.add(actions.getAddAction());
         editMenu.addSeparator();
@@ -321,10 +321,10 @@ public class MainWindow {
         editMenu.addSeparator();
         editMenu.add(actions.getDeleteAction());
         editMenu.addSeparator();
-
         editMenu.add(actions.getQuitAction());
 
-        JButton importButton = new JButton(new ImportAction(
+        JMenu filesMenu = new JMenu("Files");
+        filesMenu.add(new ImportAction(
                 "Import",
                 categoryCrudService,
                 customUnitService,
@@ -332,12 +332,12 @@ public class MainWindow {
                 recipeCrudService,
                 this::refresh
         ));
-
-        JButton exportButton = new JButton(new ExportAction("Export",
+        filesMenu.addSeparator();
+        filesMenu.add(new ExportAction("Export",
                 categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
+
         menuBar.add(editMenu);
-        menuBar.add(importButton);
-        menuBar.add(exportButton);
+        menuBar.add(filesMenu);
 
         return menuBar;
     }
