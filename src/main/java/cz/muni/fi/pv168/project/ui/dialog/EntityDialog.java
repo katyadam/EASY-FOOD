@@ -1,12 +1,15 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.model.Entity;
+import cz.muni.fi.pv168.project.model.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static javax.swing.JOptionPane.*;
 
@@ -18,19 +21,22 @@ abstract class EntityDialog<E extends Entity> {
 
     private JPanel rightPanel = null;
 
-    EntityDialog() {
+    protected E entity;
+    protected List<E> entities;
+
+    EntityDialog(E entity, List<E> entities) {
+        this.entities = entities;
+        this.entity = entity;
         panel.setLayout(new MigLayout("wrap 4"));
     }
 
-    EntityDialog(boolean twoPanels) {
-        if (twoPanels) {
-            leftPanel = new JPanel();
-            rightPanel = new JPanel();
-            panel.add(leftPanel, BorderLayout.WEST);
-            panel.add(rightPanel, BorderLayout.EAST);
-            leftPanel.setLayout(new MigLayout("wrap 4"));
-            rightPanel.setLayout(new MigLayout("fill "));
-        }
+    void setTwoPanels() {
+        leftPanel = new JPanel();
+        rightPanel = new JPanel();
+        panel.add(leftPanel, BorderLayout.WEST);
+        panel.add(rightPanel, BorderLayout.EAST);
+        leftPanel.setLayout(new MigLayout("wrap 4"));
+        rightPanel.setLayout(new MigLayout("fill "));
     }
 
     void add(String labelText, JComponent component) {
@@ -86,6 +92,13 @@ abstract class EntityDialog<E extends Entity> {
             if (getEntity().getName().isEmpty()) {
                 JOptionPane.showMessageDialog(parentComponent,"Name cannot be empty");
                 show(parentComponent,title);
+            }
+            if ( ! (entity instanceof Recipe)) {
+                Entity e = getEntity();
+                if ( ! entities.stream().filter(x -> x.getName().equals(e.getName())).collect(Collectors.toList()).isEmpty()) {
+                    JOptionPane.showMessageDialog(parentComponent,"Name must be unique");
+                    show(parentComponent,title);
+                }
             }
             return Optional.of(getEntity());
         } else {

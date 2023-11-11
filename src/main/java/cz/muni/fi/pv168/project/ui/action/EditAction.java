@@ -45,7 +45,11 @@ public final class EditAction extends ContextAction {
                 RecipeTableModel recipeTableModel = (RecipeTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Recipe recipe = recipeTableModel.getEntity(modelRow);
-                RecipeDialog dialog = new RecipeDialog(recipe, (IngredientTableModel) ingredientTable.getModel(), (CategoryTableModel) categoryTable.getModel(), (CustomUnitTableModel) unitsTable.getModel());
+                RecipeDialog dialog = new RecipeDialog(recipe,
+                        (RecipeTableModel) recipeTable.getModel(),
+                        (IngredientTableModel) ingredientTable.getModel(),
+                        (CategoryTableModel) categoryTable.getModel(),
+                        (CustomUnitTableModel) unitsTable.getModel());
                 dialog.show(activeTable, "Edit Recipe")
                         .ifPresent(recipeTableModel::updateRow);
                 break;
@@ -54,7 +58,7 @@ public final class EditAction extends ContextAction {
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Ingredient ingredient = ingredientTableModel.getEntity(modelRow);
-                IngredientDialog dialog = new IngredientDialog(ingredient, (RecipeTableModel) recipeTable.getModel());
+                IngredientDialog dialog = new IngredientDialog(ingredient,(IngredientTableModel) ingredientTable.getModel(), (RecipeTableModel) recipeTable.getModel());
                 dialog.show(activeTable, "Edit Ingredient")
                         .ifPresent(ingredientTableModel::updateRow);
                 break;
@@ -63,7 +67,7 @@ public final class EditAction extends ContextAction {
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 CustomUnit customUnit = customUnitTableModel.getEntity(modelRow);
-                CustomUnitDialog dialog = new CustomUnitDialog(customUnit);
+                CustomUnitDialog dialog = new CustomUnitDialog(customUnit, (CustomUnitTableModel) unitsTable.getModel());
                 dialog.show(activeTable, "Edit Custom Unit")
                         .ifPresent(customUnitTableModel::updateRow);
                 break;
@@ -72,7 +76,7 @@ public final class EditAction extends ContextAction {
                 CategoryTableModel categoryTableModel = (CategoryTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Category category = categoryTableModel.getEntity(modelRow);
-                CategoryDialog categoryDialog = new CategoryDialog(category);
+                CategoryDialog categoryDialog = new CategoryDialog(category, (CategoryTableModel) categoryTable.getModel());
                 categoryDialog.show(activeTable, "Edit Category")
                         .ifPresent(categoryTableModel::updateRow);
             }
