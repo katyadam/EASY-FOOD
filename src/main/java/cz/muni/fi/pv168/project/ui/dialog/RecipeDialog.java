@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
 
@@ -73,7 +74,9 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         new_date.setHours(this.recipe.getPreparationTime().hours());
         new_date.setMinutes(this.recipe.getPreparationTime().minutes());
         timeSpinner.setValue(new_date);
-        categoryJComboBox.setModel(new DefaultComboBoxModel<>(categoryTableModel.getEntities().toArray(new Category[0])));
+        List<Category> categories = categoryTableModel.getEntities();
+        categories.add(0,null);
+        categoryJComboBox.setModel(new DefaultComboBoxModel<>(categories.toArray(new Category[0])));
         categoryJComboBox.setSelectedItem(this.recipe.getCategory());
         addedIngredientsTableModel = this.recipe.getUsedIngredients();
         addedIngredientsTable.setModel(addedIngredientsTableModel);
