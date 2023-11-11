@@ -28,29 +28,30 @@ public final class AddAction extends ContextAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (TabbedPanelContext.getActiveTab()) {
-            case 0:
+            case 0 -> {
                 RecipeTableModel recipeTableModel = (RecipeTableModel) recipeTable.getModel();
-                RecipeDialog recipeDialog = new RecipeDialog(null, (IngredientTableModel) ingredientTable.getModel(), (CategoryTableModel) categoryTable.getModel());
+                RecipeDialog recipeDialog = new RecipeDialog(null, (IngredientTableModel) ingredientTable.getModel(), (CategoryTableModel) categoryTable.getModel(), (CustomUnitTableModel) unitsTable.getModel());
                 recipeDialog.show(recipeTable, "Add Recipe")
                         .ifPresent(recipeTableModel::addRow);
-                break;
-            case 1:
+            }
+            case 1 -> {
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) ingredientTable.getModel();
                 IngredientDialog ingredientDialog = new IngredientDialog(null, (RecipeTableModel) recipeTable.getModel());
                 ingredientDialog.show(ingredientTable, "Add ingredient")
                         .ifPresent(ingredientTableModel::addRow);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) unitsTable.getModel();
                 CustomUnitDialog customUnitDialog = new CustomUnitDialog(null);
                 customUnitDialog.show(unitsTable, "Add Custom Unit")
                         .ifPresent(customUnitTableModel::addRow);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 CategoryTableModel categoryTableModel = (CategoryTableModel) categoryTable.getModel();
                 CategoryDialog categoryDialog = new CategoryDialog(null);
                 categoryDialog.show(categoryTable, "Add Category")
                         .ifPresent(categoryTableModel::addRow);
+            }
         }
         StatisticsUpdater.reload();
 

@@ -4,6 +4,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.model.*;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
@@ -33,7 +35,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JComboBox<Ingredient> ingredients;
     private Recipe recipe;
     private final AddedIngredientsTableModel addedIngredientsTableModel;
-    private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
+    private final JComboBox<Unit> units;
     private final JTextArea recipeDescriptionTextField = new JTextArea();
     private final JTable addedIngredientsTable = new JTable();
 
@@ -56,13 +58,18 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         }
     });
 
-    public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel, CategoryTableModel categoryTableModel) {
+    public RecipeDialog(Recipe recipe, IngredientTableModel ingredientTableModel, CategoryTableModel categoryTableModel, CustomUnitTableModel unitTableModel) {
         super(true);
 
         this.ingredientTableModel = ingredientTableModel;
         this.categoryTableModel = categoryTableModel;
         this.recipe = recipe;
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
+
+        List<Unit> unitList = new LinkedList<>();
+        unitList.addAll(List.of( BaseUnits.values()));
+        unitList.addAll(unitTableModel.getEntities());
+        units = new JComboBox<>(unitList.toArray( new Unit[0]));
         timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
         removeIngredient.setEnabled(false);
         if (recipe != null) {
