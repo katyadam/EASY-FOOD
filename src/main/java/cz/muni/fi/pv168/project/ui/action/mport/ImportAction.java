@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.mport;
 
 import cz.muni.fi.pv168.project.service.crud.CategoryCrudService;
 import cz.muni.fi.pv168.project.service.crud.CustomUnitService;
@@ -22,13 +22,16 @@ public class ImportAction extends AbstractAction {
     protected final RecipeCrudService recipeCrudService;
     private final Runnable callback;
 
+    private final ImportType importType;
+
     public ImportAction(
             String name,
             CategoryCrudService categoryCrudService,
             CustomUnitService customUnitService,
             IngredientCrudService ingredientCrudService,
             RecipeCrudService recipeCrudService,
-            Runnable callback
+            Runnable callback,
+            ImportType importType
     ) {
         super(name);
         this.categoryCrudService = categoryCrudService;
@@ -36,9 +39,17 @@ public class ImportAction extends AbstractAction {
         this.ingredientCrudService = ingredientCrudService;
         this.recipeCrudService = recipeCrudService;
         this.callback = callback;
-        putValue(SHORT_DESCRIPTION, "Imports from an XML file");
-        putValue(MNEMONIC_KEY, KeyEvent.VK_I);
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl I"));
+        this.importType = importType;
+
+        if (importType == ImportType.OVERWRITE) {
+            putValue(SHORT_DESCRIPTION, "Overwrites all data from an XML file");
+            putValue(MNEMONIC_KEY, KeyEvent.VK_I);
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl O"));
+        } else {
+            putValue(SHORT_DESCRIPTION, "Appends all data from an XML file");
+            putValue(MNEMONIC_KEY, KeyEvent.VK_A);
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl A"));
+        }
     }
 
     @Override
@@ -58,7 +69,7 @@ public class ImportAction extends AbstractAction {
                     categoryCrudService,
                     List.of(xmlImporter)
             );
-            genericImportService.importData(selectedFile.getAbsolutePath());
+            genericImportService.importData(selectedFile.getAbsolutePath(), importType);
             callback.run();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 

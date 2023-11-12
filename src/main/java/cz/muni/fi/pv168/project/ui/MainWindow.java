@@ -14,6 +14,8 @@ import cz.muni.fi.pv168.project.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.storage.InMemoryRepository;
 import cz.muni.fi.pv168.project.ui.action.*;
+import cz.muni.fi.pv168.project.ui.action.mport.ImportAction;
+import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -324,14 +326,26 @@ public class MainWindow {
         editMenu.add(actions.getQuitAction());
 
         JMenu filesMenu = new JMenu("Files");
-        filesMenu.add(new ImportAction(
-                "Import",
+        var importMenu = new JMenu("Import");
+        importMenu.add(new ImportAction(
+                "Append new data",
                 categoryCrudService,
                 customUnitService,
                 ingredientCrudService,
                 recipeCrudService,
-                this::refresh
+                this::refresh,
+                ImportType.APPEND
         ));
+        importMenu.add(new ImportAction(
+                "Overwrite all data",
+                categoryCrudService,
+                customUnitService,
+                ingredientCrudService,
+                recipeCrudService,
+                this::refresh,
+                ImportType.OVERWRITE
+        ));
+        filesMenu.add(importMenu);
         filesMenu.addSeparator();
         filesMenu.add(new ExportAction("Export",
                 categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
@@ -407,7 +421,7 @@ public class MainWindow {
         ingredientsPanel.add(max, "left");
         ingredientsPanel.add(caloriesMaxFilter, "left, gapright push, hmin 30");
         ingredientsPanel.add(fireFilter, "al right, split 2");
-        ingredientsPanel.add( removeFilter, "wrap");
+        ingredientsPanel.add(removeFilter, "wrap");
         ingredientsPanel.add(ingredientScroll, "span 3, grow, height 99%");
         return ingredientsPanel;
     }
