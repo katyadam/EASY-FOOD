@@ -76,7 +76,6 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
         int rowIndex = entities.indexOf(entity);
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
-
     public T getEntity(int rowIndex) {
         return entities.get(rowIndex);
     }

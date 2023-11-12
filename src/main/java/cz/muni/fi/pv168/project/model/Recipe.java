@@ -64,6 +64,18 @@ public class Recipe extends Entity {
         return new PreparationTime(hours, minutes);
     }
 
+    public void destroy() {
+        if ( category != null) {
+            category.removeRecipe(this);
+        }
+        for (AddedIngredient addedIngredient: usedIngredients.getEntities()) {
+            addedIngredient.getIngredient().removeRecipe(this);
+            if (addedIngredient.getUnit() instanceof Entity) {
+                ((Entity) addedIngredient.getUnit()).removeRecipe(this);
+            }
+        }
+    }
+
     public int getPortions() {
         return portions;
     }

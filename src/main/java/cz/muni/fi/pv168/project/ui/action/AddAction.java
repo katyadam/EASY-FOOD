@@ -1,5 +1,8 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.model.AddedIngredient;
+import cz.muni.fi.pv168.project.model.Entity;
+import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
@@ -14,6 +17,7 @@ import cz.muni.fi.pv168.project.ui.resources.Icons;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Optional;
 
 public final class AddAction extends ContextAction {
 
@@ -35,8 +39,20 @@ public final class AddAction extends ContextAction {
                         (IngredientTableModel) ingredientTable.getModel(),
                         (CategoryTableModel) categoryTable.getModel(),
                         (CustomUnitTableModel) unitsTable.getModel());
-                recipeDialog.show(recipeTable, "Add Recipe")
-                        .ifPresent(recipeTableModel::addRow);
+                Optional<Recipe> newRecipe =  recipeDialog.show(recipeTable, "Add Recipe");
+                if (newRecipe.isPresent()) {
+                    Recipe recipe = newRecipe.get();
+                    if ( recipe.getCategory() != null) {
+                        recipe.getCategory().addRecipe(recipe);
+                    }
+                    for (AddedIngredient addedIngredient: recipe.getUsedIngredients().getEntities()) {
+                        addedIngredient.getIngredient().addRecipe(recipe);
+                        if ( addedIngredient.getUnit() instanceof Entity) {
+                            ((Entity) addedIngredient.getUnit()).addRecipe(recipe);
+                        }
+                    }
+                    recipeTableModel.addRow(recipe);
+                }
             }
             case 1 -> {
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) ingredientTable.getModel();

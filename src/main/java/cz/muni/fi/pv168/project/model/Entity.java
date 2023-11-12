@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.model;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Entity {
@@ -7,6 +9,8 @@ public abstract class Entity {
     protected String guid;
 
     protected String name;
+    private final List<Recipe> usedIn = new LinkedList<>();
+
 
     protected Entity(String guid) {
         this.guid = guid;
@@ -32,6 +36,21 @@ public abstract class Entity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        if ( !usedIn.contains(recipe)) {
+            usedIn.add(recipe);
+        }
+    }
+    public void removeRecipe(Recipe recipe) {
+        usedIn.remove(recipe);
+    }
+    public List<Recipe> getRecipes() {
+        return usedIn;
+    }
+    public int usedCount() {
+        return usedIn.size();
     }
 
     @Override

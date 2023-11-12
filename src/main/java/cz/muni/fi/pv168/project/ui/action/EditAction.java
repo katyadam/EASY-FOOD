@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.model.AddedIngredient;
 import cz.muni.fi.pv168.project.model.Category;
 import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.model.Entity;
 import cz.muni.fi.pv168.project.model.Ingredient;
 import cz.muni.fi.pv168.project.model.Recipe;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
@@ -18,6 +20,7 @@ import cz.muni.fi.pv168.project.ui.resources.Icons;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Optional;
 
 public final class EditAction extends ContextAction {
 
@@ -50,8 +53,18 @@ public final class EditAction extends ContextAction {
                         (IngredientTableModel) ingredientTable.getModel(),
                         (CategoryTableModel) categoryTable.getModel(),
                         (CustomUnitTableModel) unitsTable.getModel());
-                dialog.show(activeTable, "Edit Recipe")
-                        .ifPresent(recipeTableModel::updateRow);
+                Optional<Recipe> optionalRecipe = dialog.show(recipeTable, "Edit Recipe");
+                if (optionalRecipe.isPresent()) {
+                    Recipe newRecipe = optionalRecipe.get();
+                    newRecipe.getCategory().addRecipe(newRecipe);
+                    for (AddedIngredient addedIngredient : newRecipe.getUsedIngredients().getEntities()) {
+                        addedIngredient.getIngredient().addRecipe(newRecipe);
+                        if (addedIngredient.getUnit() instanceof Entity) {
+                            ((Entity) addedIngredient.getUnit()).addRecipe(newRecipe);
+                        }
+                    }
+                    recipeTableModel.updateRow(newRecipe);
+                }
                 break;
             }
             case 1: {

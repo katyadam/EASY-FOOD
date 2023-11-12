@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
-import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
+
+import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
+import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
@@ -9,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public final class DeleteAction extends ContextAction {
 
@@ -26,16 +29,33 @@ public final class DeleteAction extends ContextAction {
     public void actionPerformed(ActionEvent e) {
         JTable activeTable = TabbedPanelContext.getActiveTable();
         System.out.println(activeTable.getRowCount());
-        EntityTableModel tableModel = (EntityTableModel) activeTable.getModel();
-        Arrays.stream(activeTable.getSelectedRows())
+        AbstractEntityTableModel tableModel = (AbstractEntityTableModel) activeTable.getModel();
+        List<Integer> indexes = Arrays.stream(activeTable.getSelectedRows())
                 // view row index must be converted to model row index
                 .map(activeTable::convertRowIndexToModel)
                 .boxed()
-                // We need to delete rows in descending order to not change index of rows
-                // which are not deleted yet
                 .sorted(Comparator.reverseOrder())
-                .forEach(tableModel::deleteRow);
-        StatisticsUpdater.reload();
+                .toList();
+        if (tableModel instanceof RecipeTableModel) {
+            for (Integer i : indexes) {
+                ((Recipe) tableModel.getEntity(i)).destroy();
+                tableModel.deleteRow(i);
+            }
+        } else {
+        StringBuilder builder = new StringBuilder();
+        for (Integer i : indexes) {
+            if (tableModel.getEntity(i).usedCount() > 0) {
+                builder.append("Deletion denied for ")
+                        .append(tableModel.getEntity(i).getName())
+                        .append(" used in recipes:\n");
+                tableModel.getEntity(i.intValue()).getRecipes().stream().forEach(y -> builder.append(" -> ").append(y).append(System.lineSeparator()));
+                JOptionPane.showMessageDialog(activeTable, builder.toString());
 
+                builder.setLength(0);
+            } else {
+                tableModel.deleteRow(i);
+            }
+        }
+        }
     }
 }
