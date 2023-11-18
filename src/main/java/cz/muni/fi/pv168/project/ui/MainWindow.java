@@ -17,7 +17,6 @@ import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
 import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.storage.InMemoryRepository;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;

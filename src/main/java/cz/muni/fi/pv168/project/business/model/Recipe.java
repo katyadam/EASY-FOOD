@@ -2,7 +2,6 @@ package cz.muni.fi.pv168.project.business.model;
 
 import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
 import cz.muni.fi.pv168.project.business.service.validation.AddedIngredientValidator;
-import cz.muni.fi.pv168.project.storage.InMemoryRepository;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 
 import java.awt.*;
