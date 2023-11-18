@@ -1,11 +1,11 @@
 package cz.muni.fi.pv168.project.storage.sql;
 
-import cz.muni.fi.pv168.employees.business.model.Employee;
-import cz.muni.fi.pv168.employees.business.repository.Repository;
-import cz.muni.fi.pv168.employees.storage.sql.dao.DataAccessObject;
-import cz.muni.fi.pv168.employees.storage.sql.dao.DataStorageException;
-import cz.muni.fi.pv168.employees.storage.sql.entity.EmployeeEntity;
-import cz.muni.fi.pv168.employees.storage.sql.entity.mapper.EntityMapper;
+import cz.muni.fi.pv168.project.business.model.Employee;
+import cz.muni.fi.pv168.project.business.repository.Repository;
+import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
+import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+import cz.muni.fi.pv168.project.storage.sql.entity.EmployeeEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
 
-import cz.muni.fi.pv168.employees.business.model.Department;
-import cz.muni.fi.pv168.employees.storage.sql.entity.DepartmentEntity;
+import cz.muni.fi.pv168.project.business.model.Department;
+import cz.muni.fi.pv168.project.storage.sql.entity.DepartmentEntity;
 
 /**
  * Mapper from the {@link DepartmentEntity} to {@link Department}.

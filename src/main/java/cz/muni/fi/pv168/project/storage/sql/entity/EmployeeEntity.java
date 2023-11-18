@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
-import cz.muni.fi.pv168.employees.business.model.Gender;
+import cz.muni.fi.pv168.project.business.model.Gender;
 
 import java.time.LocalDate;
 import java.util.Objects;

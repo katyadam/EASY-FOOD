@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
-import cz.muni.fi.pv168.employees.business.model.Gender;
-import cz.muni.fi.pv168.employees.storage.sql.db.ConnectionHandler;
-import cz.muni.fi.pv168.employees.storage.sql.entity.EmployeeEntity;
+import cz.muni.fi.pv168.project.business.model.Gender;
+import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
+import cz.muni.fi.pv168.project.storage.sql.entity.EmployeeEntity;
 
 import java.sql.Date;
 import java.sql.ResultSet;

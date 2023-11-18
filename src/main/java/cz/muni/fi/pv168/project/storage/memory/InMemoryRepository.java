@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.storage.memory;
 
-import cz.muni.fi.pv168.employees.business.model.Entity;
-import cz.muni.fi.pv168.employees.business.repository.Repository;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.repository.Repository;
 
 import java.util.Collection;
 import java.util.HashMap;

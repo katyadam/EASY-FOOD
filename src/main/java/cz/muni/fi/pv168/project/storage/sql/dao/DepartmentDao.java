@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
-import cz.muni.fi.pv168.employees.storage.sql.db.ConnectionHandler;
-import cz.muni.fi.pv168.employees.storage.sql.entity.DepartmentEntity;
+import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
+import cz.muni.fi.pv168.project.storage.sql.entity.DepartmentEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
