@@ -39,15 +39,15 @@ public final class AddAction extends ContextAction {
                         (IngredientTableModel) ingredientTable.getModel(),
                         (CategoryTableModel) categoryTable.getModel(),
                         (CustomUnitTableModel) unitsTable.getModel());
-                Optional<Recipe> newRecipe =  recipeDialog.show(recipeTable, "Add Recipe");
+                Optional<Recipe> newRecipe = recipeDialog.show(recipeTable, "Add Recipe");
                 if (newRecipe.isPresent()) {
                     Recipe recipe = newRecipe.get();
-                    if ( recipe.getCategory() != null) {
+                    if (recipe.getCategory() != null) {
                         recipe.getCategory().addRecipe(recipe);
                     }
-                    for (AddedIngredient addedIngredient: recipe.getUsedIngredients().getEntities()) {
+                    for (AddedIngredient addedIngredient : recipe.getUsedIngredients().getEntities()) {
                         addedIngredient.getIngredient().addRecipe(recipe);
-                        if ( addedIngredient.getUnit() instanceof Entity) {
+                        if (addedIngredient.getUnit() instanceof Entity) {
                             ((Entity) addedIngredient.getUnit()).addRecipe(recipe);
                         }
                     }
@@ -56,7 +56,7 @@ public final class AddAction extends ContextAction {
             }
             case 1 -> {
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) ingredientTable.getModel();
-                IngredientDialog ingredientDialog = new IngredientDialog(null,(IngredientTableModel) ingredientTable.getModel() ,(RecipeTableModel) recipeTable.getModel());
+                IngredientDialog ingredientDialog = new IngredientDialog(null, (IngredientTableModel) ingredientTable.getModel(), (RecipeTableModel) recipeTable.getModel());
                 ingredientDialog.show(ingredientTable, "Add ingredient")
                         .ifPresent(ingredientTableModel::addRow);
             }

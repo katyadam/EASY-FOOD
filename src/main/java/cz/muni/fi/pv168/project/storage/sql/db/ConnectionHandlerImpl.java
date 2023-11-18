@@ -15,6 +15,7 @@ class ConnectionHandlerImpl implements ConnectionHandler {
 
     /**
      * Creates new handler over given connection
+     *
      * @param connection database connection
      */
     ConnectionHandlerImpl(Connection connection) {

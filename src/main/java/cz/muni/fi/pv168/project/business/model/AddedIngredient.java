@@ -11,12 +11,12 @@ public class AddedIngredient extends Entity {
     public AddedIngredient() {
     }
 
-    public AddedIngredient(Ingredient ingredient, Double quantity, Unit unit, Recipe recipe) {
+    public AddedIngredient(Ingredient ingredient, Double quantity, Unit unit) {
         this.ingredient = ingredient;
         this.quantity = quantity;
         this.unit = unit;
-        this.recipe = recipe;
     }
+
     public AddedIngredient(
             String guid,
             Recipe recipe,

@@ -32,26 +32,14 @@ public class Recipe extends Entity {
             String recipeName,
             Category category,
             PreparationTime preparationTime,
+            int nutritionalValue,
             int portions,
             String description
     ) {
         super(guid);
         this.recipeName = recipeName;
         this.preparationTime = preparationTime;
-        this.portions = portions;
-        this.category = category;
-        this.description = description;
-    }
-
-    public Recipe(
-            String recipeName,
-            Category category,
-            PreparationTime preparationTime,
-            int portions,
-            String description
-    ) {
-        this.recipeName = recipeName;
-        this.preparationTime = preparationTime;
+        this.nutritionalValue = nutritionalValue;
         this.portions = portions;
         this.category = category;
         this.description = description;

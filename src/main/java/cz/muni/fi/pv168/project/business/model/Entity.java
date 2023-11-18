@@ -39,16 +39,19 @@ public abstract class Entity {
     }
 
     public void addRecipe(Recipe recipe) {
-        if ( !usedIn.contains(recipe)) {
+        if (!usedIn.contains(recipe)) {
             usedIn.add(recipe);
         }
     }
+
     public void removeRecipe(Recipe recipe) {
         usedIn.remove(recipe);
     }
+
     public List<Recipe> getRecipes() {
         return usedIn;
     }
+
     public int usedCount() {
         return usedIn.size();
     }

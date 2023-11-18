@@ -2,21 +2,15 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 
 import cz.muni.fi.pv168.project.business.model.*;
-import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
-import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
-import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
-import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+import cz.muni.fi.pv168.project.ui.model.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.LinkedList;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.*;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
 
@@ -42,7 +36,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override
         public void actionPerformed(ActionEvent e) {
-
             addedIngredientsTableModel.addRow(new AddedIngredient((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
         }
     });
@@ -66,12 +59,12 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
 
         List<Unit> unitList = new LinkedList<>();
-        unitList.addAll(List.of( BaseUnits.baseUnits.toArray(new Unit[0])));
+        unitList.addAll(List.of(BaseUnits.baseUnits.toArray(new Unit[0])));
         unitList.addAll(unitTableModel.getEntities());
-        units = new JComboBox<>(unitList.toArray( new Unit[0]));
+        units = new JComboBox<>(unitList.toArray(new Unit[0]));
 
-        List<Category> categories = new LinkedList<>( categoryTableModel.getEntities());
-        categories.add(0,null);
+        List<Category> categories = new LinkedList<>(categoryTableModel.getEntities());
+        categories.add(0, null);
         categoryJComboBox.setModel(new DefaultComboBoxModel<>(categories.toArray(new Category[0])));
 
         timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
@@ -79,12 +72,12 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            entity = new Recipe(null, null,  new PreparationTime(1, 50), 0, 0, "");
+            entity = new Recipe(null, null, null, new PreparationTime(1, 50), 0, 0, "");
         }
-        Date new_date = new Date();
-        new_date.setHours(entity.getPreparationTime().hours());
-        new_date.setMinutes(entity.getPreparationTime().minutes());
-        timeSpinner.setValue(new_date);
+        Date newDate = new Date();
+        newDate.setHours(entity.getPreparationTime().hours());
+        newDate.setMinutes(entity.getPreparationTime().minutes());
+        timeSpinner.setValue(newDate);
 
         categoryJComboBox.setSelectedItem(entity.getCategory());
         addedIngredientsTableModel = entity.getUsedIngredients();
@@ -102,8 +95,8 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         recipeNameField.setText(entity.getName());
         categoryNameField.setText(entity.getCategoryName());
         categoryColor.setColor(entity.getCategory() == null
-                        ? new Color(0, 0, 0)
-                        : entity.getCategory().getColor());
+                ? new Color(0, 0, 0)
+                : entity.getCategory().getColor());
         recipePortionsField.setModel(new SpinnerNumberModel(entity.getPortions(), 1, 200, 1));
         recipeDescriptionTextField.setText(entity.getDescription());
     }
