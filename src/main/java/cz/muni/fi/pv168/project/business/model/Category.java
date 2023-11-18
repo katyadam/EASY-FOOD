@@ -5,7 +5,14 @@ import java.awt.*;
 public class Category extends Entity {
     private Color color;
 
-    public Category() {
+    public Category(
+            String guid,
+            String categoryName,
+            Color color
+    ) {
+        super(guid);
+        this.name = categoryName;
+        this.color = color;
     }
 
     public Category(String name, Color color) {

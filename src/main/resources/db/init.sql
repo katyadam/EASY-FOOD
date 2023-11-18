@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS "Recipe"
     `id`        BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     `guid`      VARCHAR     NOT NULL UNIQUE,
     `recipeName`    VARCHAR(150) NOT NULL,
-    `preparationTime`    VARCHAR(10) NOT NULL,
+    `preparationTime`    INT NOT NULL,
     `portions`    INT NOT NULL,
     `categoryId` BIGINT REFERENCES "Category"(`id`),
     `nutritionalValue`    INT NOT NULL,

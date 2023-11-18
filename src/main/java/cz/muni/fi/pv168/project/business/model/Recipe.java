@@ -1,42 +1,73 @@
 package cz.muni.fi.pv168.project.business.model;
 
-import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.validation.AddedIngredientValidator;
-import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
-
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Recipe extends Entity {
-    private PreparationTime preparationTime;
+    private String recipeName;
+    private int preparationTime;
     private int portions;
     private Category category;
     private String description = "No recipe description";
+    private int nutritionalValue;
+
+/*
     private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel(
             new AddedIngredientCrudService(
                     new InMemoryRepository<>(new ArrayList<>()),
                     new AddedIngredientValidator(),
                     new UuidGuidProvider()
             ));
-
-    public Recipe() {
+ */
+    public Recipe(
+            String guid,
+            String recipeName,
+            //Category category,
+            int preparationTime, //TODO
+            int portions,
+            int nutritionalValue,
+            String description
+    ) {
+        super(guid);
+        this.recipeName = recipeName;
+        this.preparationTime = preparationTime;
+        this.portions = portions;
+        //this.category = category;
+        this.nutritionalValue = nutritionalValue;
+        this.description = description;
     }
 
     public Recipe(
             String recipeName,
             Category category,
+            int preparationTime,
             int portions,
-            PreparationTime preparationTime
+            int nutritionalValue,
+            String description
     ) {
-        this.name = recipeName;
+        this.recipeName = recipeName;
         this.preparationTime = preparationTime;
         this.portions = portions;
         this.category = category;
-        //this.nutritionalValue = calculateNutritionalValue(ingredientList); TODO
+        this.nutritionalValue = nutritionalValue;
+        this.description = description;
+    }
+    public String getRecipeName() {
+        return recipeName;
     }
 
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
 
-    public void setPreparationTime(PreparationTime preparationTime) {
+    public int getNutritionalValue() {
+        return nutritionalValue;
+    }
+
+    public void setNutritionalValue(int nutritionalValue) {
+        this.nutritionalValue = nutritionalValue;
+    }
+
+    public void setPreparationTime(int preparationTime) {
         this.preparationTime = preparationTime;
     }
 
@@ -57,22 +88,25 @@ public class Recipe extends Entity {
         return description;
     }
 
-    public PreparationTime getPreparationTime() {
-        int hours = preparationTime.hours();
-        int minutes = preparationTime.minutes();
-        return new PreparationTime(hours, minutes);
+    public int getPreparationTime() {
+        return this.portions;
+        //int hours = preparationTime.hours();
+        //int minutes = preparationTime.minutes();
+        //return new PreparationTime(hours, minutes);
     }
 
     public void destroy() {
-        if ( category != null) {
+        if (category != null) {
             category.removeRecipe(this);
         }
-        for (AddedIngredient addedIngredient: usedIngredients.getEntities()) {
+        /*
+        for (AddedIngredient addedIngredient : usedIngredients.getEntities()) {
             addedIngredient.getIngredient().removeRecipe(this);
             if (addedIngredient.getUnit() instanceof Entity) {
                 ((Entity) addedIngredient.getUnit()).removeRecipe(this);
             }
         }
+         */
     }
 
     public int getPortions() {
@@ -92,15 +126,16 @@ public class Recipe extends Entity {
     }
 
     public int getRecipeNutritionalValue() {
-        return usedIngredients.getTotalNutritionalValue();
+        return this.nutritionalValue;
+        //return usedIngredients.getTotalNutritionalValue();TODO
     }
 
-    public AddedIngredientsTableModel getUsedIngredients() {
-        return usedIngredients;
-    }
+    //public AddedIngredientsTableModel getUsedIngredients() {
+    //    return usedIngredients;
+    //}
 
     @Override
     public String toString() {
-        return name;
+        return recipeName;
     }
 }

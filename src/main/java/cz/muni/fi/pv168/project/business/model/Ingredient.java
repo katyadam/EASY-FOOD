@@ -5,7 +5,16 @@ public class Ingredient extends Entity {
 
     private Unit unitType;
 
-    public Ingredient() {
+    public Ingredient(
+            String guid,
+            String name,
+            int nutritionalValue,
+            Unit unitType
+    ) {
+        super(guid);
+        this.name = name;
+        this.nutritionalValue = nutritionalValue;
+        this.unitType = unitType;
     }
 
     public Ingredient(String name, int nutritionalValue, Unit unitType) {

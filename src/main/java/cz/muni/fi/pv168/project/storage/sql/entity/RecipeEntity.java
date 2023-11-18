@@ -1,18 +1,15 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
-import java.time.LocalDate;
-
 public record RecipeEntity(
         Long id,
         String guid,
         long categoryId,
         String recipeName,
-        String preparationTime,
+        int preparationTime,
         int portions,
         int nutritionalValue,
-        String description,
-        LocalDate birthDate) {
-    public RecipeEntity(Long id, String guid, long categoryId, String recipeName, String preparationTime, int portions, int nutritionalValue, String description, LocalDate birthDate) {
+        String description) {
+    public RecipeEntity(Long id, String guid, long categoryId, String recipeName, int preparationTime, int portions, int nutritionalValue, String description) {
         this.id = id;
         this.guid = guid;
         this.categoryId = categoryId;
@@ -21,10 +18,9 @@ public record RecipeEntity(
         this.portions = portions;
         this.nutritionalValue = nutritionalValue;
         this.description = description;
-        this.birthDate = birthDate;
     }
 
-    public RecipeEntity(String guid, long categoryId, String recipeName, String preparationTime, int portions, int nutritionalValue, String description, LocalDate birthDate) {
-        this(null, guid, categoryId, recipeName, preparationTime, portions, nutritionalValue, description, birthDate);
+    public RecipeEntity(String guid, long categoryId, String recipeName, int preparationTime, int portions, int nutritionalValue, String description) {
+        this(null, guid, categoryId, recipeName, preparationTime, portions, nutritionalValue, description);
     }
 }

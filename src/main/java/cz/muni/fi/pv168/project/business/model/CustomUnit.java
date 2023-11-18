@@ -1,12 +1,30 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import java.awt.*;
+
 public class CustomUnit extends Entity implements Unit {
     private String unitName;
     private String abbreviation;
     private double amount;
     private Unit baseUnit;
 
-    public CustomUnit() {
+    public double getAmount() {
+        return amount;
+    }
+
+    public CustomUnit(
+            String guid,
+            String unitName,
+            String abbreviation,
+            double amount,
+            BaseUnits baseUnit
+    ) {
+        super(guid);
+        this.unitName = unitName;
+        this.name = unitName;
+        this.abbreviation = abbreviation;
+        this.amount = amount;
+        this.baseUnit = baseUnit;
     }
 
     public CustomUnit(String unitName, String abbreviation, double amount, BaseUnits baseUnit) {
