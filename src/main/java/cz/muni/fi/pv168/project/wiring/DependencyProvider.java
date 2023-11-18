@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.wiring;
 
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
@@ -36,6 +37,7 @@ public interface DependencyProvider {
     CrudService<Unit> getCustomUnitCrudService();
 
     CrudService<Ingredient> getIngredientCrudService();
+    CrudService<AddedIngredient> getAddedIngredientCrudService();
 
 
     ImportService getImportService();
@@ -49,5 +51,6 @@ public interface DependencyProvider {
     Validator<Unit> getCustomUnitValidator();
 
     Validator<Ingredient> getIngredientValidator();
+    Validator<AddedIngredient> getAddedIngredientValidator();
 }
 

@@ -43,7 +43,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            addedIngredientsTableModel.addRow(new AddedIngredient((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
+            addedIngredientsTableModel.addRow(new AddedIngredient((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem(), recipe));
         }
     });
     private final JButton removeIngredient = new JButton(new AbstractAction("Remove ingredient") {
