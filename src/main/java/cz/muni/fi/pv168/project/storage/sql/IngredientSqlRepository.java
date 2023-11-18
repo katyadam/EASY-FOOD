@@ -4,7 +4,6 @@ import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
-import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.IngredientEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 
@@ -67,4 +66,13 @@ public class IngredientSqlRepository implements Repository<Ingredient> {
                 .findByGuid(guid)
                 .map(ingredientMapper::mapToBusiness);
     }
+
+    @Override
+    public Optional<Ingredient> findById(Long id) {
+        return ingredientDao
+                .findById(id)
+                .map(ingredientMapper::mapToBusiness);
+    }
+
+
 }

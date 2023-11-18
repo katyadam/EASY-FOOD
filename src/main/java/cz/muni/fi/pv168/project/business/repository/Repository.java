@@ -1,6 +1,8 @@
 package cz.muni.fi.pv168.project.business.repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Represents a repository for any entity.
@@ -13,6 +15,12 @@ public interface Repository<T> {
      * Find all entities.
      */
     List<T> findAll();
+
+    /**
+     * Find entity by its guid, if exists
+     */
+    Optional<T> findByGuid(String guid);
+    Optional<T> findById(Long id);
 
     /**
      * Persist given {@code newEntity}.

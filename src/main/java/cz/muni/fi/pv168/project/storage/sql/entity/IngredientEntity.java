@@ -9,16 +9,17 @@ public record IngredientEntity(
         String guid,
         String ingredientName,
         int nutritionalValue,
-        Unit unitType) {
-    public IngredientEntity(Long id, String guid, String ingredientName, int nutritionalValue, Unit unitType) {
+        Long unitId
+) {
+    public IngredientEntity(Long id, String guid, String ingredientName, int nutritionalValue, Long unitId) {
         this.id = id;
         this.guid = guid;
         this.ingredientName = ingredientName;
         this.nutritionalValue = nutritionalValue;
-        this.unitType = unitType;
+        this.unitId = unitId;
     }
 
-    public IngredientEntity(String guid, String ingredientName,int nutritionalValue, Unit unitType) {
-        this(null, guid, ingredientName,nutritionalValue, unitType);
+    public IngredientEntity(String guid, String ingredientName, int nutritionalValue, Long unitId) {
+        this(null, guid, ingredientName, nutritionalValue, unitId);
     }
 }

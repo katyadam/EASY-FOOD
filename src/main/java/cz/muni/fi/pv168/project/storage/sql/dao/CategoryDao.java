@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -229,7 +230,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("categoryName"),
-                resultSet.getString("color") //TODO netusim co s tou color
+                new Color(resultSet.getInt("color")) //TODO netusim co s tou color // SOLVED
         );
     }
 }

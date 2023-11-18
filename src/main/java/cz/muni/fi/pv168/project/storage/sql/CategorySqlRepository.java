@@ -67,4 +67,11 @@ public class CategorySqlRepository implements Repository<Category> {
                 .findByGuid(guid)
                 .map(categoryMapper::mapToBusiness);
     }
+
+    @Override
+    public Optional<Category> findById(Long id) {
+        return categoryDao
+                .findById(id)
+                .map(categoryMapper::mapToBusiness);
+    }
 }

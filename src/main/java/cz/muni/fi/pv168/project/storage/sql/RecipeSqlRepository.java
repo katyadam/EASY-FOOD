@@ -66,4 +66,11 @@ public class RecipeSqlRepository implements Repository<Recipe> {
                 .findByGuid(guid)
                 .map(recipeMapper::mapToBusiness);
     }
+
+    @Override
+    public Optional<Recipe> findById(Long id) {
+        return recipeDao
+                .findById(id)
+                .map(recipeMapper::mapToBusiness);
+    }
 }

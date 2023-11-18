@@ -69,8 +69,8 @@ public class EmployeeSqlRepository implements Repository<Employee> {
 
     @Override
     public Optional<Employee> findByGuid(String guid) {
-       return employeeDao
-            .findByGuid(guid)
-            .map(employeeMapper::mapToBusiness);
+        return employeeDao
+                .findByGuid(guid)
+                .map(employeeMapper::mapToBusiness);
     }
 }

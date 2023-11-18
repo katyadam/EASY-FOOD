@@ -74,7 +74,7 @@ public class CommonDependencyProvider implements DependencyProvider {
 
         var categoryMapper = new CategoryMapper();
         var categoryDao = new CategoryDao(transactionConnectionSupplier);
-        var ingredientMapper = new IngredientMapper();
+        var ingredientMapper = new IngredientMapper(customUnitDao, categoryMapper);
         var ingredientDao = new IngredientDao(transactionConnectionSupplier);
         var customUnitMapper = new CustomUnitMapper();
         var customUnitDao = new CustomUnitDao(transactionConnectionSupplier);
