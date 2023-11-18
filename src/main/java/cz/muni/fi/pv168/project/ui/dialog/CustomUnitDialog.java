@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.BaseUnits;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 
 import javax.swing.*;

@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project;
 
-import cz.muni.fi.pv168.project.service.export.batch.Batch;
-import cz.muni.fi.pv168.project.service.export.importer.ImporterHandler;
+import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
+import cz.muni.fi.pv168.project.business.service.export.importer.ImporterHandler;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 

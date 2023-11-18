@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.model.AddedIngredient;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.Unit;
-import cz.muni.fi.pv168.project.service.crud.CrudService;
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 
 import java.util.ArrayList;
 import java.util.List;

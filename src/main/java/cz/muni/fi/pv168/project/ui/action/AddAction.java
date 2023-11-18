@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.model.AddedIngredient;
-import cz.muni.fi.pv168.project.model.Entity;
-import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;

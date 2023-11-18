@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.ui.filters.recipes.RecipeFilterAttributes;
 import cz.muni.fi.pv168.project.ui.filters.recipes.RecipeRowFilter;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -12,7 +12,6 @@ import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 public class FilterRecipesAction extends AbstractAction {
 

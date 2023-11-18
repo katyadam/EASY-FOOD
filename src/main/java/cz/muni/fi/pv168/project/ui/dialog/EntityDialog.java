@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.model.Entity;
-import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
