@@ -43,7 +43,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            addedIngredientsTableModel.addRow(new AddedIngredient((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem(), recipe));
+            addedIngredientsTableModel.addRow(new AddedIngredient((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
         }
     });
     private final JButton removeIngredient = new JButton(new AbstractAction("Remove ingredient") {
@@ -79,7 +79,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            entity = new Recipe(null, null, 0, new PreparationTime(1, 50));
+            entity = new Recipe(null, null,  new PreparationTime(1, 50), 0, 0, "");
         }
         Date new_date = new Date();
         new_date.setHours(entity.getPreparationTime().hours());

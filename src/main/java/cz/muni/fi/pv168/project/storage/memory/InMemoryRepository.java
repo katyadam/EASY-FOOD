@@ -30,6 +30,12 @@ public class InMemoryRepository<T extends Entity> implements Repository<T> {
     }
 
     @Override
+    public Optional<T> findById(Long id) {
+        //TODO
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public List<T> findAll() {
         return data.values().stream()
                 .toList();
