@@ -1,14 +1,15 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
-public record CustomUnitEntity(
+public record UnitEntity(
         Long id,
         String guid,
         String unitName,
         String abbreviation,
         double amount,
-        String baseUnit) {
+        String baseUnit // base units name
+) {
 
-    public CustomUnitEntity(Long id, String guid, String unitName, String abbreviation, double amount, String baseUnit) {
+    public UnitEntity(Long id, String guid, String unitName, String abbreviation, double amount, String baseUnit) {
         this.id = id;
         this.guid = guid;
         this.unitName = unitName;
@@ -17,7 +18,7 @@ public record CustomUnitEntity(
         this.baseUnit = baseUnit;
     }
 
-    public CustomUnitEntity(String guid, String unitName, String abbreviation, double amount, String baseUnit) {
+    public UnitEntity(String guid, String unitName, String abbreviation, double amount, String baseUnit) {
         this(null, guid, unitName, abbreviation, amount, baseUnit);
     }
 }

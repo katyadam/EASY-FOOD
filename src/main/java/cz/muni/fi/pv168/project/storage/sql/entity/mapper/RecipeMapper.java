@@ -28,7 +28,7 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
         return new Recipe(
                 entity.guid(),
                 entity.recipeName(),
-                //entity.categoryId(), //TODO
+                category,
                 entity.preparationTime(),
                 entity.portions(),
                 entity.nutritionalValue(),

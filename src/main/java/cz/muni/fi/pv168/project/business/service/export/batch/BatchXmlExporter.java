@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.business.service.export.batch;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.service.export.DataManipulationException;
@@ -86,19 +86,19 @@ public class BatchXmlExporter implements BatchExporter {
 
     private void exportCustomUnits(Batch batch, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("CustomUnits", bufferedWriter, tabs);
-        for (CustomUnit customUnit : batch.customUnits()) {
-            exportCustomUnit(customUnit, bufferedWriter, tabs + 1);
+        for (Unit unit : batch.units()) {
+            exportCustomUnit(unit, bufferedWriter, tabs + 1);
         }
         ;
         writeEnd("CustomUnits", bufferedWriter, tabs);
     }
 
-    private void exportCustomUnit(CustomUnit customUnit, BufferedWriter bufferedWriter, int tabs) throws IOException {
+    private void exportCustomUnit(Unit unit, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("CustomUnit", bufferedWriter, tabs);
-        writeAtributeString(customUnit.getName(), "CustomUnitName", bufferedWriter, tabs + 1);
-        writeAtributeString(customUnit.getAbbreviation(), "Abbreviation", bufferedWriter, tabs + 1);
-        writeAtributeString(customUnit.getBaseAmountNumber(), "BaseAmountNumber", bufferedWriter, tabs + 1);
-        writeAtributeString(customUnit.getBaseUnit().getAbbreviation(), "BaseUnitAbbr", bufferedWriter, tabs + 1);
+        writeAtributeString(unit.getName(), "CustomUnitName", bufferedWriter, tabs + 1);
+        writeAtributeString(unit.getAbbreviation(), "Abbreviation", bufferedWriter, tabs + 1);
+        writeAtributeString(unit.getBaseAmountNumber(), "BaseAmountNumber", bufferedWriter, tabs + 1);
+        writeAtributeString(unit.getBaseUnit().getAbbreviation(), "BaseUnitAbbr", bufferedWriter, tabs + 1);
         writeEnd("CustomUnit", bufferedWriter, tabs);
     }
 

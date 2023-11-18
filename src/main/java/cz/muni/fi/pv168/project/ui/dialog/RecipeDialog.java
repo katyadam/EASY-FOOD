@@ -1,13 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 
-import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.model.BaseUnits;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.PreparationTime;
-import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
@@ -72,7 +66,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
 
         List<Unit> unitList = new LinkedList<>();
-        unitList.addAll(List.of( BaseUnits.values()));
+        unitList.addAll(List.of( BaseUnits.baseUnits.toArray(new Unit[0])));
         unitList.addAll(unitTableModel.getEntities());
         units = new JComboBox<>(unitList.toArray( new Unit[0]));
 

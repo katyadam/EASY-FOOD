@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
-import cz.muni.fi.pv168.project.storage.sql.entity.CustomUnitEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
+public class UnitDao implements DataAccessObject<UnitEntity> {
     private final Supplier<ConnectionHandler> connections;
 
-    public CustomUnitDao(Supplier<ConnectionHandler> connections) {
+    public UnitDao(Supplier<ConnectionHandler> connections) {
         this.connections = connections;
     }
 
     @Override
-    public CustomUnitEntity create(CustomUnitEntity newCustomUnit) {
+    public UnitEntity create(UnitEntity newCustomUnit) {
         var sql = """
                 INSERT INTO CustomUnit(
                     guid,
@@ -62,7 +62,7 @@ public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
     }
 
     @Override
-    public Collection<CustomUnitEntity> findAll() {
+    public Collection<UnitEntity> findAll() {
         var sql = """
                 SELECT id,
                     guid,
@@ -77,7 +77,7 @@ public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
 
-            List<CustomUnitEntity> customUnits = new ArrayList<>();
+            List<UnitEntity> customUnits = new ArrayList<>();
             try (var resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     var customUnit = customUnitFromResultSet(resultSet);
@@ -92,7 +92,7 @@ public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
     }
 
     @Override
-    public Optional<CustomUnitEntity> findById(long id) {
+    public Optional<UnitEntity> findById(long id) {
         var sql = """
                 SELECT id,
                     guid,
@@ -121,7 +121,7 @@ public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
     }
 
     @Override
-    public Optional<CustomUnitEntity> findByGuid(String guid) {
+    public Optional<UnitEntity> findByGuid(String guid) {
         var sql = """
                 SELECT id,
                     guid,
@@ -150,7 +150,7 @@ public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
     }
 
     @Override
-    public CustomUnitEntity update(CustomUnitEntity entity) {
+    public UnitEntity update(UnitEntity entity) {
         var sql = """
                 UPDATE CustomUnit
                 SET unitName = ?,
@@ -238,8 +238,8 @@ public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
     }
 
 
-    private static CustomUnitEntity customUnitFromResultSet(ResultSet resultSet) throws SQLException {
-        return new CustomUnitEntity(
+    private static UnitEntity customUnitFromResultSet(ResultSet resultSet) throws SQLException {
+        return new UnitEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("unitName"),
@@ -248,4 +248,5 @@ public class CustomUnitDao implements DataAccessObject<CustomUnitEntity> {
                 resultSet.getString("baseUnit")
         );
     }
+
 }

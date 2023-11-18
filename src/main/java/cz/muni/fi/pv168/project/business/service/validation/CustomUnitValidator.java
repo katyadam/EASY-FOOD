@@ -1,14 +1,14 @@
 package cz.muni.fi.pv168.project.business.service.validation;
 
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 
 import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.validateAlphaNum;
 import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.validateAlphaNumWhiteSapce;
 import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.validateDouble;
 
-public class CustomUnitValidator implements Validator<CustomUnit> {
+public class CustomUnitValidator implements Validator<Unit> {
     @Override
-    public ValidationResult validate(CustomUnit model) {
+    public ValidationResult validate(Unit model) {
 
 
         if (!validateAlphaNumWhiteSapce(model.getName()).isValid()) {

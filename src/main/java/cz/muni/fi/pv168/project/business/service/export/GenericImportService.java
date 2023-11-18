@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.business.service.export;
 
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
@@ -20,14 +20,14 @@ public class GenericImportService implements ImportService {
 
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
-    private final CrudService<CustomUnit> customUnitsCrudService;
+    private final CrudService<Unit> customUnitsCrudService;
     private final CrudService<Category> categoryCrudService;
     private final FormatMapping<BatchImporter> importers;
 
     public GenericImportService(
             CrudService<Recipe> recipeCrudService,
             CrudService<Ingredient> ingredientCrudService,
-            CrudService<CustomUnit> customUnitsCrudService,
+            CrudService<Unit> customUnitsCrudService,
             CrudService<Category> categoryCrudService,
             Collection<BatchImporter> importers
     ) {
@@ -51,7 +51,7 @@ public class GenericImportService implements ImportService {
 
         batch.recipes().forEach(this::createRecipe);
         batch.ingredients().forEach(this::createIngredient);
-        batch.customUnits().forEach(this::createCustomUnit);
+        batch.units().forEach(this::createCustomUnit);
         batch.categories().forEach(this::createCategory);
     }
 
@@ -65,8 +65,8 @@ public class GenericImportService implements ImportService {
                 .intoException();
     }
 
-    private void createCustomUnit(CustomUnit customUnit) {
-        customUnitsCrudService.create(customUnit)
+    private void createCustomUnit(Unit unit) {
+        customUnitsCrudService.create(unit)
                 .intoException();
     }
 

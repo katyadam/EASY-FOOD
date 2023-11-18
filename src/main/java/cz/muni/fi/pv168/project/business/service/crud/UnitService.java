@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
@@ -8,15 +8,15 @@ import cz.muni.fi.pv168.project.business.service.validation.Validator;
 
 import java.util.List;
 
-public class CustomUnitService implements CrudService<CustomUnit> {
+public class UnitService implements CrudService<Unit> {
 
-    private final Repository<CustomUnit> customUnitRepository;
-    private final Validator<CustomUnit> customUnitValidator;
+    private final Repository<Unit> customUnitRepository;
+    private final Validator<Unit> customUnitValidator;
     private final GuidProvider guidProvider;
 
-    public CustomUnitService(
-            Repository<CustomUnit> customUnitRepository,
-            Validator<CustomUnit> customUnitValidator,
+    public UnitService(
+            Repository<Unit> customUnitRepository,
+            Validator<Unit> customUnitValidator,
             GuidProvider guidProvider
     ) {
         this.customUnitRepository = customUnitRepository;
@@ -26,12 +26,12 @@ public class CustomUnitService implements CrudService<CustomUnit> {
 
 
     @Override
-    public List<CustomUnit> findAll() {
+    public List<Unit> findAll() {
         return customUnitRepository.findAll();
     }
 
     @Override
-    public ValidationResult create(CustomUnit newEntity) {
+    public ValidationResult create(Unit newEntity) {
         ValidationResult validationResult = customUnitValidator.validate(newEntity);
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {
             newEntity.setGuid(guidProvider.newGuid());
@@ -50,7 +50,7 @@ public class CustomUnitService implements CrudService<CustomUnit> {
     }
 
     @Override
-    public ValidationResult update(CustomUnit entity) {
+    public ValidationResult update(Unit entity) {
         ValidationResult validationResult = customUnitValidator.validate(entity);
         if (validationResult.isValid()) {
             customUnitRepository.update(entity);

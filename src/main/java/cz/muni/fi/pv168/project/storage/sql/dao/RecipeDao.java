@@ -1,10 +1,9 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
+import cz.muni.fi.pv168.project.business.model.PreparationTime;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
-import cz.muni.fi.pv168.project.storage.sql.entity.EmployeeEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.RecipeEntity;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,7 +26,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 INSERT INTO Recipe(
                     guid,
                     recipeName,
-                    preparationTime,
+                    prepHours,
+                    prepMinutes,
                     portions,
                     categoryId,
                     nutritionalValue,
@@ -41,11 +41,12 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
         ) {
             statement.setString(1, newRecipe.guid());
             statement.setString(2, newRecipe.recipeName());
-            statement.setInt(3, newRecipe.preparationTime());
-            statement.setInt(4, newRecipe.portions());
-            statement.setLong(5, newRecipe.categoryId());
-            statement.setInt(6, newRecipe.nutritionalValue());
-            statement.setString(7, newRecipe.description());
+            statement.setInt(3, newRecipe.preparationTime().hours());
+            statement.setInt(4, newRecipe.preparationTime().minutes());
+            statement.setInt(5, newRecipe.portions());
+            statement.setLong(6, newRecipe.categoryId());
+            statement.setInt(7, newRecipe.nutritionalValue());
+            statement.setString(8, newRecipe.description());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -73,7 +74,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 SELECT id,
                     guid,
                     recipeName,
-                    preparationTime,
+                    prepHours,
+                    prepMinutes,
                     portions,
                     categoryId,
                     nutritionalValue,
@@ -105,7 +107,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 SELECT id,
                     guid,
                     recipeName,
-                    preparationTime,
+                    prepHours,
+                    prepMinutes,
                     portions,
                     categoryId,
                     nutritionalValue,
@@ -136,7 +139,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 SELECT id,
                     guid,
                     recipeName,
-                    preparationTime,
+                    prepHours,
+                    prepMinutes,
                     portions,
                     categoryId,
                     nutritionalValue,
@@ -166,7 +170,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
         var sql = """
                 UPDATE Recipe
                 SET recipeName = ?,
-                    preparationTime = ?,
+                    prepHours = ?,
+                    prepMinutes = ?,
                     portions = ?,
                     categoryId = ?,
                     nutritionalValue = ?,
@@ -178,12 +183,13 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, entity.recipeName());
-            statement.setInt(2, entity.preparationTime());
-            statement.setInt(3, entity.portions());
-            statement.setLong(4, entity.categoryId());
-            statement.setInt(5, entity.nutritionalValue());
-            statement.setString(6, entity.description());
-            statement.setLong(7, entity.id());
+            statement.setInt(2, entity.preparationTime().hours());
+            statement.setInt(3, entity.preparationTime().minutes());
+            statement.setInt(4, entity.portions());
+            statement.setLong(5, entity.categoryId());
+            statement.setInt(6, entity.nutritionalValue());
+            statement.setString(7, entity.description());
+            statement.setLong(8, entity.id());
             statement.executeUpdate();
 
             int rowsUpdated = statement.executeUpdate();
@@ -260,7 +266,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 resultSet.getString("guid"),
                 resultSet.getLong("categoryId"),
                 resultSet.getString("recipeName"),
-                resultSet.getInt("preparationTime"),
+                new PreparationTime(resultSet.getInt("prepHours"), resultSet.getInt("prepMinutes")),
                 resultSet.getInt("portions"),
                 resultSet.getInt("nutritionalValue"),
                 resultSet.getString("description")

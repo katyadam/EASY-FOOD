@@ -3,11 +3,10 @@ package cz.muni.fi.pv168.project.business.service.export.importer;
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.BaseUnits;
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.PreparationTime;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.service.export.DataManipulationException;
 import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
 import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class ImporterHandler extends DefaultHandler {
     private final List<Category> categoryList;
-    private final List<CustomUnit> customUnitList;
+    private final List<Unit> unitList;
     private final List<Ingredient> ingredientList;
     private final List<Recipe> recipeList;
 
@@ -33,7 +32,7 @@ public class ImporterHandler extends DefaultHandler {
     public static final String ADDED_INGREDIENT = "AddedIngredient";
     private StringBuilder elementValue;
     private Category activeCategory;
-    private CustomUnit activeCustomUnit;
+    private Unit activeUnit;
     private Ingredient activeIngredient;
     private Recipe activeRecipe;
     private AddedIngredient activeAddedIngredient;
@@ -42,7 +41,7 @@ public class ImporterHandler extends DefaultHandler {
 
     public ImporterHandler() {
         this.categoryList = new ArrayList<>();
-        this.customUnitList = new ArrayList<>();
+        this.unitList = new ArrayList<>();
         this.ingredientList = new ArrayList<>();
         this.recipeList = new ArrayList<>();
     }
@@ -60,7 +59,7 @@ public class ImporterHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName) {
             case CATEGORY -> activeCategory = new Category();
-            case CUSTOM_UNIT -> activeCustomUnit = new CustomUnit();
+            case CUSTOM_UNIT -> activeUnit = new Unit();
             case INGREDIENT -> activeIngredient = new Ingredient();
             case RECIPE -> activeRecipe = new Recipe();
             case ADDED_INGREDIENTS -> addedIngredients = new ArrayList<>();
@@ -73,15 +72,15 @@ public class ImporterHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
         switch (qName) {
             case CATEGORY -> categoryList.add(activeCategory);
-            case CUSTOM_UNIT -> customUnitList.add(activeCustomUnit);
+            case CUSTOM_UNIT -> unitList.add(activeUnit);
             case INGREDIENT -> ingredientList.add(activeIngredient);
             case RECIPE -> recipeList.add(activeRecipe);
             case "CategoryName" -> activeCategory.setName(elementValue.toString());
             case "Color" -> activeCategory.setColor(parseColor(elementValue.toString()));
-            case "CustomUnitName" -> activeCustomUnit.setName(elementValue.toString());
-            case "Abbreviation" -> activeCustomUnit.setAbbreviation(elementValue.toString());
-            case "BaseAmountNumber" -> activeCustomUnit.setAmount(Double.parseDouble(elementValue.toString()));
-            case "BaseUnitAbbr" -> activeCustomUnit.setBaseUnit(parseUnit(elementValue.toString()));
+            case "CustomUnitName" -> activeUnit.setName(elementValue.toString());
+            case "Abbreviation" -> activeUnit.setAbbreviation(elementValue.toString());
+            case "BaseAmountNumber" -> activeUnit.setAmount(Double.parseDouble(elementValue.toString()));
+            case "BaseUnitAbbr" -> activeUnit.setBaseUnit(parseUnit(elementValue.toString()));
             case "IngredientName" -> activeIngredient.setName(elementValue.toString());
             case "IngredientUnit" -> activeIngredient.setUnitType(parseUnit(elementValue.toString()));
             case "NutritionalValue" -> activeIngredient.setNutritionalValue(Integer.parseInt(elementValue.toString()));
@@ -142,7 +141,7 @@ public class ImporterHandler extends DefaultHandler {
                 return baseUnit;
             }
         }
-        for (var customUnit : customUnitList) {
+        for (var customUnit : unitList) {
             if (customUnit.getAbbreviation().equals(unitAbbr)) {
                 return customUnit;
             }
@@ -151,7 +150,7 @@ public class ImporterHandler extends DefaultHandler {
     }
 
     public Batch getBatch() {
-        return new Batch(recipeList, ingredientList, customUnitList, categoryList);
+        return new Batch(recipeList, ingredientList, unitList, categoryList);
     }
 
 }

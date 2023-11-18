@@ -3,12 +3,11 @@ package cz.muni.fi.pv168.project.data;
 
 import cz.muni.fi.pv168.project.business.model.BaseUnits;
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.PreparationTime;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 
 import java.awt.*;
@@ -40,7 +39,7 @@ public final class TestDataGenerator {
     private static final List<String> CUSTOM_UNIT_NAMES = new ArrayList<>();
     private static final List<String> CUSTOM_UNIT_ABBREVIATIONS = new ArrayList<>();
     private final List<Category> categories;
-    private final List<CustomUnit> customUnits;
+    private final List<Unit> units;
     private final List<Ingredient> ingredients;
     private final List<Recipe> recipes;
 
@@ -48,8 +47,8 @@ public final class TestDataGenerator {
         return categories;
     }
 
-    public List<CustomUnit> getCustomUnits() {
-        return customUnits;
+    public List<Unit> getCustomUnits() {
+        return units;
     }
 
     public List<Ingredient> getIngredients() {
@@ -60,9 +59,6 @@ public final class TestDataGenerator {
         return recipes;
     }
 
-    public List<BaseUnits> getBaseUnits() {
-        return baseUnits;
-    }
 
 
     static {
@@ -85,12 +81,12 @@ public final class TestDataGenerator {
         // Add more custom units as needed
     }
 
-    private final List<BaseUnits> baseUnits = BaseUnits.getBaseUnitList();
+    private final BaseUnits baseUnits = new BaseUnits();
 
 
     public TestDataGenerator() {
         this.categories = createTestCategories();
-        this.customUnits = createTestCustomUnits(5);
+        this.units = createTestCustomUnits(5);
         this.ingredients = createTestIngredients(10);
         this.recipes = createTestRecipes(10);
     }
@@ -124,7 +120,7 @@ public final class TestDataGenerator {
                 .collect(Collectors.toList());
     }
 
-    public List<CustomUnit> createTestCustomUnits(int count) {
+    public List<Unit> createTestCustomUnits(int count) {
         return Stream
                 .generate(this::createTestCustomUnit)
                 .limit(count)
@@ -132,15 +128,15 @@ public final class TestDataGenerator {
 
     }
 
-    private CustomUnit createTestCustomUnit() {
+    private Unit createTestCustomUnit() {
         int position = random.nextInt(CUSTOM_UNIT_NAMES.size());
         String customUnitName = CUSTOM_UNIT_NAMES.get(position);
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
         double amount = random.nextDouble() * 100;
-        BaseUnits baseUnit = selectRandom(baseUnits);
-        CustomUnit customUnit = new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
-        customUnit.setGuid(uuidProvider.newGuid());
-        return customUnit;
+        Unit baseUnit = selectRandom(BaseUnits.getBaseUnitList());
+        Unit unit = new Unit(customUnitName, customUnitAbbreviation, amount, baseUnit);
+        unit.setGuid(uuidProvider.newGuid());
+        return unit;
     }
 
     public Recipe createTestRecipe() {
@@ -157,7 +153,7 @@ public final class TestDataGenerator {
     private Ingredient createTestIngredient() {
         String ingredientName = selectRandom(INGREDIENT_NAMES);
         int nutritionalValue = random.nextInt(10000);
-        Unit unit = selectRandom(customUnits);
+        Unit unit = selectRandom(units);
         Ingredient ingredient = new Ingredient(ingredientName, nutritionalValue, unit);
         ingredient.setGuid(uuidProvider.newGuid());
         return ingredient;

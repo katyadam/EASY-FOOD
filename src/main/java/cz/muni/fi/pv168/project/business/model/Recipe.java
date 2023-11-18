@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Recipe extends Entity {
     private String recipeName;
-    private int preparationTime;
+    private PreparationTime preparationTime;
     private int portions;
     private Category category;
     private String description = "No recipe description";
@@ -18,11 +18,13 @@ public class Recipe extends Entity {
                     new UuidGuidProvider()
             ));
  */
+    public Recipe() {
+    }
     public Recipe(
             String guid,
             String recipeName,
-            //Category category,
-            int preparationTime, //TODO
+            Category category,
+            PreparationTime preparationTime,
             int portions,
             int nutritionalValue,
             String description
@@ -39,7 +41,7 @@ public class Recipe extends Entity {
     public Recipe(
             String recipeName,
             Category category,
-            int preparationTime,
+            PreparationTime preparationTime,
             int portions,
             int nutritionalValue,
             String description
@@ -67,7 +69,7 @@ public class Recipe extends Entity {
         this.nutritionalValue = nutritionalValue;
     }
 
-    public void setPreparationTime(int preparationTime) {
+    public void setPreparationTime(PreparationTime preparationTime) {
         this.preparationTime = preparationTime;
     }
 
@@ -88,11 +90,10 @@ public class Recipe extends Entity {
         return description;
     }
 
-    public int getPreparationTime() {
-        return this.portions;
-        //int hours = preparationTime.hours();
-        //int minutes = preparationTime.minutes();
-        //return new PreparationTime(hours, minutes);
+    public PreparationTime getPreparationTime() {
+        int hours = preparationTime.hours();
+        int minutes = preparationTime.minutes();
+        return new PreparationTime(hours, minutes);
     }
 
     public void destroy() {

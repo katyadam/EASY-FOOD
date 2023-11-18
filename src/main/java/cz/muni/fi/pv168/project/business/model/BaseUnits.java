@@ -2,44 +2,20 @@ package cz.muni.fi.pv168.project.business.model;
 
 import java.util.List;
 
-public enum BaseUnits implements Unit {
-    PIECE("piece", "pc"),
-    //TEASPOON("teaspoon", "tsp"),
-    //TABLESPOON("tablespoon", "tbsp"),
-    //CUP("cup", "c"),
-    //FLUID_OUNCE("fluid ounce", "fl oz"),
-    //PINT("pint", "pt"),
-    //QUART("quart", "qt"),
-    //GALLON("gallon", "gal"),
-    MILLILITER("milliliter", "ml"),
-    LITER("liter", "l"),
-    GRAM("gram", "g"),
-    KILOGRAM("kilogram", "kg");
-    //OUNCE("ounce", "oz"),
-    //POUND("pound", "lb"),
-    //DROP("drop", "drop"),
-    //PIECE("piece", "pc");
+public class BaseUnits extends Entity {
+    private static final UuidGuidProvider uuidGuidProvider = new UuidGuidProvider();
+    public static final List<Unit> baseUnits = List.of(
+            new Unit(uuidGuidProvider.newGuid(), "piece", "pc", 1, null),
+            new Unit(uuidGuidProvider.newGuid(), "mililiter", "ml", 1, null),
+            new Unit(uuidGuidProvider.newGuid(), "liter", "l", 1, null),
+            new Unit(uuidGuidProvider.newGuid(), "gram", "g", 1, null),
+            new Unit(uuidGuidProvider.newGuid(), "kilogram", "kg", 1, null)
+    );
 
-
-    private final String fullName;
-    private final String abbreviation;
-
-    BaseUnits(String fullName, String abbreviation) {
-        this.fullName = fullName;
-        this.abbreviation = abbreviation;
+    public BaseUnits() {
     }
 
-    @Override
-    public String getName() {
-        return fullName;
-    }
-
-    @Override
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public static List<BaseUnits> getBaseUnitList() {
-        return List.of(MILLILITER, LITER, GRAM, KILOGRAM, PIECE);
+    public static List<Unit> getBaseUnitList() {
+        return baseUnits;
     }
 }

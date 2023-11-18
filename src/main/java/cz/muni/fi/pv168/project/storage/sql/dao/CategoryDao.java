@@ -36,7 +36,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
         ) {
             statement.setString(1, newCategory.guid());
             statement.setString(2, newCategory.categoryName());
-            statement.setString(3, newCategory.color().toString());
+            statement.setInt(3, newCategory.color().getRGB());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -153,7 +153,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, entity.categoryName());
-            statement.setString(2, entity.color().toString());
+            statement.setInt(2, entity.color().getRGB());
             statement.setLong(7, entity.id());
             statement.executeUpdate();
 
@@ -230,7 +230,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("categoryName"),
-                new Color(resultSet.getInt("color")) //TODO netusim co s tou color // SOLVED
+                new Color(resultSet.getInt("color"))
         );
     }
 }

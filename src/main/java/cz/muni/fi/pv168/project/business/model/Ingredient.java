@@ -5,6 +5,9 @@ public class Ingredient extends Entity {
 
     private Unit unitType;
 
+    public Ingredient() {
+    }
+
     public Ingredient(
             String guid,
             String name,

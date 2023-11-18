@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.business.service.export;
 
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
@@ -22,14 +22,14 @@ public class GenericExportService implements ExportService {
 
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
-    private final CrudService<CustomUnit> customUnitsCrudService;
+    private final CrudService<Unit> customUnitsCrudService;
     private final CrudService<Category> categoryCrudService;
     private final FormatMapping<BatchExporter> exporters;
 
     public GenericExportService(
             CrudService<Recipe> recipeCrudService,
             CrudService<Ingredient> ingredienbtCrudService,
-            CrudService<CustomUnit> customUnitsCrudService,
+            CrudService<Unit> customUnitsCrudService,
             CrudService<Category> categoryCrudService,
             Collection<BatchExporter> exporters
     ) {

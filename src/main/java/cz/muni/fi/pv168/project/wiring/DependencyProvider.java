@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.wiring;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.repository.Repository;
@@ -23,7 +23,7 @@ public interface DependencyProvider {
 
     Repository<Category> getCategoryRepository();
 
-    Repository<CustomUnit> getCustomUnitRepository();
+    Repository<Unit> getCustomUnitRepository();
 
     Repository<Ingredient> getIngredientRepository();
 
@@ -33,7 +33,7 @@ public interface DependencyProvider {
 
     CrudService<Category> getCategoryCrudService();
 
-    CrudService<CustomUnit> getCustomUnitCrudService();
+    CrudService<Unit> getCustomUnitCrudService();
 
     CrudService<Ingredient> getIngredientCrudService();
 
@@ -46,7 +46,7 @@ public interface DependencyProvider {
 
     Validator<Category> getCategoryValidator();
 
-    Validator<CustomUnit> getCustomUnitValidator();
+    Validator<Unit> getCustomUnitValidator();
 
     Validator<Ingredient> getIngredientValidator();
 }

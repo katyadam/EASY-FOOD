@@ -1,28 +1,29 @@
-package cz.muni.fi.pv168.project.storage.sql.entity;
+package cz.muni.fi.pv168.project.storage.sql;
 
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CustomUnitSqlRepository implements Repository<CustomUnit> {
+public class UnitSqlRepository implements Repository<Unit> {
 
-    private final DataAccessObject<CustomUnitEntity> customUnitDao;
-    private final EntityMapper<CustomUnitEntity, CustomUnit> customUnitMapper;
+    private final DataAccessObject<UnitEntity> customUnitDao;
+    private final EntityMapper<UnitEntity, Unit> customUnitMapper;
 
-    public CustomUnitSqlRepository(
-            DataAccessObject<CustomUnitEntity> customUnitDao,
-            EntityMapper<CustomUnitEntity, CustomUnit> customUnitMapper) {
+    public UnitSqlRepository(
+            DataAccessObject<UnitEntity> customUnitDao,
+            EntityMapper<UnitEntity, Unit> customUnitMapper) {
         this.customUnitDao = customUnitDao;
         this.customUnitMapper = customUnitMapper;
     }
 
     @Override
-    public List<CustomUnit> findAll() {
+    public List<Unit> findAll() {
         return customUnitDao
                 .findAll()
                 .stream()
@@ -31,12 +32,12 @@ public class CustomUnitSqlRepository implements Repository<CustomUnit> {
     }
 
     @Override
-    public void create(CustomUnit newEntity) {
+    public void create(Unit newEntity) {
         customUnitDao.create(customUnitMapper.mapNewEntityToDatabase(newEntity));
     }
 
     @Override
-    public void update(CustomUnit entity) {
+    public void update(Unit entity) {
         var existingDepartment = customUnitDao.findByGuid(entity.getGuid())
                 .orElseThrow(() -> new DataStorageException("CustomUnit not found, guid: " + entity.getGuid()));
         var updatedCustomUnit = customUnitMapper.mapExistingEntityToDatabase(entity, existingDepartment.id());
@@ -60,9 +61,16 @@ public class CustomUnitSqlRepository implements Repository<CustomUnit> {
     }
 
     @Override
-    public Optional<CustomUnit> findByGuid(String guid) {
+    public Optional<Unit> findByGuid(String guid) {
         return customUnitDao
                 .findByGuid(guid)
+                .map(customUnitMapper::mapToBusiness);
+    }
+
+    @Override
+    public Optional<Unit> findById(Long id) {
+        return customUnitDao
+                .findById(id)
                 .map(customUnitMapper::mapToBusiness);
     }
 }

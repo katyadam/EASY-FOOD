@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
@@ -79,8 +79,8 @@ public final class EditAction extends ContextAction {
             case 2: {
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
-                CustomUnit customUnit = customUnitTableModel.getEntity(modelRow);
-                CustomUnitDialog dialog = new CustomUnitDialog(customUnit, (CustomUnitTableModel) unitsTable.getModel());
+                Unit unit = customUnitTableModel.getEntity(modelRow);
+                CustomUnitDialog dialog = new CustomUnitDialog(unit, (CustomUnitTableModel) unitsTable.getModel());
                 dialog.show(activeTable, "Edit Custom Unit")
                         .ifPresent(customUnitTableModel::updateRow);
                 break;

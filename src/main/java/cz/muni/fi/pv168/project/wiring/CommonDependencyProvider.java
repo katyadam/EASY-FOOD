@@ -1,14 +1,14 @@
 package cz.muni.fi.pv168.project.wiring;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
-import cz.muni.fi.pv168.project.business.service.crud.CustomUnitService;
+import cz.muni.fi.pv168.project.business.service.crud.UnitService;
 import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
 import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
 import cz.muni.fi.pv168.project.business.service.export.ExportService;
@@ -22,7 +22,7 @@ import cz.muni.fi.pv168.project.storage.sql.CategorySqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.IngredientSqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.RecipeSqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.dao.CategoryDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.CustomUnitDao;
+import cz.muni.fi.pv168.project.storage.sql.dao.UnitDao;
 import cz.muni.fi.pv168.project.storage.sql.dao.IngredientDao;
 import cz.muni.fi.pv168.project.storage.sql.dao.RecipeDao;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
@@ -30,9 +30,9 @@ import cz.muni.fi.pv168.project.storage.sql.db.TransactionConnectionSupplier;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutorImpl;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionManagerImpl;
-import cz.muni.fi.pv168.project.storage.sql.entity.CustomUnitSqlRepository;
+import cz.muni.fi.pv168.project.storage.sql.UnitSqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CategoryMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CustomUnitMapper;
+import cz.muni.fi.pv168.project.storage.sql.entity.mapper.UnitMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.IngredientMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.RecipeMapper;
 
@@ -43,13 +43,13 @@ public class CommonDependencyProvider implements DependencyProvider {
 
     private final Repository<Recipe> recipes;
     private final Repository<Category> categories;
-    private final Repository<CustomUnit> customUnits;
+    private final Repository<Unit> customUnits;
     private final Repository<Ingredient> ingredients;
     private final DatabaseManager databaseManager;
     private final TransactionExecutor transactionExecutor;
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
-    private final CrudService<CustomUnit> customUnitCrudService;
+    private final CrudService<Unit> customUnitCrudService;
     private final CrudService<Category> categoryCrudService;
     //private final ImportService importService; //TODO
     //private final ExportService exportService; //TODO
@@ -71,13 +71,12 @@ public class CommonDependencyProvider implements DependencyProvider {
         this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
         var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
-
+        var unitMapper = new UnitMapper();
         var categoryMapper = new CategoryMapper();
         var categoryDao = new CategoryDao(transactionConnectionSupplier);
-        var ingredientMapper = new IngredientMapper(customUnitDao, categoryMapper);
+        var unitDao = new UnitDao(transactionConnectionSupplier);
+        var ingredientMapper = new IngredientMapper(unitDao, unitMapper);
         var ingredientDao = new IngredientDao(transactionConnectionSupplier);
-        var customUnitMapper = new CustomUnitMapper();
-        var customUnitDao = new CustomUnitDao(transactionConnectionSupplier);
 
         var recipeMapper = new RecipeMapper(categoryDao, categoryMapper);
         var recipeDao = new RecipeDao(transactionConnectionSupplier);
@@ -90,9 +89,9 @@ public class CommonDependencyProvider implements DependencyProvider {
                 categoryDao,
                 categoryMapper
         );
-        this.customUnits = new CustomUnitSqlRepository(
-                customUnitDao,
-                customUnitMapper
+        this.customUnits = new UnitSqlRepository(
+                unitDao,
+                unitMapper
         );
         this.ingredients = new IngredientSqlRepository(
                 ingredientDao,
@@ -102,7 +101,7 @@ public class CommonDependencyProvider implements DependencyProvider {
         recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider);
         categoryCrudService = new CategoryCrudService(categories, categoryValidator, guidProvider);
         ingredientCrudService = new IngredientCrudService(ingredients, ingredientValidator, guidProvider);
-        customUnitCrudService = new CustomUnitService(customUnits, customUnitValidator, guidProvider);
+        customUnitCrudService = new UnitService(customUnits, customUnitValidator, guidProvider);
 
 
         exportService = new GenericExportService(employeeCrudService, departmentCrudService,
@@ -129,7 +128,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public Repository<CustomUnit> getCustomUnitRepository() {
+    public Repository<Unit> getCustomUnitRepository() {
         return customUnits;
     }
 
@@ -155,7 +154,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public CrudService<CustomUnit> getCustomUnitCrudService() {
+    public CrudService<Unit> getCustomUnitCrudService() {
         return null;
     }
 
@@ -186,7 +185,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public Validator<CustomUnit> getCustomUnitValidator() {
+    public Validator<Unit> getCustomUnitValidator() {
         return customUnitValidator;
     }
 

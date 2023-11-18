@@ -19,7 +19,7 @@ public class XmlParserTest {
         ImporterHandler importerHandler = new ImporterHandler();
         saxParser.parse("src/test/resources/text-import.xml", importerHandler);
         Batch batch = importerHandler.getBatch();
-        assert batch.customUnits().size() == 1;
+        assert batch.units().size() == 1;
         assert batch.categories().size() == 1;
         assert batch.ingredients().size() == 1;
         assert batch.recipes().size() == 1;

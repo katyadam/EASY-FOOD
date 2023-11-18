@@ -5,6 +5,9 @@ import java.awt.*;
 public class Category extends Entity {
     private Color color;
 
+    public Category() {
+    }
+
     public Category(
             String guid,
             String categoryName,

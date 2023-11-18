@@ -26,7 +26,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                     guid,
                     ingredientName,
                     nutritionalValue,
-                    unitType
+                    unitId
                 )
                 VALUES (?, ?, ?, ?);
                 """;
@@ -66,7 +66,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                     guid,
                     ingredientName,
                     nutritionalValue,
-                    unitType
+                    unitId
                 FROM Ingredient
                 """;
         try (
@@ -95,7 +95,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                     guid,
                     ingredientName,
                     nutritionalValue,
-                    unitType
+                    unitId
                 FROM Ingredient
                 WHERE id = ?
                 """;
@@ -123,7 +123,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                     guid,
                     ingredientName,
                     nutritionalValue,
-                    unitType
+                    unitId
                 FROM Ingredient
                 WHERE guid = ?
                 """;
@@ -150,7 +150,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 UPDATE Recipe
                 SET ingredientName = ?,
                     nutritionalValue = ?,
-                    unitType = ?
+                    unitId = ?
                 WHERE id = ?
                 """;
         try (
@@ -211,6 +211,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
         }
     }
 
+    // TODO: Recipe v query ?
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
@@ -239,7 +240,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 resultSet.getInt("nutritionalValue"),
                 // TODO same as color // should be unit id // units will be stored in db
                 // One unit has multiple Ingredients -> 1:N
-                resultSet.getLong("unitTypeId")
+                resultSet.getLong("unitId")
         );
     }
 }

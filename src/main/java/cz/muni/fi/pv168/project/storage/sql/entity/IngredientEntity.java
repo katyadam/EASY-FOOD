@@ -1,9 +1,5 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
-import cz.muni.fi.pv168.project.business.model.Unit;
-
-import java.time.LocalDate;
-
 public record IngredientEntity(
         Long id,
         String guid,
