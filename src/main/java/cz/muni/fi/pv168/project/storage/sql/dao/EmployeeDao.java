@@ -33,10 +33,10 @@ public final class EmployeeDao implements DataAccessObject<EmployeeEntity> {
                     firstName,
                     lastName,
                     birthDate,
-                    -- TODO: ADD GENDER
+                    gender,
                     departmentId
                 )
-                VALUES (?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?);
                 """;
         try (
                 var connection = connections.get();
@@ -46,7 +46,8 @@ public final class EmployeeDao implements DataAccessObject<EmployeeEntity> {
             statement.setString(2, newEmployee.firstName());
             statement.setString(3, newEmployee.lastName());
             statement.setDate(4, Date.valueOf(newEmployee.birthDate()));
-            statement.setLong(5, newEmployee.departmentId());
+            statement.setString(5, newEmployee.gender().toString());
+            statement.setLong(6, newEmployee.departmentId());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -76,7 +77,7 @@ public final class EmployeeDao implements DataAccessObject<EmployeeEntity> {
                        departmentId,
                        firstName,
                        lastName,
-                       -- TODO: ADD GENDER
+                       gender,
                        birthDate
                 FROM Employee
                 """;
@@ -107,7 +108,7 @@ public final class EmployeeDao implements DataAccessObject<EmployeeEntity> {
                        departmentId,
                        firstName,
                        lastName,
-                       -- TODO: ADD GENDER
+                       gender,
                        birthDate
                 FROM Employee
                 WHERE id = ?
@@ -137,7 +138,7 @@ public final class EmployeeDao implements DataAccessObject<EmployeeEntity> {
                        departmentId,
                        firstName,
                        lastName,
-                       -- TODO: ADD GENDER
+                       gender,
                        birthDate
                 FROM Employee
                 WHERE guid = ?
@@ -161,8 +162,39 @@ public final class EmployeeDao implements DataAccessObject<EmployeeEntity> {
 
     @Override
     public EmployeeEntity update(EmployeeEntity entity) {
-        // TODO: Implement me
-        throw new UnsupportedOperationException("Not implemented yet");
+        var sql = """
+                UPDATE Employee
+                SET firstName = ?,
+                    lastName = ?,
+                    birthDate = ?,
+                    gender = ?,
+                    departmentId = ?
+                WHERE id = ?
+                """;
+        try (
+                var connection = connections.get();
+                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            statement.setString(1, entity.firstName());
+            statement.setString(2, entity.lastName());
+            statement.setDate(3, Date.valueOf(entity.birthDate()));
+            statement.setString(4, entity.gender().toString());
+            statement.setLong(5, entity.departmentId());
+            statement.setLong(6, entity.id());
+            statement.executeUpdate();
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new DataStorageException("Employee not found, id: " + entity.id());
+            }
+            if (rowsUpdated > 1) {
+                throw new DataStorageException("More then 1 employee (rows=%d) has been updated: %s"
+                        .formatted(rowsUpdated, entity));
+            }
+            return entity;
+        } catch (SQLException ex) {
+            throw new DataStorageException("Failed to update employee: " + entity, ex);
+        }
     }
 
     @Override
@@ -225,8 +257,7 @@ public final class EmployeeDao implements DataAccessObject<EmployeeEntity> {
                 resultSet.getLong("departmentId"),
                 resultSet.getString("firstName"),
                 resultSet.getString("lastName"),
-                // TODO: ADD GENDER
-                Gender.FEMALE,
+                Gender.valueOf(resultSet.getString("gender")),
                 resultSet.getTimestamp("birthDate").toLocalDateTime().toLocalDate()
         );
     }

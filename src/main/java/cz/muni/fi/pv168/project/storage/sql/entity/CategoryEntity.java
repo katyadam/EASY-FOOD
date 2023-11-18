@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
 import java.awt.*;
-import java.time.LocalDate;
 
 public record CategoryEntity(
         Long id,

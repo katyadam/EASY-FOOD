@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
-import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+import cz.muni.fi.pv168.employees.storage.sql.dao.DataStorageException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -21,10 +21,10 @@ import java.util.function.Supplier;
  */
 final class SqlFileExecutor {
     private final Class<?> resourceRoot;
-    private final Supplier<TransactionHandler> transactions;
+    private final Supplier<Transaction> transactions;
 
     SqlFileExecutor(
-            Supplier<TransactionHandler> transactions,
+            Supplier<Transaction> transactions,
             Class<?> resourceRoot
     ) {
         this.transactions = transactions;

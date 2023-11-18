@@ -1,7 +1,8 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
-import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+import cz.muni.fi.pv168.employees.storage.sql.dao.DataStorageException;
 import org.h2.jdbcx.JdbcConnectionPool;
+import org.tinylog.Logger;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -29,25 +30,12 @@ public final class DatabaseManager {
         this.sqlFileExecutor = new SqlFileExecutor(this::getTransactionHandler, DatabaseManager.class);
     }
 
-    public ConnectionHandler getConnectionHandler() {
-        try {
-            return new ConnectionHandlerImpl(dataSource.getConnection());
-        } catch (SQLException e) {
-            throw new DataStorageException("Unable to get a new connection", e);
-        }
-    }
-
-    public TransactionHandler getTransactionHandler() {
-        try {
-            return new TransactionHandlerImpl(dataSource.getConnection());
-        } catch (SQLException e) {
-            throw new DataStorageException("Unable to get a new connection", e);
-        }
-    }
-
     public static DatabaseManager createProductionInstance() {
         String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
-        return new DatabaseManager(connectionString);
+        var dbm = new DatabaseManager(connectionString);
+        dbm.initSchema();
+        dbm.initData("dev");
+        return dbm;
     }
 
     public static DatabaseManager createTestInstance() {
@@ -59,8 +47,20 @@ public final class DatabaseManager {
         return databaseManager;
     }
 
-    public DataSource getDataSource() {
-        return dataSource;
+    public ConnectionHandler getConnectionHandler() {
+        try {
+            return new ConnectionHandlerImpl(dataSource.getConnection());
+        } catch (SQLException e) {
+            throw new DataStorageException("Unable to get a new connection", e);
+        }
+    }
+
+    public Transaction getTransactionHandler() {
+        try {
+            return new TransactionImpl(dataSource.getConnection());
+        } catch (SQLException e) {
+            throw new DataStorageException("Unable to get a new connection", e);
+        }
     }
 
     public String getDatabaseConnectionString() {
@@ -84,8 +84,15 @@ public final class DatabaseManager {
         Path projectDbPath = Paths.get(projectDir, "db", PROJECT_NAME);
 
         File parentDir = projectDbPath.getParent().toFile();
+
+        if (parentDir.mkdirs()) {
+            Logger.debug("Created a new root directory for the database: {}", projectDbPath.getParent());
+        } else {
+            Logger.debug("Root directory for the database already exists: {}", projectDbPath.getParent());
+        }
+
         if (!parentDir.exists()) {
-            parentDir.mkdirs();
+            throw new DataStorageException("Unable to create database root directory");
         }
 
         return projectDbPath;
