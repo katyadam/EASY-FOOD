@@ -42,6 +42,8 @@ import cz.muni.fi.pv168.project.storage.sql.entity.mapper.UnitMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.IngredientMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.RecipeMapper;
 
+import java.util.List;
+
 /**
  * Common dependency provider for both production and test environment.
  */
