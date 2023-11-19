@@ -12,7 +12,7 @@ public class CustomUnitDialog extends EntityDialog<Unit> {
     private final JTextField customUnitNameField = new JTextField();
     private final JTextField customUnitAbbreviationField = new JTextField();
     private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 50000.0, 1.0));
-    private final JComboBox<Unit> units = new JComboBox<>((ComboBoxModel) BaseUnits.getBaseUnitList());
+    private final JComboBox<Unit> units = new JComboBox<>(BaseUnits.getBaseUnitList().toArray(new Unit[0]));
 
     public CustomUnitDialog(Unit unit, CustomUnitTableModel unitTableModel) {
         super(unit, unitTableModel.getEntities());

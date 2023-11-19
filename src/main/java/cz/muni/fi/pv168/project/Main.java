@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        var errorHandler = new ApplicationErrorHandler();
-        Thread.setDefaultUncaughtExceptionHandler(errorHandler);
+//        var errorHandler = new ApplicationErrorHandler();
+//        Thread.setDefaultUncaughtExceptionHandler(errorHandler);
 
         initLookAndFeel();
         EventQueue.invokeLater(() -> {

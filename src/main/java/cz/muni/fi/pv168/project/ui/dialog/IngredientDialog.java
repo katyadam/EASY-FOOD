@@ -20,11 +20,11 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
     );
 
     // insert array of base units here
-    private final JComboBox<BaseUnits> ingredientJComboBox = new JComboBox<>((ComboBoxModel) BaseUnits.getBaseUnitList());
+    private final JComboBox<Unit> ingredientJComboBox = new JComboBox<>(BaseUnits.getBaseUnitList().toArray(new Unit[0]));
     private RecipeTableModel recipeData;
 
     public IngredientDialog(Ingredient ingredient, IngredientTableModel ingredientTableModel, RecipeTableModel recipeTableModel) {
-        super( ingredient, ingredientTableModel.getEntities());
+        super(ingredient, ingredientTableModel.getEntities());
         this.recipeData = recipeTableModel;
 
         if (ingredient != null) {
