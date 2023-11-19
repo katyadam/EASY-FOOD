@@ -34,6 +34,7 @@ import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
+import cz.muni.fi.pv168.project.wiring.DependencyProvider;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -98,16 +99,16 @@ public class MainWindow {
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
     private MultiSelectCombobox<Category> categoriesFilter;
 
-    private final CommonDependencyProvider commonDependencyProvider;
+    //private final CommonDependencyProvider commonDependencyProvider;
 
-    public MainWindow() {
+    public MainWindow(DependencyProvider dependencyProvider) {
         setDataGeneration();
-        this.commonDependencyProvider = new CommonDependencyProvider(DatabaseManager.createTestInstance());
+        //this.commonDependencyProvider = new CommonDependencyProvider(DatabaseManager.createTestInstance());
 
-        this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
-        this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
-        this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
-        this.unitService = commonDependencyProvider.getCustomUnitCrudService();
+        this.recipeCrudService = dependencyProvider.getRecipeCrudService();
+        this.categoryCrudService = dependencyProvider.getCategoryCrudService();
+        this.ingredientCrudService = dependencyProvider.getIngredientCrudService();
+        this.unitService = dependencyProvider.getCustomUnitCrudService();
 
         this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
         this.customUnitTableModel = new CustomUnitTableModel(unitService);
