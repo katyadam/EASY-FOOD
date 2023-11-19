@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
 import cz.muni.fi.pv168.project.business.model.PreparationTime;
-import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.RecipeEntity;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public class RecipeDao implements DataAccessObject<RecipeEntity> {
-    private final Supplier<ConnectionHandler> connections;
 
-    public RecipeDao(Supplier<ConnectionHandler> connections) {
-        this.connections = connections;
+    private final Connection con;
+
+    public RecipeDao(Connection con) {
+        this.con = con;
     }
 
     @Override
@@ -36,8 +36,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 VALUES (?, ?, ?, ?, ?, ?, ?);
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, newRecipe.guid());
             statement.setString(2, newRecipe.recipeName());
@@ -83,8 +82,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 FROM Recipe
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
 
             List<RecipeEntity> recipes = new ArrayList<>();
@@ -117,8 +115,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 WHERE id = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setLong(1, id);
             var resultSet = statement.executeQuery();
@@ -149,8 +146,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 WHERE guid = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             var resultSet = statement.executeQuery();
@@ -179,8 +175,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 WHERE id = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, entity.recipeName());
             statement.setInt(2, entity.preparationTime().hours());
@@ -210,8 +205,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
     public void deleteByGuid(String guid) {
         var sql = "DELETE FROM Recipe WHERE guid = ?";
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             int rowsUpdated = statement.executeUpdate();
@@ -231,8 +225,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
     public void deleteAll() {
         var sql = "DELETE FROM Recipe";
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.executeUpdate();
         } catch (SQLException ex) {
@@ -248,8 +241,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 WHERE guid = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             var resultSet = statement.executeQuery();

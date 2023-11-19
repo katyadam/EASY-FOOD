@@ -8,8 +8,12 @@ import cz.muni.fi.pv168.project.business.service.export.ImportService;
 import cz.muni.fi.pv168.project.business.service.validation.*;
 import cz.muni.fi.pv168.project.storage.sql.*;
 import cz.muni.fi.pv168.project.storage.sql.dao.*;
-import cz.muni.fi.pv168.project.storage.sql.db.*;
+import cz.muni.fi.pv168.project.storage.sql.db.DatabaseConnection;
+import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
+import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.*;
+
+import java.sql.Connection;
 
 /**
  * Common dependency provider for both production and test environment.
@@ -21,8 +25,8 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final Repository<Unit> customUnits;
     private final Repository<Ingredient> ingredients;
     private final Repository<AddedIngredient> addedIngredients;
-    private final DatabaseManager databaseManager;
-    private final TransactionExecutor transactionExecutor;
+    //    private final DatabaseManager databaseManager;
+//    private final TransactionExecutor transactionExecutor;
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
     private final CrudService<AddedIngredient> addedIngredientCrudService;
@@ -36,7 +40,8 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final CustomUnitValidator customUnitValidator;
     private final AddedIngredientValidator addedIngredientValidator;
 
-    public CommonDependencyProvider(DatabaseManager databaseManager) {
+    public CommonDependencyProvider() {
+        Connection connection = DatabaseConnection.createConnection();
         recipeValidator = new RecipeValidator();
         categoryValidator = new CategoryValidator();
         ingredientValidator = new IngredientValidator();
@@ -45,21 +50,20 @@ public class CommonDependencyProvider implements DependencyProvider {
 
         var guidProvider = new UuidGuidProvider();
 
-        this.databaseManager = databaseManager;
-        var transactionManager = new TransactionManagerImpl(databaseManager);
-        this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
-        var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
+//        var transactionManager = new TransactionManagerImpl(databaseManager);
+//        this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
+//        var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
         var unitMapper = new UnitMapper();
         var categoryMapper = new CategoryMapper();
-        var categoryDao = new CategoryDao(transactionConnectionSupplier);
-        var unitDao = new UnitDao(transactionConnectionSupplier);
+        var categoryDao = new CategoryDao(connection);
+        var unitDao = new UnitDao(connection);
         var ingredientMapper = new IngredientMapper(unitDao, unitMapper);
-        var ingredientDao = new IngredientDao(transactionConnectionSupplier);
-        var addedIngredientDao = new AddedIngredientDao(transactionConnectionSupplier);
+        var ingredientDao = new IngredientDao(connection);
+        var addedIngredientDao = new AddedIngredientDao(connection);
 
         var recipeMapper = new RecipeMapper(categoryDao, categoryMapper);
-        var recipeDao = new RecipeDao(transactionConnectionSupplier);
+        var recipeDao = new RecipeDao(connection);
 
         var addedIngredientMapper = new AddedIngredientMapper(recipeDao, recipeMapper, ingredientDao, ingredientMapper, unitDao, unitMapper);
 
@@ -101,7 +105,7 @@ public class CommonDependencyProvider implements DependencyProvider {
 
     @Override
     public DatabaseManager getDatabaseManager() {
-        return databaseManager;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -127,7 +131,7 @@ public class CommonDependencyProvider implements DependencyProvider {
 
     @Override
     public TransactionExecutor getTransactionExecutor() {
-        return transactionExecutor;
+        throw new UnsupportedOperationException();
     }
 
     @Override

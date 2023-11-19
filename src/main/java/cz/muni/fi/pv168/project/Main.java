@@ -4,7 +4,6 @@ package cz.muni.fi.pv168.project;
 import cz.muni.fi.pv168.project.ui.ApplicationErrorHandler;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
-import cz.muni.fi.pv168.project.wiring.ProductionDependencyProvider;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class Main {
         initLookAndFeel();
         EventQueue.invokeLater(() -> {
             try {
-                new MainWindow(new ProductionDependencyProvider()).show();
+                new MainWindow().show();
             } catch (Exception ex) {
                 showInitializationFailedDialog(ex);
             }

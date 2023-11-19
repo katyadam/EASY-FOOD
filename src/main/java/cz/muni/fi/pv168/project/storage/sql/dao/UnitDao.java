@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
-import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,19 +10,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public class UnitDao implements DataAccessObject<UnitEntity> {
-    private final Supplier<ConnectionHandler> connections;
 
-    public UnitDao(Supplier<ConnectionHandler> connections) {
-        this.connections = connections;
+    private final Connection con;
+
+    public UnitDao(Connection con) {
+        this.con = con;
     }
 
+
     @Override
-    public UnitEntity create(UnitEntity newCustomUnit) {
+    public UnitEntity create(UnitEntity newUnit) {
         var sql = """
-                INSERT INTO CustomUnit(
+                INSERT INTO Unit(
                     guid,
                     unitName,
                     abbreviation,
@@ -32,32 +33,31 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                 VALUES (?, ?, ?, ?, ?);
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
-            statement.setString(1, newCustomUnit.guid());
-            statement.setString(2, newCustomUnit.unitName());
-            statement.setString(3, newCustomUnit.abbreviation());
-            statement.setDouble(4, newCustomUnit.amount());
-            statement.setString(5, newCustomUnit.baseUnit());
+            statement.setString(1, newUnit.guid());
+            statement.setString(2, newUnit.unitName());
+            statement.setString(3, newUnit.abbreviation());
+            statement.setDouble(4, newUnit.amount());
+            statement.setString(5, newUnit.baseUnit());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
-                long customUnitId;
+                long unitId;
 
                 if (keyResultSet.next()) {
-                    customUnitId = keyResultSet.getLong(1);
+                    unitId = keyResultSet.getLong(1);
                 } else {
-                    throw new DataStorageException("Failed to fetch generated key for: " + newCustomUnit);
+                    throw new DataStorageException("Failed to fetch generated key for: " + newUnit);
                 }
                 if (keyResultSet.next()) {
-                    throw new DataStorageException("Multiple keys returned for: " + newCustomUnit);
+                    throw new DataStorageException("Multiple keys returned for: " + newUnit);
                 }
 
-                return findById(customUnitId).orElseThrow();
+                return findById(unitId).orElseThrow();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to store: " + newCustomUnit, ex);
+            throw new DataStorageException("Failed to store: " + newUnit, ex);
         }
     }
 
@@ -70,24 +70,23 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     abbreviation,
                     amount,
                     baseUnit
-                FROM CustomUnit
+                FROM Unit
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
 
-            List<UnitEntity> customUnits = new ArrayList<>();
+            List<UnitEntity> units = new ArrayList<>();
             try (var resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    var customUnit = customUnitFromResultSet(resultSet);
-                    customUnits.add(customUnit);
+                    var unit = unitFromResultSet(resultSet);
+                    units.add(unit);
                 }
             }
 
-            return customUnits;
+            return units;
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load all customUnits", ex);
+            throw new DataStorageException("Failed to load all units", ex);
         }
     }
 
@@ -100,23 +99,22 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     abbreviation,
                     amount,
                     baseUnit
-                FROM CustomUnit
+                FROM Unit
                 WHERE id = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setLong(1, id);
             var resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(customUnitFromResultSet(resultSet));
+                return Optional.of(unitFromResultSet(resultSet));
             } else {
                 // recipe not found
                 return Optional.empty();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load customUnit by id", ex);
+            throw new DataStorageException("Failed to load unit by id", ex);
         }
     }
 
@@ -129,30 +127,29 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     abbreviation,
                     amount,
                     baseUnit
-                FROM CustomUnit
+                FROM Unit
                 WHERE guid = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             var resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(customUnitFromResultSet(resultSet));
+                return Optional.of(unitFromResultSet(resultSet));
             } else {
                 // recipe not found
                 return Optional.empty();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load customUnit by id", ex);
+            throw new DataStorageException("Failed to load unit by id", ex);
         }
     }
 
     @Override
     public UnitEntity update(UnitEntity entity) {
         var sql = """
-                UPDATE CustomUnit
+                UPDATE Unit
                 SET unitName = ?,
                     abbreviation = ?,
                     amount = ?,
@@ -160,8 +157,7 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                 WHERE id = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, entity.unitName());
             statement.setString(2, entity.abbreviation());
@@ -172,49 +168,47 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated == 0) {
-                throw new DataStorageException("CustomUnit not found, id: " + entity.id());
+                throw new DataStorageException("Unit not found, id: " + entity.id());
             }
             if (rowsUpdated > 1) {
-                throw new DataStorageException("More then 1 CustomUnit (rows=%d) has been updated: %s"
+                throw new DataStorageException("More then 1 Unit (rows=%d) has been updated: %s"
                         .formatted(rowsUpdated, entity));
             }
             return entity;
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to update CustomUnit: " + entity, ex);
+            throw new DataStorageException("Failed to update Unit: " + entity, ex);
         }
     }
 
     @Override
     public void deleteByGuid(String guid) {
-        var sql = "DELETE FROM CustomUnit WHERE guid = ?";
+        var sql = "DELETE FROM Unit WHERE guid = ?";
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated == 0) {
-                throw new DataStorageException("CustomUnit not found, guid: " + guid);
+                throw new DataStorageException("Unit not found, guid: " + guid);
             }
             if (rowsUpdated > 1) {
-                throw new DataStorageException("More then 1 CustomUnit (rows=%d) has been deleted: %s"
+                throw new DataStorageException("More then 1 Unit (rows=%d) has been deleted: %s"
                         .formatted(rowsUpdated, guid));
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to delete CustomUnit, guid: " + guid, ex);
+            throw new DataStorageException("Failed to delete Unit, guid: " + guid, ex);
         }
     }
 
     @Override
     public void deleteAll() {
-        var sql = "DELETE FROM CustomUnit";
+        var sql = "DELETE FROM Unit";
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.executeUpdate();
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to delete all CustomUnits", ex);
+            throw new DataStorageException("Failed to delete all Units", ex);
         }
     }
 
@@ -222,23 +216,22 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     public boolean existsByGuid(String guid) {
         var sql = """
                 SELECT id
-                FROM CustomUnit
+                FROM Unit
                 WHERE guid = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             var resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to check if CustomUnit exists: " + guid, ex);
+            throw new DataStorageException("Failed to check if Unit exists: " + guid, ex);
         }
     }
 
 
-    private static UnitEntity customUnitFromResultSet(ResultSet resultSet) throws SQLException {
+    private static UnitEntity unitFromResultSet(ResultSet resultSet) throws SQLException {
         return new UnitEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),

@@ -1,10 +1,8 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
-import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.AddedIngredientEntity;
-import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 
-import java.awt.*;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,16 +10,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
  * @author Adam Juhas
  */
 public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntity> {
-    private final Supplier<ConnectionHandler> connections;
 
-    public AddedIngredientDao(Supplier<ConnectionHandler> connections) {
-        this.connections = connections;
+    private final Connection con;
+
+    public AddedIngredientDao(Connection con) {
+        this.con = con;
     }
 
     @Override
@@ -38,8 +36,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 VALUES (?, ?, ?, ?, ?, ?);
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setLong(1, newAddedIngredient.recipeId());
             statement.setString(2, newAddedIngredient.guid());
@@ -79,8 +76,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 FROM AddedIngredient
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
 
             List<AddedIngredientEntity> addedIngredients = new ArrayList<>();
@@ -109,8 +105,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 WHERE id = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setLong(1, id);
             var resultSet = statement.executeQuery();
@@ -138,8 +133,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 WHERE guid = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             var resultSet = statement.executeQuery();
@@ -167,8 +161,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 WHERE id = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setLong(1, entity.recipeId());
             statement.setString(2, entity.guid());
@@ -195,8 +188,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     public void deleteByGuid(String guid) {
         var sql = "DELETE FROM AddedIngredient WHERE guid = ?";
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             int rowsUpdated = statement.executeUpdate();
@@ -216,8 +208,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     public void deleteAll() {
         var sql = "DELETE FROM AddedIngredient";
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.executeUpdate();
         } catch (SQLException ex) {
@@ -233,8 +224,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 WHERE guid = ?
                 """;
         try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, guid);
             var resultSet = statement.executeQuery();

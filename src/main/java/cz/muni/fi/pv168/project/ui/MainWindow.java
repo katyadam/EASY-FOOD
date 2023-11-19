@@ -99,16 +99,16 @@ public class MainWindow {
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
     private MultiSelectCombobox<Category> categoriesFilter;
 
-    //private final CommonDependencyProvider commonDependencyProvider;
+    private final CommonDependencyProvider commonDependencyProvider;
 
-    public MainWindow(DependencyProvider dependencyProvider) {
+    public MainWindow() {
         setDataGeneration();
-        //this.commonDependencyProvider = new CommonDependencyProvider(DatabaseManager.createTestInstance());
+        this.commonDependencyProvider = new CommonDependencyProvider();
 
-        this.recipeCrudService = dependencyProvider.getRecipeCrudService();
-        this.categoryCrudService = dependencyProvider.getCategoryCrudService();
-        this.ingredientCrudService = dependencyProvider.getIngredientCrudService();
-        this.unitService = dependencyProvider.getCustomUnitCrudService();
+        this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
+        this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
+        this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
+        this.unitService = commonDependencyProvider.getCustomUnitCrudService();
 
         this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
         this.customUnitTableModel = new CustomUnitTableModel(unitService);
