@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.business.service.validation.*;
 import cz.muni.fi.pv168.project.storage.sql.*;
 import cz.muni.fi.pv168.project.storage.sql.dao.*;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseConnection;
+import cz.muni.fi.pv168.project.storage.sql.db.DatabaseInitializer;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.*;
@@ -19,7 +20,7 @@ import java.sql.Connection;
  * Common dependency provider for both production and test environment.
  */
 public class CommonDependencyProvider implements DependencyProvider {
-
+    public static final String INIT_SQL = "init.sql";
     private final Repository<Recipe> recipes;
     private final Repository<Category> categories;
     private final Repository<Unit> customUnits;
@@ -42,6 +43,7 @@ public class CommonDependencyProvider implements DependencyProvider {
 
     public CommonDependencyProvider() {
         Connection connection = DatabaseConnection.createConnection();
+        DatabaseInitializer.init(connection, INIT_SQL);
         recipeValidator = new RecipeValidator();
         categoryValidator = new CategoryValidator();
         ingredientValidator = new IngredientValidator();
