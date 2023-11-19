@@ -116,12 +116,11 @@ public class CommonDependencyProvider implements DependencyProvider {
                 ingredientMapper
         );
 
-        recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider);
         categoryCrudService = new CategoryCrudService(categories, categoryValidator, guidProvider);
         ingredientCrudService = new IngredientCrudService(ingredients, ingredientValidator, guidProvider);
         customUnitCrudService = new UnitService(customUnits, customUnitValidator, guidProvider);
         addedIngredientCrudService = new AddedIngredientCrudService(addedIngredients, addedIngredientValidator, guidProvider);
-
+        recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider, addedIngredientCrudService);
 
         exportService = new GenericExportService(employeeCrudService, departmentCrudService,
                 List.of(new BatchCsvExporter()));

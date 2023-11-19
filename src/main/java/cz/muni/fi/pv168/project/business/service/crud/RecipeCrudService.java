@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.repository.Repository;
@@ -13,15 +14,17 @@ public class RecipeCrudService implements CrudService<Recipe> {
     private final Repository<Recipe> recipeRepository;
     private final RecipeValidator recipeValidator;
     private final GuidProvider guidProvider;
+    private final CrudService<AddedIngredient> addedIngredientCrudService;
 
     public RecipeCrudService(
             Repository<Recipe> recipeRepository,
             RecipeValidator recipeValidator,
-            GuidProvider guidProvider
-    ) {
+            GuidProvider guidProvider,
+            CrudService<AddedIngredient> addedIngredientCrudService) {
         this.recipeRepository = recipeRepository;
         this.recipeValidator = recipeValidator;
         this.guidProvider = guidProvider;
+        this.addedIngredientCrudService = addedIngredientCrudService;
     }
 
 
@@ -40,6 +43,12 @@ public class RecipeCrudService implements CrudService<Recipe> {
         }
         if (validationResult.isValid()) {
             recipeRepository.create(newEntity);
+//            Setting this new recipe to its added ingredients
+            newEntity.getUsedIngredients().getEntities().forEach(
+                    addedIngredient -> addedIngredient.setRecipe(newEntity)
+            );
+//            Creating added ingredient via their service
+            newEntity.getUsedIngredients().getEntities().forEach(addedIngredientCrudService::create);
         }
 
         return validationResult;
@@ -50,6 +59,7 @@ public class RecipeCrudService implements CrudService<Recipe> {
         ValidationResult validationResult = recipeValidator.validate(entity);
         if (validationResult.isValid()) {
             recipeRepository.update(entity);
+//            TODO Update added ingredients
         }
 
         return validationResult;

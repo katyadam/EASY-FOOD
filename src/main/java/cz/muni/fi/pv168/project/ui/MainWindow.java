@@ -107,7 +107,7 @@ public class MainWindow {
     public MainWindow() {
         setDataGeneration();
         this.recipeRepository = new InMemoryRepository<>(this.recipesList);
-        this.recipeCrudService = new RecipeCrudService(recipeRepository, new RecipeValidator(), uuidProvider);
+        this.recipeCrudService = new RecipeCrudService(recipeRepository, new RecipeValidator(), uuidProvider, addedIngredientCrudService);
         this.recipeTableModel = new RecipeTableModel(this.recipeCrudService);
 
         this.ingredientRepository = new InMemoryRepository<>(this.ingredientList);
