@@ -14,6 +14,7 @@ class TransactionHandlerImpl implements TransactionHandler {
 
     /**
      * Creates new transaction over given connection
+     *
      * @param connection database connection
      */
     TransactionHandlerImpl(Connection connection) throws SQLException {

@@ -1,48 +1,15 @@
 package cz.muni.fi.pv168.project.wiring;
 
-import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Unit;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.CrudService;
-import cz.muni.fi.pv168.project.business.service.crud.UnitService;
-import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
+import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.ExportService;
 import cz.muni.fi.pv168.project.business.service.export.ImportService;
-import cz.muni.fi.pv168.project.business.service.validation.AddedIngredientValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
-import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
-import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
-import cz.muni.fi.pv168.project.business.service.validation.Validator;
-import cz.muni.fi.pv168.project.storage.sql.AddedIngredientRepository;
-import cz.muni.fi.pv168.project.storage.sql.CategorySqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.IngredientSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.RecipeSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.dao.AddedIngredientDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.CategoryDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.UnitDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.IngredientDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.RecipeDao;
-import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
-import cz.muni.fi.pv168.project.storage.sql.db.TransactionConnectionSupplier;
-import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
-import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutorImpl;
-import cz.muni.fi.pv168.project.storage.sql.db.TransactionManagerImpl;
-import cz.muni.fi.pv168.project.storage.sql.UnitSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.AddedIngredientMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CategoryMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.UnitMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.IngredientMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.RecipeMapper;
-
-import java.util.List;
+import cz.muni.fi.pv168.project.business.service.validation.*;
+import cz.muni.fi.pv168.project.storage.sql.*;
+import cz.muni.fi.pv168.project.storage.sql.dao.*;
+import cz.muni.fi.pv168.project.storage.sql.db.*;
+import cz.muni.fi.pv168.project.storage.sql.entity.mapper.*;
 
 /**
  * Common dependency provider for both production and test environment.
@@ -124,11 +91,11 @@ public class CommonDependencyProvider implements DependencyProvider {
         addedIngredientCrudService = new AddedIngredientCrudService(addedIngredients, addedIngredientValidator, guidProvider);
         recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider, addedIngredientCrudService);
 
-        exportService = new GenericExportService(employeeCrudService, departmentCrudService,
-                List.of(new BatchCsvExporter()));
-        importService = new GenericImportService(employeeCrudService, departmentCrudService,
-                List.of(new BatchCsvImporter()), transactionExecutor);
-        //TODO
+//        exportService = new GenericExportService(employeeCrudService, departmentCrudService,
+//                List.of(new BatchCsvExporter()));
+//        importService = new GenericImportService(employeeCrudService, departmentCrudService,
+//                List.of(new BatchCsvImporter()), transactionExecutor);
+        //TODO import export
 
     }
 
@@ -156,7 +123,6 @@ public class CommonDependencyProvider implements DependencyProvider {
     public Repository<Ingredient> getIngredientRepository() {
         return ingredients;
     }
-
 
 
     @Override
@@ -192,12 +158,12 @@ public class CommonDependencyProvider implements DependencyProvider {
 
     @Override
     public ImportService getImportService() {
-        return importService;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ExportService getExportService() {
-        return exportService;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -219,6 +185,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     public Validator<Ingredient> getIngredientValidator() {
         return ingredientValidator;
     }
+
     @Override
     public Validator<AddedIngredient> getAddedIngredientValidator() {
         return addedIngredientValidator;

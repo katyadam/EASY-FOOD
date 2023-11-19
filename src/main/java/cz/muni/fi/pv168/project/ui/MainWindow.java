@@ -8,16 +8,14 @@ import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.UnitService;
-import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
+import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
 import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
 import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.storage.memory.InMemoryRepository;
+import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
@@ -35,6 +33,7 @@ import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -89,43 +88,37 @@ public class MainWindow {
     // GuidProviders
     private final GuidProvider uuidProvider = new UuidGuidProvider();
 
-    // Repositories
-    private final Repository<Recipe> recipeRepository;
-    private final Repository<Category> categoryRepository;
-    private final Repository<Ingredient> ingredientRepository;
-    private final Repository<Unit> customUnitRepository;
 
     // CRUD services
-    private final RecipeCrudService recipeCrudService;
-    private final CategoryCrudService categoryCrudService;
-    private final IngredientCrudService ingredientCrudService;
-    private final UnitService unitService;
+    private final CrudService<Recipe> recipeCrudService;
+    private final CrudService<Category> categoryCrudService;
+    private final CrudService<Ingredient> ingredientCrudService;
+    private final CrudService<Unit> unitService;
 
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
     private MultiSelectCombobox<Category> categoriesFilter;
 
+    private final CommonDependencyProvider commonDependencyProvider;
+
     public MainWindow() {
         setDataGeneration();
-        this.recipeRepository = new InMemoryRepository<>(this.recipesList);
-        this.recipeCrudService = new RecipeCrudService(recipeRepository, new RecipeValidator(), uuidProvider, addedIngredientCrudService);
-        this.recipeTableModel = new RecipeTableModel(this.recipeCrudService);
+        this.commonDependencyProvider = new CommonDependencyProvider(DatabaseManager.createTestInstance());
 
-        this.ingredientRepository = new InMemoryRepository<>(this.ingredientList);
-        this.ingredientCrudService = new IngredientCrudService(ingredientRepository, new IngredientValidator(), uuidProvider);
-        this.ingredientTableModel = new IngredientTableModel(this.ingredientCrudService);
+        this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
+        this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
+        this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
+        this.unitService = commonDependencyProvider.getCustomUnitCrudService();
 
-        this.customUnitRepository = new InMemoryRepository<>(this.unitList);
-        this.unitService = new UnitService(customUnitRepository, new CustomUnitValidator(), uuidProvider);
-        this.customUnitTableModel = new CustomUnitTableModel(this.unitService);
-
-        this.categoryRepository = new InMemoryRepository<>(this.categoryList);
-        this.categoryCrudService = new CategoryCrudService(categoryRepository, new CategoryValidator(), uuidProvider);
-        this.categoryTableModel = new CategoryTableModel(this.categoryCrudService);
+        this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
+        this.customUnitTableModel = new CustomUnitTableModel(unitService);
+        this.categoryTableModel = new CategoryTableModel(categoryCrudService);
+        this.recipeTableModel = new RecipeTableModel(recipeCrudService);
 
         this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
         this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
         this.customUnitTableSorter = new TableRowSorter<>(customUnitTableModel);
         this.categoryTableSorter = new TableRowSorter<>(categoryTableModel);
+
         createTables();
         createScrollPanes();
 
@@ -335,17 +328,18 @@ public class MainWindow {
         editMenu.add(actions.getQuitAction());
 
         JMenu filesMenu = new JMenu("Files");
-        filesMenu.add(new ImportAction(
-                "Import",
-                categoryCrudService,
-                unitService,
-                ingredientCrudService,
-                recipeCrudService,
-                this::refresh
-        ));
-        filesMenu.addSeparator();
-        filesMenu.add(new ExportAction("Export",
-                categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
+        // TODO import export
+//        filesMenu.add(new ImportAction(
+//                "Import",
+//                categoryCrudService,
+//                unitService,
+//                ingredientCrudService,
+//                recipeCrudService,
+//                this::refresh
+//        ));
+//        filesMenu.addSeparator();
+//        filesMenu.add(new ExportAction("Export",
+//                categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
 
         menuBar.add(editMenu);
         menuBar.add(filesMenu);

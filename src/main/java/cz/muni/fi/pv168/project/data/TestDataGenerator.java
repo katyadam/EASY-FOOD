@@ -1,14 +1,7 @@
 package cz.muni.fi.pv168.project.data;
 
 
-import cz.muni.fi.pv168.project.business.model.BaseUnits;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Unit;
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.PreparationTime;
-import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
+import cz.muni.fi.pv168.project.business.model.*;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -58,7 +51,6 @@ public final class TestDataGenerator {
     public List<Recipe> getRecipes() {
         return recipes;
     }
-
 
 
     static {
@@ -139,12 +131,28 @@ public final class TestDataGenerator {
         return unit;
     }
 
+    //    String guid,
+//    String recipeName,
+//    Category category,
+//    PreparationTime preparationTime,
+//    int nutritionalValue,
+//    int portions,
+//    String description
     public Recipe createTestRecipe() {
 
         String recipeName = selectRandom(RECIPE_NAMES);
         PreparationTime preparationTime = new PreparationTime(LocalTime.now().getHour(), LocalTime.now().getMinute());
         int portions = random.nextInt(10);
-        Recipe recipe = new Recipe(recipeName, categories.get(random.nextInt(categories.size())), portions, preparationTime);
+        Recipe recipe = new Recipe(
+                uuidProvider.newGuid(),
+                recipeName,
+                categories.get(random.nextInt(categories.size())),
+                preparationTime,
+                0,
+                portions,
+                "desc"
+        );
+
         recipe.setGuid(uuidProvider.newGuid());
         recipe.setCategory(categories.get(random.nextInt(categories.size())));
         return recipe;

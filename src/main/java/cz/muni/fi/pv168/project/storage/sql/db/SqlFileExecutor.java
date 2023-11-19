@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
-import cz.muni.fi.pv168.employees.storage.sql.dao.DataStorageException;
+
+import cz.muni.fi.pv168.project.storage.DataStorageException;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -69,7 +70,7 @@ final class SqlFileExecutor {
     private String loadSQLFromResources(final String fileName) {
         URL resource = resourceRoot.getResource(fileName);
         if (resource == null) {
-            throw new DataStorageException("Expected SQL file does not exit: " + fileName);
+            throw new DataStorageException("Expected SQL file does not exist: " + fileName);
         }
 
         try {
