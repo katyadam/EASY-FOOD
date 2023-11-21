@@ -10,12 +10,12 @@ import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 import java.util.List;
 import java.util.Optional;
 
-public class AddedIngredientRepository implements Repository<AddedIngredient> {
+public class AddedIngredientSqlRepository implements Repository<AddedIngredient> {
 
     private final DataAccessObject<AddedIngredientEntity> addedIngredientDao;
     private final EntityMapper<AddedIngredientEntity, AddedIngredient> addedIngredientMapper;
 
-    public AddedIngredientRepository(
+    public AddedIngredientSqlRepository(
             DataAccessObject<AddedIngredientEntity> addedIngredientDao,
             EntityMapper<AddedIngredientEntity, AddedIngredient> addedIngredientMapper) {
         this.addedIngredientDao = addedIngredientDao;

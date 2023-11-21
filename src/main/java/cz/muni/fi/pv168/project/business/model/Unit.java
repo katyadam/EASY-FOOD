@@ -4,7 +4,7 @@ public class Unit extends Entity {
     private String unitName;
     private String abbreviation;
     private double amount;
-    private Unit baseUnit;
+    private BaseUnit baseUnit;
 
     public double getAmount() {
         return amount;
@@ -18,7 +18,7 @@ public class Unit extends Entity {
             String unitName,
             String abbreviation,
             double amount,
-            Unit baseUnit
+            BaseUnit baseUnit
     ) {
         super(guid);
         this.unitName = unitName;
@@ -28,7 +28,7 @@ public class Unit extends Entity {
         this.baseUnit = baseUnit;
     }
 
-    public Unit(String unitName, String abbreviation, double amount, Unit baseUnit) {
+    public Unit(String unitName, String abbreviation, double amount, BaseUnit baseUnit) {
         this.unitName = unitName;
         this.name = unitName;
         this.abbreviation = abbreviation;
@@ -53,7 +53,7 @@ public class Unit extends Entity {
         return String.format("%.2f", amount) + " " + baseUnit.getAbbreviation();
     }
 
-    public Unit getBaseUnit() {
+    public BaseUnit getBaseUnit() {
         return baseUnit;
     }
 
@@ -71,7 +71,7 @@ public class Unit extends Entity {
         this.amount = amount;
     }
 
-    public void setBaseUnit(Unit baseUnit) {
+    public void setBaseUnit(BaseUnit baseUnit) {
         this.baseUnit = baseUnit;
     }
 

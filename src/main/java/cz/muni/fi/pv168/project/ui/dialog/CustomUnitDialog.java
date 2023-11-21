@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.business.model.BaseUnit;
 import cz.muni.fi.pv168.project.business.model.BaseUnits;
 import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
@@ -43,7 +44,7 @@ public class CustomUnitDialog extends EntityDialog<Unit> {
         entity.setName(customUnitNameField.getText());
         entity.setAbbreviation(customUnitAbbreviationField.getText());
         entity.setAmount((double) customUnitAmount.getValue());
-        entity.setBaseUnit((Unit) units.getSelectedItem());
+        entity.setBaseUnit((BaseUnit) units.getSelectedItem());
         return entity;
     }
 }

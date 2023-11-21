@@ -6,20 +6,20 @@ public record UnitEntity(
         String unitName,
         String abbreviation,
         double amount,
-        String baseUnit // base units name
+        Long baseUnitId // base units name
 ) {
 
-    public UnitEntity(Long id, String guid, String unitName, String abbreviation, double amount, String baseUnit) {
+    public UnitEntity(Long id, String guid, String unitName, String abbreviation, double amount, Long baseUnitId) {
         this.id = id;
         this.guid = guid;
         this.unitName = unitName;
         this.abbreviation = abbreviation;
         this.amount = amount;
-        this.baseUnit = baseUnit;
+        this.baseUnitId = baseUnitId;
     }
 
-    public UnitEntity(String guid, String unitName, String abbreviation, double amount, String baseUnit) {
-        this(null, guid, unitName, abbreviation, amount, baseUnit);
+    public UnitEntity(String guid, String unitName, String abbreviation, double amount, Long baseUnitId) {
+        this(null, guid, unitName, abbreviation, amount, baseUnitId);
     }
 }
 

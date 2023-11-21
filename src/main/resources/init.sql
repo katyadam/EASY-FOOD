@@ -1,3 +1,5 @@
+// PRESERVE ORDER
+
 --
 -- Category table definition
 --
@@ -11,6 +13,17 @@ CREATE TABLE IF NOT EXISTS "Category"
 );
 
 --
+-- BaseUnit table definition
+--
+CREATE TABLE IF NOT EXISTS "BaseUnit"
+(
+    `id`           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    `guid`         VARCHAR      NOT NULL UNIQUE,
+    `baseUnitName` VARCHAR(150) NOT NULL,
+    `abbreviation` VARCHAR(150) NOT NULL
+);
+
+--
 -- CustomUnit table definition
 --
 CREATE TABLE IF NOT EXISTS "Unit"
@@ -20,7 +33,7 @@ CREATE TABLE IF NOT EXISTS "Unit"
     `unitName`     VARCHAR(150) NOT NULL,
     `abbreviation` VARCHAR(150) NOT NULL,
     `amount`       DOUBLE       NOT NULL,
-    `baseUnit`     VARCHAR(150) NOT NULL,
+    `baseUnitId`   BIGINT REFERENCES "BaseUnit" (`id`),
     `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -53,3 +66,13 @@ CREATE TABLE IF NOT EXISTS "Recipe"
     `description`      VARCHAR(255)          DEFAULT 'No recipe description',
     `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+--
+-- Initialization of base units
+--
+MERGE INTO "BaseUnit" ("guid", "baseUnitName", "abbreviation")
+    VALUES ('bu-pc', 'piece', 'pc'),
+           ('bu-ml', 'milliliter', 'ml'),
+           ('bu-l', 'liter', 'l'),
+           ('bu-g', 'gram', 'g'),
+           ('bu-kg', 'kilogram', 'kg')

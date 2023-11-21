@@ -56,12 +56,18 @@ public class CommonDependencyProvider implements DependencyProvider {
 //        this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
 //        var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
-        var unitMapper = new UnitMapper();
+        var baseUnitMapper = new BaseUnitMapper();
+        var baseUnitDao = new BaseUnitDao(connection);
+
+        var unitMapper = new UnitMapper(baseUnitDao, baseUnitMapper);
+        var unitDao = new UnitDao(connection);
+
         var categoryMapper = new CategoryMapper();
         var categoryDao = new CategoryDao(connection);
-        var unitDao = new UnitDao(connection);
+
         var ingredientMapper = new IngredientMapper(unitDao, unitMapper);
         var ingredientDao = new IngredientDao(connection);
+
         var addedIngredientDao = new AddedIngredientDao(connection);
 
         var recipeMapper = new RecipeMapper(categoryDao, categoryMapper);
@@ -69,11 +75,10 @@ public class CommonDependencyProvider implements DependencyProvider {
 
         var addedIngredientMapper = new AddedIngredientMapper(recipeDao, recipeMapper, ingredientDao, ingredientMapper, unitDao, unitMapper);
 
-        this.addedIngredients = new AddedIngredientRepository(
+        this.addedIngredients = new AddedIngredientSqlRepository(
                 addedIngredientDao,
                 addedIngredientMapper
         );
-
         this.recipes = new RecipeSqlRepository(
                 recipeDao,
                 recipeMapper
