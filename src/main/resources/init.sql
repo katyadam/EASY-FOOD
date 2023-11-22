@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS "Category"
 --
 CREATE TABLE IF NOT EXISTS "BaseUnit"
 (
-    `id`           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    `id`           BIGINT PRIMARY KEY,
     `guid`         VARCHAR      NOT NULL UNIQUE,
     `baseUnitName` VARCHAR(150) NOT NULL,
     `abbreviation` VARCHAR(150) NOT NULL
@@ -70,9 +70,9 @@ CREATE TABLE IF NOT EXISTS "Recipe"
 --
 -- Initialization of base units
 --
-MERGE INTO "BaseUnit" ("guid", "baseUnitName", "abbreviation")
-    VALUES ('bu-pc', 'piece', 'pc'),
-           ('bu-ml', 'milliliter', 'ml'),
-           ('bu-l', 'liter', 'l'),
-           ('bu-g', 'gram', 'g'),
-           ('bu-kg', 'kilogram', 'kg')
+MERGE INTO "BaseUnit" ("id","guid", "baseUnitName", "abbreviation")
+    VALUES (1,'bu-pc', 'piece', 'pc'),
+           (2,'bu-ml', 'milliliter', 'ml'),
+           (3,'bu-l', 'liter', 'l'),
+           (4,'bu-g', 'gram', 'g'),
+           (5,'bu-kg', 'kilogram', 'kg')

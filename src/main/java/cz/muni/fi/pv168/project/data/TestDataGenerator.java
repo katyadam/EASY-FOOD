@@ -125,7 +125,7 @@ public final class TestDataGenerator {
         String customUnitName = CUSTOM_UNIT_NAMES.get(position);
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
         double amount = random.nextDouble() * 100;
-        Unit baseUnit = selectRandom(BaseUnits.getBaseUnitList());
+        BaseUnit baseUnit = selectRandom(BaseUnits.getBaseUnitList());
         Unit unit = new Unit(customUnitName, customUnitAbbreviation, amount, baseUnit);
         unit.setGuid(uuidProvider.newGuid());
         return unit;

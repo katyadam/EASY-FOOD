@@ -113,7 +113,7 @@ public class BaseUnitDao implements DataAccessObject<BaseUnitEntity> {
         var sql = """
                 SELECT id,
                     guid,
-                    unitName,
+                    baseUnitName,
                     abbreviation,
                 FROM BaseUnit
                 WHERE guid = ?
@@ -129,7 +129,7 @@ public class BaseUnitDao implements DataAccessObject<BaseUnitEntity> {
                 return Optional.empty();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load unit by id", ex);
+            throw new DataStorageException("Failed to load BaseUnit by id", ex);
         }
     }
 
@@ -137,7 +137,7 @@ public class BaseUnitDao implements DataAccessObject<BaseUnitEntity> {
     public BaseUnitEntity update(BaseUnitEntity entity) {
         var sql = """
                 UPDATE Unit
-                SET unitName = ?,
+                SET baseUnitName = ?,
                     abbreviation = ?,
                 WHERE id = ?
                 """;

@@ -80,7 +80,7 @@ public class ImporterHandler extends DefaultHandler {
             case "CustomUnitName" -> activeUnit.setName(elementValue.toString());
             case "Abbreviation" -> activeUnit.setAbbreviation(elementValue.toString());
             case "BaseAmountNumber" -> activeUnit.setAmount(Double.parseDouble(elementValue.toString()));
-            case "BaseUnitAbbr" -> activeUnit.setBaseUnit(parseUnit(elementValue.toString()));
+//            case "BaseUnitAbbr" -> activeUnit.setBaseUnit(parseUnit(elementValue.toString()));
             case "IngredientName" -> activeIngredient.setName(elementValue.toString());
             case "IngredientUnit" -> activeIngredient.setUnitType(parseUnit(elementValue.toString()));
             case "NutritionalValue" -> activeIngredient.setNutritionalValue(Integer.parseInt(elementValue.toString()));
@@ -136,11 +136,11 @@ public class ImporterHandler extends DefaultHandler {
     }
 
     private Unit parseUnit(String unitAbbr) {
-        for (var baseUnit : BaseUnits.getBaseUnitList()) {
-            if (baseUnit.getAbbreviation().equals(unitAbbr)) {
-                return baseUnit;
-            }
-        }
+//        for (var baseUnit : BaseUnits.getBaseUnitList()) {
+//            if (baseUnit.getAbbreviation().equals(unitAbbr)) {
+//                return baseUnit;
+//            }
+//        }
         for (var customUnit : unitList) {
             if (customUnit.getAbbreviation().equals(unitAbbr)) {
                 return customUnit;

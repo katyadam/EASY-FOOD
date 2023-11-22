@@ -23,4 +23,9 @@ public class BaseUnit extends Entity {
     public String getAbbreviation() {
         return abbreviation;
     }
+
+    @Override
+    public String toString() {
+        return baseUnitName;
+    }
 }

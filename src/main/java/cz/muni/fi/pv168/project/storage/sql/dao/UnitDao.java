@@ -69,7 +69,7 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     unitName,
                     abbreviation,
                     amount,
-                    baseUnit
+                    baseUnitId
                 FROM Unit
                 """;
         try (
@@ -98,7 +98,7 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     unitName,
                     abbreviation,
                     amount,
-                    baseUnit
+                    baseUnitId
                 FROM Unit
                 WHERE id = ?
                 """;
@@ -126,7 +126,7 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     unitName,
                     abbreviation,
                     amount,
-                    baseUnit
+                    baseUnitId
                 FROM Unit
                 WHERE guid = ?
                 """;

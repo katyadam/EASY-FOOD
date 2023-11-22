@@ -59,6 +59,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
 
         List<Unit> unitList = new LinkedList<>();
+        // TODO najebat unity a ne base unity
         unitList.addAll(List.of(BaseUnits.baseUnits.toArray(new Unit[0])));
         unitList.addAll(unitTableModel.getEntities());
         units = new JComboBox<>(unitList.toArray(new Unit[0]));

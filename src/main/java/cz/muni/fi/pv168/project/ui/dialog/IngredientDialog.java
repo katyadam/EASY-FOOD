@@ -19,7 +19,7 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
             new SpinnerNumberModel(0, 0, 50000, 20)
     );
 
-    // insert array of base units here
+    // TODO insert array of base units here
     private final JComboBox<Unit> ingredientJComboBox = new JComboBox<>(BaseUnits.getBaseUnitList().toArray(new Unit[0]));
     private RecipeTableModel recipeData;
 
@@ -31,7 +31,7 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
             statistic = countIngredientUsage();
             setFields();
         } else {
-            entity = new Ingredient(null, 0, BaseUnits.getBaseUnitList().get(0));
+            entity = new Ingredient(null, 0, null); //BaseUnits.getBaseUnitList().get(0)
         }
         addFields();
 
