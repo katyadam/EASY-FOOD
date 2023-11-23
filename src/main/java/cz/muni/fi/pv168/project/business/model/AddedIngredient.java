@@ -5,7 +5,6 @@ public class AddedIngredient extends Entity {
     private Ingredient ingredient;
     private Double quantity;
     private Unit unit;
-    private double amount;
     private Recipe recipe;
 
     public AddedIngredient() {
@@ -19,16 +18,16 @@ public class AddedIngredient extends Entity {
 
     public AddedIngredient(
             String guid,
-            Recipe recipe,
             Ingredient ingredient,
+            Recipe recipe,
             Unit unit,
-            double amount
+            Double quantity
     ) {
         super(guid);
         this.recipe = recipe;
         this.ingredient = ingredient;
         this.unit = unit;
-        this.amount = amount;
+        this.quantity = quantity;
     }
 
     public Recipe getRecipe() {

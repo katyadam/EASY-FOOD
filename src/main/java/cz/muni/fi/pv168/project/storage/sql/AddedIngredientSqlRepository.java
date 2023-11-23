@@ -40,9 +40,9 @@ public class AddedIngredientSqlRepository implements Repository<AddedIngredient>
     public void update(AddedIngredient entity) {
         var existingDepartment = addedIngredientDao.findByGuid(entity.getGuid())
                 .orElseThrow(() -> new DataStorageException("Category not found, guid: " + entity.getGuid()));
-        var updatedCategory = addedIngredientMapper.mapExistingEntityToDatabase(entity, existingDepartment.id());
+        var updateAddedIngredient = addedIngredientMapper.mapExistingEntityToDatabase(entity, existingDepartment.id());
 
-        addedIngredientDao.update(updatedCategory);
+        addedIngredientDao.update(updateAddedIngredient);
     }
 
     @Override

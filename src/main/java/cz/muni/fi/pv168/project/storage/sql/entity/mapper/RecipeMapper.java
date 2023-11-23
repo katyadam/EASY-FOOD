@@ -30,8 +30,8 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 entity.recipeName(),
                 category,
                 entity.preparationTime(),
-                entity.portions(),
                 entity.nutritionalValue(),
+                entity.portions(),
                 entity.description());
     }
 
@@ -58,6 +58,7 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 .orElseThrow(() -> new DataStorageException("Category not found, guid: " +
                         entity.getCategory().getGuid()));
         return new RecipeEntity(
+                dbId,
                 entity.getGuid(),
                 categoryEntity.id(),
                 entity.getRecipeName(),

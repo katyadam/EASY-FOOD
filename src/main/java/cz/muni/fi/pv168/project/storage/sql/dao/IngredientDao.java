@@ -64,7 +64,8 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 SELECT id,
                     guid,
                     ingredientName,
-                    nutritionalValue
+                    nutritionalValue,
+                    unitId
                 FROM Ingredient
                 """;
         try (
@@ -142,7 +143,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public IngredientEntity update(IngredientEntity entity) {
         var sql = """
-                UPDATE Recipe
+                UPDATE Ingredient
                 SET ingredientName = ?,
                     nutritionalValue = ?,
                     unitId = ?

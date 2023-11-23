@@ -33,7 +33,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                     nutritionalValue,
                     description
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

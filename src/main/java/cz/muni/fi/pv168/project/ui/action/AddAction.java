@@ -13,6 +13,7 @@ import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,9 +22,17 @@ import java.util.Optional;
 
 public final class AddAction extends ContextAction {
 
+    private final CommonDependencyProvider commonDependencyProvider;
 
-    public AddAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
+    public AddAction(
+            JTable recipeTable,
+            JTable ingredientTable,
+            JTable unitsTable,
+            JTable categoryTable,
+            CommonDependencyProvider commonDependencyProvider
+    ) {
         super(recipeTable, ingredientTable, unitsTable, categoryTable, "Add", Icons.ADD_ICON);
+        this.commonDependencyProvider = commonDependencyProvider;
         putValue(SHORT_DESCRIPTION, "Adds new recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
@@ -56,7 +65,7 @@ public final class AddAction extends ContextAction {
             }
             case 1 -> {
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) ingredientTable.getModel();
-                IngredientDialog ingredientDialog = new IngredientDialog(null, (IngredientTableModel) ingredientTable.getModel(), (RecipeTableModel) recipeTable.getModel());
+                IngredientDialog ingredientDialog = new IngredientDialog(null, (IngredientTableModel) ingredientTable.getModel(), commonDependencyProvider.getCustomUnitCrudService(), (RecipeTableModel) recipeTable.getModel());
                 ingredientDialog.show(ingredientTable, "Add ingredient")
                         .ifPresent(ingredientTableModel::addRow);
             }

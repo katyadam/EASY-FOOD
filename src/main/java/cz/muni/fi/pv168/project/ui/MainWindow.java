@@ -7,20 +7,11 @@ import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
-import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.crud.*;
-import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
-import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
-import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.storage.memory.InMemoryRepository;
-import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
 import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
-import cz.muni.fi.pv168.project.ui.action.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.RemoveRecipesFilterAction;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
@@ -34,7 +25,6 @@ import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
-import cz.muni.fi.pv168.project.wiring.DependencyProvider;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -123,7 +113,7 @@ public class MainWindow {
         createTables();
         createScrollPanes();
 
-        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable);
+        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable, commonDependencyProvider);
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
         this.frame = createFrame();

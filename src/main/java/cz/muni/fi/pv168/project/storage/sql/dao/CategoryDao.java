@@ -140,7 +140,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public CategoryEntity update(CategoryEntity entity) {
         var sql = """
-                UPDATE Recipe
+                UPDATE Category
                 SET categoryName = ?,
                     color = ?
                 WHERE id = ?
@@ -150,7 +150,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
         ) {
             statement.setString(1, entity.categoryName());
             statement.setInt(2, entity.color().getRGB());
-            statement.setLong(7, entity.id());
+            statement.setLong(3, entity.id());
             statement.executeUpdate();
 
             int rowsUpdated = statement.executeUpdate();

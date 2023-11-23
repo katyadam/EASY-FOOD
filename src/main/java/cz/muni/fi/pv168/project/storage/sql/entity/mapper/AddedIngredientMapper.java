@@ -47,10 +47,10 @@ public class AddedIngredientMapper implements EntityMapper<AddedIngredientEntity
                         entity.unitId()));
         return new AddedIngredient(
                 entity.guid(),
-                recipe,
                 ingredient,
+                recipe,
                 unit,
-                entity.amount()
+                entity.quantity()
         );
     }
 
@@ -79,9 +79,9 @@ public class AddedIngredientMapper implements EntityMapper<AddedIngredientEntity
                         entity.getUnit().getGuid()));
         return new AddedIngredientEntity(
                 dbId,
-                recipeEntity.id(),
                 entity.getGuid(),
                 ingredientEntity.id(),
+                recipeEntity.id(),
                 unitEntity.id(),
                 entity.getQuantity()
         );
