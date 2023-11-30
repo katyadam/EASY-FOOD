@@ -1,30 +1,28 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.service.crud.CustomUnitService;
-import cz.muni.fi.pv168.project.service.crud.IngredientCrudService;
-import cz.muni.fi.pv168.project.service.crud.RecipeCrudService;
-import cz.muni.fi.pv168.project.service.export.batch.Batch;
-import cz.muni.fi.pv168.project.service.export.batch.BatchXmlExporter;
+import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
+import cz.muni.fi.pv168.project.business.service.crud.UnitService;
+import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
+import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
+import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
+import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
 public class ExportAction extends AbstractAction {
     protected final CategoryCrudService categoryCrudService;
-    protected final CustomUnitService customUnitService;
+    protected final UnitService unitService;
     protected final IngredientCrudService ingredientCrudService;
     protected final RecipeCrudService recipeCrudService;
 
-    public ExportAction(String name, CategoryCrudService categoryCrudService, CustomUnitService customUnitService, IngredientCrudService ingredientCrudService, RecipeCrudService recipeCrudService) {
+    public ExportAction(String name, CategoryCrudService categoryCrudService, UnitService unitService, IngredientCrudService ingredientCrudService, RecipeCrudService recipeCrudService) {
         super(name);
         this.categoryCrudService = categoryCrudService;
-        this.customUnitService = customUnitService;
+        this.unitService = unitService;
         this.ingredientCrudService = ingredientCrudService;
         this.recipeCrudService = recipeCrudService;
         putValue(SHORT_DESCRIPTION, "Exports your data to an XML file");
@@ -42,7 +40,7 @@ public class ExportAction extends AbstractAction {
         int result = fileChooser.showOpenDialog(null);
         Batch batch = new Batch(this.recipeCrudService.findAll(),
                 this.ingredientCrudService.findAll(),
-                this.customUnitService.findAll(),
+                this.unitService.findAll(),
                 this.categoryCrudService.findAll());
 
         if (result == JFileChooser.APPROVE_OPTION) {

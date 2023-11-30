@@ -1,9 +1,12 @@
 package cz.muni.fi.pv168.project.ui.filters.recipes;
 
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.ui.filters.EntityMatcher;
+
+import java.util.Optional;
 
 public class RecipeMatcher extends EntityMatcher<Recipe> {
     private final RecipeFilterAttributes recipeFilterAttributes;
@@ -28,7 +31,10 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
             return true;
         }
         for (Ingredient ingredient : recipeFilterAttributes.ingredients()) {
-            if (!recipe.getUsedIngredients().contains(ingredient)) {
+            Optional<AddedIngredient> addedIngredient = recipe.getAddedIngredients().stream()
+                    .filter(ai -> ai.getIngredient().getGuid().equals(ingredient.getGuid()))
+                    .findFirst();
+            if (addedIngredient.isEmpty()) {
                 return false;
             }
         }

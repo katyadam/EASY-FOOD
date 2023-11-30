@@ -1,19 +1,19 @@
 package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
+import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.model.*;
-import cz.muni.fi.pv168.project.repository.Repository;
-import cz.muni.fi.pv168.project.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.service.crud.CustomUnitService;
-import cz.muni.fi.pv168.project.service.crud.IngredientCrudService;
-import cz.muni.fi.pv168.project.service.crud.RecipeCrudService;
-import cz.muni.fi.pv168.project.service.validation.CategoryValidator;
-import cz.muni.fi.pv168.project.service.validation.CustomUnitValidator;
-import cz.muni.fi.pv168.project.service.validation.IngredientValidator;
-import cz.muni.fi.pv168.project.service.validation.RecipeValidator;
-import cz.muni.fi.pv168.project.storage.InMemoryRepository;
-import cz.muni.fi.pv168.project.ui.action.*;
+import cz.muni.fi.pv168.project.ui.action.ActionFactory;
+import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
+import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
+import cz.muni.fi.pv168.project.ui.action.RemoveRecipesFilterAction;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -24,6 +24,7 @@ import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -47,7 +48,7 @@ public class MainWindow {
 
     private List<Recipe> recipesList;
     private List<Ingredient> ingredientList;
-    private List<CustomUnit> customUnitList;
+    private List<Unit> unitList;
     private List<Category> categoryList;
 
     private JTable recipeTable;
@@ -61,7 +62,6 @@ public class MainWindow {
     private JScrollPane categoryScroll;
 
     private final JMenuBar menuBar;
-    private final TestDataGenerator testDataGen = new TestDataGenerator();
 
     //    MODELS
     private final RecipeTableModel recipeTableModel;
@@ -78,50 +78,47 @@ public class MainWindow {
     // GuidProviders
     private final GuidProvider uuidProvider = new UuidGuidProvider();
 
-    // Repositories
-    private final Repository<Recipe> recipeRepository;
-    private final Repository<Category> categoryRepository;
-    private final Repository<Ingredient> ingredientRepository;
-    private final Repository<CustomUnit> customUnitRepository;
 
     // CRUD services
-    private final RecipeCrudService recipeCrudService;
-    private final CategoryCrudService categoryCrudService;
-    private final IngredientCrudService ingredientCrudService;
-    private final CustomUnitService customUnitService;
+    private final CrudService<Recipe> recipeCrudService;
+    private final CrudService<Category> categoryCrudService;
+    private final CrudService<Ingredient> ingredientCrudService;
+    private final CrudService<Unit> unitService;
 
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
     private MultiSelectCombobox<Category> categoriesFilter;
 
+    public static final CommonDependencyProvider commonDependencyProvider = new CommonDependencyProvider();
+
     public MainWindow() {
-        setDataGeneration();
-        this.recipeRepository = new InMemoryRepository<>(this.recipesList);
-        this.recipeCrudService = new RecipeCrudService(recipeRepository, new RecipeValidator(), uuidProvider);
-        this.recipeTableModel = new RecipeTableModel(this.recipeCrudService);
 
-        this.ingredientRepository = new InMemoryRepository<>(this.ingredientList);
-        this.ingredientCrudService = new IngredientCrudService(ingredientRepository, new IngredientValidator(), uuidProvider);
-        this.ingredientTableModel = new IngredientTableModel(this.ingredientCrudService);
+        this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
+        this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
+        this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
+        this.unitService = commonDependencyProvider.getCustomUnitCrudService();
 
-        this.customUnitRepository = new InMemoryRepository<>(this.customUnitList);
-        this.customUnitService = new CustomUnitService(customUnitRepository, new CustomUnitValidator(), uuidProvider);
-        this.customUnitTableModel = new CustomUnitTableModel(this.customUnitService);
-
-        this.categoryRepository = new InMemoryRepository<>(this.categoryList);
-        this.categoryCrudService = new CategoryCrudService(categoryRepository, new CategoryValidator(), uuidProvider);
-        this.categoryTableModel = new CategoryTableModel(this.categoryCrudService);
+        this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
+        this.customUnitTableModel = new CustomUnitTableModel(unitService);
+        this.categoryTableModel = new CategoryTableModel(categoryCrudService);
+        this.recipeTableModel = new RecipeTableModel(recipeCrudService);
 
         this.recipeTableSorter = new TableRowSorter<>(recipeTableModel);
         this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
         this.customUnitTableSorter = new TableRowSorter<>(customUnitTableModel);
         this.categoryTableSorter = new TableRowSorter<>(categoryTableModel);
+
         createTables();
         createScrollPanes();
 
-        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable);
+        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable, commonDependencyProvider);
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
         this.frame = createFrame();
+        this.recipesList = recipeCrudService.findAll();
+        this.ingredientList = ingredientCrudService.findAll();
+        this.categoryList = categoryCrudService.findAll();
+        this.unitList = unitService.findAll();
+
         setActiveButtons();
         setTabbedPannels();
         setStatistics();
@@ -166,12 +163,6 @@ public class MainWindow {
         TabbedPanelContext.setTables(this.recipeTable, this.ingredientTable, this.customUnitTable, this.categoryTable);
     }
 
-    private void setDataGeneration() {
-        this.recipesList = testDataGen.getRecipes();
-        this.ingredientList = testDataGen.getIngredients();
-        this.customUnitList = testDataGen.getCustomUnits();
-        this.categoryList = testDataGen.getCategories();
-    }
 
     private void setTabbedPannels() {
         layout.getTabbedPanels().add("Recipes", createRecipeTab());
@@ -324,17 +315,18 @@ public class MainWindow {
         editMenu.add(actions.getQuitAction());
 
         JMenu filesMenu = new JMenu("Files");
-        filesMenu.add(new ImportAction(
-                "Import",
-                categoryCrudService,
-                customUnitService,
-                ingredientCrudService,
-                recipeCrudService,
-                this::refresh
-        ));
-        filesMenu.addSeparator();
-        filesMenu.add(new ExportAction("Export",
-                categoryCrudService, customUnitService, ingredientCrudService, recipeCrudService));
+        // TODO import export
+//        filesMenu.add(new ImportAction(
+//                "Import",
+//                categoryCrudService,
+//                unitService,
+//                ingredientCrudService,
+//                recipeCrudService,
+//                this::refresh
+//        ));
+//        filesMenu.addSeparator();
+//        filesMenu.add(new ExportAction("Export",
+//                categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
 
         menuBar.add(editMenu);
         menuBar.add(filesMenu);
@@ -407,7 +399,7 @@ public class MainWindow {
         ingredientsPanel.add(max, "left");
         ingredientsPanel.add(caloriesMaxFilter, "left, gapright push, hmin 30");
         ingredientsPanel.add(fireFilter, "al right, split 2");
-        ingredientsPanel.add( removeFilter, "wrap");
+        ingredientsPanel.add(removeFilter, "wrap");
         ingredientsPanel.add(ingredientScroll, "span 3, grow, height 99%");
         return ingredientsPanel;
     }

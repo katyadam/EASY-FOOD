@@ -1,11 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.model.AddedIngredient;
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.CustomUnit;
-import cz.muni.fi.pv168.project.model.Entity;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
@@ -16,6 +11,7 @@ import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,9 +20,17 @@ import java.util.Optional;
 
 public final class EditAction extends ContextAction {
 
+    private final CommonDependencyProvider commonDependencyProvider;
 
-    public EditAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
+    public EditAction(
+            JTable recipeTable,
+            JTable ingredientTable,
+            JTable unitsTable,
+            JTable categoryTable,
+            CommonDependencyProvider commonDependencyProvider
+    ) {
         super(recipeTable, ingredientTable, unitsTable, categoryTable, "Edit", Icons.EDIT_ICON);
+        this.commonDependencyProvider = commonDependencyProvider;
         putValue(SHORT_DESCRIPTION, "Edits selected recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
@@ -57,12 +61,6 @@ public final class EditAction extends ContextAction {
                 if (optionalRecipe.isPresent()) {
                     Recipe newRecipe = optionalRecipe.get();
                     newRecipe.getCategory().addRecipe(newRecipe);
-                    for (AddedIngredient addedIngredient : newRecipe.getUsedIngredients().getEntities()) {
-                        addedIngredient.getIngredient().addRecipe(newRecipe);
-                        if (addedIngredient.getUnit() instanceof Entity) {
-                            ((Entity) addedIngredient.getUnit()).addRecipe(newRecipe);
-                        }
-                    }
                     recipeTableModel.updateRow(newRecipe);
                 }
                 break;
@@ -71,7 +69,7 @@ public final class EditAction extends ContextAction {
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Ingredient ingredient = ingredientTableModel.getEntity(modelRow);
-                IngredientDialog dialog = new IngredientDialog(ingredient,(IngredientTableModel) ingredientTable.getModel(), (RecipeTableModel) recipeTable.getModel());
+                IngredientDialog dialog = new IngredientDialog(ingredient, (IngredientTableModel) ingredientTable.getModel(), commonDependencyProvider.getCustomUnitCrudService(), (RecipeTableModel) recipeTable.getModel());
                 dialog.show(activeTable, "Edit Ingredient")
                         .ifPresent(ingredientTableModel::updateRow);
                 break;
@@ -79,8 +77,8 @@ public final class EditAction extends ContextAction {
             case 2: {
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
-                CustomUnit customUnit = customUnitTableModel.getEntity(modelRow);
-                CustomUnitDialog dialog = new CustomUnitDialog(customUnit, (CustomUnitTableModel) unitsTable.getModel());
+                Unit unit = customUnitTableModel.getEntity(modelRow);
+                CustomUnitDialog dialog = new CustomUnitDialog(unit, (CustomUnitTableModel) unitsTable.getModel());
                 dialog.show(activeTable, "Edit Custom Unit")
                         .ifPresent(customUnitTableModel::updateRow);
                 break;

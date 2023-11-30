@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project;
 
-import cz.muni.fi.pv168.project.service.export.batch.Batch;
-import cz.muni.fi.pv168.project.service.export.importer.ImporterHandler;
+import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
+import cz.muni.fi.pv168.project.business.service.export.importer.ImporterHandler;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
@@ -19,7 +19,7 @@ public class XmlParserTest {
         ImporterHandler importerHandler = new ImporterHandler();
         saxParser.parse("src/test/resources/text-import.xml", importerHandler);
         Batch batch = importerHandler.getBatch();
-        assert batch.customUnits().size() == 1;
+        assert batch.units().size() == 1;
         assert batch.categories().size() == 1;
         assert batch.ingredients().size() == 1;
         assert batch.recipes().size() == 1;

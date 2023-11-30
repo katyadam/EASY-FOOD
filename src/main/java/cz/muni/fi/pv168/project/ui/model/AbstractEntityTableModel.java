@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.model.Entity;
-import cz.muni.fi.pv168.project.service.crud.CrudService;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -9,9 +9,9 @@ import java.util.List;
 
 public abstract class AbstractEntityTableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
 
-    private List<T> entities;
+    public List<T> entities;
     private final List<Column<T, ?>> columns;
-    private final CrudService<T> crudService;
+    public final CrudService<T> crudService;
 
     public AbstractEntityTableModel(List<Column<T, ?>> columns, List<T> entities, CrudService<T> crudService) {
         this.columns = columns;

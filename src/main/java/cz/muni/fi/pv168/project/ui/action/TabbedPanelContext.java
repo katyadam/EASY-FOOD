@@ -1,5 +1,11 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
+import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
+import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+
 import javax.swing.*;
 
 /**
@@ -22,18 +28,32 @@ public class TabbedPanelContext {
 
     public static void setActiveTab(int i) {
         activeTab = i;
+        refreshChangedTable();
     }
 
     public static JTable getActiveTable() {
+        return switch (activeTab) {
+            case 0 -> recipeTable;
+            case 1 -> ingredientTable;
+            case 2 -> unitsTable;
+            default -> categoryTable;
+        };
+    }
+
+    public static void refreshChangedTable() {
         switch (activeTab) {
             case 0:
-                return recipeTable;
+                RecipeTableModel recipeTableModel = (RecipeTableModel) recipeTable.getModel();
+                recipeTableModel.refresh();
             case 1:
-                return ingredientTable;
+                IngredientTableModel ingredientTableModel = (IngredientTableModel) ingredientTable.getModel();
+                ingredientTableModel.refresh();
             case 2:
-                return unitsTable;
+                CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) unitsTable.getModel();
+                customUnitTableModel.refresh();
             default:
-                return categoryTable;
+                CategoryTableModel categoryTableModel = (CategoryTableModel) categoryTable.getModel();
+                categoryTableModel.refresh();
         }
     }
 

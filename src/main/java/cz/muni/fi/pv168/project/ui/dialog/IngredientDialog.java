@@ -1,14 +1,16 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.model.Unit;
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Optional;
 
 
 public class IngredientDialog extends EntityDialog<Ingredient> {
@@ -19,19 +21,27 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
             new SpinnerNumberModel(0, 0, 50000, 20)
     );
 
-    // insert array of base units here
-    private final JComboBox<BaseUnits> ingredientJComboBox = new JComboBox<>(BaseUnits.values());
-    private RecipeTableModel recipeData;
+    private final CrudService<Unit> unitCrudService;
 
-    public IngredientDialog(Ingredient ingredient, IngredientTableModel ingredientTableModel, RecipeTableModel recipeTableModel) {
-        super( ingredient, ingredientTableModel.getEntities());
+    // TODO insert array of base units here
+    private final JComboBox<Unit> ingredientJComboBox;
+    private final RecipeTableModel recipeData;
+
+    public IngredientDialog(
+            Ingredient ingredient,
+            IngredientTableModel ingredientTableModel,
+            CrudService<Unit> unitCrudService,
+            RecipeTableModel recipeTableModel
+    ) {
+        super(ingredient, ingredientTableModel.getEntities());
+        this.unitCrudService = unitCrudService;
         this.recipeData = recipeTableModel;
-
+        this.ingredientJComboBox = new JComboBox<>(unitCrudService.findAll().toArray(new Unit[0]));
         if (ingredient != null) {
             statistic = countIngredientUsage();
             setFields();
         } else {
-            entity = new Ingredient(null, 0, BaseUnits.GRAM);
+            entity = new Ingredient(null, 0, null); //BaseUnits.getBaseUnitList().get(0)
         }
         addFields();
 
@@ -41,7 +51,10 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
         int result = 0;
         List<Recipe> recipes = recipeData.getEntities();
         for (Recipe recipe : recipes) {
-            if (recipe.getUsedIngredients().contains(entity)) {
+            Optional<AddedIngredient> addedIngredient = recipe.getAddedIngredients().stream()
+                    .filter(ai -> ai.getIngredient().getGuid().equals(entity.getGuid()))
+                    .findFirst();
+            if (addedIngredient.isPresent()) {
                 result++;
             }
         }

@@ -1,26 +1,27 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.BaseUnit;
+import cz.muni.fi.pv168.project.business.model.BaseUnits;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 
 import javax.swing.*;
 
-public class CustomUnitDialog extends EntityDialog<CustomUnit> {
+public class CustomUnitDialog extends EntityDialog<Unit> {
 
 
     private final JTextField customUnitNameField = new JTextField();
     private final JTextField customUnitAbbreviationField = new JTextField();
     private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 50000.0, 1.0));
-    private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
+    private final JComboBox<BaseUnit> units = new JComboBox<>(BaseUnits.getBaseUnitList().toArray(new BaseUnit[0]));
 
-    public CustomUnitDialog(CustomUnit customUnit, CustomUnitTableModel unitTableModel) {
-        super(customUnit, unitTableModel.getEntities());
+    public CustomUnitDialog(Unit unit, CustomUnitTableModel unitTableModel) {
+        super(unit, unitTableModel.getEntities());
 
-        if (customUnit != null) {
+        if (unit != null) {
             setValues();
         } else {
-            entity = new CustomUnit(null, null, 0, null);
+            entity = new Unit(null, null, 0, null);
         }
         addFields();
     }
@@ -39,11 +40,11 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
     }
 
     @Override
-    CustomUnit getEntity() {
+    Unit getEntity() {
         entity.setName(customUnitNameField.getText());
         entity.setAbbreviation(customUnitAbbreviationField.getText());
         entity.setAmount((double) customUnitAmount.getValue());
-        entity.setBaseUnit((BaseUnits) units.getSelectedItem());
+        entity.setBaseUnit((BaseUnit) units.getSelectedItem());
         return entity;
     }
 }
