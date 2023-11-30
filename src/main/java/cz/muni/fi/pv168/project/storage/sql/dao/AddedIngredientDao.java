@@ -63,6 +63,35 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
         }
     }
 
+    public Collection<AddedIngredientEntity> findByRecipeId(Long recipeId) {
+        var sql = """
+                SELECT id,
+                    guid,
+                    ingredientId,
+                    recipeId,
+                    unitId,
+                    quantity
+                FROM AddedIngredient
+                WHERE recipeId = ?
+                """;
+        try (
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            statement.setLong(1, recipeId);
+            List<AddedIngredientEntity> addedIngredients = new ArrayList<>();
+            try (var resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    var addedIngredient = addedIngredientFromResultSet(resultSet);
+                    addedIngredients.add(addedIngredient);
+                }
+            }
+
+            return addedIngredients;
+        } catch (SQLException ex) {
+            throw new DataStorageException("Failed to load all categories", ex);
+        }
+    }
+
     @Override
     public Collection<AddedIngredientEntity> findAll() {
         var sql = """

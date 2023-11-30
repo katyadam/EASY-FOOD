@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS "Recipe"
     `prepMinutes`      INT          NOT NULL,
     `portions`         INT          NOT NULL,
     `categoryId`       BIGINT REFERENCES "Category" (`id`) ON DELETE CASCADE,
-    `nutritionalValue` INT          NOT NULL,
     `description`      VARCHAR(255)          DEFAULT 'No recipe description',
     `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

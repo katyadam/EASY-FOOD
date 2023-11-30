@@ -92,7 +92,7 @@ public class ImporterHandler extends DefaultHandler {
             case "AddedIngredientName" -> activeAddedIngredient.setIngredient(parseIngredient(elementValue.toString()));
             case "Quantity" -> activeAddedIngredient.setQuantity(Double.parseDouble(elementValue.toString()));
             case "AddedUnit" -> activeAddedIngredient.setUnit(parseUnit(elementValue.toString()));
-            case ADDED_INGREDIENTS -> saveUsedIngredients();
+//            case ADDED_INGREDIENTS -> saveUsedIngredients();
             case ADDED_INGREDIENT -> addedIngredients.add(activeAddedIngredient);
 
         }
@@ -130,10 +130,10 @@ public class ImporterHandler extends DefaultHandler {
         return new PreparationTime(Integer.parseInt(split[0]), Integer.parseInt(split[2]));
     }
 
-    private void saveUsedIngredients() {
-        AddedIngredientsTableModel tableModel = activeRecipe.getUsedIngredients();
-        addedIngredients.forEach(tableModel::addRow);
-    }
+//    private void saveUsedIngredients() {
+//        AddedIngredientsTableModel tableModel = activeRecipe.getUsedIngredients();
+//        addedIngredients.forEach(tableModel::addRow);
+//    }
 
     private Unit parseUnit(String unitAbbr) {
 //        for (var baseUnit : BaseUnits.getBaseUnitList()) {

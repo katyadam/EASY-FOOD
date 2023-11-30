@@ -1,27 +1,17 @@
 package cz.muni.fi.pv168.project.business.model;
 
-import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.validation.AddedIngredientValidator;
-import cz.muni.fi.pv168.project.storage.memory.InMemoryRepository;
-import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
-
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Recipe extends Entity {
     private PreparationTime preparationTime;
     private int portions;
     private Category category;
     private String description = "No recipe description";
-    private int nutritionalValue;
+    private int nutritionalValue = 0;
 
-
-    private final AddedIngredientsTableModel usedIngredients = new AddedIngredientsTableModel(
-            new AddedIngredientCrudService(
-                    new InMemoryRepository<>(new ArrayList<>()),
-                    new AddedIngredientValidator(),
-                    new UuidGuidProvider()
-            ));
+    private List<AddedIngredient> addedIngredients = new ArrayList<>();
 
     public Recipe() {
     }
@@ -31,14 +21,12 @@ public class Recipe extends Entity {
             String recipeName,
             Category category,
             PreparationTime preparationTime,
-            int nutritionalValue,
             int portions,
             String description
     ) {
         super(guid);
         this.name = recipeName;
         this.preparationTime = preparationTime;
-        this.nutritionalValue = nutritionalValue;
         this.portions = portions;
         this.category = category;
         this.description = description;
@@ -56,8 +44,12 @@ public class Recipe extends Entity {
         return nutritionalValue;
     }
 
-    public void setNutritionalValue(int nutritionalValue) {
-        this.nutritionalValue = nutritionalValue;
+    public void decrementNutritionalValue(int value) {
+        nutritionalValue -= value;
+    }
+
+    public void incrementNutritionalValue(int value) {
+        nutritionalValue += value;
     }
 
     public void setPreparationTime(PreparationTime preparationTime) {
@@ -91,7 +83,7 @@ public class Recipe extends Entity {
         if (category != null) {
             category.removeRecipe(this);
         }
-        for (AddedIngredient addedIngredient : usedIngredients.getEntities()) {
+        for (AddedIngredient addedIngredient : addedIngredients) {
             addedIngredient.getIngredient().removeRecipe(this);
             if (addedIngredient.getUnit() instanceof Entity) {
                 ((Entity) addedIngredient.getUnit()).removeRecipe(this);
@@ -116,11 +108,33 @@ public class Recipe extends Entity {
     }
 
     public int getRecipeNutritionalValue() {
-        return usedIngredients.getTotalNutritionalValue();
+        return nutritionalValue;
     }
 
-    public AddedIngredientsTableModel getUsedIngredients() {
-        return usedIngredients;
+
+    public void addIngredient(AddedIngredient addedIngredient) {
+        nutritionalValue += addedIngredient.getIngredient().getNutritionalValue();
+        addedIngredients.add(addedIngredient);
+    }
+
+    public void removeIngredient(AddedIngredient addedIngredient) {
+        nutritionalValue -= addedIngredient.getIngredient().getNutritionalValue();
+        addedIngredients.remove(addedIngredient);
+    }
+
+    public void updateNutritionalValue() {
+        nutritionalValue = 0;
+        addedIngredients.forEach(
+                ai -> {
+                    if (ai.getIngredient() != null) {
+                        nutritionalValue += ai.getIngredient().getNutritionalValue();
+                    }
+                }
+        );
+    }
+
+    public List<AddedIngredient> getAddedIngredients() {
+        return addedIngredients;
     }
 
     @Override

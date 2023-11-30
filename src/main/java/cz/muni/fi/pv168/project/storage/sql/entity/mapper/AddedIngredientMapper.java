@@ -13,13 +13,20 @@ import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
 
 public class AddedIngredientMapper implements EntityMapper<AddedIngredientEntity, AddedIngredient> {
     private final DataAccessObject<RecipeEntity> recipeDao;
-    private final EntityMapper<RecipeEntity, Recipe> recipeMapper;
+    private final RecipeMapper recipeMapper;
     private final DataAccessObject<IngredientEntity> ingredientDao;
-    private final EntityMapper<IngredientEntity, Ingredient> ingredientMapper;
+    private final IngredientMapper ingredientMapper;
     private final DataAccessObject<UnitEntity> unitDao;
-    private final EntityMapper<UnitEntity, Unit> unitMapper;
+    private final UnitMapper unitMapper;
 
-    public AddedIngredientMapper(DataAccessObject<RecipeEntity> recipeDao, EntityMapper<RecipeEntity, Recipe> recipeMapper, DataAccessObject<IngredientEntity> ingredientDao, EntityMapper<IngredientEntity, Ingredient> ingredientMapper, DataAccessObject<UnitEntity> unitDao, EntityMapper<UnitEntity, Unit> unitMapper) {
+    public AddedIngredientMapper(
+            DataAccessObject<RecipeEntity> recipeDao,
+            RecipeMapper recipeMapper,
+            DataAccessObject<IngredientEntity> ingredientDao,
+            IngredientMapper ingredientMapper,
+            DataAccessObject<UnitEntity> unitDao,
+            UnitMapper unitMapper
+    ) {
         this.recipeDao = recipeDao;
         this.recipeMapper = recipeMapper;
         this.ingredientDao = ingredientDao;

@@ -51,16 +51,10 @@ public final class AddAction extends ContextAction {
                 Optional<Recipe> newRecipe = recipeDialog.show(recipeTable, "Add Recipe");
                 if (newRecipe.isPresent()) {
                     Recipe recipe = newRecipe.get();
+                    recipeTableModel.addRow(recipe);
                     if (recipe.getCategory() != null) {
                         recipe.getCategory().addRecipe(recipe);
                     }
-                    for (AddedIngredient addedIngredient : recipe.getUsedIngredients().getEntities()) {
-                        addedIngredient.getIngredient().addRecipe(recipe);
-                        if (addedIngredient.getUnit() instanceof Entity) {
-                            ((Entity) addedIngredient.getUnit()).addRecipe(recipe);
-                        }
-                    }
-                    recipeTableModel.addRow(recipe);
                 }
             }
             case 1 -> {

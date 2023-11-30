@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 
 import cz.muni.fi.pv168.project.business.model.*;
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.model.*;
 
 import javax.swing.*;
@@ -36,22 +37,43 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            addedIngredientsTableModel.addRow(new AddedIngredient((Ingredient) ingredients.getSelectedItem(), (double) amount.getValue(), (Unit) units.getSelectedItem()));
+            AddedIngredient newIngredient = new AddedIngredient(
+                    (Ingredient) ingredients.getSelectedItem(),
+                    (double) amount.getValue(),
+                    (Unit) units.getSelectedItem());
+            if (entity.getGuid() != null) {
+                newIngredient.setRecipe(entity);
+                MainWindow.commonDependencyProvider.getAddedIngredientCrudService().create(newIngredient);
+            }
+
+            entity.addIngredient(newIngredient);
+            addedIngredientsTableModel.addRow(newIngredient);
         }
     });
     private final JButton removeIngredient = new JButton(new AbstractAction("Remove ingredient") {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(addedIngredientsTable.getSelectedRows().length);
             Arrays.stream(addedIngredientsTable.getSelectedRows())
                     .map(addedIngredientsTable::convertRowIndexToModel)
                     .boxed()
                     .sorted(Comparator.reverseOrder())
-                    .forEach(addedIngredientsTableModel::deleteRow);
+                    .forEach(
+                            rowIndex -> {
+                                AddedIngredient entityToDelete = addedIngredientsTableModel.getEntity(rowIndex);
+                                entity.removeIngredient(entityToDelete);
+                                addedIngredientsTableModel.deleteRow(rowIndex);
+                            }
+                    );
         }
     });
 
-    public RecipeDialog(Recipe recipe, RecipeTableModel recipeTableModel, IngredientTableModel ingredientTableModel, CategoryTableModel categoryTableModel, CustomUnitTableModel unitTableModel) {
+    public RecipeDialog(
+            Recipe recipe,
+            RecipeTableModel recipeTableModel,
+            IngredientTableModel ingredientTableModel,
+            CategoryTableModel categoryTableModel,
+            CustomUnitTableModel unitTableModel
+    ) {
         super(recipe, recipeTableModel.getEntities());
         setTwoPanels();
         this.ingredientTableModel = ingredientTableModel;
@@ -72,7 +94,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            entity = new Recipe(null, null, null, new PreparationTime(1, 50), 0, 0, "");
+            entity = new Recipe(null, null, null, new PreparationTime(1, 50), 0, "");
         }
         Date newDate = new Date();
         newDate.setHours(entity.getPreparationTime().hours());
@@ -80,7 +102,10 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         timeSpinner.setValue(newDate);
 
         categoryJComboBox.setSelectedItem(entity.getCategory());
-        addedIngredientsTableModel = entity.getUsedIngredients();
+        addedIngredientsTableModel = new AddedIngredientsTableModel(
+                MainWindow.commonDependencyProvider.getAddedIngredientCrudService().findByRecipeGuid(entity.getGuid()),
+                MainWindow.commonDependencyProvider.getAddedIngredientCrudService()
+        );
         addedIngredientsTable.setModel(addedIngredientsTableModel);
         addedIngredientsTable.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         addedIngredientsTable.setAutoCreateRowSorter(true);

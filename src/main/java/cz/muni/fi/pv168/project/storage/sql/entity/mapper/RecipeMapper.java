@@ -10,9 +10,12 @@ import cz.muni.fi.pv168.project.storage.sql.entity.RecipeEntity;
 public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
 
     private final DataAccessObject<CategoryEntity> categoryDao;
-    private final EntityMapper<CategoryEntity, Category> categoryMapper;
+    private final CategoryMapper categoryMapper;
 
-    public RecipeMapper(DataAccessObject<CategoryEntity> categoryDao, EntityMapper<CategoryEntity, Category> categoryMapper) {
+    public RecipeMapper(
+            DataAccessObject<CategoryEntity> categoryDao,
+            CategoryMapper categoryMapper
+    ) {
         this.categoryDao = categoryDao;
         this.categoryMapper = categoryMapper;
     }
@@ -30,7 +33,6 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 entity.recipeName(),
                 category,
                 entity.preparationTime(),
-                entity.nutritionalValue(),
                 entity.portions(),
                 entity.description());
     }
@@ -47,7 +49,6 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 entity.getRecipeName(),
                 entity.getPreparationTime(),
                 entity.getPortions(),
-                entity.getNutritionalValue(),
                 entity.getDescription());
     }
 
@@ -64,7 +65,6 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 entity.getRecipeName(),
                 entity.getPreparationTime(),
                 entity.getPortions(),
-                entity.getNutritionalValue(),
                 entity.getDescription());
     }
 }

@@ -9,7 +9,6 @@ public record RecipeEntity(
         String recipeName,
         PreparationTime preparationTime,
         int portions,
-        int nutritionalValue,
         String description) {
     public RecipeEntity(
             Long id,
@@ -18,7 +17,6 @@ public record RecipeEntity(
             String recipeName,
             PreparationTime preparationTime,
             int portions,
-            int nutritionalValue,
             String description
     ) {
         this.id = id;
@@ -27,12 +25,11 @@ public record RecipeEntity(
         this.recipeName = recipeName;
         this.preparationTime = preparationTime;
         this.portions = portions;
-        this.nutritionalValue = nutritionalValue;
         this.description = description;
     }
 
     public RecipeEntity(String guid, long categoryId, String recipeName,
-                        PreparationTime preparationTime, int portions, int nutritionalValue, String description) {
-        this(null, guid, categoryId, recipeName, preparationTime, portions, nutritionalValue, description);
+                        PreparationTime preparationTime, int portions, String description) {
+        this(null, guid, categoryId, recipeName, preparationTime, portions, description);
     }
 }

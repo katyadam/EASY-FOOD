@@ -61,12 +61,6 @@ public final class EditAction extends ContextAction {
                 if (optionalRecipe.isPresent()) {
                     Recipe newRecipe = optionalRecipe.get();
                     newRecipe.getCategory().addRecipe(newRecipe);
-                    for (AddedIngredient addedIngredient : newRecipe.getUsedIngredients().getEntities()) {
-                        addedIngredient.getIngredient().addRecipe(newRecipe);
-                        if (addedIngredient.getUnit() instanceof Entity) {
-                            ((Entity) addedIngredient.getUnit()).addRecipe(newRecipe);
-                        }
-                    }
                     recipeTableModel.updateRow(newRecipe);
                 }
                 break;

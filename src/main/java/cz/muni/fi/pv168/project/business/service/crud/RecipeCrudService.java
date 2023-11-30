@@ -44,11 +44,11 @@ public class RecipeCrudService implements CrudService<Recipe> {
         if (validationResult.isValid()) {
             recipeRepository.create(newEntity);
 //            Setting this new recipe to its added ingredients
-            newEntity.getUsedIngredients().getEntities().forEach(
+            newEntity.getAddedIngredients().forEach(
                     addedIngredient -> addedIngredient.setRecipe(newEntity)
             );
 //            Creating added ingredient via their service
-            newEntity.getUsedIngredients().getEntities().forEach(addedIngredientCrudService::create);
+            newEntity.getAddedIngredients().forEach(addedIngredientCrudService::create);
         }
 
         return validationResult;

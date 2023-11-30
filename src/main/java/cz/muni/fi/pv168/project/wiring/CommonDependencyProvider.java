@@ -25,12 +25,12 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final Repository<Category> categories;
     private final Repository<Unit> customUnits;
     private final Repository<Ingredient> ingredients;
-    private final Repository<AddedIngredient> addedIngredients;
+    private final AddedIngredientSqlRepository addedIngredients;
     //    private final DatabaseManager databaseManager;
 //    private final TransactionExecutor transactionExecutor;
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
-    private final CrudService<AddedIngredient> addedIngredientCrudService;
+    private final AddedIngredientCrudService addedIngredientCrudService;
     private final CrudService<Unit> customUnitCrudService;
     private final CrudService<Category> categoryCrudService;
     //private final ImportService importService; //TODO
@@ -40,9 +40,11 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final IngredientValidator ingredientValidator;
     private final CustomUnitValidator customUnitValidator;
     private final AddedIngredientValidator addedIngredientValidator;
+    private static final DatabaseConnection CONNECTION = new DatabaseConnection();
 
     public CommonDependencyProvider() {
-        Connection connection = DatabaseConnection.createConnection();
+
+        Connection connection = CONNECTION.useConnection();
         DatabaseInitializer.init(connection, INIT_SQL);
         recipeValidator = new RecipeValidator();
         categoryValidator = new CategoryValidator();
@@ -77,7 +79,8 @@ public class CommonDependencyProvider implements DependencyProvider {
 
         this.addedIngredients = new AddedIngredientSqlRepository(
                 addedIngredientDao,
-                addedIngredientMapper
+                addedIngredientMapper,
+                recipeDao
         );
         this.recipes = new RecipeSqlRepository(
                 recipeDao,
@@ -162,7 +165,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public CrudService<AddedIngredient> getAddedIngredientCrudService() {
+    public AddedIngredientCrudService getAddedIngredientCrudService() {
         return addedIngredientCrudService;
     }
 

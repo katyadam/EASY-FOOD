@@ -14,16 +14,21 @@ public class DatabaseConnection {
 
     public static final String PROJECT_NAME = "EASY-FOOD";
     private static final String DB_PROPERTIES_STRING = "DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false";
+    private final Connection connection;
 
-    public static Connection createConnection() {
+    public DatabaseConnection() {
         String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
-        Connection connection = null;
+        Connection newCon = null;
 
         try {
-            connection = DriverManager.getConnection(connectionString);
+            newCon = DriverManager.getConnection(connectionString);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        this.connection = newCon;
+    }
+
+    public Connection useConnection() {
         return connection;
     }
 

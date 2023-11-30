@@ -23,8 +23,7 @@ public class ShowDialog {
         recipeString.append("<b>Preparation Time:</b> ").append(recipe.getPreparationTime().hours()).append(" hours ")
                 .append(recipe.getPreparationTime().minutes()).append(" minutes").append("<br>").append("<br>");
         recipeString.append("<b>Ingredients:</b>\n");
-        for (int i = 0; i < recipe.getUsedIngredients().getRowCount(); i++) {
-            AddedIngredient ingredient = recipe.getUsedIngredients().getEntity(i);
+        for (var ingredient : recipe.getAddedIngredients()) {
             recipeString.append("-> ").append(ingredient.getIngredient().getName())
                     .append("  ").append(ingredient.getQuantity()).append(" ").append(ingredient.getUnit()).append("<br>");
         }

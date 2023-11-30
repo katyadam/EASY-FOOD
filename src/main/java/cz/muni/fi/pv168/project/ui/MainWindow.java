@@ -62,7 +62,6 @@ public class MainWindow {
     private JScrollPane categoryScroll;
 
     private final JMenuBar menuBar;
-    private final TestDataGenerator testDataGen = new TestDataGenerator();
 
     //    MODELS
     private final RecipeTableModel recipeTableModel;
@@ -89,11 +88,9 @@ public class MainWindow {
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
     private MultiSelectCombobox<Category> categoriesFilter;
 
-    private final CommonDependencyProvider commonDependencyProvider;
+    public static final CommonDependencyProvider commonDependencyProvider = new CommonDependencyProvider();
 
     public MainWindow() {
-        setDataGeneration();
-        this.commonDependencyProvider = new CommonDependencyProvider();
 
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
@@ -117,6 +114,11 @@ public class MainWindow {
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
         this.frame = createFrame();
+        this.recipesList = recipeCrudService.findAll();
+        this.ingredientList = ingredientCrudService.findAll();
+        this.categoryList = categoryCrudService.findAll();
+        this.unitList = unitService.findAll();
+
         setActiveButtons();
         setTabbedPannels();
         setStatistics();
@@ -161,12 +163,6 @@ public class MainWindow {
         TabbedPanelContext.setTables(this.recipeTable, this.ingredientTable, this.customUnitTable, this.categoryTable);
     }
 
-    private void setDataGeneration() {
-        this.recipesList = testDataGen.getRecipes();
-        this.ingredientList = testDataGen.getIngredients();
-        this.unitList = testDataGen.getCustomUnits();
-        this.categoryList = testDataGen.getCategories();
-    }
 
     private void setTabbedPannels() {
         layout.getTabbedPanels().add("Recipes", createRecipeTab());

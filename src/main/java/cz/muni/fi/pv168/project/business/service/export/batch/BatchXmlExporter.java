@@ -47,7 +47,7 @@ public class BatchXmlExporter implements BatchExporter {
         writeAtributeString(recipe.getPreparationTime().toString(), "PreparationTime", bufferedWriter, tabs + 1);
         writeAtributeString(recipe.getDescription(), "Description", bufferedWriter, tabs + 1);
 
-        exportAddedIngredients(recipe.getUsedIngredients().getEntities(), bufferedWriter, tabs + 1);
+//        exportAddedIngredients(recipe.getUsedIngredients().getEntities(), bufferedWriter, tabs + 1);
         writeEnd("Recipe", bufferedWriter, tabs);
     }
 

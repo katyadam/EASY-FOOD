@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.Unit;
@@ -9,6 +10,7 @@ import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Optional;
 
 
 public class IngredientDialog extends EntityDialog<Ingredient> {
@@ -49,7 +51,10 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
         int result = 0;
         List<Recipe> recipes = recipeData.getEntities();
         for (Recipe recipe : recipes) {
-            if (recipe.getUsedIngredients().contains(entity)) {
+            Optional<AddedIngredient> addedIngredient = recipe.getAddedIngredients().stream()
+                    .filter(ai -> ai.getIngredient().getGuid().equals(entity.getGuid()))
+                    .findFirst();
+            if (addedIngredient.isPresent()) {
                 result++;
             }
         }

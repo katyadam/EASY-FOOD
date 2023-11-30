@@ -148,7 +148,6 @@ public final class TestDataGenerator {
                 recipeName,
                 categories.get(random.nextInt(categories.size())),
                 preparationTime,
-                0,
                 portions,
                 "desc"
         );
