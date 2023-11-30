@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.*;
 
@@ -103,7 +102,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
         categoryJComboBox.setSelectedItem(entity.getCategory());
         addedIngredientsTableModel = new AddedIngredientsTableModel(
-                MainWindow.commonDependencyProvider.getAddedIngredientCrudService().findByRecipeGuid(entity.getGuid()),
+                entity.getGuid(),
                 MainWindow.commonDependencyProvider.getAddedIngredientCrudService()
         );
         addedIngredientsTable.setModel(addedIngredientsTableModel);

@@ -9,9 +9,9 @@ import java.util.List;
 
 public abstract class AbstractEntityTableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
 
-    private List<T> entities;
+    public List<T> entities;
     private final List<Column<T, ?>> columns;
-    private final CrudService<T> crudService;
+    public final CrudService<T> crudService;
 
     public AbstractEntityTableModel(List<Column<T, ?>> columns, List<T> entities, CrudService<T> crudService) {
         this.columns = columns;

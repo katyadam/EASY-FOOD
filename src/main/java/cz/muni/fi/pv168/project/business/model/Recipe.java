@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import cz.muni.fi.pv168.project.ui.MainWindow;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,6 @@ public class Recipe extends Entity {
     private int portions;
     private Category category;
     private String description = "No recipe description";
-    private int nutritionalValue = 0;
 
     private List<AddedIngredient> addedIngredients = new ArrayList<>();
 
@@ -40,17 +41,6 @@ public class Recipe extends Entity {
         super.name = recipeName;
     }
 
-    public int getNutritionalValue() {
-        return nutritionalValue;
-    }
-
-    public void decrementNutritionalValue(int value) {
-        nutritionalValue -= value;
-    }
-
-    public void incrementNutritionalValue(int value) {
-        nutritionalValue += value;
-    }
 
     public void setPreparationTime(PreparationTime preparationTime) {
         this.preparationTime = preparationTime;
@@ -108,29 +98,20 @@ public class Recipe extends Entity {
     }
 
     public int getRecipeNutritionalValue() {
-        return nutritionalValue;
+        int val = 0;
+        for(var ingr : MainWindow.commonDependencyProvider.getAddedIngredientCrudService().findByRecipeGuid(this.getGuid())) {
+            val += ingr.getIngredient().getNutritionalValue();
+        }
+        return val;
     }
 
 
     public void addIngredient(AddedIngredient addedIngredient) {
-        nutritionalValue += addedIngredient.getIngredient().getNutritionalValue();
         addedIngredients.add(addedIngredient);
     }
 
     public void removeIngredient(AddedIngredient addedIngredient) {
-        nutritionalValue -= addedIngredient.getIngredient().getNutritionalValue();
         addedIngredients.remove(addedIngredient);
-    }
-
-    public void updateNutritionalValue() {
-        nutritionalValue = 0;
-        addedIngredients.forEach(
-                ai -> {
-                    if (ai.getIngredient() != null) {
-                        nutritionalValue += ai.getIngredient().getNutritionalValue();
-                    }
-                }
-        );
     }
 
     public List<AddedIngredient> getAddedIngredients() {

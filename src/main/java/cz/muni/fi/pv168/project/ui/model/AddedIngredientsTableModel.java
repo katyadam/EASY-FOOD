@@ -11,15 +11,17 @@ import java.util.List;
 
 public class AddedIngredientsTableModel extends AbstractEntityTableModel<AddedIngredient> {
 
+    private final AddedIngredientCrudService addedIngredientCrudService;
+
     public AddedIngredientsTableModel(
-            List<AddedIngredient> addedIngredients,
-            AddedIngredientCrudService addedIngredientCrudService
-    ) {
+            String recipeGuid,
+            AddedIngredientCrudService addedIngredientCrudService) {
         super(List.of(
                 Column.readonly("Ingredient", Ingredient.class, AddedIngredient::getIngredient),
                 Column.readonly("amount", double.class, AddedIngredient::getQuantity),
                 Column.readonly("Unit", Unit.class, AddedIngredient::getUnit)
-        ), addedIngredients, addedIngredientCrudService);
+        ), addedIngredientCrudService.findByRecipeGuid(recipeGuid), MainWindow.commonDependencyProvider.getAddedIngredientCrudService());
+        this.addedIngredientCrudService = addedIngredientCrudService;
     }
 
     @Override
@@ -28,5 +30,13 @@ public class AddedIngredientsTableModel extends AbstractEntityTableModel<AddedIn
         fireTableRowsInserted(super.getEntities().size() - 1, super.getEntities().size() - 1);
     }
 
-
+    @Override
+    public void deleteRow(int rowIndex) {
+        AddedIngredient entity = getEntity(rowIndex);
+        entities.remove(rowIndex);
+        if (entity.getGuid() != null) {
+            crudService.deleteByGuid(entity.getGuid());
+        }
+        fireTableRowsDeleted(rowIndex, rowIndex);
+    }
 }

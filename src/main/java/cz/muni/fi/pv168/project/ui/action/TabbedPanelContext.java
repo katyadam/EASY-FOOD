@@ -44,7 +44,6 @@ public class TabbedPanelContext {
         switch (activeTab) {
             case 0:
                 RecipeTableModel recipeTableModel = (RecipeTableModel) recipeTable.getModel();
-                recipeTableModel.getEntities().forEach(Recipe::updateNutritionalValue);
                 recipeTableModel.refresh();
             case 1:
                 IngredientTableModel ingredientTableModel = (IngredientTableModel) ingredientTable.getModel();
