@@ -161,7 +161,7 @@ public final class TestDataGenerator {
         String ingredientName = selectRandom(INGREDIENT_NAMES);
         int nutritionalValue = random.nextInt(10000);
         Unit unit = selectRandom(units);
-        Ingredient ingredient = new Ingredient(ingredientName, nutritionalValue, unit);
+        Ingredient ingredient = new Ingredient(ingredientName, nutritionalValue);
         ingredient.setGuid(uuidProvider.newGuid());
         return ingredient;
     }

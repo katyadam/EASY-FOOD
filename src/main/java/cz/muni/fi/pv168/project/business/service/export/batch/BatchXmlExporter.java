@@ -79,7 +79,7 @@ public class BatchXmlExporter implements BatchExporter {
     private void exportIngredient(Ingredient ingredient, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Ingredient", bufferedWriter, tabs);
         writeAtributeString(ingredient.getName(), "IngredientName", bufferedWriter, tabs + 1);
-        writeAtributeString(ingredient.getUnitAbbreviation(), "IngredientUnit", bufferedWriter, tabs + 1);
+//        writeAtributeString(ingredient.getUnitAbbreviation(), "IngredientUnit", bufferedWriter, tabs + 1);
         writeAtributeInt(ingredient.getNutritionalValue(), "NutritionalValue", bufferedWriter, tabs + 1);
         writeEnd("Ingredient", bufferedWriter, tabs);
     }

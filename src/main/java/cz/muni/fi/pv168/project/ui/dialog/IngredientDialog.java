@@ -23,8 +23,6 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
 
     private final CrudService<Unit> unitCrudService;
 
-    // TODO insert array of base units here
-    private final JComboBox<Unit> ingredientJComboBox;
     private final RecipeTableModel recipeData;
 
     public IngredientDialog(
@@ -36,12 +34,11 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
         super(ingredient, ingredientTableModel.getEntities());
         this.unitCrudService = unitCrudService;
         this.recipeData = recipeTableModel;
-        this.ingredientJComboBox = new JComboBox<>(unitCrudService.findAll().toArray(new Unit[0]));
         if (ingredient != null) {
             statistic = countIngredientUsage();
             setFields();
         } else {
-            entity = new Ingredient(null, 0, null); //BaseUnits.getBaseUnitList().get(0)
+            entity = new Ingredient(null, 0); //BaseUnits.getBaseUnitList().get(0)
         }
         addFields();
 
@@ -63,7 +60,6 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
 
     private void addFields() {
         add("Name", nameField);
-        add("Measurement unit", ingredientJComboBox);
         add("Nutritional value [KCAL]", nutritionalValueSpinner);
         add("Ingredient used in " + statistic + " recipes");
     }
@@ -71,14 +67,12 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
     private void setFields() {
         nameField.setText(entity.getName());
         nutritionalValueSpinner.setModel(new SpinnerNumberModel(entity.getNutritionalValue(), 0, 50000, 20));
-        ingredientJComboBox.setSelectedItem(entity.getUnitType());
     }
 
     @Override
     Ingredient getEntity() {
         entity.setName(nameField.getText());
         entity.setNutritionalValue((int) nutritionalValueSpinner.getValue());
-        entity.setUnitType((Unit) ingredientJComboBox.getSelectedItem());
         return entity;
     }
 }

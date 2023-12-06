@@ -28,11 +28,7 @@ public class IngredientMapper implements EntityMapper<IngredientEntity, Ingredie
         return new Ingredient(
                 dbIngredient.guid(),
                 dbIngredient.ingredientName(),
-                dbIngredient.nutritionalValue(),
-                unitDao.findById(dbIngredient.unitId())
-                        .map(unitMapper::mapToBusiness).orElseThrow(
-                        () -> new DataStorageException("Custom unit with id: " + dbIngredient.unitId() + "was not found!")
-                )
+                dbIngredient.nutritionalValue()
         );
     }
 
@@ -47,17 +43,11 @@ public class IngredientMapper implements EntityMapper<IngredientEntity, Ingredie
     }
 
     private IngredientEntity getIngredientEntity(Ingredient entity, Long dbId) {
-        var customUnitEntity = unitDao
-                .findByGuid(entity.getUnitType().getGuid())
-                .orElseThrow(
-                        () -> new DataStorageException("Unit with guid: " + entity.getUnitType().getGuid() + "not found!")
-                );
         return new IngredientEntity(
                 dbId,
                 entity.getGuid(),
                 entity.getName(),
-                entity.getNutritionalValue(),
-                customUnitEntity.id()
+                entity.getNutritionalValue()
         );
     }
 }

@@ -25,10 +25,9 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 INSERT INTO Ingredient(
                     guid,
                     ingredientName,
-                    nutritionalValue,
-                    unitId
+                    nutritionalValue
                 )
-                VALUES (?, ?, ?, ?);
+                VALUES (?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -36,7 +35,6 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
             statement.setString(1, newIngredient.guid());
             statement.setString(2, newIngredient.ingredientName());
             statement.setInt(3, newIngredient.nutritionalValue());
-            statement.setLong(4, newIngredient.unitId());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -64,8 +62,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 SELECT id,
                     guid,
                     ingredientName,
-                    nutritionalValue,
-                    unitId
+                    nutritionalValue
                 FROM Ingredient
                 """;
         try (
@@ -92,8 +89,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 SELECT id,
                     guid,
                     ingredientName,
-                    nutritionalValue,
-                    unitId
+                    nutritionalValue
                 FROM Ingredient
                 WHERE id = ?
                 """;
@@ -119,8 +115,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 SELECT id,
                     guid,
                     ingredientName,
-                    nutritionalValue,
-                    unitId
+                    nutritionalValue
                 FROM Ingredient
                 WHERE guid = ?
                 """;
@@ -146,7 +141,6 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 UPDATE Ingredient
                 SET ingredientName = ?,
                     nutritionalValue = ?,
-                    unitId = ?
                 WHERE id = ?
                 """;
         try (
@@ -154,8 +148,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
         ) {
             statement.setString(1, entity.ingredientName());
             statement.setInt(2, entity.nutritionalValue());
-            statement.setLong(3, entity.unitId());
-            statement.setLong(4, entity.id());
+            statement.setLong(3, entity.id());
             statement.executeUpdate();
 
             int rowsUpdated = statement.executeUpdate();
@@ -229,10 +222,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("ingredientName"),
-                resultSet.getInt("nutritionalValue"),
-                // TODO same as color // should be unit id // units will be stored in db
-                // One unit has multiple Ingredients -> 1:N
-                resultSet.getLong("unitId")
+                resultSet.getInt("nutritionalValue")
         );
     }
 }

@@ -9,9 +9,9 @@ public class IngredientValidator implements Validator<Ingredient> {
         if (!StringValidator.validateAlphaNumWhiteSapce(model.getName()).isValid()) {
             return ValidationResult.failed();
         }
-        if (!StringValidator.validateAlphaNum(model.getUnitType().getAbbreviation()).isValid()) {
-            return ValidationResult.failed();
-        }
+//        if (!StringValidator.validateAlphaNum(model.getUnitType().getAbbreviation()).isValid()) {
+//            return ValidationResult.failed();
+//        }
 //        has to be validated before making ingredient
 //        if (!StringValidator.validateNum(model.getNutritionalValue()).isValid()) {
 //            return ValidationResult.failed();

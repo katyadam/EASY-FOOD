@@ -82,7 +82,7 @@ public class ImporterHandler extends DefaultHandler {
             case "BaseAmountNumber" -> activeUnit.setAmount(Double.parseDouble(elementValue.toString()));
 //            case "BaseUnitAbbr" -> activeUnit.setBaseUnit(parseUnit(elementValue.toString()));
             case "IngredientName" -> activeIngredient.setName(elementValue.toString());
-            case "IngredientUnit" -> activeIngredient.setUnitType(parseUnit(elementValue.toString()));
+//            case "IngredientUnit" -> activeIngredient.setUnitType(parseUnit(elementValue.toString()));
             case "NutritionalValue" -> activeIngredient.setNutritionalValue(Integer.parseInt(elementValue.toString()));
             case "RecipeName" -> activeRecipe.setName(elementValue.toString());
             case "RecipeCategory" -> activeRecipe.setCategory(parseCategory(elementValue.toString()));

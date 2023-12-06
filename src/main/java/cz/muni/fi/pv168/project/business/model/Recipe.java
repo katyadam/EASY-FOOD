@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import java.awt.*;
@@ -11,7 +12,9 @@ public class Recipe extends Entity {
     private int portions;
     private Category category;
     private String description = "No recipe description";
-
+    private final AddedIngredientCrudService addedIngredientCrudService = MainWindow
+            .commonDependencyProvider
+            .getAddedIngredientCrudService();
     private List<AddedIngredient> addedIngredients = new ArrayList<>();
 
     public Recipe() {
@@ -99,8 +102,8 @@ public class Recipe extends Entity {
 
     public int getRecipeNutritionalValue() {
         int val = 0;
-        for(var ingr : MainWindow.commonDependencyProvider.getAddedIngredientCrudService().findByRecipeGuid(this.getGuid())) {
-            val += ingr.getIngredient().getNutritionalValue();
+        for (var ingr : addedIngredientCrudService.findByRecipeGuid(this.getGuid())) {
+            val += (int) (ingr.getIngredient().getNutritionalValue() * ingr.getQuantity());
         }
         return val;
     }

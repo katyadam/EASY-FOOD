@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS "Ingredient"
     `guid`             VARCHAR      NOT NULL UNIQUE,
     `ingredientName`   VARCHAR(150) NOT NULL,
     `nutritionalValue` INT          NOT NULL,
-    `unitId`           BIGINT REFERENCES "Unit" (`id`) ON DELETE CASCADE,
     `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
