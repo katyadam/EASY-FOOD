@@ -26,24 +26,22 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 INSERT INTO Recipe(
                     guid,
                     recipeName,
-                    prepHours,
                     prepMinutes,
                     portions,
                     categoryId,
                     description
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, newRecipe.guid());
             statement.setString(2, newRecipe.recipeName());
-            statement.setInt(3, newRecipe.preparationTime().hours());
-            statement.setInt(4, newRecipe.preparationTime().minutes());
-            statement.setInt(5, newRecipe.portions());
-            statement.setLong(6, newRecipe.categoryId());
-            statement.setString(7, newRecipe.description());
+            statement.setInt(3, newRecipe.prepMinutes());
+            statement.setInt(4, newRecipe.portions());
+            statement.setLong(5, newRecipe.categoryId());
+            statement.setString(6, newRecipe.description());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -71,7 +69,6 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 SELECT id,
                     guid,
                     recipeName,
-                    prepHours,
                     prepMinutes,
                     portions,
                     categoryId,
@@ -102,7 +99,6 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 SELECT id,
                     guid,
                     recipeName,
-                    prepHours,
                     prepMinutes,
                     portions,
                     categoryId,
@@ -132,7 +128,6 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 SELECT id,
                     guid,
                     recipeName,
-                    prepHours,
                     prepMinutes,
                     portions,
                     categoryId,
@@ -161,7 +156,6 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
         var sql = """
                 UPDATE Recipe
                 SET recipeName = ?,
-                    prepHours = ?,
                     prepMinutes = ?,
                     portions = ?,
                     categoryId = ?,
@@ -172,12 +166,11 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, entity.recipeName());
-            statement.setInt(2, entity.preparationTime().hours());
-            statement.setInt(3, entity.preparationTime().minutes());
-            statement.setInt(4, entity.portions());
-            statement.setLong(5, entity.categoryId());
-            statement.setString(6, entity.description());
-            statement.setLong(7, entity.id());
+            statement.setInt(2, entity.prepMinutes());
+            statement.setInt(3, entity.portions());
+            statement.setLong(4, entity.categoryId());
+            statement.setString(5, entity.description());
+            statement.setLong(6, entity.id());
             statement.executeUpdate();
 
             int rowsUpdated = statement.executeUpdate();
@@ -251,7 +244,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 resultSet.getString("guid"),
                 resultSet.getLong("categoryId"),
                 resultSet.getString("recipeName"),
-                new PreparationTime(resultSet.getInt("prepHours"), resultSet.getInt("prepMinutes")),
+                resultSet.getInt("prepMinutes"),
                 resultSet.getInt("portions"),
                 resultSet.getString("description")
         );

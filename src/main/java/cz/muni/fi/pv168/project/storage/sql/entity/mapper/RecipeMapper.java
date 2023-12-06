@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
 
-import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
@@ -32,7 +31,7 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 entity.guid(),
                 entity.recipeName(),
                 category,
-                entity.preparationTime(),
+                entity.prepMinutes(),
                 entity.portions(),
                 entity.description());
     }
@@ -47,7 +46,7 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 entity.getGuid(),
                 categoryEntity.id(),
                 entity.getRecipeName(),
-                entity.getPreparationTime(),
+                entity.getPrepMinutes(),
                 entity.getPortions(),
                 entity.getDescription());
     }
@@ -63,7 +62,7 @@ public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
                 entity.getGuid(),
                 categoryEntity.id(),
                 entity.getRecipeName(),
-                entity.getPreparationTime(),
+                entity.getPrepMinutes(),
                 entity.getPortions(),
                 entity.getDescription());
     }

@@ -9,8 +9,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.*;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
 
@@ -26,7 +28,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JTextField categoryNameField = new JTextField();
     private final JComboBox<Category> categoryJComboBox = new JComboBox<>();
     private final JColorChooser categoryColor = new JColorChooser();
-    private final JSpinner timeSpinner = new JSpinner(new SpinnerDateModel());
+    private final JSpinner timeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000000, 1));
     private final JComboBox<Ingredient> ingredients;
     private final AddedIngredientsTableModel addedIngredientsTableModel;
     private final JComboBox<Unit> units;
@@ -88,17 +90,13 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         categories.add(0, null);
         categoryJComboBox.setModel(new DefaultComboBoxModel<>(categories.toArray(new Category[0])));
 
-        timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm"));
         removeIngredient.setEnabled(false);
         if (recipe != null) {
             setValues();
         } else {
-            entity = new Recipe(null, null, null, new PreparationTime(1, 50), 0, "");
+            entity = new Recipe(null, null, null, 30, 0, "");
         }
-        Date newDate = new Date();
-        newDate.setHours(entity.getPreparationTime().hours());
-        newDate.setMinutes(entity.getPreparationTime().minutes());
-        timeSpinner.setValue(newDate);
+        timeSpinner.setValue(entity.getPrepMinutes());
 
         categoryJComboBox.setSelectedItem(entity.getCategory());
         addedIngredientsTableModel = new AddedIngredientsTableModel(
@@ -130,7 +128,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         addLeft("Recipe Name:", recipeNameField);
         addLeft("Category:", categoryJComboBox);
         addLeft("Portions", recipePortionsField);
-        addLeft("Preparation time: [HH:SS]", timeSpinner);
+        addLeft("Preparation time in minutes: ", timeSpinner);
         addLeft(ingredients, amount, units, addIngredient, removeIngredient);
         addLeft(new JScrollPane(addedIngredientsTable), "span 5, grow");
         addRight("Description", new JScrollPane(recipeDescriptionTextField), "wmin 250lp, hmin 580lp, grow");
@@ -141,10 +139,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         entity.setName(recipeNameField.getText());
         entity.setCategory((Category) categoryJComboBox.getSelectedItem());
         entity.setPortions((int) recipePortionsField.getValue());
-        entity.setPreparationTime(new PreparationTime(
-                ((Date) timeSpinner.getValue()).getHours(),
-                ((Date) timeSpinner.getValue()).getMinutes()
-        ));
+        entity.setPrepMinutes((int) timeSpinner.getValue());
         entity.setDescription(recipeDescriptionTextField.getText());
         return entity;
     }

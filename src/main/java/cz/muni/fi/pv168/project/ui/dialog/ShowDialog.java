@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 
@@ -21,9 +20,8 @@ public class ShowDialog {
         recipeString.append("<b>Category:</b> ").append(recipe.getCategory() != null ? recipe.getCategory().getName() : "No category").append("<br>");
         recipeString.append("<b>Nutritional Value [KCAL]:</b> ").append(recipe.getRecipeNutritionalValue()).append("<br>");
         recipeString.append("<b>Portions:</b> ").append(recipe.getPortions()).append("<br>");
-        recipeString.append("<b>Preparation Time:</b> ").append(recipe.getPreparationTime().hours()).append(" hours ")
-                .append(recipe.getPreparationTime().minutes()).append(" minutes").append("<br>").append("<br>");
-        recipeString.append("<b>Ingredients:</b>\n");
+        recipeString.append("<b>Preparation Time:</b> ").append(recipe.getPrepMinutes()).append(" minutes").append("<br>").append("<br>");
+        recipeString.append("<b>Ingredients:</b> <br>");
         for (var ingredient : MainWindow.commonDependencyProvider.getAddedIngredientCrudService().findByRecipeGuid(recipe.getGuid())) {
             recipeString.append("-> ").append(ingredient.getIngredient().getName())
                     .append("  ").append(ingredient.getQuantity()).append(" ").append(ingredient.getUnit()).append("<br>");

@@ -57,7 +57,6 @@ CREATE TABLE IF NOT EXISTS "Recipe"
     `id`               BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     `guid`             VARCHAR      NOT NULL UNIQUE,
     `recipeName`       VARCHAR(150) NOT NULL,
-    `prepHours`        INT          NOT NULL,
     `prepMinutes`      INT          NOT NULL,
     `portions`         INT          NOT NULL,
     `categoryId`       BIGINT REFERENCES "Category" (`id`) ON DELETE CASCADE,

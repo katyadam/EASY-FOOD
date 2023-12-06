@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe extends Entity {
-    private PreparationTime preparationTime;
     private int portions;
     private Category category;
     private String description = "No recipe description";
@@ -17,6 +16,8 @@ public class Recipe extends Entity {
             .getAddedIngredientCrudService();
     private List<AddedIngredient> addedIngredients = new ArrayList<>();
 
+    private int prepMinutes;
+
     public Recipe() {
     }
 
@@ -24,15 +25,15 @@ public class Recipe extends Entity {
             String guid,
             String recipeName,
             Category category,
-            PreparationTime preparationTime,
+            int prepMinutes,
             int portions,
             String description
     ) {
         super(guid);
         this.name = recipeName;
-        this.preparationTime = preparationTime;
-        this.portions = portions;
         this.category = category;
+        this.prepMinutes = prepMinutes;
+        this.portions = portions;
         this.description = description;
     }
 
@@ -44,10 +45,6 @@ public class Recipe extends Entity {
         super.name = recipeName;
     }
 
-
-    public void setPreparationTime(PreparationTime preparationTime) {
-        this.preparationTime = preparationTime;
-    }
 
     public void setPortions(int portions) {
         this.portions = portions;
@@ -66,11 +63,6 @@ public class Recipe extends Entity {
         return description;
     }
 
-    public PreparationTime getPreparationTime() {
-        int hours = preparationTime.hours();
-        int minutes = preparationTime.minutes();
-        return new PreparationTime(hours, minutes);
-    }
 
     public void destroy() {
         if (category != null) {
@@ -119,6 +111,14 @@ public class Recipe extends Entity {
 
     public List<AddedIngredient> getAddedIngredients() {
         return addedIngredients;
+    }
+
+    public int getPrepMinutes() {
+        return prepMinutes;
+    }
+
+    public void setPrepMinutes(int prepMinutes) {
+        this.prepMinutes = prepMinutes;
     }
 
     @Override

@@ -1,15 +1,8 @@
 package cz.muni.fi.pv168.project.business.service.export.importer;
 
-import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.model.BaseUnits;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Unit;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.PreparationTime;
-import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.service.export.DataManipulationException;
 import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
-import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -87,7 +80,7 @@ public class ImporterHandler extends DefaultHandler {
             case "RecipeName" -> activeRecipe.setName(elementValue.toString());
             case "RecipeCategory" -> activeRecipe.setCategory(parseCategory(elementValue.toString()));
             case "Portions" -> activeRecipe.setPortions(Integer.parseInt(elementValue.toString()));
-            case "PreparationTime" -> activeRecipe.setPreparationTime(parsePreparationTime(elementValue.toString()));
+//            case "PreparationTime" -> activeRecipe.setPreparationTime(parsePreparationTime(elementValue.toString()));
             case "Description" -> activeRecipe.setDescription(elementValue.toString());
             case "AddedIngredientName" -> activeAddedIngredient.setIngredient(parseIngredient(elementValue.toString()));
             case "Quantity" -> activeAddedIngredient.setQuantity(Double.parseDouble(elementValue.toString()));

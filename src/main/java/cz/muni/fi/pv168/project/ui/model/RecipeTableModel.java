@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.ui.model;
 
 
-import cz.muni.fi.pv168.project.business.model.PreparationTime;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 
@@ -21,9 +20,9 @@ public class RecipeTableModel extends AbstractEntityTableModel<Recipe> {
                 Column.editable("Portions", int.class, Recipe::getPortions, Recipe::setPortions),
                 Column.editable(
                         "Time to prepare",
-                        PreparationTime.class,
-                        Recipe::getPreparationTime,
-                        Recipe::setPreparationTime
+                        Integer.class,
+                        Recipe::getPrepMinutes,
+                        Recipe::setPrepMinutes
                 )
         ), recipeCrudService.findAll(), recipeCrudService);
         this.recipeCrudService = recipeCrudService;

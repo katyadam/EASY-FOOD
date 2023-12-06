@@ -1,10 +1,6 @@
 package cz.muni.fi.pv168.project.business.service.export.batch;
 
-import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Unit;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.service.export.DataManipulationException;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
 
@@ -44,7 +40,7 @@ public class BatchXmlExporter implements BatchExporter {
         writeAtributeInt(recipe.getRecipeNutritionalValue(), "RecipeNutritionalValue", bufferedWriter, tabs + 1);
         writeAtributeString(recipe.getCategoryName(), "RecipeCategory", bufferedWriter, tabs + 1);
         writeAtributeInt(recipe.getPortions(), "Portions", bufferedWriter, tabs + 1);
-        writeAtributeString(recipe.getPreparationTime().toString(), "PreparationTime", bufferedWriter, tabs + 1);
+//        writeAtributeString(recipe.getPreparationTime().toString(), "PreparationTime", bufferedWriter, tabs + 1);
         writeAtributeString(recipe.getDescription(), "Description", bufferedWriter, tabs + 1);
 
 //        exportAddedIngredients(recipe.getUsedIngredients().getEntities(), bufferedWriter, tabs + 1);

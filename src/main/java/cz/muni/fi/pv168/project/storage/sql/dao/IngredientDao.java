@@ -140,7 +140,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
         var sql = """
                 UPDATE Ingredient
                 SET ingredientName = ?,
-                    nutritionalValue = ?,
+                    nutritionalValue = ?
                 WHERE id = ?
                 """;
         try (

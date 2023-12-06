@@ -1,13 +1,11 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
-import cz.muni.fi.pv168.project.business.model.PreparationTime;
-
 public record RecipeEntity(
         Long id,
         String guid,
         long categoryId,
         String recipeName,
-        PreparationTime preparationTime,
+        int prepMinutes,
         int portions,
         String description) {
     public RecipeEntity(
@@ -15,7 +13,7 @@ public record RecipeEntity(
             String guid,
             long categoryId,
             String recipeName,
-            PreparationTime preparationTime,
+            int prepMinutes,
             int portions,
             String description
     ) {
@@ -23,13 +21,13 @@ public record RecipeEntity(
         this.guid = guid;
         this.categoryId = categoryId;
         this.recipeName = recipeName;
-        this.preparationTime = preparationTime;
+        this.prepMinutes = prepMinutes;
         this.portions = portions;
         this.description = description;
     }
 
     public RecipeEntity(String guid, long categoryId, String recipeName,
-                        PreparationTime preparationTime, int portions, String description) {
-        this(null, guid, categoryId, recipeName, preparationTime, portions, description);
+                        int prepMinutes, int portions, String description) {
+        this(null, guid, categoryId, recipeName, prepMinutes, portions, description);
     }
 }

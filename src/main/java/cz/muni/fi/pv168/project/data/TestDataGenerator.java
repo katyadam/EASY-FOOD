@@ -5,7 +5,6 @@ import cz.muni.fi.pv168.project.business.model.*;
 
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -141,13 +140,12 @@ public final class TestDataGenerator {
     public Recipe createTestRecipe() {
 
         String recipeName = selectRandom(RECIPE_NAMES);
-        PreparationTime preparationTime = new PreparationTime(LocalTime.now().getHour(), LocalTime.now().getMinute());
         int portions = random.nextInt(10);
         Recipe recipe = new Recipe(
                 uuidProvider.newGuid(),
                 recipeName,
                 categories.get(random.nextInt(categories.size())),
-                preparationTime,
+                20,
                 portions,
                 "desc"
         );
@@ -160,7 +158,6 @@ public final class TestDataGenerator {
     private Ingredient createTestIngredient() {
         String ingredientName = selectRandom(INGREDIENT_NAMES);
         int nutritionalValue = random.nextInt(10000);
-        Unit unit = selectRandom(units);
         Ingredient ingredient = new Ingredient(ingredientName, nutritionalValue);
         ingredient.setGuid(uuidProvider.newGuid());
         return ingredient;
