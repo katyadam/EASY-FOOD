@@ -197,6 +197,7 @@ public class MainWindow {
             ButtonLocker.reload(actions, TabbedPanelContext.getActiveTable());
             StatisticsUpdater.reload();
             ingredientsFilter.reload(ingredientCrudService.findAll());
+            categoriesFilter.reload(categoryCrudService.findAll());
         }
     }
 

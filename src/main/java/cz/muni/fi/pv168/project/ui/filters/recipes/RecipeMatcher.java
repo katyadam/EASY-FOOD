@@ -34,22 +34,22 @@ public class RecipeMatcher extends EntityMatcher<Recipe> {
             Optional<AddedIngredient> addedIngredient = recipe.getAddedIngredients().stream()
                     .filter(ai -> ai.getIngredient().getGuid().equals(ingredient.getGuid()))
                     .findFirst();
-            if (addedIngredient.isEmpty()) {
-                return false;
+            if (addedIngredient.isPresent()) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private boolean categoryMatch(Recipe recipe) {
-        if (recipeFilterAttributes.category().isEmpty()) { // TODO: zmenit na null check!!!
+        if (recipeFilterAttributes.category().isEmpty()) {
             return true;
         }
         if (recipe.getCategory() == null) {
             return false;
         }
         for (Category category : recipeFilterAttributes.category()) {
-            if (recipe.getCategory() == category) {
+            if (recipe.getCategory().getGuid().equals(category.getGuid())) {
                 return true;
             }
         }

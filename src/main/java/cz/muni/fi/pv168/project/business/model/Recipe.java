@@ -94,7 +94,7 @@ public class Recipe extends Entity {
 
     public int getRecipeNutritionalValue() {
         int val = 0;
-        for (var ingr : addedIngredientCrudService.findByRecipeGuid(this.getGuid())) {
+        for (var ingr : getAddedIngredients()) {
             val += (int) (ingr.getIngredient().getNutritionalValue() * ingr.getQuantity());
         }
         return val;
@@ -110,6 +110,9 @@ public class Recipe extends Entity {
     }
 
     public List<AddedIngredient> getAddedIngredients() {
+        if (addedIngredients.isEmpty()) {
+            addedIngredients = addedIngredientCrudService.findByRecipeGuid(this.getGuid());
+        }
         return addedIngredients;
     }
 
