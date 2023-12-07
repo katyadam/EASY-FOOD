@@ -1,9 +1,10 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.mport;
 
-import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.UnitService;
-import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.GenericImportService;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchXmlImporter;
 
@@ -16,19 +17,22 @@ import java.util.List;
 
 public class ImportAction extends AbstractAction {
 
-    protected final CategoryCrudService categoryCrudService;
-    protected final UnitService unitService;
-    protected final IngredientCrudService ingredientCrudService;
-    protected final RecipeCrudService recipeCrudService;
+    protected final CrudService<Category> categoryCrudService;
+    protected final CrudService<Unit> unitService;
+    protected final CrudService<Ingredient> ingredientCrudService;
+    protected final CrudService<Recipe> recipeCrudService;
     private final Runnable callback;
+
+    private final ImportType importType;
 
     public ImportAction(
             String name,
-            CategoryCrudService categoryCrudService,
-            UnitService unitService,
-            IngredientCrudService ingredientCrudService,
-            RecipeCrudService recipeCrudService,
-            Runnable callback
+            CrudService<Category> categoryCrudService,
+            CrudService<Unit> unitService,
+            CrudService<Ingredient> ingredientCrudService,
+            CrudService<Recipe> recipeCrudService,
+            Runnable callback,
+            ImportType importType
     ) {
         super(name);
         this.categoryCrudService = categoryCrudService;
@@ -36,9 +40,17 @@ public class ImportAction extends AbstractAction {
         this.ingredientCrudService = ingredientCrudService;
         this.recipeCrudService = recipeCrudService;
         this.callback = callback;
-        putValue(SHORT_DESCRIPTION, "Imports from an XML file");
-        putValue(MNEMONIC_KEY, KeyEvent.VK_I);
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl I"));
+        this.importType = importType;
+
+        if (importType == ImportType.OVERWRITE) {
+            putValue(SHORT_DESCRIPTION, "Overwrites all data from an XML file");
+            putValue(MNEMONIC_KEY, KeyEvent.VK_I);
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl O"));
+        } else {
+            putValue(SHORT_DESCRIPTION, "Appends all data from an XML file");
+            putValue(MNEMONIC_KEY, KeyEvent.VK_A);
+            putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl A"));
+        }
     }
 
     @Override
@@ -58,7 +70,7 @@ public class ImportAction extends AbstractAction {
                     categoryCrudService,
                     List.of(xmlImporter)
             );
-            genericImportService.importData(selectedFile.getAbsolutePath());
+            genericImportService.importData(selectedFile.getAbsolutePath(), importType);
             callback.run();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 

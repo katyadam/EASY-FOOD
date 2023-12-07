@@ -5,6 +5,8 @@ package cz.muni.fi.pv168.project.business.service.export;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchOperationException;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
 
+import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+
 import java.util.Collection;
 
 /**
@@ -19,7 +21,7 @@ public interface ImportService {
      *
      * @throws BatchOperationException if the import cannot be done
      */
-    void importData(String filePath);
+    void importData(String filePath, ImportType importType);
 
     /**
      * Gets all available formats for import.

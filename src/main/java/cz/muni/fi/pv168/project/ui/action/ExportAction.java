@@ -1,9 +1,10 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.UnitService;
-import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
 
@@ -14,12 +15,18 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 
 public class ExportAction extends AbstractAction {
-    protected final CategoryCrudService categoryCrudService;
-    protected final UnitService unitService;
-    protected final IngredientCrudService ingredientCrudService;
-    protected final RecipeCrudService recipeCrudService;
+    protected final CrudService<Category> categoryCrudService;
+    protected final CrudService<Unit> unitService;
+    protected final CrudService<Ingredient> ingredientCrudService;
+    protected final CrudService<Recipe> recipeCrudService;
 
-    public ExportAction(String name, CategoryCrudService categoryCrudService, UnitService unitService, IngredientCrudService ingredientCrudService, RecipeCrudService recipeCrudService) {
+    public ExportAction(
+            String name,
+            CrudService<Category> categoryCrudService,
+            CrudService<Unit> unitService,
+            CrudService<Ingredient> ingredientCrudService,
+            CrudService<Recipe> recipeCrudService
+    ) {
         super(name);
         this.categoryCrudService = categoryCrudService;
         this.unitService = unitService;

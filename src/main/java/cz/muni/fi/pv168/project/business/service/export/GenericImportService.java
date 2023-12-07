@@ -11,6 +11,9 @@ import cz.muni.fi.pv168.project.business.service.export.format.Format;
 import cz.muni.fi.pv168.project.business.service.export.format.FormatMapping;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchImporter;
 
+
+import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+
 import java.util.Collection;
 
 /**
@@ -40,12 +43,13 @@ public class GenericImportService implements ImportService {
     }
 
     @Override
-    public void importData(String filePath) {
-        recipeCrudService.deleteAll();
-        ingredientCrudService.deleteAll();
-        customUnitsCrudService.deleteAll();
-        categoryCrudService.deleteAll();
-
+    public void importData(String filePath, ImportType importType) {
+        if (importType == ImportType.OVERWRITE) {
+            recipeCrudService.deleteAll();
+            ingredientCrudService.deleteAll();
+            customUnitsCrudService.deleteAll();
+            categoryCrudService.deleteAll();
+        }
 
         var batch = getImporter(filePath).importBatch(filePath);
 

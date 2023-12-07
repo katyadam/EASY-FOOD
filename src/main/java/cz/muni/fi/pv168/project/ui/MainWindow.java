@@ -14,6 +14,10 @@ import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
 import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
 import cz.muni.fi.pv168.project.ui.action.RemoveRecipesFilterAction;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
+
+import cz.muni.fi.pv168.project.ui.action.*;
+import cz.muni.fi.pv168.project.ui.action.mport.ImportAction;
+import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -328,6 +332,29 @@ public class MainWindow {
 //        filesMenu.addSeparator();
 //        filesMenu.add(new ExportAction("Export",
 //                categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
+        var importMenu = new JMenu("Import");
+        importMenu.add(new ImportAction(
+                "Append new data",
+                categoryCrudService,
+                unitService,
+                ingredientCrudService,
+                recipeCrudService,
+                this::refresh,
+                ImportType.APPEND
+        ));
+        importMenu.add(new ImportAction(
+                "Overwrite all data",
+                categoryCrudService,
+                unitService,
+                ingredientCrudService,
+                recipeCrudService,
+                this::refresh,
+                ImportType.OVERWRITE
+        ));
+        filesMenu.add(importMenu);
+        filesMenu.addSeparator();
+        filesMenu.add(new ExportAction("Export",
+                categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
 
         menuBar.add(editMenu);
         menuBar.add(filesMenu);
