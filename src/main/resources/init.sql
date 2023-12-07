@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS "AddedIngredient"
     `ingredientId` BIGINT REFERENCES "Ingredient" (`id`) ON DELETE CASCADE,
     `recipeId`     BIGINT REFERENCES "Recipe" (`id`) ON DELETE CASCADE,
     `unitId`       BIGINT REFERENCES "Unit" (`id`) ON DELETE CASCADE,
-    `quantity`     INT       NOT NULL,
+    `quantity`     DOUBLE       NOT NULL,
     `createdAt`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

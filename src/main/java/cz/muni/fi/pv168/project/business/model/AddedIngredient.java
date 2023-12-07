@@ -1,11 +1,14 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import java.text.DecimalFormat;
+
 public class AddedIngredient extends Entity {
 
     private Ingredient ingredient;
     private Double quantity;
     private Unit unit;
     private Recipe recipe;
+    private final DecimalFormat amountFormat = new DecimalFormat("#.##");
 
     public AddedIngredient() {
     }
