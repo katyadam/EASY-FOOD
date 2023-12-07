@@ -7,6 +7,9 @@ import static cz.muni.fi.pv168.project.business.service.validation.StringValidat
 public class RecipeValidator implements Validator<Recipe> {
     @Override
     public ValidationResult validate(Recipe model) {
+        if (model.getCategory() == null || model.getName().isEmpty()) {
+            return ValidationResult.failed();
+        }
         if (!validateAlphaNumWhiteSapce(model.getName()).isValid()) {
             return ValidationResult.failed();
         }

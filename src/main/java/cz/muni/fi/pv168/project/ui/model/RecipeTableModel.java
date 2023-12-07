@@ -16,7 +16,7 @@ public class RecipeTableModel extends AbstractEntityTableModel<Recipe> {
                 Column.editable("Recipe name", String.class, Recipe::getName, Recipe::setName),
                 Column.readonly("Category name", String.class, Recipe::getCategoryName),
                 Column.readonly("Color", Color.class, Recipe::getCategoryColor),
-                Column.readonly("Nutritional value [KCAL]", int.class, Recipe::getRecipeNutritionalValue),
+                Column.readonly("Nutritional value [KCAL]", Double.class, Recipe::getRecipeNutritionalValue),
                 Column.editable("Portions", int.class, Recipe::getPortions, Recipe::setPortions),
                 Column.editable(
                         "Time to prepare",

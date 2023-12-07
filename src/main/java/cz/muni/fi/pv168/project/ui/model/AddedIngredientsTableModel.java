@@ -6,13 +6,13 @@ import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 
 public class AddedIngredientsTableModel extends AbstractEntityTableModel<AddedIngredient> {
 
     private final AddedIngredientCrudService addedIngredientCrudService;
+
     public AddedIngredientsTableModel(
             String recipeGuid,
             AddedIngredientCrudService addedIngredientCrudService) {

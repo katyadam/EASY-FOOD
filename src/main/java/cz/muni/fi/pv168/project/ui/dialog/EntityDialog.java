@@ -90,17 +90,23 @@ abstract class EntityDialog<E extends Entity> {
                 OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);
         if (result == OK_OPTION) {
             if (getEntity().getName().isEmpty()) {
-                JOptionPane.showMessageDialog(parentComponent,"Name cannot be empty");
-                show(parentComponent,title);
+                JOptionPane.showMessageDialog(parentComponent, "Name cannot be empty");
+                show(parentComponent, title);
             }
-            // TODO somehow jumps when editing
-//            if ( ! (entity instanceof Recipe)) {
-//                Entity e = getEntity();
-//                if ( ! entities.stream().filter(x -> x.getName().equals(e.getName())).collect(Collectors.toList()).isEmpty()) {
-//                    JOptionPane.showMessageDialog(parentComponent,"Name must be unique");
-//                    show(parentComponent,title);
-//                }
-//            }
+            if (getEntity().getClass() == Recipe.class) {
+                Recipe recipe = (Recipe) getEntity();
+                if (recipe.getCategory() == null) {
+                    JOptionPane.showMessageDialog(parentComponent, "Missing category!");
+                    show(parentComponent, title);
+                }
+            }
+            if (!(entity instanceof Recipe)) {
+                Entity e = getEntity();
+                if (!entities.stream().filter(x -> x.getName().equals(e.getName())).collect(Collectors.toList()).isEmpty()) {
+                    JOptionPane.showMessageDialog(parentComponent, "Name must be unique");
+                    show(parentComponent, title);
+                }
+            }
             return Optional.of(getEntity());
         } else {
             return Optional.empty();

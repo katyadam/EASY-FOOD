@@ -38,6 +38,11 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (((double) amount.getValue()) == 0) {
+                JOptionPane.showMessageDialog(null, "Amount should be positive number!");
+                amount.setValue(1.0);
+                return;
+            }
             AddedIngredient newIngredient = new AddedIngredient(
                     (Ingredient) ingredients.getSelectedItem(),
                     (double) amount.getValue(),
@@ -82,7 +87,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
 
         List<Unit> unitList = new LinkedList<>();
-//        unitList.addAll(List.of(BaseUnits.baseUnits.toArray(new Unit[0])));
         unitList.addAll(unitTableModel.getEntities());
         units = new JComboBox<>(unitList.toArray(new Unit[0]));
 

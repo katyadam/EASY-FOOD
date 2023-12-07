@@ -92,17 +92,16 @@ public class Recipe extends Entity {
         return category != null ? category.getColor() : Color.black;
     }
 
-    public int getRecipeNutritionalValue() {
-        int val = 0;
+    public double getRecipeNutritionalValue() {
+        double val = 0;
         for (var ingr : getAddedIngredients()) {
-            val += (int) (ingr.getIngredient().getNutritionalValue() * ingr.getQuantity());
+            val += (ingr.getIngredient().getNutritionalValue() * ingr.getQuantity());
         }
         return val;
     }
 
 
     public void addIngredient(AddedIngredient addedIngredient) {
-//        Somehow when getting recipe in EditAction, it gets recipe with immutable addedIngredients collection...
         addedIngredients.add(addedIngredient);
     }
 
