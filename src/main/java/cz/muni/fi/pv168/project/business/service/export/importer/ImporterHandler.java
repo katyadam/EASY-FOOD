@@ -126,7 +126,7 @@ public class ImporterHandler extends DefaultHandler {
         String[] split = prepTime.split(" ");
         return new PreparationTime(Integer.parseInt(split[0]), Integer.parseInt(split[2]));
     }
-    
+
     private Unit parseUnit(String unitName) {
         return unitList.stream()
                 .filter(unit -> unit.getName().equals(unitName))
