@@ -18,7 +18,7 @@ public class ImporterHandler extends DefaultHandler {
     private final List<Recipe> recipeList;
 
     public static final String CATEGORY = "Category";
-    public static final String CUSTOM_UNIT = "CustomUnit";
+    public static final String UNIT = "Unit";
     public static final String INGREDIENT = "Ingredient";
     public static final String RECIPE = "Recipe";
     public static final String ADDED_INGREDIENTS = "AddedIngredients";
@@ -52,7 +52,7 @@ public class ImporterHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName) {
             case CATEGORY -> activeCategory = new Category();
-            case CUSTOM_UNIT -> activeUnit = new Unit();
+            case UNIT -> activeUnit = new Unit();
             case INGREDIENT -> activeIngredient = new Ingredient();
             case RECIPE -> activeRecipe = new Recipe();
             case ADDED_INGREDIENTS -> addedIngredients = new ArrayList<>();
@@ -65,39 +65,44 @@ public class ImporterHandler extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
         switch (qName) {
             case CATEGORY -> categoryList.add(activeCategory);
-            case CUSTOM_UNIT -> unitList.add(activeUnit);
+            case UNIT -> unitList.add(activeUnit);
             case INGREDIENT -> ingredientList.add(activeIngredient);
             case RECIPE -> recipeList.add(activeRecipe);
+
             case "CategoryName" -> activeCategory.setName(elementValue.toString());
-            case "Color" -> activeCategory.setColor(parseColor(elementValue.toString()));
-            case "CustomUnitName" -> activeUnit.setName(elementValue.toString());
+            case "Color" -> activeCategory.setColor(new Color(Integer.parseInt(elementValue.toString())));
+
+            case "UnitName" -> activeUnit.setName(elementValue.toString());
             case "Abbreviation" -> activeUnit.setAbbreviation(elementValue.toString());
-            case "BaseAmountNumber" -> activeUnit.setAmount(Double.parseDouble(elementValue.toString()));
-//            case "BaseUnitAbbr" -> activeUnit.setBaseUnit(parseUnit(elementValue.toString()));
+            case "Amount" -> activeUnit.setAmount(Double.parseDouble(elementValue.toString()));
+            case "BaseUnitName" -> activeUnit.setBaseUnit(BaseUnits.getBaseUnitList().stream()
+                    .filter(bu -> bu.getBaseUnitName().contentEquals(elementValue))
+                    .findFirst()
+                    .orElseThrow(() -> new DataManipulationException(
+                            "BaseUnit with name: " + elementValue.toString() + "does not exist")
+                    ));
+
             case "IngredientName" -> activeIngredient.setName(elementValue.toString());
-//            case "IngredientUnit" -> activeIngredient.setUnitType(parseUnit(elementValue.toString()));
             case "NutritionalValue" -> activeIngredient.setNutritionalValue(Integer.parseInt(elementValue.toString()));
+
             case "RecipeName" -> activeRecipe.setName(elementValue.toString());
-            case "RecipeCategory" -> activeRecipe.setCategory(parseCategory(elementValue.toString()));
+            case "PrepMinutes" -> activeRecipe.setPrepMinutes(Integer.parseInt(elementValue.toString()));
             case "Portions" -> activeRecipe.setPortions(Integer.parseInt(elementValue.toString()));
-//            case "PreparationTime" -> activeRecipe.setPreparationTime(parsePreparationTime(elementValue.toString()));
+            case "RecipeCategoryName" -> activeRecipe.setCategory(parseCategory(elementValue.toString()));
             case "Description" -> activeRecipe.setDescription(elementValue.toString());
-            case "AddedIngredientName" -> activeAddedIngredient.setIngredient(parseIngredient(elementValue.toString()));
+            case "AiIngredientName" -> activeAddedIngredient.setIngredient(parseIngredient(elementValue.toString()));
+            case "AiRecipeName" -> activeAddedIngredient.setRecipe(activeRecipe);
+            case "AiUnitName" -> activeAddedIngredient.setUnit(parseUnit(elementValue.toString()));
             case "Quantity" -> activeAddedIngredient.setQuantity(Double.parseDouble(elementValue.toString()));
-            case "AddedUnit" -> activeAddedIngredient.setUnit(parseUnit(elementValue.toString()));
 //            case ADDED_INGREDIENTS -> saveUsedIngredients();
-            case ADDED_INGREDIENT -> addedIngredients.add(activeAddedIngredient);
+            case ADDED_INGREDIENT -> assignAddedIngredient(activeRecipe, activeAddedIngredient);
 
         }
     }
 
-    private Color parseColor(String line) {
-        String[] split = line.split(",");
-        return new Color(
-                Integer.parseInt(split[0]),
-                Integer.parseInt(split[1]),
-                Integer.parseInt(split[2])
-        );
+    private void assignAddedIngredient(Recipe recipe, AddedIngredient addedIngredient) {
+        recipe.getAddedIngredients().add(addedIngredient);
+        addedIngredients.add(addedIngredient);
     }
 
     private Category parseCategory(String categoryName) {
@@ -128,18 +133,11 @@ public class ImporterHandler extends DefaultHandler {
 //        addedIngredients.forEach(tableModel::addRow);
 //    }
 
-    private Unit parseUnit(String unitAbbr) {
-//        for (var baseUnit : BaseUnits.getBaseUnitList()) {
-//            if (baseUnit.getAbbreviation().equals(unitAbbr)) {
-//                return baseUnit;
-//            }
-//        }
-        for (var customUnit : unitList) {
-            if (customUnit.getAbbreviation().equals(unitAbbr)) {
-                return customUnit;
-            }
-        }
-        throw new DataManipulationException("Unit: " + unitAbbr + " was not found!");
+    private Unit parseUnit(String unitName) {
+        return unitList.stream()
+                .filter(unit -> unit.getName().equals(unitName))
+                .findFirst()
+                .orElseThrow(() -> new DataManipulationException("Unit: " + unitName + " was not found!"));
     }
 
     public Batch getBatch() {

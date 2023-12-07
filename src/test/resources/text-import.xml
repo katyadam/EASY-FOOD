@@ -1,38 +1,63 @@
 <EasyFood>
     <Categories>
         <Category>
-            <CategoryName>Spanish</CategoryName>
-            <Color>94,232,235</Color>
+            <CategoryName>Catalan</CategoryName>
+            <Color>125</Color>
         </Category>
     </Categories>
-    <CustomUnits>
-        <CustomUnit>
-            <CustomUnitName>sprig</CustomUnitName>
-            <Abbreviation>spg</Abbreviation>
-            <BaseAmount>85,47 pc</BaseAmount>
-            <BaseAmountNumber>85.46809551995536</BaseAmountNumber>
-            <BaseUnitAbbr>pc</BaseUnitAbbr>
-        </CustomUnit>
-    </CustomUnits>
+    <Units>
+        <Unit>
+            <UnitName>One piece</UnitName>
+            <Abbreviation>un</Abbreviation>
+            <Amount>1</Amount>
+            <BaseUnitName>piece</BaseUnitName>
+        </Unit>
+        <Unit>
+            <UnitName>Gigaliter</UnitName>
+            <Abbreviation>gl</Abbreviation>
+            <Amount>100</Amount>
+            <BaseUnitName>liter</BaseUnitName>
+        </Unit>
+    </Units>
     <Ingredients>
         <Ingredient>
-            <IngredientName>Paprika</IngredientName>
-            <IngredientUnit>spg</IngredientUnit>
-            <NutritionalValue>635</NutritionalValue>
+            <IngredientName>Tomato</IngredientName>
+            <NutritionalValue>20</NutritionalValue>
+        </Ingredient>
+        <Ingredient>
+            <IngredientName>Potato</IngredientName>
+            <NutritionalValue>200</NutritionalValue>
+        </Ingredient>
+        <Ingredient>
+            <IngredientName>Avocado</IngredientName>
+            <NutritionalValue>250</NutritionalValue>
         </Ingredient>
     </Ingredients>
     <Recipes>
         <Recipe>
-            <RecipeName>Gulas</RecipeName>
-            <RecipeCategory>Spanish</RecipeCategory>
-            <Portions>1</Portions>
-            <PreparationTime>1 hours 0 minutes</PreparationTime>
-            <Description>Description</Description>
+            <RecipeName>Gaspacho</RecipeName>
+            <PrepMinutes>10</PrepMinutes>
+            <Portions>3</Portions>
+            <RecipeCategoryName>Catalan</RecipeCategoryName>
+            <Description>Cold soup</Description>
             <AddedIngredients>
                 <AddedIngredient>
-                    <AddedIngredientName>Paprika</AddedIngredientName>
-                    <Quantity>1.0</Quantity>
-                    <AddedUnit>spg</AddedUnit>
+                    <AiIngredientName>Potato</AiIngredientName>
+                    <AiRecipeName>Gaspacho</AiRecipeName>
+                    <AiUnitName>Gigaliter</AiUnitName>
+                    <Quantity>5</Quantity>
+                </AddedIngredient>
+                <AddedIngredient>
+                    <AiIngredientName>Potato</AiIngredientName>
+                    <AiRecipeName>Gaspacho</AiRecipeName>
+                    <AiUnitName>One piece</AiUnitName>
+                    <Quantity>3</Quantity>
+                </AddedIngredient>
+                <AddedIngredient>
+                    <AiIngredientName>Avocado</AiIngredientName>
+                    <AiRecipeName>Gaspacho</AiRecipeName>
+                    <AiUnitName>One piece</AiUnitName>
+                    <Quantity>1</Quantity>
                 </AddedIngredient>
             </AddedIngredients>
         </Recipe>

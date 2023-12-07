@@ -102,6 +102,7 @@ public class Recipe extends Entity {
 
 
     public void addIngredient(AddedIngredient addedIngredient) {
+//        Somehow when getting recipe in EditAction, it gets recipe with immutable addedIngredients collection...
         addedIngredients.add(addedIngredient);
     }
 
@@ -111,7 +112,7 @@ public class Recipe extends Entity {
 
     public List<AddedIngredient> getAddedIngredients() {
         if (addedIngredients.isEmpty()) {
-            addedIngredients = addedIngredientCrudService.findByRecipeGuid(this.getGuid());
+            addedIngredients = new ArrayList<>(addedIngredientCrudService.findByRecipeGuid(this.getGuid()));
         }
         return addedIngredients;
     }

@@ -53,10 +53,11 @@ public class GenericImportService implements ImportService {
 
         var batch = getImporter(filePath).importBatch(filePath);
 
-        batch.recipes().forEach(this::createRecipe);
+        batch.categories().forEach(this::createCategory);
         batch.ingredients().forEach(this::createIngredient);
         batch.units().forEach(this::createCustomUnit);
-        batch.categories().forEach(this::createCategory);
+        batch.recipes().forEach(this::createRecipe);
+
     }
 
     private void createRecipe(Recipe recipe) {
