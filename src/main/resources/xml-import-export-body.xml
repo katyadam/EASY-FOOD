@@ -5,34 +5,33 @@
             <Color></Color>
         </Category>
     </Categories>
-    <CustomUnits>
-        <CustomUnit>
-            <CustomUnitName></CustomUnitName>
+    <Units>
+        <Unit>
+            <UnitName></UnitName>
             <Abbreviation></Abbreviation>
-            <BaseAmount></BaseAmount>
-            <BaseAmountNumber></BaseAmountNumber>
-            <BaseUnitAbbr></BaseUnitAbbr>
-        </CustomUnit>
-    </CustomUnits>
+            <Amount></Amount>
+            <BaseUnitName></BaseUnitName>
+        </Unit>
+    </Units>
     <Ingredients>
         <Ingredient>
             <IngredientName></IngredientName>
-            <IngredientUnit></IngredientUnit>
             <NutritionalValue></NutritionalValue>
         </Ingredient>
     </Ingredients>
     <Recipes>
         <Recipe>
             <RecipeName></RecipeName>
-            <RecipeCategory></RecipeCategory>
+            <PrepMinutes></PrepMinutes>
             <Portions></Portions>
-            <PreparationTime></PreparationTime>
+            <RecipeCategoryName></RecipeCategoryName>
             <Description></Description>
             <AddedIngredients>
                 <AddedIngredient>
-                    <AddedIngredientName></AddedIngredientName>
+                    <AiIngredientName></AiIngredientName>
+                    <AiRecipeName></AiRecipeName>
+                    <AiUnitName></AiUnitName>
                     <Quantity></Quantity>
-                    <AddedUnit></AddedUnit>
                 </AddedIngredient>
             </AddedIngredients>
         </Recipe>
