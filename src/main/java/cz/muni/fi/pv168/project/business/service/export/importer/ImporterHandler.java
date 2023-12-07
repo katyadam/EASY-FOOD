@@ -79,7 +79,7 @@ public class ImporterHandler extends DefaultHandler {
                     .filter(bu -> bu.getBaseUnitName().contentEquals(elementValue))
                     .findFirst()
                     .orElseThrow(() -> new DataManipulationException(
-                            "BaseUnit with name: " + elementValue.toString() + "does not exist")
+                            "BaseUnit with name: " + elementValue.toString() + " does not exist")
                     ));
 
             case "IngredientName" -> activeIngredient.setName(elementValue.toString());
@@ -94,7 +94,6 @@ public class ImporterHandler extends DefaultHandler {
             case "AiRecipeName" -> activeAddedIngredient.setRecipe(activeRecipe);
             case "AiUnitName" -> activeAddedIngredient.setUnit(parseUnit(elementValue.toString()));
             case "Quantity" -> activeAddedIngredient.setQuantity(Double.parseDouble(elementValue.toString()));
-//            case ADDED_INGREDIENTS -> saveUsedIngredients();
             case ADDED_INGREDIENT -> assignAddedIngredient(activeRecipe, activeAddedIngredient);
 
         }
@@ -127,12 +126,7 @@ public class ImporterHandler extends DefaultHandler {
         String[] split = prepTime.split(" ");
         return new PreparationTime(Integer.parseInt(split[0]), Integer.parseInt(split[2]));
     }
-
-//    private void saveUsedIngredients() {
-//        AddedIngredientsTableModel tableModel = activeRecipe.getUsedIngredients();
-//        addedIngredients.forEach(tableModel::addRow);
-//    }
-
+    
     private Unit parseUnit(String unitName) {
         return unitList.stream()
                 .filter(unit -> unit.getName().equals(unitName))
