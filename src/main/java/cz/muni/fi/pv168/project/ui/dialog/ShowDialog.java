@@ -4,10 +4,12 @@ import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import javax.swing.*;
+import java.text.DecimalFormat;
 
 public class ShowDialog {
 
     private final Recipe recipe;
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public ShowDialog(Recipe recipe) {
         this.recipe = recipe;
@@ -24,7 +26,7 @@ public class ShowDialog {
         recipeString.append("<b>Ingredients:</b> <br>");
         for (var ingredient : MainWindow.commonDependencyProvider.getAddedIngredientCrudService().findByRecipeGuid(recipe.getGuid())) {
             recipeString.append("-> ").append(ingredient.getIngredient().getName())
-                    .append("  ").append(ingredient.getQuantity()).append(" ").append(ingredient.getUnit()).append("<br>");
+                    .append("  ").append(decimalFormat.format(ingredient.getQuantity())).append(" ").append(ingredient.getUnit()).append("<br>");
         }
         recipeString.append("<br>");
 
