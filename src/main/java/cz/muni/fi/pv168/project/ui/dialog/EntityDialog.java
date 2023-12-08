@@ -102,7 +102,7 @@ abstract class EntityDialog<E extends Entity> {
             }
             if (!(entity instanceof Recipe)) {
                 Entity e = getEntity();
-                if (!entities.stream().filter(x -> x.getName().equals(e.getName())).collect(Collectors.toList()).isEmpty()) {
+                if (!(entities.stream().filter(x -> x.getName().equals(e.getName())).toList().size() == 1)) {
                     JOptionPane.showMessageDialog(parentComponent, "Name must be unique");
                     show(parentComponent, title);
                 }
