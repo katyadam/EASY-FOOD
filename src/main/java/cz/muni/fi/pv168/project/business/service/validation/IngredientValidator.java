@@ -6,8 +6,8 @@ import cz.muni.fi.pv168.project.business.model.Ingredient;
 public class IngredientValidator implements Validator<Ingredient> {
     @Override
     public ValidationResult validate(Ingredient model) {
-        if (!StringValidator.validateAlphaNumWhiteSapce(model.getName()).isValid()) {
-            return ValidationResult.failed();
+        if (!StringValidator.validateAlphaNumWhiteSpace(model.getName()).isValid()) {
+            return ValidationResult.failed("ingredient validation failed");
         }
 //        if (!StringValidator.validateAlphaNum(model.getUnitType().getAbbreviation()).isValid()) {
 //            return ValidationResult.failed();

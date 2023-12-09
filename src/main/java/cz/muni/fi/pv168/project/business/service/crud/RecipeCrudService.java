@@ -59,7 +59,6 @@ public class RecipeCrudService implements CrudService<Recipe> {
         ValidationResult validationResult = recipeValidator.validate(entity);
         if (validationResult.isValid()) {
             recipeRepository.update(entity);
-//            TODO Update added ingredients
         }
 
         return validationResult;

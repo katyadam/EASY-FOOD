@@ -18,14 +18,14 @@ public class StringValidator {
         if (string.matches("^[a-zA-Z0-9]*$")) {
             return ValidationResult.success();
         }
-        return ValidationResult.failed();
+        return ValidationResult.failed("validateAlphaNum failed");
     }
 
-    public static ValidationResult validateAlphaNumWhiteSapce (String string) {
+    public static ValidationResult validateAlphaNumWhiteSpace(String string) {
         if (string.matches("^[a-zA-Z0-9\\s]*$")) {
             return ValidationResult.success();
         }
-        return ValidationResult.failed();
+        return ValidationResult.failed("validateAlphaNumWhiteSpace failed");
     }
 
     public static ValidationResult validateDouble(String string) {
@@ -33,20 +33,20 @@ public class StringValidator {
         if (string.matches("[-+]?(\\d*\\.\\d+|\\d+\\.\\d*|\\d+)([eE][-+]?)?")) {
             return ValidationResult.success();
         }
-        return ValidationResult.failed();
+        return ValidationResult.failed("validateDouble failed");
     }
 
     public static ValidationResult validateNum(String string) {
         if (string.matches("\\d+")) {
             return ValidationResult.success();
         }
-        return ValidationResult.failed();
+        return ValidationResult.failed("validateNum failed");
     }
 
     public static ValidationResult validateColor(String string) {
         if (string.matches("^\\d{1,3},\\d{1,3},\\d{1,3}$")) {
             return ValidationResult.success();
         }
-        return ValidationResult.failed();
+        return ValidationResult.failed("validateColor failed");
     }
 }
