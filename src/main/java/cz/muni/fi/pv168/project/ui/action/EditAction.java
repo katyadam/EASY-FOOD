@@ -1,6 +1,10 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.business.model.*;
+import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
+import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
+import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
+import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
@@ -57,7 +61,7 @@ public final class EditAction extends ContextAction {
                         (IngredientTableModel) ingredientTable.getModel(),
                         (CategoryTableModel) categoryTable.getModel(),
                         (CustomUnitTableModel) unitsTable.getModel());
-                Optional<Recipe> optionalRecipe = dialog.show(recipeTable, "Edit Recipe");
+                Optional<Recipe> optionalRecipe = dialog.show(recipeTable, "Edit Recipe", new RecipeValidator());
                 if (optionalRecipe.isPresent()) {
                     Recipe newRecipe = optionalRecipe.get();
                     if (newRecipe.getCategory() != null) {
@@ -72,7 +76,7 @@ public final class EditAction extends ContextAction {
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Ingredient ingredient = ingredientTableModel.getEntity(modelRow);
                 IngredientDialog dialog = new IngredientDialog(ingredient, (IngredientTableModel) ingredientTable.getModel(), commonDependencyProvider.getCustomUnitCrudService(), (RecipeTableModel) recipeTable.getModel());
-                dialog.show(activeTable, "Edit Ingredient")
+                dialog.show(activeTable, "Edit Ingredient", new IngredientValidator())
                         .ifPresent(ingredientTableModel::updateRow);
                 break;
             }
@@ -81,7 +85,7 @@ public final class EditAction extends ContextAction {
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Unit unit = customUnitTableModel.getEntity(modelRow);
                 CustomUnitDialog dialog = new CustomUnitDialog(unit, (CustomUnitTableModel) unitsTable.getModel());
-                dialog.show(activeTable, "Edit Custom Unit")
+                dialog.show(activeTable, "Edit Custom Unit", new CustomUnitValidator())
                         .ifPresent(customUnitTableModel::updateRow);
                 break;
             }
@@ -90,7 +94,7 @@ public final class EditAction extends ContextAction {
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Category category = categoryTableModel.getEntity(modelRow);
                 CategoryDialog categoryDialog = new CategoryDialog(category, (CategoryTableModel) categoryTable.getModel());
-                categoryDialog.show(activeTable, "Edit Category")
+                categoryDialog.show(activeTable, "Edit Category", new CategoryValidator())
                         .ifPresent(categoryTableModel::updateRow);
             }
         }

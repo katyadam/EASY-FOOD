@@ -9,8 +9,12 @@ import static cz.muni.fi.pv168.project.business.service.validation.StringValidat
 public class CustomUnitValidator implements Validator<Unit> {
     @Override
     public ValidationResult validate(Unit model) {
-
-
+        if (model.getName().isEmpty()) {
+            return ValidationResult.failed("unit name is empty");
+        }
+        if (model.getAbbreviation().isEmpty()) {
+            return ValidationResult.failed("unit abbreviation is empty");
+        }
         if (!validateAlphaNumWhiteSpace(model.getName()).isValid()) {
             return ValidationResult.failed("unit validation failed");
         }

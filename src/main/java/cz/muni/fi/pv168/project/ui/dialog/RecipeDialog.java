@@ -2,6 +2,8 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 
 import cz.muni.fi.pv168.project.business.model.*;
+import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.model.*;
 
@@ -9,10 +11,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
+
+import static javax.swing.JOptionPane.*;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
 
@@ -34,6 +36,8 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JComboBox<Unit> units;
     private final JTextArea recipeDescriptionTextField = new JTextArea();
     private final JTable addedIngredientsTable = new JTable();
+
+    private final RecipeValidator recipeValidator = new RecipeValidator();
 
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override

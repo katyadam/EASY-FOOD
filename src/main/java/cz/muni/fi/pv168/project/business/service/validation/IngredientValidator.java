@@ -6,6 +6,9 @@ import cz.muni.fi.pv168.project.business.model.Ingredient;
 public class IngredientValidator implements Validator<Ingredient> {
     @Override
     public ValidationResult validate(Ingredient model) {
+        if (model.getName().isEmpty()) {
+            return ValidationResult.failed("ingredient name is empty");
+        }
         if (!StringValidator.validateAlphaNumWhiteSpace(model.getName()).isValid()) {
             return ValidationResult.failed("ingredient validation failed");
         }

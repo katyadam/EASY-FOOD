@@ -11,6 +11,10 @@ public class CategoryValidator implements Validator<Category> {
     @Override
     public ValidationResult validate(Category model) {
 
+        if (model.getName().isEmpty()) {
+            return ValidationResult.failed("category name is empty");
+        }
+
         if (!validateAlphaNumWhiteSpace(model.getName()).isValid()) {
             return ValidationResult.failed("category validation failed");
         }
