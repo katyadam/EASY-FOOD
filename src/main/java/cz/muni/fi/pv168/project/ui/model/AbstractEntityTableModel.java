@@ -2,7 +2,9 @@ package cz.muni.fi.pv168.project.ui.model;
 
 import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,17 +67,32 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
     }
 
     public void addRow(T entity) {
-        crudService.create(entity);
-        int newRowIndex = entities.size();
-        entities.add(entity);
-        fireTableRowsInserted(newRowIndex, newRowIndex);
+        ValidationResult validationResult = crudService.create(entity);
+        if (validationResult.isValid()) {
+            int newRowIndex = entities.size();
+            entities.add(entity);
+            fireTableRowsInserted(newRowIndex, newRowIndex);
+        } else {
+            JOptionPane.showMessageDialog(
+                    new JPanel(),
+                    String.join(", ", validationResult.getValidationErrors())
+            );
+        }
     }
 
     public void updateRow(T entity) {
-        crudService.update(entity).intoException();
-        int rowIndex = entities.indexOf(entity);
-        fireTableRowsUpdated(rowIndex, rowIndex);
+        ValidationResult validationResult = crudService.update(entity);
+        if (validationResult.isValid()) {
+            int rowIndex = entities.indexOf(entity);
+            fireTableRowsUpdated(rowIndex, rowIndex);
+        } else {
+            JOptionPane.showMessageDialog(
+                    new JPanel(),
+                    String.join(", ", validationResult.getValidationErrors())
+            );
+        }
     }
+
     public T getEntity(int rowIndex) {
         return entities.get(rowIndex);
     }

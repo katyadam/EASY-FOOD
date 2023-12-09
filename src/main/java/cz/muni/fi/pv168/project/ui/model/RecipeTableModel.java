@@ -27,5 +27,4 @@ public class RecipeTableModel extends AbstractEntityTableModel<Recipe> {
         ), recipeCrudService.findAll(), recipeCrudService);
         this.recipeCrudService = recipeCrudService;
     }
-
 }

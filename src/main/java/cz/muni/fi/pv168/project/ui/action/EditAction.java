@@ -60,7 +60,9 @@ public final class EditAction extends ContextAction {
                 Optional<Recipe> optionalRecipe = dialog.show(recipeTable, "Edit Recipe");
                 if (optionalRecipe.isPresent()) {
                     Recipe newRecipe = optionalRecipe.get();
-                    newRecipe.getCategory().addRecipe(newRecipe);
+                    if (newRecipe.getCategory() != null) {
+                        newRecipe.getCategory().addRecipe(newRecipe);
+                    }
                     recipeTableModel.updateRow(newRecipe);
                 }
                 break;

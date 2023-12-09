@@ -9,7 +9,6 @@ import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static javax.swing.JOptionPane.*;
 
@@ -23,6 +22,7 @@ abstract class EntityDialog<E extends Entity> {
 
     protected E entity;
     protected List<E> entities;
+
 
     EntityDialog(E entity, List<E> entities) {
         this.entities = entities;
@@ -88,28 +88,33 @@ abstract class EntityDialog<E extends Entity> {
     public Optional<E> show(JComponent parentComponent, String title) {
         int result = JOptionPane.showOptionDialog(parentComponent, panel, title,
                 OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);
-        if (result == OK_OPTION) {
-            if (getEntity().getName().isEmpty()) {
-                JOptionPane.showMessageDialog(parentComponent, "Name cannot be empty");
-                show(parentComponent, title);
-            }
-            if (getEntity().getClass() == Recipe.class) {
-                Recipe recipe = (Recipe) getEntity();
-                if (recipe.getCategory() == null) {
-                    JOptionPane.showMessageDialog(parentComponent, "Missing category!");
-                    show(parentComponent, title);
-                }
-            }
-            if (!(entity instanceof Recipe)) {
-                Entity e = getEntity();
-                if (!(entities.stream().filter(x -> x.getName().equals(e.getName())).toList().size() == 1)) {
-                    JOptionPane.showMessageDialog(parentComponent, "Name must be unique");
-                    show(parentComponent, title);
-                }
-            }
-            return Optional.of(getEntity());
-        } else {
-            return Optional.empty();
-        }
+
+        return result == OK_OPTION ? Optional.of(getEntity()) : Optional.empty();
+//        if (result == OK_OPTION) {
+//            if (getEntity().getName().isEmpty()) {
+//                JOptionPane.showMessageDialog(parentComponent, "Name cannot be empty");
+//                show(parentComponent, title);
+//                return Optional.empty();
+//            }
+//            if (getEntity().getClass() == Recipe.class) {
+//                Recipe recipe = (Recipe) getEntity();
+//                if (recipe.getCategory() == null) {
+//                    JOptionPane.showMessageDialog(parentComponent, "Missing category!");
+//                    show(parentComponent, title);
+//                    return Optional.empty();
+//                }
+//            }
+//            if (!(entity instanceof Recipe)) {
+//                Entity e = getEntity();
+//                if (!(entities.stream().filter(x -> x.getName().equals(e.getName())).toList().size() == 1)) {
+//                    JOptionPane.showMessageDialog(parentComponent, "Name must be unique");
+//                    show(parentComponent, title);
+//                    return Optional.empty();
+//                }
+//            }
+//            return Optional.of(getEntity());
+//        } else {
+//            return Optional.empty();
+//        }
     }
 }
