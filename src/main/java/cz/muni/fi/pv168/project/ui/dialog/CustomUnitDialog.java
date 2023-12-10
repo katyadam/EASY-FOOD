@@ -41,10 +41,12 @@ public class CustomUnitDialog extends EntityDialog<Unit> {
 
     @Override
     Unit getEntity() {
-        entity.setName(customUnitNameField.getText());
-        entity.setAbbreviation(customUnitAbbreviationField.getText());
-        entity.setAmount((double) customUnitAmount.getValue());
-        entity.setBaseUnit((BaseUnit) units.getSelectedItem());
-        return entity;
+        Unit setEntity = new Unit();
+        setEntity.setGuid(entity.getGuid());
+        setEntity.setName(customUnitNameField.getText());
+        setEntity.setAbbreviation(customUnitAbbreviationField.getText());
+        setEntity.setAmount((double) customUnitAmount.getValue());
+        setEntity.setBaseUnit((BaseUnit) units.getSelectedItem());
+        return setEntity;
     }
 }

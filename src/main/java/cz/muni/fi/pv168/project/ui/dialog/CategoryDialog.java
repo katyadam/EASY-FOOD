@@ -12,7 +12,7 @@ public class CategoryDialog extends EntityDialog<Category> {
     private final JColorChooser categoryColor = new JColorChooser();
 
     public CategoryDialog(Category category, CategoryTableModel categoryTableModel) {
-        super( category, categoryTableModel.getEntities());
+        super(category, categoryTableModel.getEntities());
 
         for (AbstractColorChooserPanel panel : categoryColor.getChooserPanels()) {
             if (!panel.getDisplayName().equals("RGB")) {
@@ -41,8 +41,10 @@ public class CategoryDialog extends EntityDialog<Category> {
 
     @Override
     Category getEntity() {
-        entity.setName(categoryNameField.getText());
-        entity.setColor(categoryColor.getColor());
-        return entity;
+        Category setEntity = new Category();
+        setEntity.setGuid(entity.getGuid());
+        setEntity.setName(categoryNameField.getText());
+        setEntity.setColor(categoryColor.getColor());
+        return setEntity;
     }
 }

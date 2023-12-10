@@ -2,8 +2,6 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 
 import cz.muni.fi.pv168.project.business.model.*;
-import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
-import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.model.*;
 
@@ -11,10 +9,10 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
-
-import static javax.swing.JOptionPane.*;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
 
@@ -37,7 +35,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JTextArea recipeDescriptionTextField = new JTextArea();
     private final JTable addedIngredientsTable = new JTable();
 
-    private final RecipeValidator recipeValidator = new RecipeValidator();
 
     private final JButton addIngredient = new JButton(new AbstractAction("Add ingredient") {
         @Override
@@ -144,11 +141,17 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
     @Override
     Recipe getEntity() {
-        entity.setName(recipeNameField.getText());
-        entity.setCategory((Category) categoryJComboBox.getSelectedItem());
-        entity.setPortions((int) recipePortionsField.getValue());
-        entity.setPrepMinutes((int) timeSpinner.getValue());
-        entity.setDescription(recipeDescriptionTextField.getText());
-        return entity;
+//        instead of getting entity(Recipe) which is from UI table,
+//        setting new entity(Recipe) same as original entity from UI table,
+//        this will prevent to overwriting UI entity when it is set...
+        Recipe setEntity = new Recipe();
+        setEntity.setGuid(entity.getGuid());
+        setEntity.setName(recipeNameField.getText());
+        setEntity.setCategory((Category) categoryJComboBox.getSelectedItem());
+        setEntity.setPortions((int) recipePortionsField.getValue());
+        setEntity.setPrepMinutes((int) timeSpinner.getValue());
+        setEntity.setDescription(recipeDescriptionTextField.getText());
+        entity.getAddedIngredients().forEach(setEntity::addIngredient);
+        return setEntity;
     }
 }

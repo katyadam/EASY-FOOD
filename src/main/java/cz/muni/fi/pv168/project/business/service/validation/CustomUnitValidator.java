@@ -2,30 +2,28 @@ package cz.muni.fi.pv168.project.business.service.validation;
 
 import cz.muni.fi.pv168.project.business.model.Unit;
 
-import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.validateAlphaNum;
-import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.validateAlphaNumWhiteSpace;
-import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.validateDouble;
+import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.*;
 
 public class CustomUnitValidator implements Validator<Unit> {
     @Override
     public ValidationResult validate(Unit model) {
         if (model.getName().isEmpty()) {
-            return ValidationResult.failed("unit name is empty");
+            return ValidationResult.failed("Unit name is empty!");
         }
         if (model.getAbbreviation().isEmpty()) {
-            return ValidationResult.failed("unit abbreviation is empty");
+            return ValidationResult.failed("Unit abbreviation is empty!");
         }
         if (!validateAlphaNumWhiteSpace(model.getName()).isValid()) {
-            return ValidationResult.failed("unit validation failed");
+            return ValidationResult.failed("Unit name format is invalid!");
         }
         if (!validateAlphaNum(model.getAbbreviation()).isValid()) {
-            return ValidationResult.failed("unit validation failed");
+            return ValidationResult.failed("Unit abbreviation is invalid!");
         }
         if (!validateDouble(model.getBaseAmountNumber()).isValid()) {
-            return ValidationResult.failed("unit validation failed");
+            return ValidationResult.failed("Unit amount format is invalid!");
         }
         if (!validateAlphaNum(model.getBaseUnit().getAbbreviation()).isValid()) {
-            return ValidationResult.failed("unit validation failed");
+            return ValidationResult.failed("System err: Base units abbreviation is invalid! Please fix your db!");
         }
 
         return ValidationResult.success();

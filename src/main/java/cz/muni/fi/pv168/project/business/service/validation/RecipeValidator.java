@@ -8,19 +8,19 @@ public class RecipeValidator implements Validator<Recipe> {
     @Override
     public ValidationResult validate(Recipe model) {
         if (model.getCategory() == null) {
-            return ValidationResult.failed("category is null");
+            return ValidationResult.failed("Category is empty!");
         }
         if (model.getName().isEmpty()) {
-            return ValidationResult.failed("name is empty");
+            return ValidationResult.failed("Name is empty!");
         }
         if (!validateAlphaNumWhiteSpace(model.getName()).isValid()) {
-            return ValidationResult.failed("name is not valid");
+            return ValidationResult.failed("Name format is invalid!");
         }
         if (!validateAlphaNumWhiteSpace(model.getCategoryName()).isValid()) {
-            return ValidationResult.failed("category name is not valid");
+            return ValidationResult.failed("Category name format is invalid!");
         }
         if (model.getDescription().contains("<") || model.getDescription().contains(">")) {
-            return ValidationResult.failed("description is not valid");
+            return ValidationResult.failed("Description format is invalid!");
         }
         return ValidationResult.success();
     }

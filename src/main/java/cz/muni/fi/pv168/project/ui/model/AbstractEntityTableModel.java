@@ -69,9 +69,8 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
     public void addRow(T entity) {
         ValidationResult validationResult = crudService.create(entity);
         if (validationResult.isValid()) {
-            int newRowIndex = entities.size();
             entities.add(entity);
-            fireTableRowsInserted(newRowIndex, newRowIndex);
+            refresh();
         } else {
             JOptionPane.showMessageDialog(
                     new JPanel(),
@@ -84,7 +83,7 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
         ValidationResult validationResult = crudService.update(entity);
         if (validationResult.isValid()) {
             int rowIndex = entities.indexOf(entity);
-            fireTableRowsUpdated(rowIndex, rowIndex);
+            refresh();
         } else {
             JOptionPane.showMessageDialog(
                     new JPanel(),

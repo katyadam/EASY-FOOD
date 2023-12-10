@@ -7,10 +7,10 @@ public class IngredientValidator implements Validator<Ingredient> {
     @Override
     public ValidationResult validate(Ingredient model) {
         if (model.getName().isEmpty()) {
-            return ValidationResult.failed("ingredient name is empty");
+            return ValidationResult.failed("Ingredient name is empty!");
         }
         if (!StringValidator.validateAlphaNumWhiteSpace(model.getName()).isValid()) {
-            return ValidationResult.failed("ingredient validation failed");
+            return ValidationResult.failed("Ingredient name format is invalid!");
         }
 //        if (!StringValidator.validateAlphaNum(model.getUnitType().getAbbreviation()).isValid()) {
 //            return ValidationResult.failed();

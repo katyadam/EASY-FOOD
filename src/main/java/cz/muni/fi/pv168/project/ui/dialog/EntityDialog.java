@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Entity;
-import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import net.miginfocom.swing.MigLayout;
@@ -89,7 +88,8 @@ abstract class EntityDialog<E extends Entity> {
 
     public Optional<E> show(JComponent parentComponent, String title, Validator<E> entityValidator) {
         int result = JOptionPane.showOptionDialog(parentComponent, panel, title,
-                OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);;
+                OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);
+        ;
         ValidationResult validationResult = entityValidator.validate(getEntity());
         if (result == OK_OPTION) {
             if (validationResult.isValid()) {
@@ -99,8 +99,7 @@ abstract class EntityDialog<E extends Entity> {
                         new JPanel(),
                         String.join(", ", validationResult.getValidationErrors())
                 );
-                show(parentComponent, title, entityValidator);
-                return Optional.empty();
+                return show(parentComponent, title, entityValidator);
             }
         }
         return Optional.empty();

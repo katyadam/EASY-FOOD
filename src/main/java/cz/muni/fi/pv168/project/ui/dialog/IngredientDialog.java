@@ -71,8 +71,10 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
 
     @Override
     Ingredient getEntity() {
-        entity.setName(nameField.getText());
-        entity.setNutritionalValue((int) nutritionalValueSpinner.getValue());
-        return entity;
+        Ingredient setEntity = new Ingredient();
+        setEntity.setGuid(entity.getGuid());
+        setEntity.setName(nameField.getText());
+        setEntity.setNutritionalValue((int) nutritionalValueSpinner.getValue());
+        return setEntity;
     }
 }
