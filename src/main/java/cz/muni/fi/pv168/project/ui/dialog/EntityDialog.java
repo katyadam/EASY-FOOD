@@ -103,31 +103,5 @@ abstract class EntityDialog<E extends Entity> {
             }
         }
         return Optional.empty();
-//        if (result == OK_OPTION) {
-//            if (getEntity().getName().isEmpty()) {
-//                JOptionPane.showMessageDialog(parentComponent, "Name cannot be empty");
-//                show(parentComponent, title);
-//                return Optional.empty();
-//            }
-//            if (getEntity().getClass() == Recipe.class) {
-//                Recipe recipe = (Recipe) getEntity();
-//                if (recipe.getCategory() == null) {
-//                    JOptionPane.showMessageDialog(parentComponent, "Missing category!");
-//                    show(parentComponent, title);
-//                    return Optional.empty();
-//                }
-//            }
-//            if (!(entity instanceof Recipe)) {
-//                Entity e = getEntity();
-//                if (!(entities.stream().filter(x -> x.getName().equals(e.getName())).toList().size() == 1)) {
-//                    JOptionPane.showMessageDialog(parentComponent, "Name must be unique");
-//                    show(parentComponent, title);
-//                    return Optional.empty();
-//                }
-//            }
-//            return Optional.of(getEntity());
-//        } else {
-//            return Optional.empty();
-//        }
     }
 }

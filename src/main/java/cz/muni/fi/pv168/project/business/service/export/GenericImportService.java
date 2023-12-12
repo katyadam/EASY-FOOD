@@ -2,16 +2,14 @@ package cz.muni.fi.pv168.project.business.service.export;
 
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchOperationException;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
 import cz.muni.fi.pv168.project.business.service.export.format.FormatMapping;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchImporter;
-
-
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
 
@@ -81,8 +79,6 @@ public class GenericImportService implements ImportService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     private void createRecipe(Recipe recipe) {

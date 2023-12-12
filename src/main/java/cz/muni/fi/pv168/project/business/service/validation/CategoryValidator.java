@@ -20,6 +20,4 @@ public class CategoryValidator implements Validator<Category> {
         }
         return ValidationResult.success();
     }
-
-
 }

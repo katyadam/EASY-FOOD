@@ -49,5 +49,10 @@ public interface Repository<T> {
      */
     boolean existsByGuid(String guid);
 
+    /**
+     * Check if there is an existing Entity with name {@code name}
+     *
+     * @return true, if an Entity with given {@code} is found, false otherwise
+     */
     boolean existsByName(String name);
 }
