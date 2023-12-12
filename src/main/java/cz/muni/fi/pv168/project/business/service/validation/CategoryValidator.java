@@ -14,7 +14,9 @@ public class CategoryValidator implements Validator<Category> {
         }
 
         if (!validateAlphaNumWhiteSpace(model.getName()).isValid()) {
-            return ValidationResult.failed("Category name format is invalid!");
+            return ValidationResult.failed(
+                    String.format("Category name format is invalid! Category name: %s", model.getName())
+            );
         }
         return ValidationResult.success();
     }

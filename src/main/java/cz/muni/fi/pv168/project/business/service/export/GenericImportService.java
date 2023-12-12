@@ -12,8 +12,10 @@ import cz.muni.fi.pv168.project.business.service.export.format.FormatMapping;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchImporter;
 
 
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
 
+import javax.swing.*;
 import java.util.Collection;
 
 /**
@@ -61,23 +63,35 @@ public class GenericImportService implements ImportService {
     }
 
     private void createRecipe(Recipe recipe) {
-        recipeCrudService.create(recipe)
-                .intoException();
+        ValidationResult validationResult = recipeCrudService.create(recipe);
+        if (!validationResult.isValid()) {
+            JOptionPane.showMessageDialog(new JPanel(), validationResult);
+            throw new DataManipulationException("Create recipe failed!");
+        }
     }
 
     private void createIngredient(Ingredient ingredient) {
-        ingredientCrudService.create(ingredient)
-                .intoException();
+        ValidationResult validationResult = ingredientCrudService.create(ingredient);
+        if (!validationResult.isValid()) {
+            JOptionPane.showMessageDialog(new JPanel(), validationResult);
+            throw new DataManipulationException("Create ingredient failed!");
+        }
     }
 
     private void createCustomUnit(Unit unit) {
-        customUnitsCrudService.create(unit)
-                .intoException();
+        ValidationResult validationResult = customUnitsCrudService.create(unit);
+        if (!validationResult.isValid()) {
+            JOptionPane.showMessageDialog(new JPanel(), validationResult);
+            throw new DataManipulationException("Create unit failed!");
+        }
     }
 
     private void createCategory(Category category) {
-        categoryCrudService.create(category)
-                .intoException();
+        ValidationResult validationResult = categoryCrudService.create(category);
+        if (!validationResult.isValid()) {
+            JOptionPane.showMessageDialog(new JPanel(), validationResult);
+            throw new DataManipulationException("Create category failed!");
+        }
     }
 
 

@@ -10,7 +10,9 @@ public class IngredientValidator implements Validator<Ingredient> {
             return ValidationResult.failed("Ingredient name is empty!");
         }
         if (!StringValidator.validateAlphaNumWhiteSpace(model.getName()).isValid()) {
-            return ValidationResult.failed("Ingredient name format is invalid!");
+            return ValidationResult.failed(
+                    String.format("Ingredient name format is invalid! Ingredient name: %s", model.getName())
+            );
         }
 //        if (!StringValidator.validateAlphaNum(model.getUnitType().getAbbreviation()).isValid()) {
 //            return ValidationResult.failed();

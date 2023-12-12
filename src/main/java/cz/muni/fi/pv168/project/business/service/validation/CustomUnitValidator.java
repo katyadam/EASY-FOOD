@@ -14,13 +14,22 @@ public class CustomUnitValidator implements Validator<Unit> {
             return ValidationResult.failed("Unit abbreviation is empty!");
         }
         if (!validateAlphaNumWhiteSpace(model.getName()).isValid()) {
-            return ValidationResult.failed("Unit name format is invalid!");
+            return ValidationResult.failed(
+                    String.format("Unit name format is invalid! Unit name: %s", model.getName())
+            );
         }
         if (!validateAlphaNum(model.getAbbreviation()).isValid()) {
-            return ValidationResult.failed("Unit abbreviation is invalid!");
+            return ValidationResult.failed(
+                    String.format(
+                            "Unit abbreviation name format is invalid! Unit abbr. name: %s",
+                            model.getAbbreviation()
+                    )
+            );
         }
         if (!validateDouble(model.getBaseAmountNumber()).isValid()) {
-            return ValidationResult.failed("Unit amount format is invalid!");
+            return ValidationResult.failed(
+                    String.format("Unit amount format is invalid! Unit amount: %f", model.getAmount())
+            );
         }
         if (!validateAlphaNum(model.getBaseUnit().getAbbreviation()).isValid()) {
             return ValidationResult.failed("System err: Base units abbreviation is invalid! Please fix your db!");

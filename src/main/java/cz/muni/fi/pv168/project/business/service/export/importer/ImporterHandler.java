@@ -7,9 +7,11 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ImporterHandler extends DefaultHandler {
     private final List<Category> categoryList;
@@ -105,21 +107,24 @@ public class ImporterHandler extends DefaultHandler {
     }
 
     private Category parseCategory(String categoryName) {
-        return categoryList.stream()
+        Optional<Category> optionalCategory = categoryList.stream()
                 .filter(category -> category.getName().equals(categoryName))
-                .findFirst()
-                .orElseThrow(
-                        () -> new DataManipulationException("Category with name: " + categoryName + " not found!")
-                );
+                .findFirst();
+        if (optionalCategory.isEmpty()) {
+            popUpDialog(new DataManipulationException("Category with name: " + categoryName + " not found!"));
+        }
+        return optionalCategory.get();
+
     }
 
     private Ingredient parseIngredient(String ingredientName) {
-        return ingredientList.stream()
+        Optional<Ingredient> optionalIngredient = ingredientList.stream()
                 .filter(ingredient -> ingredient.getName().equals(ingredientName))
-                .findFirst()
-                .orElseThrow(
-                        () -> new DataManipulationException("Ingredient with name: " + ingredientName + " not found!")
-                );
+                .findFirst();
+        if (optionalIngredient.isEmpty()) {
+            popUpDialog(new DataManipulationException("Ingredient with name: " + ingredientName + " not found!"));
+        }
+        return optionalIngredient.get();
     }
 
     private PreparationTime parsePreparationTime(String prepTime) {
@@ -128,14 +133,22 @@ public class ImporterHandler extends DefaultHandler {
     }
 
     private Unit parseUnit(String unitName) {
-        return unitList.stream()
+        Optional<Unit> optionalUnit = unitList.stream()
                 .filter(unit -> unit.getName().equals(unitName))
-                .findFirst()
-                .orElseThrow(() -> new DataManipulationException("Unit: " + unitName + " was not found!"));
+                .findFirst();
+        if (optionalUnit.isEmpty()) {
+            popUpDialog(new DataManipulationException("Unit with name: " + unitName + " not found!"));
+        }
+        return optionalUnit.get();
     }
 
     public Batch getBatch() {
         return new Batch(recipeList, ingredientList, unitList, categoryList);
+    }
+
+    private void popUpDialog(DataManipulationException e) {
+        JOptionPane.showMessageDialog(new JPanel(), e.getMessage());
+        throw e;
     }
 
 }
