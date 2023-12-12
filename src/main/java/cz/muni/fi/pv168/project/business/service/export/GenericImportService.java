@@ -16,6 +16,9 @@ import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 
 /**
@@ -28,37 +31,57 @@ public class GenericImportService implements ImportService {
     private final CrudService<Unit> customUnitsCrudService;
     private final CrudService<Category> categoryCrudService;
     private final FormatMapping<BatchImporter> importers;
+    private final GenericExportService exportService;
 
     public GenericImportService(
             CrudService<Recipe> recipeCrudService,
             CrudService<Ingredient> ingredientCrudService,
             CrudService<Unit> customUnitsCrudService,
             CrudService<Category> categoryCrudService,
-            Collection<BatchImporter> importers
-    ) {
+            Collection<BatchImporter> importers,
+            GenericExportService exportService) {
         this.recipeCrudService = recipeCrudService;
         this.ingredientCrudService = ingredientCrudService;
         this.customUnitsCrudService = customUnitsCrudService;
         this.categoryCrudService = categoryCrudService;
 
         this.importers = new FormatMapping<>(importers);
+        this.exportService = exportService;
     }
 
     @Override
     public void importData(String filePath, ImportType importType) {
-        if (importType == ImportType.OVERWRITE) {
-            recipeCrudService.deleteAll();
-            ingredientCrudService.deleteAll();
-            customUnitsCrudService.deleteAll();
-            categoryCrudService.deleteAll();
+        try {
+//            creating temp file to store current data
+            Path tempFile = Files.createTempFile("import-temp", ".xml");
+            exportService.exportData(tempFile.toAbsolutePath().toString());
+
+//            trying to import data
+            try {
+                if (importType == ImportType.OVERWRITE) {
+                    recipeCrudService.deleteAll();
+                    ingredientCrudService.deleteAll();
+                    customUnitsCrudService.deleteAll();
+                    categoryCrudService.deleteAll();
+                }
+
+                var batch = getImporter(filePath).importBatch(filePath);
+
+                batch.categories().forEach(this::createCategory);
+                batch.ingredients().forEach(this::createIngredient);
+                batch.units().forEach(this::createCustomUnit);
+                batch.recipes().forEach(this::createRecipe);
+
+            } catch (RuntimeException e) {
+//                importing data stored in temp file back
+                importData(tempFile.toFile().getPath(), ImportType.OVERWRITE);
+                throw new DataManipulationException(e.getMessage());
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        var batch = getImporter(filePath).importBatch(filePath);
-
-        batch.categories().forEach(this::createCategory);
-        batch.ingredients().forEach(this::createIngredient);
-        batch.units().forEach(this::createCustomUnit);
-        batch.recipes().forEach(this::createRecipe);
 
     }
 

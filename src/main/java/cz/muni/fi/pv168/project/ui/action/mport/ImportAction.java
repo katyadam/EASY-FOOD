@@ -5,8 +5,11 @@ import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.service.crud.*;
+import cz.muni.fi.pv168.project.business.service.export.GenericExportService;
 import cz.muni.fi.pv168.project.business.service.export.GenericImportService;
+import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchXmlImporter;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -68,7 +71,14 @@ public class ImportAction extends AbstractAction {
                     ingredientCrudService,
                     unitService,
                     categoryCrudService,
-                    List.of(xmlImporter)
+                    List.of(xmlImporter),
+                    new GenericExportService(
+                            recipeCrudService,
+                            ingredientCrudService,
+                            unitService,
+                            categoryCrudService,
+                            List.of(new BatchXmlExporter())
+                    )
             );
             genericImportService.importData(selectedFile.getAbsolutePath(), importType);
             callback.run();
