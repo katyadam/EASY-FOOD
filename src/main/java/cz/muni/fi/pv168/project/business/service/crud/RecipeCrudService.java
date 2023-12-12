@@ -49,6 +49,8 @@ public class RecipeCrudService implements CrudService<Recipe> {
             );
 //            Creating added ingredient via their service
             newEntity.getAddedIngredients().forEach(addedIngredientCrudService::create);
+//            adding recipe to usedIn list in category, later should decline deleting this category
+            newEntity.getCategory().addRecipe(newEntity);
         }
 
         return validationResult;
@@ -65,8 +67,9 @@ public class RecipeCrudService implements CrudService<Recipe> {
     }
 
     @Override
-    public void deleteByGuid(String guid) {
+    public ValidationResult deleteByGuid(String guid) {
         recipeRepository.deleteByGuid(guid);
+        return ValidationResult.success();
     }
 
     @Override

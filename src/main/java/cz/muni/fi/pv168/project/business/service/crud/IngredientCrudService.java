@@ -60,8 +60,9 @@ public class IngredientCrudService implements CrudService<Ingredient> {
     }
 
     @Override
-    public void deleteByGuid(String guid) {
+    public ValidationResult deleteByGuid(String guid) {
         ingredientRepository.deleteByGuid(guid);
+        return ValidationResult.success();
     }
 
     @Override

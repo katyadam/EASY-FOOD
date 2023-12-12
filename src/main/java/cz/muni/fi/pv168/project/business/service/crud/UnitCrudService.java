@@ -61,8 +61,9 @@ public class UnitCrudService implements CrudService<Unit> {
     }
 
     @Override
-    public void deleteByGuid(String guid) {
+    public ValidationResult deleteByGuid(String guid) {
         customUnitRepository.deleteByGuid(guid);
+        return ValidationResult.success();
     }
 
     @Override
