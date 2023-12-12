@@ -3,24 +3,25 @@ package cz.muni.fi.pv168.project.business.service.crud;
 import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
+import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 
 import java.util.List;
 
-public class UnitService implements CrudService<Unit> {
+public class UnitCrudService implements CrudService<Unit> {
 
     private final Repository<Unit> customUnitRepository;
     private final Validator<Unit> customUnitValidator;
     private final GuidProvider guidProvider;
 
-    public UnitService(
+    public UnitCrudService(
             Repository<Unit> customUnitRepository,
             Validator<Unit> customUnitValidator,
             GuidProvider guidProvider
     ) {
         this.customUnitRepository = customUnitRepository;
-        this.customUnitValidator = customUnitValidator;
+        this.customUnitValidator = customUnitValidator.and(new DuplicateValidator<>(customUnitRepository));
         this.guidProvider = guidProvider;
     }
 

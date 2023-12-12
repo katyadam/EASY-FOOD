@@ -12,12 +12,12 @@ import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
 import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.UnitService;
+import cz.muni.fi.pv168.project.business.service.crud.UnitCrudService;
 import cz.muni.fi.pv168.project.business.service.export.ExportService;
 import cz.muni.fi.pv168.project.business.service.export.ImportService;
 import cz.muni.fi.pv168.project.business.service.validation.AddedIngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
+import cz.muni.fi.pv168.project.business.service.validation.UnitValidator;
 import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
@@ -67,7 +67,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final RecipeValidator recipeValidator;
     private final CategoryValidator categoryValidator;
     private final IngredientValidator ingredientValidator;
-    private final CustomUnitValidator customUnitValidator;
+    private final UnitValidator customUnitValidator;
     private final AddedIngredientValidator addedIngredientValidator;
     private static final DatabaseConnection CONNECTION = new DatabaseConnection();
 
@@ -78,7 +78,7 @@ public class CommonDependencyProvider implements DependencyProvider {
         recipeValidator = new RecipeValidator();
         categoryValidator = new CategoryValidator();
         ingredientValidator = new IngredientValidator();
-        customUnitValidator = new CustomUnitValidator();
+        customUnitValidator = new UnitValidator();
         addedIngredientValidator = new AddedIngredientValidator();
 
         var guidProvider = new UuidGuidProvider();
@@ -130,7 +130,7 @@ public class CommonDependencyProvider implements DependencyProvider {
 
         categoryCrudService = new CategoryCrudService(categories, categoryValidator, guidProvider);
         ingredientCrudService = new IngredientCrudService(ingredients, ingredientValidator, guidProvider);
-        customUnitCrudService = new UnitService(customUnits, customUnitValidator, guidProvider);
+        customUnitCrudService = new UnitCrudService(customUnits, customUnitValidator, guidProvider);
         addedIngredientCrudService = new AddedIngredientCrudService(addedIngredients, addedIngredientValidator, guidProvider);
         recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider, addedIngredientCrudService);
 

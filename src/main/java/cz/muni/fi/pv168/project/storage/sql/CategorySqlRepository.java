@@ -62,6 +62,12 @@ public class CategorySqlRepository implements Repository<Category> {
     }
 
     @Override
+    public boolean existsByName(String name) {
+        return findAll().stream()
+                .anyMatch(entity -> entity.getName().equals(name));
+    }
+
+    @Override
     public Optional<Category> findByGuid(String guid) {
         return categoryDao
                 .findByGuid(guid)

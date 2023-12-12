@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
+import cz.muni.fi.pv168.project.business.service.validation.UnitValidator;
 import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
@@ -85,7 +85,7 @@ public final class EditAction extends ContextAction {
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
                 Unit unit = customUnitTableModel.getEntity(modelRow);
                 CustomUnitDialog dialog = new CustomUnitDialog(unit, (CustomUnitTableModel) unitsTable.getModel());
-                dialog.show(activeTable, "Edit Custom Unit", new CustomUnitValidator())
+                dialog.show(activeTable, "Edit Custom Unit", new UnitValidator())
                         .ifPresent(customUnitTableModel::updateRow);
                 break;
             }

@@ -61,6 +61,12 @@ public class UnitSqlRepository implements Repository<Unit> {
     }
 
     @Override
+    public boolean existsByName(String name) {
+        return findAll().stream()
+                .anyMatch(entity -> entity.getName().equals(name));
+    }
+
+    @Override
     public Optional<Unit> findByGuid(String guid) {
         return customUnitDao
                 .findByGuid(guid)

@@ -81,4 +81,9 @@ public class InMemoryRepository<T extends Entity> implements Repository<T> {
     {
         return data.containsKey(guid);
     }
+
+    @Override
+    public boolean existsByName(String name) {
+        return false;
+    }
 }

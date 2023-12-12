@@ -61,6 +61,11 @@ public class RecipeSqlRepository implements Repository<Recipe> {
     }
 
     @Override
+    public boolean existsByName(String name) {
+        return false;
+    }
+
+    @Override
     public Optional<Recipe> findByGuid(String guid) {
         return recipeDao
                 .findByGuid(guid)

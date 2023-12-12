@@ -48,4 +48,6 @@ public interface Repository<T> {
      * @return true, if an Entity with given {@code} is found, false otherwise
      */
     boolean existsByGuid(String guid);
+
+    boolean existsByName(String name);
 }

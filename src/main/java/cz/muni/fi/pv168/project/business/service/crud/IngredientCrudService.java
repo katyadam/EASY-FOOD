@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.repository.Repository;
+import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 
@@ -20,7 +21,7 @@ public class IngredientCrudService implements CrudService<Ingredient> {
             GuidProvider guidProvider
     ) {
         this.ingredientRepository = ingredientRepository;
-        this.ingredientValidator = ingredientValidator;
+        this.ingredientValidator = ingredientValidator.and(new DuplicateValidator<>(ingredientRepository));
         this.guidProvider = guidProvider;
     }
 

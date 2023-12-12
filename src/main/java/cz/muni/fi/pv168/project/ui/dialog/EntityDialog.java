@@ -89,7 +89,7 @@ abstract class EntityDialog<E extends Entity> {
     public Optional<E> show(JComponent parentComponent, String title, Validator<E> entityValidator) {
         int result = JOptionPane.showOptionDialog(parentComponent, panel, title,
                 OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);
-        ;
+
         ValidationResult validationResult = entityValidator.validate(getEntity());
         if (result == OK_OPTION) {
             if (validationResult.isValid()) {
@@ -97,7 +97,7 @@ abstract class EntityDialog<E extends Entity> {
             } else {
                 JOptionPane.showMessageDialog(
                         new JPanel(),
-                        String.join(", ", validationResult.getValidationErrors())
+                        validationResult
                 );
                 return show(parentComponent, title, entityValidator);
             }

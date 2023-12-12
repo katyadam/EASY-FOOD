@@ -82,7 +82,6 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
     public void updateRow(T entity) {
         ValidationResult validationResult = crudService.update(entity);
         if (validationResult.isValid()) {
-            int rowIndex = entities.indexOf(entity);
             refresh();
         } else {
             JOptionPane.showMessageDialog(

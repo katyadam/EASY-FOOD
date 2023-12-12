@@ -61,6 +61,12 @@ public class IngredientSqlRepository implements Repository<Ingredient> {
     }
 
     @Override
+    public boolean existsByName(String name) {
+        return findAll().stream()
+                .anyMatch(entity -> entity.getName().equals(name));
+    }
+
+    @Override
     public Optional<Ingredient> findByGuid(String guid) {
         return ingredientDao
                 .findByGuid(guid)

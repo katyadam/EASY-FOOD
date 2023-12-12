@@ -83,6 +83,11 @@ public class AddedIngredientSqlRepository implements Repository<AddedIngredient>
     }
 
     @Override
+    public boolean existsByName(String name) {
+        return false;
+    }
+
+    @Override
     public Optional<AddedIngredient> findByGuid(String guid) {
         return addedIngredientDao
                 .findByGuid(guid)

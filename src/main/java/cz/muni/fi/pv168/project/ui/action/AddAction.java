@@ -4,7 +4,7 @@ import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CustomUnitValidator;
+import cz.muni.fi.pv168.project.business.service.validation.UnitValidator;
 import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
@@ -71,7 +71,7 @@ public final class AddAction extends ContextAction {
             case 2 -> {
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) unitsTable.getModel();
                 CustomUnitDialog customUnitDialog = new CustomUnitDialog(null, (CustomUnitTableModel) unitsTable.getModel());
-                customUnitDialog.show(unitsTable, "Add Custom Unit", new CustomUnitValidator())
+                customUnitDialog.show(unitsTable, "Add Custom Unit", new UnitValidator())
                         .ifPresent(customUnitTableModel::addRow);
             }
             case 3 -> {

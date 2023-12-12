@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
+import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 
@@ -20,7 +21,7 @@ public class CategoryCrudService implements CrudService<Category> {
             GuidProvider guidProvider
     ) {
         this.categoryRepository = categoryRepository;
-        this.categoryValidator = categoryValidator;
+        this.categoryValidator = categoryValidator.and(new DuplicateValidator<>(categoryRepository));
         this.guidProvider = guidProvider;
     }
 
