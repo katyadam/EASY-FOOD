@@ -23,7 +23,7 @@ public interface CrudService<T> {
     /**
      * Delete entity with given guid.
      */
-    ValidationResult deleteByGuid(String guid);
+    ValidationResult deleteByGuid(String guid, boolean userAgreed);
 
     /**
      * Delete all entities.

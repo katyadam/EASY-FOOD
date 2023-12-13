@@ -35,7 +35,7 @@ public class AddedIngredientsTableModel extends AbstractEntityTableModel<AddedIn
         AddedIngredient entity = getEntity(rowIndex);
         entities.remove(rowIndex);
         if (entity.getGuid() != null) {
-            crudService.deleteByGuid(entity.getGuid());
+            crudService.deleteByGuid(entity.getGuid(), true);
         }
         fireTableRowsDeleted(rowIndex, rowIndex);
     }

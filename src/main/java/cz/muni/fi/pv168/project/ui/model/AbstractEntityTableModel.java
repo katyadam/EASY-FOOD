@@ -61,15 +61,22 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
 
     public void deleteRow(int rowIndex) {
         T entity = getEntity(rowIndex);
-        ValidationResult validationResult = crudService.deleteByGuid(entity.getGuid());
+        ValidationResult validationResult = crudService.deleteByGuid(entity.getGuid(), false);
         if (validationResult.isValid()) {
             entities.remove(rowIndex);
             fireTableRowsDeleted(rowIndex, rowIndex);
         } else {
-            JOptionPane.showMessageDialog(
+            int option = JOptionPane.showConfirmDialog(
                     new JPanel(),
-                    validationResult
+                    validationResult,
+                    "Do you agree?",
+                    JOptionPane.YES_NO_OPTION
             );
+            if (option == 0) {
+                crudService.deleteByGuid(entity.getGuid(), true);
+                entities.remove(rowIndex);
+                fireTableRowsDeleted(rowIndex, rowIndex);
+            }
         }
     }
 

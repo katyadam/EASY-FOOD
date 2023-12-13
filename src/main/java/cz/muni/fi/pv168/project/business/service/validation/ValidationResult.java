@@ -44,7 +44,7 @@ public final class ValidationResult {
         if (isValid()) {
             return "Validation passed";
         }
-        return "Validation has failed:\n" + String.join("\n", getValidationErrors());
+        return String.join("\n", getValidationErrors());
     }
 
     public void intoException() {

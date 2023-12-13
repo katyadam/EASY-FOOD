@@ -7,7 +7,6 @@ import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.*;
 import cz.muni.fi.pv168.project.storage.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.CategorySqlRepository;
-import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import java.util.List;
 
@@ -67,13 +66,13 @@ public class CategoryCrudService implements CrudService<Category> {
     }
 
     @Override
-    public ValidationResult deleteByGuid(String guid) {
+    public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
         Category toDelete = ((CategorySqlRepository) categoryRepository).findByGuid(guid)
                 .orElseThrow(
                         () -> new DataStorageException("Category with guid: " + guid + "not found!")
                 );
         ValidationResult validationResult = usageValidator.validate(toDelete);
-        if (validationResult.isValid()) {
+        if (validationResult.isValid() || userAgreed) {
             categoryRepository.deleteByGuid(guid);
         }
         return validationResult;

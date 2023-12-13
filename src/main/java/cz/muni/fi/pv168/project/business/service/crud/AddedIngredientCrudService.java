@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
@@ -64,7 +63,7 @@ public class AddedIngredientCrudService implements CrudService<AddedIngredient> 
     }
 
     @Override
-    public ValidationResult deleteByGuid(String guid) {
+    public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
         addedIngredientRepository.deleteByGuid(guid);
         return ValidationResult.success();
     }
