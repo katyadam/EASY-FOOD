@@ -4,9 +4,11 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.business.service.validation.*;
+import cz.muni.fi.pv168.project.business.service.validation.CategoryUsageValidator;
+import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
+import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.storage.DataStorageException;
-import cz.muni.fi.pv168.project.storage.sql.CategorySqlRepository;
 
 import java.util.List;
 
@@ -67,7 +69,7 @@ public class CategoryCrudService implements CrudService<Category> {
 
     @Override
     public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
-        Category toDelete = ((CategorySqlRepository) categoryRepository).findByGuid(guid)
+        Category toDelete = categoryRepository.findByGuid(guid)
                 .orElseThrow(
                         () -> new DataStorageException("Category with guid: " + guid + "not found!")
                 );

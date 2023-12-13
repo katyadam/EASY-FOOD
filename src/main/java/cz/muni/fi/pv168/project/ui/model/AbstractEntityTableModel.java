@@ -69,7 +69,7 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
             int option = JOptionPane.showConfirmDialog(
                     new JPanel(),
                     validationResult,
-                    "Do you agree?",
+                    "Are you sure you want to delete?",
                     JOptionPane.YES_NO_OPTION
             );
             if (option == 0) {

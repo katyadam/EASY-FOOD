@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.business.service.validation;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.ui.MainWindow;
 
 public class CategoryUsageValidator implements Validator<Category> {
 

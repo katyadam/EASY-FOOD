@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
+import cz.muni.fi.pv168.project.storage.DataStorageException;
 
 import java.util.List;
 
@@ -14,15 +15,19 @@ public class IngredientCrudService implements CrudService<Ingredient> {
     private final Repository<Ingredient> ingredientRepository;
     private final Validator<Ingredient> ingredientValidator;
     private final GuidProvider guidProvider;
+    private final Validator<Ingredient> ingredientUsageValidator;
 
     public IngredientCrudService(
             Repository<Ingredient> ingredientRepository,
             Validator<Ingredient> ingredientValidator,
-            GuidProvider guidProvider
-    ) {
+            GuidProvider guidProvider,
+            Validator<Ingredient> ingredientUsageValidator) {
         this.ingredientRepository = ingredientRepository;
-        this.ingredientValidator = ingredientValidator.and(new DuplicateValidator<>(ingredientRepository));
+        this.ingredientValidator = ingredientValidator
+                .and(new DuplicateValidator<>(ingredientRepository))
+                .and(ingredientUsageValidator);
         this.guidProvider = guidProvider;
+        this.ingredientUsageValidator = ingredientUsageValidator;
     }
 
     @Override
@@ -61,8 +66,15 @@ public class IngredientCrudService implements CrudService<Ingredient> {
 
     @Override
     public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
-        ingredientRepository.deleteByGuid(guid);
-        return ValidationResult.success();
+        Ingredient toDelete = ingredientRepository.findByGuid(guid)
+                .orElseThrow(
+                        () -> new DataStorageException("Ingredient with guid: " + guid + "not found!")
+                );
+        ValidationResult validationResult = ingredientUsageValidator.validate(toDelete);
+        if (validationResult.isValid() || userAgreed) {
+            ingredientRepository.deleteByGuid(guid);
+        }
+        return validationResult;
     }
 
     @Override

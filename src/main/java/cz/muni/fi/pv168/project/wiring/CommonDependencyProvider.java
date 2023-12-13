@@ -1,42 +1,18 @@
 package cz.muni.fi.pv168.project.wiring;
 
-import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
-import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.CrudService;
-import cz.muni.fi.pv168.project.business.service.crud.IngredientCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.RecipeCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.UnitCrudService;
+import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.ExportService;
 import cz.muni.fi.pv168.project.business.service.export.ImportService;
 import cz.muni.fi.pv168.project.business.service.validation.*;
-import cz.muni.fi.pv168.project.storage.sql.AddedIngredientSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.CategorySqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.IngredientSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.RecipeSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.UnitSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.dao.AddedIngredientDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.BaseUnitDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.CategoryDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.IngredientDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.RecipeDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.UnitDao;
+import cz.muni.fi.pv168.project.storage.sql.*;
+import cz.muni.fi.pv168.project.storage.sql.dao.*;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseConnection;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseInitializer;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.AddedIngredientMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.BaseUnitMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CategoryMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.IngredientMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.RecipeMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.UnitMapper;
+import cz.muni.fi.pv168.project.storage.sql.entity.mapper.*;
 
 import java.sql.Connection;
 
@@ -64,7 +40,6 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final IngredientValidator ingredientValidator;
     private final UnitValidator customUnitValidator;
     private final AddedIngredientValidator addedIngredientValidator;
-
     private final CategoryUsageValidator categoryUsageValidator;
 
     private static final DatabaseConnection CONNECTION = new DatabaseConnection();
@@ -129,8 +104,18 @@ public class CommonDependencyProvider implements DependencyProvider {
         categoryUsageValidator = new CategoryUsageValidator(recipes);
 
         categoryCrudService = new CategoryCrudService(categories, categoryValidator, categoryUsageValidator);
-        ingredientCrudService = new IngredientCrudService(ingredients, ingredientValidator, guidProvider);
-        customUnitCrudService = new UnitCrudService(customUnits, customUnitValidator, guidProvider);
+        ingredientCrudService = new IngredientCrudService(
+                ingredients,
+                ingredientValidator,
+                guidProvider,
+                new IngredientUsageValidator(addedIngredients)
+        );
+        customUnitCrudService = new UnitCrudService(
+                customUnits,
+                customUnitValidator,
+                guidProvider,
+                new UnitUsageValidator(addedIngredients)
+        );
         addedIngredientCrudService = new AddedIngredientCrudService(addedIngredients, addedIngredientValidator, guidProvider);
         recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider, addedIngredientCrudService);
 
