@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.ui.action;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
@@ -16,14 +16,14 @@ import java.io.File;
 
 public class ExportAction extends AbstractAction {
     protected final CrudService<Category> categoryCrudService;
-    protected final CrudService<Unit> unitService;
+    protected final CrudService<CustomUnit> unitService;
     protected final CrudService<Ingredient> ingredientCrudService;
     protected final CrudService<Recipe> recipeCrudService;
 
     public ExportAction(
             String name,
             CrudService<Category> categoryCrudService,
-            CrudService<Unit> unitService,
+            CrudService<CustomUnit> unitService,
             CrudService<Ingredient> ingredientCrudService,
             CrudService<Recipe> recipeCrudService
     ) {

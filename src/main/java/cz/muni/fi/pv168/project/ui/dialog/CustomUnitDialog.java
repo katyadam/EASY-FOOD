@@ -2,12 +2,12 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.BaseUnit;
 import cz.muni.fi.pv168.project.business.model.BaseUnits;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 
 import javax.swing.*;
 
-public class CustomUnitDialog extends EntityDialog<Unit> {
+public class CustomUnitDialog extends EntityDialog<CustomUnit> {
 
 
     private final JTextField customUnitNameField = new JTextField();
@@ -15,13 +15,13 @@ public class CustomUnitDialog extends EntityDialog<Unit> {
     private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 50000.0, 1.0));
     private final JComboBox<BaseUnit> units = new JComboBox<>(BaseUnits.getBaseUnitList().toArray(new BaseUnit[0]));
 
-    public CustomUnitDialog(Unit unit, CustomUnitTableModel unitTableModel) {
+    public CustomUnitDialog(CustomUnit unit, CustomUnitTableModel unitTableModel) {
         super(unit, unitTableModel.getEntities());
 
         if (unit != null) {
             setValues();
         } else {
-            entity = new Unit(null, null, 0, null);
+            entity = new CustomUnit(null, null, 0, null);
         }
         addFields();
     }
@@ -40,8 +40,8 @@ public class CustomUnitDialog extends EntityDialog<Unit> {
     }
 
     @Override
-    Unit getEntity() {
-        Unit setEntity = new Unit();
+    CustomUnit getEntity() {
+        CustomUnit setEntity = new CustomUnit();
         setEntity.setGuid(entity.getGuid());
         setEntity.setName(customUnitNameField.getText());
         setEntity.setAbbreviation(customUnitAbbreviationField.getText());

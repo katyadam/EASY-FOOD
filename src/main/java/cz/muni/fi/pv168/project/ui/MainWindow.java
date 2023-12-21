@@ -5,7 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
@@ -50,7 +50,7 @@ public class MainWindow {
 
     private List<Recipe> recipesList;
     private List<Ingredient> ingredientList;
-    private List<Unit> unitList;
+    private List<CustomUnit> unitList;
     private List<Category> categoryList;
 
     private JTable recipeTable;
@@ -85,7 +85,7 @@ public class MainWindow {
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Category> categoryCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
-    private final CrudService<Unit> unitService;
+    private final CrudService<CustomUnit> unitService;
 
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
     private MultiSelectCombobox<Category> categoriesFilter;

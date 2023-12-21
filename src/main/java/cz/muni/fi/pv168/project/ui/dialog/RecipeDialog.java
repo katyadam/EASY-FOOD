@@ -31,7 +31,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JSpinner timeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000000, 1));
     private final JComboBox<Ingredient> ingredients;
     private final AddedIngredientsTableModel addedIngredientsTableModel;
-    private final JComboBox<Unit> units;
+    private final JComboBox<CustomUnit> units;
     private final JTextArea recipeDescriptionTextField = new JTextArea();
     private final JTable addedIngredientsTable = new JTable();
 
@@ -47,7 +47,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
             AddedIngredient newIngredient = new AddedIngredient(
                     (Ingredient) ingredients.getSelectedItem(),
                     (double) amount.getValue(),
-                    (Unit) units.getSelectedItem());
+                    (CustomUnit) units.getSelectedItem());
             if (entity.getGuid() != null) {
                 newIngredient.setRecipe(entity);
                 MainWindow.commonDependencyProvider.getAddedIngredientCrudService().create(newIngredient);
@@ -87,9 +87,9 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         this.categoryTableModel = categoryTableModel;
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
 
-        List<Unit> unitList = new LinkedList<>();
+        List<CustomUnit> unitList = new LinkedList<>();
         unitList.addAll(unitTableModel.getEntities());
-        units = new JComboBox<>(unitList.toArray(new Unit[0]));
+        units = new JComboBox<>(unitList.toArray(new CustomUnit[0]));
 
         List<Category> categories = new LinkedList<>(categoryTableModel.getEntities());
         categories.add(0, null);

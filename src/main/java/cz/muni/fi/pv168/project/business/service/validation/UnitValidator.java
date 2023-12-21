@@ -1,17 +1,13 @@
 package cz.muni.fi.pv168.project.business.service.validation;
 
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Unit;
-import cz.muni.fi.pv168.project.business.service.crud.CrudService;
-
-import java.util.Optional;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 
 import static cz.muni.fi.pv168.project.business.service.validation.StringValidator.*;
 
-public class UnitValidator implements Validator<Unit> {
+public class UnitValidator implements Validator<CustomUnit> {
 
     @Override
-    public ValidationResult validate(Unit model) {
+    public ValidationResult validate(CustomUnit model) {
         if (model.getName().isEmpty()) {
             return ValidationResult.failed("Unit name is empty!");
         }

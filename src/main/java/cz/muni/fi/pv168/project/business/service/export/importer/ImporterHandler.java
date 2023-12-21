@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class ImporterHandler extends DefaultHandler {
     private final List<Category> categoryList;
-    private final List<Unit> unitList;
+    private final List<CustomUnit> unitList;
     private final List<Ingredient> ingredientList;
     private final List<Recipe> recipeList;
 
@@ -27,7 +27,7 @@ public class ImporterHandler extends DefaultHandler {
     public static final String ADDED_INGREDIENT = "AddedIngredient";
     private StringBuilder elementValue;
     private Category activeCategory;
-    private Unit activeUnit;
+    private CustomUnit activeUnit;
     private Ingredient activeIngredient;
     private Recipe activeRecipe;
     private AddedIngredient activeAddedIngredient;
@@ -54,7 +54,7 @@ public class ImporterHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName) {
             case CATEGORY -> activeCategory = new Category();
-            case UNIT -> activeUnit = new Unit();
+            case UNIT -> activeUnit = new CustomUnit();
             case INGREDIENT -> activeIngredient = new Ingredient();
             case RECIPE -> activeRecipe = new Recipe();
             case ADDED_INGREDIENTS -> addedIngredients = new ArrayList<>();
@@ -132,8 +132,8 @@ public class ImporterHandler extends DefaultHandler {
         return new PreparationTime(Integer.parseInt(split[0]), Integer.parseInt(split[2]));
     }
 
-    private Unit parseUnit(String unitName) {
-        Optional<Unit> optionalUnit = unitList.stream()
+    private CustomUnit parseUnit(String unitName) {
+        Optional<CustomUnit> optionalUnit = unitList.stream()
                 .filter(unit -> unit.getName().equals(unitName))
                 .findFirst();
         if (optionalUnit.isEmpty()) {

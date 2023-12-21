@@ -31,7 +31,7 @@ public final class TestDataGenerator {
     private static final List<String> CUSTOM_UNIT_NAMES = new ArrayList<>();
     private static final List<String> CUSTOM_UNIT_ABBREVIATIONS = new ArrayList<>();
     private final List<Category> categories;
-    private final List<Unit> units;
+    private final List<CustomUnit> units;
     private final List<Ingredient> ingredients;
     private final List<Recipe> recipes;
 
@@ -39,7 +39,7 @@ public final class TestDataGenerator {
         return categories;
     }
 
-    public List<Unit> getCustomUnits() {
+    public List<CustomUnit> getCustomUnits() {
         return units;
     }
 
@@ -111,7 +111,7 @@ public final class TestDataGenerator {
                 .collect(Collectors.toList());
     }
 
-    public List<Unit> createTestCustomUnits(int count) {
+    public List<CustomUnit> createTestCustomUnits(int count) {
         return Stream
                 .generate(this::createTestCustomUnit)
                 .limit(count)
@@ -119,13 +119,13 @@ public final class TestDataGenerator {
 
     }
 
-    private Unit createTestCustomUnit() {
+    private CustomUnit createTestCustomUnit() {
         int position = random.nextInt(CUSTOM_UNIT_NAMES.size());
         String customUnitName = CUSTOM_UNIT_NAMES.get(position);
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
         double amount = random.nextDouble() * 100;
         BaseUnit baseUnit = selectRandom(BaseUnits.getBaseUnitList());
-        Unit unit = new Unit(customUnitName, customUnitAbbreviation, amount, baseUnit);
+        CustomUnit unit = new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
         unit.setGuid(uuidProvider.newGuid());
         return unit;
     }

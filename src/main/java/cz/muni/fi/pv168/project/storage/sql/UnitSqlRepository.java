@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql;
 
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
@@ -10,20 +10,20 @@ import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 import java.util.List;
 import java.util.Optional;
 
-public class UnitSqlRepository implements Repository<Unit> {
+public class UnitSqlRepository implements Repository<CustomUnit> {
 
     private final DataAccessObject<UnitEntity> customUnitDao;
-    private final EntityMapper<UnitEntity, Unit> customUnitMapper;
+    private final EntityMapper<UnitEntity, CustomUnit> customUnitMapper;
 
     public UnitSqlRepository(
             DataAccessObject<UnitEntity> customUnitDao,
-            EntityMapper<UnitEntity, Unit> customUnitMapper) {
+            EntityMapper<UnitEntity, CustomUnit> customUnitMapper) {
         this.customUnitDao = customUnitDao;
         this.customUnitMapper = customUnitMapper;
     }
 
     @Override
-    public List<Unit> findAll() {
+    public List<CustomUnit> findAll() {
         return customUnitDao
                 .findAll()
                 .stream()
@@ -32,12 +32,12 @@ public class UnitSqlRepository implements Repository<Unit> {
     }
 
     @Override
-    public void create(Unit newEntity) {
+    public void create(CustomUnit newEntity) {
         customUnitDao.create(customUnitMapper.mapNewEntityToDatabase(newEntity));
     }
 
     @Override
-    public void update(Unit entity) {
+    public void update(CustomUnit entity) {
         var existingDepartment = customUnitDao.findByGuid(entity.getGuid())
                 .orElseThrow(() -> new DataStorageException("CustomUnit not found, guid: " + entity.getGuid()));
         var updatedCustomUnit = customUnitMapper.mapExistingEntityToDatabase(entity, existingDepartment.id());
@@ -67,14 +67,14 @@ public class UnitSqlRepository implements Repository<Unit> {
     }
 
     @Override
-    public Optional<Unit> findByGuid(String guid) {
+    public Optional<CustomUnit> findByGuid(String guid) {
         return customUnitDao
                 .findByGuid(guid)
                 .map(customUnitMapper::mapToBusiness);
     }
 
     @Override
-    public Optional<Unit> findById(Long id) {
+    public Optional<CustomUnit> findById(Long id) {
         return customUnitDao
                 .findById(id)
                 .map(customUnitMapper::mapToBusiness);

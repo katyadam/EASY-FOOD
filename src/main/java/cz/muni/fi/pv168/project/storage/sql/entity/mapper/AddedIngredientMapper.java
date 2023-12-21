@@ -1,9 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.AddedIngredientEntity;
