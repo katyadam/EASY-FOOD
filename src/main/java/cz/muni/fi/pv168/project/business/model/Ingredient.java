@@ -1,5 +1,8 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import cz.muni.fi.pv168.project.ui.MainWindow;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
+
 public class Ingredient extends Entity {
     private int nutritionalValue;
 
@@ -35,4 +38,17 @@ public class Ingredient extends Entity {
         return name;
     }
 
+    public int getUsage() {
+        int usage = 0;
+        CommonDependencyProvider dependencyProvider = MainWindow.commonDependencyProvider;
+        for ( Recipe recipe : dependencyProvider.getRecipeCrudService().findAll()) {
+            for (AddedIngredient addedIngredient : recipe.getAddedIngredients()) {
+                if ( addedIngredient.getIngredient().equals(this)) {
+                    usage++;
+                    break;
+                }
+            }
+        }
+        return usage;
+    }
 }

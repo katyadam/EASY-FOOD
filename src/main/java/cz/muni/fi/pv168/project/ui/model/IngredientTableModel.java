@@ -11,7 +11,8 @@ public class IngredientTableModel extends AbstractEntityTableModel<Ingredient> {
     public IngredientTableModel(CrudService<Ingredient> ingredientCrudService) {
         super(List.of(
                 Column.readonly("Ingredient name", String.class, Ingredient::getName),
-                Column.readonly("Nutritional value [KCAL]", int.class, Ingredient::getNutritionalValue)
+                Column.readonly("Nutritional value [KCAL]", int.class, Ingredient::getNutritionalValue),
+                Column.readonly("Used in",int.class, Ingredient::getUsage)
         ), ingredientCrudService.findAll(), ingredientCrudService);
         this.ingredientCrudService = ingredientCrudService;
     }
