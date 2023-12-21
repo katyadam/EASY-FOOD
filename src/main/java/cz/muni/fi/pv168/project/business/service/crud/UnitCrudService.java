@@ -16,6 +16,7 @@ public class UnitCrudService implements CrudService<CustomUnit> {
     private final Validator<CustomUnit> customUnitValidator;
     private final GuidProvider guidProvider;
     private final Validator<CustomUnit> unitUsageValidator;
+    private final Validator<CustomUnit> duplicityValidator;
 
     public UnitCrudService(
             Repository<CustomUnit> unitRepository,
@@ -24,10 +25,10 @@ public class UnitCrudService implements CrudService<CustomUnit> {
             Validator<CustomUnit> unitUsageValidator
     ) {
         this.unitRepository = unitRepository;
-        this.customUnitValidator = customUnitValidator
-                .and(new DuplicateValidator<>(unitRepository));
+        this.customUnitValidator = customUnitValidator;
         this.guidProvider = guidProvider;
         this.unitUsageValidator = unitUsageValidator;
+        this.duplicityValidator = new DuplicateValidator<>(unitRepository);
     }
 
 
@@ -38,6 +39,7 @@ public class UnitCrudService implements CrudService<CustomUnit> {
 
     @Override
     public ValidationResult create(CustomUnit newEntity) {
+        customUnitValidator.and(duplicityValidator);
         ValidationResult validationResult = customUnitValidator.validate(newEntity);
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {
             newEntity.setGuid(guidProvider.newGuid());
