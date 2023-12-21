@@ -60,10 +60,10 @@ public class CommonDependencyProvider implements DependencyProvider {
 //        this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
 //        var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
-        var baseUnitMapper = new BaseUnitMapper();
-        var baseUnitDao = new BaseUnitDao(connection);
+        //var baseUnitMapper = new BaseUnitMapper();
+        //var baseUnitDao = new BaseUnitDao(connection);
 
-        var unitMapper = new UnitMapper(baseUnitDao, baseUnitMapper);
+        var unitMapper = new UnitMapper();
         var unitDao = new UnitDao(connection);
 
         var categoryMapper = new CategoryMapper();

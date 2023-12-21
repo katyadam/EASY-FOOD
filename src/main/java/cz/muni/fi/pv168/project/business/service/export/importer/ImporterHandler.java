@@ -77,8 +77,8 @@ public class ImporterHandler extends DefaultHandler {
             case "UnitName" -> activeUnit.setName(elementValue.toString());
             case "Abbreviation" -> activeUnit.setAbbreviation(elementValue.toString());
             case "Amount" -> activeUnit.setAmount(Double.parseDouble(elementValue.toString()));
-            case "BaseUnitName" -> activeUnit.setBaseUnit(BaseUnits.getBaseUnitList().stream()
-                    .filter(bu -> bu.getBaseUnitName().contentEquals(elementValue))
+            case "BaseUnitName" -> activeUnit.setBaseUnit(List.of(BaseUnit.values()).stream()
+                    .filter(bu -> bu.getName().contentEquals(elementValue))
                     .findFirst()
                     .orElseThrow(() -> new DataManipulationException(
                             "BaseUnit with name: " + elementValue.toString() + " does not exist")

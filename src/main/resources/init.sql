@@ -15,13 +15,13 @@ CREATE TABLE IF NOT EXISTS "Category"
 --
 -- BaseUnit table definition
 --
-CREATE TABLE IF NOT EXISTS "BaseUnit"
-(
-    `id`           BIGINT PRIMARY KEY,
-    `guid`         VARCHAR      NOT NULL UNIQUE,
-    `baseUnitName` VARCHAR(150) NOT NULL,
-    `abbreviation` VARCHAR(150) NOT NULL
-);
+--CREATE TABLE IF NOT EXISTS "BaseUnit"
+--(
+--    `id`           BIGINT PRIMARY KEY,
+--    `guid`         VARCHAR      NOT NULL UNIQUE,
+--    `baseUnitName` VARCHAR(150) NOT NULL,
+--    `abbreviation` VARCHAR(150) NOT NULL
+--);
 
 --
 -- CustomUnit table definition
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS "Unit"
     `unitName`     VARCHAR(150) NOT NULL,
     `abbreviation` VARCHAR(150) NOT NULL,
     `amount`       DOUBLE       NOT NULL,
-    `baseUnitId`   BIGINT REFERENCES "BaseUnit" (`id`),
+    `baseUnitId`   INT          NOT NUll,
     `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -84,9 +84,9 @@ CREATE TABLE IF NOT EXISTS "AddedIngredient"
 --
 -- Initialization of base units
 --
-MERGE INTO "BaseUnit" ("id", "guid", "baseUnitName", "abbreviation")
-    VALUES (1, 'bu-pc', 'piece', 'pc'),
-           (2, 'bu-ml', 'milliliter', 'ml'),
-           (3, 'bu-l', 'liter', 'l'),
-           (4, 'bu-g', 'gram', 'g'),
-           (5, 'bu-kg', 'kilogram', 'kg')
+--MERGE INTO "BaseUnit" ("id", "guid", "baseUnitName", "abbreviation")
+--    VALUES (1, 'bu-pc', 'piece', 'pc'),
+--           (2, 'bu-ml', 'milliliter', 'ml'),
+--           (3, 'bu-l', 'liter', 'l'),
+--           (4, 'bu-g', 'gram', 'g'),
+--           (5, 'bu-kg', 'kilogram', 'kg')

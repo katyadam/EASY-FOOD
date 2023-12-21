@@ -1,31 +1,39 @@
 package cz.muni.fi.pv168.project.business.model;
 
-public class BaseUnit extends Entity {
+/**
+ * @author Filip Skvara
+ */
+public enum BaseUnit implements Unit {
 
-    private final String baseUnitName;
+    KILOGRAM("kg",0),
+    GRAM("g",1),
+    MILLILITER("ml",2),
+    LITER("l",3),
+    PIECE("pcs",4);
     private final String abbreviation;
+    private final int index;
 
-    public BaseUnit(String guid, String baseUnitName, String abbreviation) {
-        super(guid);
-        this.baseUnitName = baseUnitName;
+    BaseUnit(String abbreviation, int i) {
+        index = i;
         this.abbreviation = abbreviation;
     }
 
-    public BaseUnit(String baseUnitName, String abbreviation) {
-        this.baseUnitName = baseUnitName;
-        this.abbreviation = abbreviation;
+    public static BaseUnit indexToUnit(int i) {
+        return BaseUnit.values()[i];
     }
-
-    public String getBaseUnitName() {
-        return baseUnitName;
+    public String getName() {
+        return this.name();
     }
 
     public String getAbbreviation() {
         return abbreviation;
     }
 
+    public int getIndex() {return index;}
+
+
     @Override
     public String toString() {
-        return baseUnitName;
+        return this.name();
     }
 }

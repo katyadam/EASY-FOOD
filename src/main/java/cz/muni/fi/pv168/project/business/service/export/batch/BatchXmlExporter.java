@@ -93,7 +93,7 @@ public class BatchXmlExporter implements BatchExporter {
         writeAtributeString(unit.getName(), "UnitName", bufferedWriter, tabs + 1);
         writeAtributeString(unit.getAbbreviation(), "Abbreviation", bufferedWriter, tabs + 1);
         writeAtributeInt((int) unit.getAmount(), "Amount", bufferedWriter, tabs + 1);
-        writeAtributeString(unit.getBaseUnit().getBaseUnitName(), "BaseUnitName", bufferedWriter, tabs + 1);
+        writeAtributeString(unit.getBaseUnit().getName(), "BaseUnitName", bufferedWriter, tabs + 1);
         writeEnd("Unit", bufferedWriter, tabs);
     }
 

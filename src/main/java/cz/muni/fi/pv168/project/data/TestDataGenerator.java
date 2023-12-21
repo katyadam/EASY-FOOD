@@ -72,7 +72,7 @@ public final class TestDataGenerator {
         // Add more custom units as needed
     }
 
-    private final BaseUnits baseUnits = new BaseUnits();
+    //private final BaseUnits baseUnits = new BaseUnits();
 
 
     public TestDataGenerator() {
@@ -124,7 +124,7 @@ public final class TestDataGenerator {
         String customUnitName = CUSTOM_UNIT_NAMES.get(position);
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
         double amount = random.nextDouble() * 100;
-        BaseUnit baseUnit = selectRandom(BaseUnits.getBaseUnitList());
+        BaseUnit baseUnit = selectRandom(List.of(BaseUnit.values()));
         CustomUnit unit = new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
         unit.setGuid(uuidProvider.newGuid());
         return unit;

@@ -2,9 +2,6 @@ package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
 
 import cz.muni.fi.pv168.project.business.model.BaseUnit;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
-import cz.muni.fi.pv168.project.storage.DataStorageException;
-import cz.muni.fi.pv168.project.storage.sql.dao.BaseUnitDao;
-import cz.muni.fi.pv168.project.storage.sql.entity.BaseUnitEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
 
 /**
@@ -12,30 +9,28 @@ import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
  */
 public class UnitMapper implements EntityMapper<UnitEntity, CustomUnit> {
 
-    private final BaseUnitDao baseUnitDao;
-    private final EntityMapper<BaseUnitEntity, BaseUnit> baseUnitMapper;
+    //private final BaseUnitDao baseUnitDao;
+    //private final EntityMapper<BaseUnitEntity, BaseUnit> baseUnitMapper;
 
     public UnitMapper(
-            BaseUnitDao baseUnitDao,
-            EntityMapper<BaseUnitEntity, BaseUnit> baseUnitMapper
     ) {
-        this.baseUnitDao = baseUnitDao;
-        this.baseUnitMapper = baseUnitMapper;
+        //this.baseUnitDao = baseUnitDao;
+        //this.baseUnitMapper = baseUnitMapper;
     }
 
     @Override
     public CustomUnit mapToBusiness(UnitEntity dbCustomUnit) {
-        var baseUnit = baseUnitDao
+        /*var baseUnit = baseUnitDao
                 .findById(dbCustomUnit.baseUnitId())
                 .map(baseUnitMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("BaseUnit not found, id: " +
-                        dbCustomUnit.baseUnitId()));
+                        dbCustomUnit.baseUnitId()));*/
         return new CustomUnit(
                 dbCustomUnit.guid(),
                 dbCustomUnit.unitName(),
                 dbCustomUnit.abbreviation(),
                 dbCustomUnit.amount(),
-                baseUnit
+                BaseUnit.indexToUnit(dbCustomUnit.baseUnitId())
         );
     }
 
@@ -50,17 +45,17 @@ public class UnitMapper implements EntityMapper<UnitEntity, CustomUnit> {
     }
 
     private UnitEntity getUnitEntity(CustomUnit entity, Long dbId) {
-        var baseUnitEntity = baseUnitDao
+        /*var baseUnitEntity = baseUnitDao
                 .findByGuid(entity.getBaseUnit().getGuid())
                 .orElseThrow(() -> new DataStorageException("BaseUnit not found, guid: " +
-                        entity.getBaseUnit().getGuid()));
+                        entity.getBaseUnit().getGuid()));*/
         return new UnitEntity(
                 dbId,
                 entity.getGuid(),
                 entity.getName(),
                 entity.getAbbreviation(),
                 entity.getAmount(),
-                baseUnitEntity.id()
+                entity.getBaseUnit().getIndex()
         );
     }
 }
