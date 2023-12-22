@@ -62,7 +62,8 @@ public class CustomUnit extends Entity implements Unit {
         super.setName(name);
         this.unitName = name;
     }
-
+    @Override
+    public boolean isCustom() { return true;}
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }

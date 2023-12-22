@@ -19,7 +19,8 @@ public class UnitUsageValidator implements Validator<CustomUnit> {
     @Override
     public ValidationResult validate(CustomUnit model) {
         List<AddedIngredient> foundUsages = addedIngredientRepository.findAll().stream()
-                .filter(ai -> ai.getUnit().getGuid().equals(model.getGuid()))
+                .filter(ai -> ai.getUnit().getClass().equals(CustomUnit.class))
+                .filter(ai -> ((CustomUnit) ai.getUnit()).getGuid().equals(model.getGuid()))
                 .toList();
         if (!foundUsages.isEmpty()) {
             return ValidationResult.failed(

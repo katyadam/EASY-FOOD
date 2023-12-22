@@ -6,14 +6,14 @@ public class AddedIngredient extends Entity {
 
     private Ingredient ingredient;
     private Double quantity;
-    private CustomUnit unit;
+    private Unit unit;
     private Recipe recipe;
     private final DecimalFormat amountFormat = new DecimalFormat("#.##");
 
     public AddedIngredient() {
     }
 
-    public AddedIngredient(Ingredient ingredient, Double quantity, CustomUnit unit) {
+    public AddedIngredient(Ingredient ingredient, Double quantity, Unit unit) {
         this.ingredient = ingredient;
         this.quantity = quantity;
         this.unit = unit;
@@ -23,7 +23,7 @@ public class AddedIngredient extends Entity {
             String guid,
             Ingredient ingredient,
             Recipe recipe,
-            CustomUnit unit,
+            Unit unit,
             Double quantity
     ) {
         super(guid);
@@ -53,7 +53,7 @@ public class AddedIngredient extends Entity {
         this.unit = unit;
     }
 
-    public CustomUnit getUnit() {
+    public Unit getUnit() {
         return unit;
     }
 

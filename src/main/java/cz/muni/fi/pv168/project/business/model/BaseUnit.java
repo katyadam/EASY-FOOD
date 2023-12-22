@@ -5,16 +5,18 @@ package cz.muni.fi.pv168.project.business.model;
  */
 public enum BaseUnit implements Unit {
 
-    KILOGRAM("kg",0),
-    GRAM("g",1),
-    MILLILITER("ml",2),
-    LITER("l",3),
-    PIECE("pcs",4);
+    KILOGRAM("kg",0,"bu-kg"),
+    GRAM("g",1,"bu-gg"),
+    MILLILITER("ml",2,"bu-ml"),
+    LITER("l",3,"bu-ll"),
+    PIECE("pcs",4,"bu-pcs");
     private final String abbreviation;
     private final int index;
+    private final String guid;
 
-    BaseUnit(String abbreviation, int i) {
+    BaseUnit(String abbreviation, int i, String guid) {
         index = i;
+        this.guid = guid;
         this.abbreviation = abbreviation;
     }
 
@@ -27,6 +29,16 @@ public enum BaseUnit implements Unit {
 
     public String getAbbreviation() {
         return abbreviation;
+    }
+
+    @Override
+    public String getGuid() {
+        return guid;
+    }
+
+    @Override
+    public boolean isCustom() {
+        return false;
     }
 
     public int getIndex() {return index;}

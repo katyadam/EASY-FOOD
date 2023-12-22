@@ -72,7 +72,8 @@ CREATE TABLE IF NOT EXISTS "AddedIngredient"
     `recipeId`     BIGINT REFERENCES "Recipe" (`id`) ON DELETE CASCADE,
     `unitId`       BIGINT REFERENCES "Unit" (`id`) ON DELETE CASCADE,
     `quantity`     DOUBLE       NOT NULL,
-    `createdAt`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `createdAt`    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `baseUnitId`   INT
 );
 
 -- CREATE TRIGGER delete_added_ingredients
@@ -84,9 +85,9 @@ CREATE TABLE IF NOT EXISTS "AddedIngredient"
 --
 -- Initialization of base units
 --
---MERGE INTO "BaseUnit" ("id", "guid", "baseUnitName", "abbreviation")
---    VALUES (1, 'bu-pc', 'piece', 'pc'),
---           (2, 'bu-ml', 'milliliter', 'ml'),
---           (3, 'bu-l', 'liter', 'l'),
---           (4, 'bu-g', 'gram', 'g'),
---           (5, 'bu-kg', 'kilogram', 'kg')
+--MERGE INTO "Unit" ( "guid", "unitName", "abbreviation","amount","baseUnitId")
+--    VALUES ( '"bu-kg"', 'KILOGRAM', 'kg',0,0),
+--           ( 'bu-gg', 'milliliter', 'g',0,1),
+--           ( 'bu-ml', 'liter', 'ml',0,2),
+--           ( 'bu-ll', 'gram', 'l',0,3),
+--          ( 'bu-pcs', 'kilogram', 'pcs',0,4);

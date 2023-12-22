@@ -30,9 +30,10 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                     ingredientId,
                     recipeId,
                     unitId,
-                    quantity
+                    quantity,
+                    baseUnitId
                 )
-                VALUES (?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -42,6 +43,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
             statement.setLong(3, newAddedIngredient.recipeId());
             statement.setLong(4, newAddedIngredient.unitId());
             statement.setDouble(5, newAddedIngredient.quantity());
+            statement.setInt(6, newAddedIngredient.baseUnit());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -70,7 +72,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                     ingredientId,
                     recipeId,
                     unitId,
-                    quantity
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
                 WHERE recipeId = ?
                 """;
@@ -100,7 +103,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                     ingredientId,
                     recipeId,
                     unitId,
-                    quantity
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
                 """;
         try (
@@ -129,7 +133,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                         ingredientId,
                         recipeId,
                         unitId,
-                        quantity
+                        quantity,
+                        baseUnitId
                 FROM AddedIngredient
                 WHERE id = ?
                 """;
@@ -158,6 +163,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                         ingredientId
                         unitId
                         quantity
+                        baseUnitId
                 FROM AddedIngredient
                 WHERE guid = ?
                 """;
@@ -186,7 +192,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                         ingredientId = ?,
                         recipeId = ?,
                         unitId = ?,
-                        quantity = ?
+                        quantity = ?,
+                        baseUnitId = ?
                 WHERE id = ?
                 """;
         try (
@@ -197,6 +204,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
             statement.setLong(3, entity.recipeId());
             statement.setLong(4, entity.unitId());
             statement.setDouble(5, entity.quantity());
+            statement.setInt(6,entity.baseUnit());
             statement.executeUpdate();
 
             int rowsUpdated = statement.executeUpdate();
@@ -271,7 +279,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 resultSet.getLong("ingredientId"),
                 resultSet.getLong("recipeId"),
                 resultSet.getLong("unitId"),
-                resultSet.getDouble("quantity")
+                resultSet.getDouble("quantity"),
+                resultSet.getInt("baseUnitId")
         );
     }
 }
