@@ -39,8 +39,9 @@ public class UnitCrudService implements CrudService<CustomUnit> {
 
     @Override
     public ValidationResult create(CustomUnit newEntity) {
-        customUnitValidator.and(duplicityValidator);
-        ValidationResult validationResult = customUnitValidator.validate(newEntity);
+        ValidationResult validationResult = customUnitValidator
+                .and(duplicityValidator)
+                .validate(newEntity);
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {
             newEntity.setGuid(guidProvider.newGuid());
         } else if (unitRepository.existsByGuid(newEntity.getGuid())) {
