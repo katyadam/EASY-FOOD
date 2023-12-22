@@ -15,9 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
-
-    private final IngredientTableModel ingredientTableModel;
-    private final CategoryTableModel categoryTableModel;
     private final JTextField recipeNameField = new JTextField();
     private final JSpinner recipePortionsField = new JSpinner(
             new SpinnerNumberModel(1, 1, 200, 1)
@@ -31,7 +28,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     private final JSpinner timeSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000000, 1));
     private final JComboBox<Ingredient> ingredients;
     private final AddedIngredientsTableModel addedIngredientsTableModel;
-    private final JComboBox<CustomUnit> units;
+    private final JComboBox<Unit> units;
     private final JTextArea recipeDescriptionTextField = new JTextArea();
     private final JTable addedIngredientsTable = new JTable();
 
@@ -47,7 +44,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
             AddedIngredient newIngredient = new AddedIngredient(
                     (Ingredient) ingredients.getSelectedItem(),
                     (double) amount.getValue(),
-                    (CustomUnit) units.getSelectedItem());
+                    (Unit) units.getSelectedItem());
             if (entity.getGuid() != null) {
                 newIngredient.setRecipe(entity);
                 MainWindow.commonDependencyProvider.getAddedIngredientCrudService().create(newIngredient);
@@ -83,13 +80,12 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     ) {
         super(recipe, recipeTableModel.getEntities());
         setTwoPanels();
-        this.ingredientTableModel = ingredientTableModel;
-        this.categoryTableModel = categoryTableModel;
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
 
-        List<CustomUnit> unitList = new LinkedList<>();
+        List<Unit> unitList = new LinkedList<>();
         unitList.addAll(unitTableModel.getEntities());
-        units = new JComboBox<>(unitList.toArray(new CustomUnit[0]));
+        unitList.addAll(Arrays.stream(BaseUnit.values()).toList());
+        units = new JComboBox<>(unitList.toArray(new Unit[0]));
 
         List<Category> categories = new LinkedList<>(categoryTableModel.getEntities());
         categories.add(0, null);
