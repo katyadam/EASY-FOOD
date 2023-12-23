@@ -33,8 +33,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -266,6 +265,10 @@ public class MainWindow {
         table.getColumnModel().getColumn(2).setMaxWidth(50);
         TableColumn colorColumn = table.getColumnModel().getColumn(2);
         colorColumn.setCellRenderer(new ColorRenderer());
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.LEFT);
+        table.getColumnModel().getColumn(5).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(renderer);
         return table;
     }
 
