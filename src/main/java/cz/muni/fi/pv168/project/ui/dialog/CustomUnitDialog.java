@@ -29,6 +29,7 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
         customUnitNameField.setText(entity.getName());
         customUnitAbbreviationField.setText(entity.getAbbreviation());
         customUnitAmount.setValue(Double.parseDouble(entity.getBaseAmountNumber()));
+        units.setSelectedIndex(entity.getBaseUnit().getIndex());
     }
 
     private void addFields() {
