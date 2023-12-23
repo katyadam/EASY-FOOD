@@ -121,7 +121,9 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
                 ? new Color(0, 0, 0)
                 : entity.getCategory().getColor());
         recipePortionsField.setModel(new SpinnerNumberModel(entity.getPortions(), 1, 200, 1));
+        recipeDescriptionTextField.setLineWrap(true);
         recipeDescriptionTextField.setText(entity.getDescription());
+
     }
 
     private void addFields() {
