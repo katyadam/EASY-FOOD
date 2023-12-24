@@ -1,23 +1,20 @@
 package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
 
 
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
-import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
-import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.IngredientEntity;
 
 public class IngredientMapper implements EntityMapper<IngredientEntity, Ingredient> {
 
     private final DataAccessObject<UnitEntity> unitDao;
-    private final EntityMapper<UnitEntity, Unit> unitMapper;
+    private final EntityMapper<UnitEntity, CustomUnit> unitMapper;
 
     public IngredientMapper(
             DataAccessObject<UnitEntity> unitDao,
-            EntityMapper<UnitEntity, Unit> unitMapper
+            EntityMapper<UnitEntity, CustomUnit> unitMapper
     ) {
         this.unitDao = unitDao;
         this.unitMapper = unitMapper;

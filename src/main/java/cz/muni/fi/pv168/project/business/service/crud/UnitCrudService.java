@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
@@ -10,35 +10,38 @@ import cz.muni.fi.pv168.project.storage.DataStorageException;
 
 import java.util.List;
 
-public class UnitCrudService implements CrudService<Unit> {
+public class UnitCrudService implements CrudService<CustomUnit> {
 
-    private final Repository<Unit> unitRepository;
-    private final Validator<Unit> customUnitValidator;
+    private final Repository<CustomUnit> unitRepository;
+    private final Validator<CustomUnit> customUnitValidator;
     private final GuidProvider guidProvider;
-    private final Validator<Unit> unitUsageValidator;
+    private final Validator<CustomUnit> unitUsageValidator;
+    private final Validator<CustomUnit> duplicityValidator;
 
     public UnitCrudService(
-            Repository<Unit> unitRepository,
-            Validator<Unit> customUnitValidator,
+            Repository<CustomUnit> unitRepository,
+            Validator<CustomUnit> customUnitValidator,
             GuidProvider guidProvider,
-            Validator<Unit> unitUsageValidator
+            Validator<CustomUnit> unitUsageValidator
     ) {
         this.unitRepository = unitRepository;
-        this.customUnitValidator = customUnitValidator
-                .and(new DuplicateValidator<>(unitRepository));
+        this.customUnitValidator = customUnitValidator;
         this.guidProvider = guidProvider;
         this.unitUsageValidator = unitUsageValidator;
+        this.duplicityValidator = new DuplicateValidator<>(unitRepository);
     }
 
 
     @Override
-    public List<Unit> findAll() {
+    public List<CustomUnit> findAll() {
         return unitRepository.findAll();
     }
 
     @Override
-    public ValidationResult create(Unit newEntity) {
-        ValidationResult validationResult = customUnitValidator.validate(newEntity);
+    public ValidationResult create(CustomUnit newEntity) {
+        ValidationResult validationResult = customUnitValidator
+                .and(duplicityValidator)
+                .validate(newEntity);
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {
             newEntity.setGuid(guidProvider.newGuid());
         } else if (unitRepository.existsByGuid(newEntity.getGuid())) {
@@ -56,7 +59,7 @@ public class UnitCrudService implements CrudService<Unit> {
     }
 
     @Override
-    public ValidationResult update(Unit entity) {
+    public ValidationResult update(CustomUnit entity) {
         ValidationResult validationResult = customUnitValidator.validate(entity);
         if (validationResult.isValid()) {
             unitRepository.update(entity);
@@ -67,7 +70,7 @@ public class UnitCrudService implements CrudService<Unit> {
 
     @Override
     public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
-        Unit toDelete = unitRepository.findByGuid(guid)
+        CustomUnit toDelete = unitRepository.findByGuid(guid)
                 .orElseThrow(
                         () -> new DataStorageException("Unit with guid: " + guid + "not found!")
                 );

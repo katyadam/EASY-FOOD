@@ -83,7 +83,7 @@ public final class EditAction extends ContextAction {
             case 2: {
                 CustomUnitTableModel customUnitTableModel = (CustomUnitTableModel) activeTable.getModel();
                 int modelRow = activeTable.convertRowIndexToModel(selectedRows[0]);
-                Unit unit = customUnitTableModel.getEntity(modelRow);
+                CustomUnit unit = customUnitTableModel.getEntity(modelRow);
                 CustomUnitDialog dialog = new CustomUnitDialog(unit, (CustomUnitTableModel) unitsTable.getModel());
                 dialog.show(activeTable, "Edit Custom Unit", new UnitValidator())
                         .ifPresent(customUnitTableModel::updateRow);

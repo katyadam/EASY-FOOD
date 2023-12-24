@@ -23,7 +23,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     public static final String INIT_SQL = "init.sql";
     private final Repository<Recipe> recipes;
     private final Repository<Category> categories;
-    private final Repository<Unit> customUnits;
+    private final Repository<CustomUnit> customUnits;
     private final Repository<Ingredient> ingredients;
     private final AddedIngredientSqlRepository addedIngredients;
     //    private final DatabaseManager databaseManager;
@@ -31,7 +31,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
     private final AddedIngredientCrudService addedIngredientCrudService;
-    private final CrudService<Unit> customUnitCrudService;
+    private final CrudService<CustomUnit> customUnitCrudService;
     private final CrudService<Category> categoryCrudService;
     //private final ImportService importService; //TODO
     //private final ExportService exportService; //TODO
@@ -60,10 +60,10 @@ public class CommonDependencyProvider implements DependencyProvider {
 //        this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
 //        var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
-        var baseUnitMapper = new BaseUnitMapper();
-        var baseUnitDao = new BaseUnitDao(connection);
+        //var baseUnitMapper = new BaseUnitMapper();
+        //var baseUnitDao = new BaseUnitDao(connection);
 
-        var unitMapper = new UnitMapper(baseUnitDao, baseUnitMapper);
+        var unitMapper = new UnitMapper();
         var unitDao = new UnitDao(connection);
 
         var categoryMapper = new CategoryMapper();
@@ -143,7 +143,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public Repository<Unit> getCustomUnitRepository() {
+    public Repository<CustomUnit> getCustomUnitRepository() {
         return customUnits;
     }
 
@@ -169,7 +169,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public CrudService<Unit> getCustomUnitCrudService() {
+    public CrudService<CustomUnit> getCustomUnitCrudService() {
         return customUnitCrudService;
     }
 
@@ -205,7 +205,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public Validator<Unit> getCustomUnitValidator() {
+    public Validator<CustomUnit> getCustomUnitValidator() {
         return customUnitValidator;
     }
 

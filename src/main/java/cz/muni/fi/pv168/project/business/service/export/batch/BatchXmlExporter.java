@@ -81,19 +81,19 @@ public class BatchXmlExporter implements BatchExporter {
 
     private void exportCustomUnits(Batch batch, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Units", bufferedWriter, tabs);
-        for (Unit unit : batch.units()) {
+        for (CustomUnit unit : batch.units()) {
             exportCustomUnit(unit, bufferedWriter, tabs + 1);
         }
         ;
         writeEnd("Units", bufferedWriter, tabs);
     }
 
-    private void exportCustomUnit(Unit unit, BufferedWriter bufferedWriter, int tabs) throws IOException {
+    private void exportCustomUnit(CustomUnit unit, BufferedWriter bufferedWriter, int tabs) throws IOException {
         writeStart("Unit", bufferedWriter, tabs);
         writeAtributeString(unit.getName(), "UnitName", bufferedWriter, tabs + 1);
         writeAtributeString(unit.getAbbreviation(), "Abbreviation", bufferedWriter, tabs + 1);
         writeAtributeInt((int) unit.getAmount(), "Amount", bufferedWriter, tabs + 1);
-        writeAtributeString(unit.getBaseUnit().getBaseUnitName(), "BaseUnitName", bufferedWriter, tabs + 1);
+        writeAtributeString(unit.getBaseUnit().getName(), "BaseUnitName", bufferedWriter, tabs + 1);
         writeEnd("Unit", bufferedWriter, tabs);
     }
 

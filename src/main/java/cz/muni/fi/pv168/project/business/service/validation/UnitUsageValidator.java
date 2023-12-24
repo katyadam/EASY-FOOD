@@ -2,14 +2,14 @@ package cz.muni.fi.pv168.project.business.service.validation;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UnitUsageValidator implements Validator<Unit> {
+public class UnitUsageValidator implements Validator<CustomUnit> {
     private final Repository<AddedIngredient> addedIngredientRepository;
 
     public UnitUsageValidator(Repository<AddedIngredient> addedIngredientRepository) {
@@ -17,9 +17,10 @@ public class UnitUsageValidator implements Validator<Unit> {
     }
 
     @Override
-    public ValidationResult validate(Unit model) {
+    public ValidationResult validate(CustomUnit model) {
         List<AddedIngredient> foundUsages = addedIngredientRepository.findAll().stream()
-                .filter(ai -> ai.getUnit().getGuid().equals(model.getGuid()))
+                .filter(ai -> ai.getUnit().getClass().equals(CustomUnit.class))
+                .filter(ai -> ((CustomUnit) ai.getUnit()).getGuid().equals(model.getGuid()))
                 .toList();
         if (!foundUsages.isEmpty()) {
             return ValidationResult.failed(

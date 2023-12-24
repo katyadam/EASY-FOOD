@@ -18,8 +18,8 @@ public class CategoryCrudService implements CrudService<Category> {
     private final Repository<Category> categoryRepository;
     private final Validator<Category> categoryValidator;
     private final Validator<Category> usageValidator;
+    private final Validator<Category> duplicityValidator;
     private final GuidProvider guidProvider;
-
 
     public CategoryCrudService(
             Repository<Category> categoryRepository,
@@ -27,10 +27,10 @@ public class CategoryCrudService implements CrudService<Category> {
             CategoryUsageValidator usageValidator
     ) {
         this.categoryRepository = categoryRepository;
-        this.categoryValidator = categoryValidator
-                .and(new DuplicateValidator<>(this.categoryRepository));
+        this.categoryValidator = categoryValidator;
         this.guidProvider = new UuidGuidProvider();
         this.usageValidator = usageValidator;
+        this.duplicityValidator = new DuplicateValidator<>(this.categoryRepository);
     }
 
     @Override
@@ -40,7 +40,9 @@ public class CategoryCrudService implements CrudService<Category> {
 
     @Override
     public ValidationResult create(Category newEntity) {
-        ValidationResult validationResult = categoryValidator.validate(newEntity);
+        ValidationResult validationResult = categoryValidator
+                .and(duplicityValidator)
+                .validate(newEntity);
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {
             newEntity.setGuid(guidProvider.newGuid());
         } else if (categoryRepository.existsByGuid(newEntity.getGuid())) {

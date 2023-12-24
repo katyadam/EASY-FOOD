@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
@@ -21,14 +21,14 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
             new SpinnerNumberModel(0, 0, 50000, 20)
     );
 
-    private final CrudService<Unit> unitCrudService;
+    private final CrudService<CustomUnit> unitCrudService;
 
     private final RecipeTableModel recipeData;
 
     public IngredientDialog(
             Ingredient ingredient,
             IngredientTableModel ingredientTableModel,
-            CrudService<Unit> unitCrudService,
+            CrudService<CustomUnit> unitCrudService,
             RecipeTableModel recipeTableModel
     ) {
         super(ingredient, ingredientTableModel.getEntities());

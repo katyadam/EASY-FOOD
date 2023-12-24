@@ -15,9 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class RecipeDialog extends EntityDialog<Recipe> {
-
-    private final IngredientTableModel ingredientTableModel;
-    private final CategoryTableModel categoryTableModel;
     private final JTextField recipeNameField = new JTextField();
     private final JSpinner recipePortionsField = new JSpinner(
             new SpinnerNumberModel(1, 1, 200, 1)
@@ -83,12 +80,11 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     ) {
         super(recipe, recipeTableModel.getEntities());
         setTwoPanels();
-        this.ingredientTableModel = ingredientTableModel;
-        this.categoryTableModel = categoryTableModel;
         ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
 
         List<Unit> unitList = new LinkedList<>();
         unitList.addAll(unitTableModel.getEntities());
+        unitList.addAll(Arrays.stream(BaseUnit.values()).toList());
         units = new JComboBox<>(unitList.toArray(new Unit[0]));
 
         List<Category> categories = new LinkedList<>(categoryTableModel.getEntities());
@@ -125,7 +121,9 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
                 ? new Color(0, 0, 0)
                 : entity.getCategory().getColor());
         recipePortionsField.setModel(new SpinnerNumberModel(entity.getPortions(), 1, 200, 1));
+        recipeDescriptionTextField.setLineWrap(true);
         recipeDescriptionTextField.setText(entity.getDescription());
+
     }
 
     private void addFields() {

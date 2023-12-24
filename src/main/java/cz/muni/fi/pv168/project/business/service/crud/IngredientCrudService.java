@@ -16,18 +16,17 @@ public class IngredientCrudService implements CrudService<Ingredient> {
     private final Validator<Ingredient> ingredientValidator;
     private final GuidProvider guidProvider;
     private final Validator<Ingredient> ingredientUsageValidator;
-
+    private final Validator<Ingredient> duplicateValidator;
     public IngredientCrudService(
             Repository<Ingredient> ingredientRepository,
             Validator<Ingredient> ingredientValidator,
             GuidProvider guidProvider,
             Validator<Ingredient> ingredientUsageValidator) {
         this.ingredientRepository = ingredientRepository;
-        this.ingredientValidator = ingredientValidator
-                .and(new DuplicateValidator<>(ingredientRepository))
-                .and(ingredientUsageValidator);
+        this.ingredientValidator = ingredientValidator;
         this.guidProvider = guidProvider;
         this.ingredientUsageValidator = ingredientUsageValidator;
+        this.duplicateValidator = new DuplicateValidator<>(ingredientRepository);
     }
 
     @Override
@@ -37,7 +36,9 @@ public class IngredientCrudService implements CrudService<Ingredient> {
 
     @Override
     public ValidationResult create(Ingredient newEntity) {
-        ValidationResult validationResult = ingredientValidator.validate(newEntity);
+        ValidationResult validationResult = ingredientValidator
+                .and(duplicateValidator)
+                .validate(newEntity);
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {
             newEntity.setGuid(guidProvider.newGuid());
         } else if (ingredientRepository.existsByGuid(newEntity.getGuid())) {

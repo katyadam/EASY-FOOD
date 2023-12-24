@@ -1,9 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.BaseUnit;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.AddedIngredientEntity;
@@ -47,11 +45,11 @@ public class AddedIngredientMapper implements EntityMapper<AddedIngredientEntity
                 .map(ingredientMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Ingredient not found, id: " +
                         entity.ingredientId()));
-        var unit = unitDao
+        var unit = entity.baseUnit() == -1 ? unitDao
                 .findById(entity.unitId())
                 .map(unitMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Unit not found, id: " +
-                        entity.unitId()));
+                        entity.unitId())) : BaseUnit.indexToUnit(entity.baseUnit());
         return new AddedIngredient(
                 entity.guid(),
                 ingredient,
@@ -76,21 +74,23 @@ public class AddedIngredientMapper implements EntityMapper<AddedIngredientEntity
                 .findByGuid(entity.getRecipe().getGuid())
                 .orElseThrow(() -> new DataStorageException("Recipe not found, guid: " +
                         entity.getRecipe().getGuid()));
-        var ingredientEntity = ingredientDao
+        var ingredientEntity =  ingredientDao
                 .findByGuid(entity.getIngredient().getGuid())
                 .orElseThrow(() -> new DataStorageException("Ingredient not found, guid: " +
                         entity.getIngredient().getGuid()));
-        var unitEntity = unitDao
+        var unitEntity = entity.getUnit().isCustom() ? unitDao
                 .findByGuid(entity.getUnit().getGuid())
                 .orElseThrow(() -> new DataStorageException("Unit not found, guid: " +
-                        entity.getUnit().getGuid()));
+                        entity.getUnit().getGuid())) : null;
+        var baseUnitId = entity.getUnit().isCustom() ? -1 : ((BaseUnit) entity.getUnit()).getIndex();
         return new AddedIngredientEntity(
                 dbId,
                 entity.getGuid(),
                 ingredientEntity.id(),
                 recipeEntity.id(),
-                unitEntity.id(),
-                entity.getQuantity()
+                unitEntity == null ? -1 :  unitEntity.id(),
+                entity.getQuantity(),
+                baseUnitId
         );
     }
 }

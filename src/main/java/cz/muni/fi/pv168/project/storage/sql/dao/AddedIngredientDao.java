@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,9 +31,10 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                     ingredientId,
                     recipeId,
                     unitId,
-                    quantity
+                    quantity,
+                    baseUnitId
                 )
-                VALUES (?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -40,8 +42,11 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
             statement.setString(1, newAddedIngredient.guid());
             statement.setLong(2, newAddedIngredient.ingredientId());
             statement.setLong(3, newAddedIngredient.recipeId());
-            statement.setLong(4, newAddedIngredient.unitId());
+            if ( newAddedIngredient.unitId() == -1 ){statement.setNull(4, Types.BIGINT);}
+            else {statement.setLong(4, newAddedIngredient.unitId()); }
+            //newAddedIngredient.unitId() == -1 ? statement.setNull(4, Types.BIGINT) : statement.setLong(4, newAddedIngredient.unitId());
             statement.setDouble(5, newAddedIngredient.quantity());
+            statement.setInt(6, newAddedIngredient.baseUnit());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -70,7 +75,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                     ingredientId,
                     recipeId,
                     unitId,
-                    quantity
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
                 WHERE recipeId = ?
                 """;
@@ -100,7 +106,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                     ingredientId,
                     recipeId,
                     unitId,
-                    quantity
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
                 """;
         try (
@@ -129,7 +136,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                         ingredientId,
                         recipeId,
                         unitId,
-                        quantity
+                        quantity,
+                        baseUnitId
                 FROM AddedIngredient
                 WHERE id = ?
                 """;
@@ -158,6 +166,7 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                         ingredientId
                         unitId
                         quantity
+                        baseUnitId
                 FROM AddedIngredient
                 WHERE guid = ?
                 """;
@@ -186,7 +195,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                         ingredientId = ?,
                         recipeId = ?,
                         unitId = ?,
-                        quantity = ?
+                        quantity = ?,
+                        baseUnitId = ?
                 WHERE id = ?
                 """;
         try (
@@ -195,8 +205,12 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
             statement.setString(1, entity.guid());
             statement.setLong(2, entity.ingredientId());
             statement.setLong(3, entity.recipeId());
-            statement.setLong(4, entity.unitId());
+            if ( entity.unitId() == -1 ) {
+                statement.setNull(4, Types.BIGINT);}
+            else {statement.setLong(4, entity.unitId()); }
+            statement.setLong(4, entity.unitId() == -1 ? null : entity.unitId());
             statement.setDouble(5, entity.quantity());
+            statement.setInt(6,entity.baseUnit());
             statement.executeUpdate();
 
             int rowsUpdated = statement.executeUpdate();
@@ -271,7 +285,8 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
                 resultSet.getLong("ingredientId"),
                 resultSet.getLong("recipeId"),
                 resultSet.getLong("unitId"),
-                resultSet.getDouble("quantity")
+                resultSet.getDouble("quantity"),
+                resultSet.getInt("baseUnitId")
         );
     }
 }

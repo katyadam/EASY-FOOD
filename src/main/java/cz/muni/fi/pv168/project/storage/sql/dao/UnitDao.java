@@ -238,7 +238,7 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                 resultSet.getString("unitName"),
                 resultSet.getString("abbreviation"),
                 resultSet.getDouble("amount"),
-                resultSet.getLong("baseUnitId")
+                resultSet.getInt("baseUnitId")
         );
     }
 

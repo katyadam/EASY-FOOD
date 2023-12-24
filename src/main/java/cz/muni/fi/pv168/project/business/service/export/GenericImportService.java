@@ -4,7 +4,7 @@ package cz.muni.fi.pv168.project.business.service.export;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchOperationException;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
@@ -26,7 +26,7 @@ public class GenericImportService implements ImportService {
 
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
-    private final CrudService<Unit> customUnitsCrudService;
+    private final CrudService<CustomUnit> customUnitsCrudService;
     private final CrudService<Category> categoryCrudService;
     private final FormatMapping<BatchImporter> importers;
     private final GenericExportService exportService;
@@ -34,7 +34,7 @@ public class GenericImportService implements ImportService {
     public GenericImportService(
             CrudService<Recipe> recipeCrudService,
             CrudService<Ingredient> ingredientCrudService,
-            CrudService<Unit> customUnitsCrudService,
+            CrudService<CustomUnit> customUnitsCrudService,
             CrudService<Category> categoryCrudService,
             Collection<BatchImporter> importers,
             GenericExportService exportService) {
@@ -97,7 +97,7 @@ public class GenericImportService implements ImportService {
         }
     }
 
-    private void createCustomUnit(Unit unit) {
+    private void createCustomUnit(CustomUnit unit) {
         ValidationResult validationResult = customUnitsCrudService.create(unit);
         if (!validationResult.isValid()) {
             JOptionPane.showMessageDialog(new JPanel(), validationResult);

@@ -3,13 +3,12 @@ package cz.muni.fi.pv168.project.ui.action.mport;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.GenericExportService;
 import cz.muni.fi.pv168.project.business.service.export.GenericImportService;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchXmlImporter;
-import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -21,7 +20,7 @@ import java.util.List;
 public class ImportAction extends AbstractAction {
 
     protected final CrudService<Category> categoryCrudService;
-    protected final CrudService<Unit> unitService;
+    protected final CrudService<CustomUnit> unitService;
     protected final CrudService<Ingredient> ingredientCrudService;
     protected final CrudService<Recipe> recipeCrudService;
     private final Runnable callback;
@@ -31,7 +30,7 @@ public class ImportAction extends AbstractAction {
     public ImportAction(
             String name,
             CrudService<Category> categoryCrudService,
-            CrudService<Unit> unitService,
+            CrudService<CustomUnit> unitService,
             CrudService<Ingredient> ingredientCrudService,
             CrudService<Recipe> recipeCrudService,
             Runnable callback,

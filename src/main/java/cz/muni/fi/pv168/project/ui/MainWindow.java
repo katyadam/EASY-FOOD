@@ -5,7 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.Unit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
@@ -33,8 +33,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -50,7 +49,7 @@ public class MainWindow {
 
     private List<Recipe> recipesList;
     private List<Ingredient> ingredientList;
-    private List<Unit> unitList;
+    private List<CustomUnit> unitList;
     private List<Category> categoryList;
 
     private JTable recipeTable;
@@ -85,7 +84,7 @@ public class MainWindow {
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Category> categoryCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
-    private final CrudService<Unit> unitService;
+    private final CrudService<CustomUnit> unitService;
 
     private MultiSelectCombobox<Ingredient> ingredientsFilter;
     private MultiSelectCombobox<Category> categoriesFilter;
@@ -266,6 +265,10 @@ public class MainWindow {
         table.getColumnModel().getColumn(2).setMaxWidth(50);
         TableColumn colorColumn = table.getColumnModel().getColumn(2);
         colorColumn.setCellRenderer(new ColorRenderer());
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.LEFT);
+        table.getColumnModel().getColumn(5).setCellRenderer(renderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(renderer);
         return table;
     }
 
