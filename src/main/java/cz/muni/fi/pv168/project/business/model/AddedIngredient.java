@@ -49,7 +49,7 @@ public class AddedIngredient extends Entity {
         this.quantity = quantity;
     }
 
-    public void setUnit(CustomUnit unit) {
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 

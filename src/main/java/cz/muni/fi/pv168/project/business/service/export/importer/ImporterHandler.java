@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Arrays;
 
 public class ImporterHandler extends DefaultHandler {
     private final List<Category> categoryList;
@@ -132,8 +133,10 @@ public class ImporterHandler extends DefaultHandler {
         return new PreparationTime(Integer.parseInt(split[0]), Integer.parseInt(split[2]));
     }
 
-    private CustomUnit parseUnit(String unitName) {
-        Optional<CustomUnit> optionalUnit = unitList.stream()
+    private Unit parseUnit(String unitName) {
+        List<Unit> units = new ArrayList<>(unitList);
+        units.addAll(Arrays.stream(BaseUnit.values()).toList());
+        Optional<Unit> optionalUnit = units.stream()
                 .filter(unit -> unit.getName().equals(unitName))
                 .findFirst();
         if (optionalUnit.isEmpty()) {
