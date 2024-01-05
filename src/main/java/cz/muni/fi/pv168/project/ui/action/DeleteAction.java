@@ -28,6 +28,11 @@ public final class DeleteAction extends ContextAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JTable activeTable = TabbedPanelContext.getActiveTable();
+        int confirm = JOptionPane.showOptionDialog(activeTable,"Confirm",
+                "Delete confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,null,null,null);
+        if ( confirm != JOptionPane.OK_OPTION) {
+            return;
+        }
         System.out.println(activeTable.getRowCount());
         AbstractEntityTableModel tableModel = (AbstractEntityTableModel) activeTable.getModel();
         List<Integer> indexes = Arrays.stream(activeTable.getSelectedRows())
