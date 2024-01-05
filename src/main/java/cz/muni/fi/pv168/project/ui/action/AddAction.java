@@ -35,7 +35,7 @@ public final class AddAction extends ContextAction {
             JTable categoryTable,
             CommonDependencyProvider commonDependencyProvider
     ) {
-        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Add", Icons.ADD_ICON);
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "", Icons.ADD_ICON);
         this.commonDependencyProvider = commonDependencyProvider;
         putValue(SHORT_DESCRIPTION, "Adds new recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
