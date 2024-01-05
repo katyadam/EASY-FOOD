@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 
 public class ShowAction extends ContextAction {
     public ShowAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
-        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Show Recipe", Icons.SHOW_ICON);
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "", Icons.SHOW_ICON);
         putValue(SHORT_DESCRIPTION, "Shows recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_S);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl S"));

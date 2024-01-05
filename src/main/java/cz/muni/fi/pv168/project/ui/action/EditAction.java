@@ -33,7 +33,7 @@ public final class EditAction extends ContextAction {
             JTable categoryTable,
             CommonDependencyProvider commonDependencyProvider
     ) {
-        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Edit", Icons.EDIT_ICON);
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "", Icons.EDIT_ICON);
         this.commonDependencyProvider = commonDependencyProvider;
         putValue(SHORT_DESCRIPTION, "Edits selected recipe");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
