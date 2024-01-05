@@ -389,7 +389,7 @@ public class MainWindow {
                 recipeTable,
                 recipeTableSorter)
         );
-        JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
+        //JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
         recipePanel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, gap 0px 10px, split 11");
         recipePanel.add(ingredientsFilter, " left, hmin 30, gap 0px 10px");
         recipePanel.add(categoriesFilter, "left, hmin 30, gap 0px 10px");
@@ -401,8 +401,9 @@ public class MainWindow {
         recipePanel.add(portionsMinFilter, "wmax 70, hmin 30");
         recipePanel.add(sep2, "left");
         recipePanel.add(portionsMaxFilter, "wmax 70, hmin 30");
-        recipePanel.add(fireFilter, "al right, split 2");
-        recipePanel.add(removeFilter, " wrap");
+        recipePanel.add(fireFilter, "al right, split 2, wrap");
+        //recipePanel.add(fireFilter, "al right, split 2");
+        //recipePanel.add(removeFilter, " wrap");
         recipePanel.add(recipeScroll, "span 9, grow, height 99% ");
         return recipePanel;
     }
@@ -421,14 +422,15 @@ public class MainWindow {
                 caloriesMinFilter,
                 caloriesMaxFilter
         ));
-        JButton removeFilter = new JButton(new RemoveRecipesFilterAction(ingredientTableSorter));
+        //JButton removeFilter = new JButton(new RemoveRecipesFilterAction(ingredientTableSorter));
         ingredientsPanel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, gap 0px 10px, split 5");
         ingredientsPanel.add(caloriesText, "left");
         ingredientsPanel.add(caloriesMinFilter, "left, hmin 30");
         ingredientsPanel.add(sep, "left");
         ingredientsPanel.add(caloriesMaxFilter, "left, gapright push, hmin 30");
-        ingredientsPanel.add(fireFilter, "al right, split 2");
-        ingredientsPanel.add(removeFilter, "wrap");
+        ingredientsPanel.add(fireFilter, "al right, split 2, wrap");
+        //ingredientsPanel.add(fireFilter, "al right, split 2");
+        //ingredientsPanel.add(removeFilter, "wrap");
         ingredientsPanel.add(ingredientScroll, "span 3, grow, height 99%");
         return ingredientsPanel;
     }
