@@ -372,10 +372,10 @@ public class MainWindow {
         JSpinner portionsMinFilter = new JSpinner(new SpinnerNumberModel(1, 1, 200, 1));
         JSpinner portionsMaxFilter = new JSpinner(new SpinnerNumberModel(200, 1, 200, 1));
         JLabel categories = new JLabel("Categories:");
-        JLabel nutrition = new JLabel("Calories min");
-        JLabel max = new JLabel("max");
-        JLabel max2 = new JLabel("max");
-        JLabel portions = new JLabel("Portions min");
+        JLabel sep1 = new JLabel("-");
+        JLabel sep2 = new JLabel("-");
+        JLabel nutrition = new JLabel("Calories");
+        JLabel portions = new JLabel("Portions");
         JTextField searchBar = new JTextField("Search...");
         searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
@@ -390,18 +390,18 @@ public class MainWindow {
                 recipeTableSorter)
         );
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
-        recipePanel.add(searchBar, " left, grow, wmin 90");
-        recipePanel.add(ingredientsFilter, " right, hmin 30");
-        recipePanel.add(categoriesFilter, "right, hmin 30");
-        recipePanel.add(nutrition, "right, split 4");
+        recipePanel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, gap 0px 10px, split 11");
+        recipePanel.add(ingredientsFilter, " left, hmin 30, gap 0px 10px");
+        recipePanel.add(categoriesFilter, "left, hmin 30, gap 0px 10px");
+        recipePanel.add(nutrition, "left, split 8");
         recipePanel.add(caloriesMinFilter, "wmax 80, hmin 30");
-        recipePanel.add(max2);
-        recipePanel.add(caloriesMaxFilter, "wmax 80, hmin 30");
-        recipePanel.add(portions, "al right, split 4");
+        recipePanel.add(sep1, "left");
+        recipePanel.add(caloriesMaxFilter, "wmax 80, hmin 30, gap 4px 10px");
+        recipePanel.add(portions, "left");
         recipePanel.add(portionsMinFilter, "wmax 70, hmin 30");
-        recipePanel.add(max);
+        recipePanel.add(sep2, "left");
         recipePanel.add(portionsMaxFilter, "wmax 70, hmin 30");
-        recipePanel.add(fireFilter, " r, split 2");
+        recipePanel.add(fireFilter, "al right, split 2");
         recipePanel.add(removeFilter, " wrap");
         recipePanel.add(recipeScroll, "span 9, grow, height 99% ");
         return recipePanel;
@@ -411,8 +411,8 @@ public class MainWindow {
         JPanel ingredientsPanel = new JPanel(new MigLayout("fillx, insets 2"));
         JSpinner caloriesMinFilter = new JSpinner(new SpinnerNumberModel(0, 0, 50000, 20));
         JSpinner caloriesMaxFilter = new JSpinner(new SpinnerNumberModel(50000, 0, 50000, 20));
-        JLabel nutritions = new JLabel("Calories");
-        JLabel max = new JLabel("-");
+        JLabel caloriesText = new JLabel("Calories");
+        JLabel sep = new JLabel("-");
         JTextField searchBar = new JTextField("Search...");
         searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, ingredientTableSorter));
@@ -422,10 +422,10 @@ public class MainWindow {
                 caloriesMaxFilter
         ));
         JButton removeFilter = new JButton(new RemoveRecipesFilterAction(ingredientTableSorter));
-        ingredientsPanel.add(searchBar, " grow, width 18%");
-        ingredientsPanel.add(nutritions, "left, split 4");
+        ingredientsPanel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, gap 0px 10px, split 5");
+        ingredientsPanel.add(caloriesText, "left");
         ingredientsPanel.add(caloriesMinFilter, "left, hmin 30");
-        ingredientsPanel.add(max, "left");
+        ingredientsPanel.add(sep, "left");
         ingredientsPanel.add(caloriesMaxFilter, "left, gapright push, hmin 30");
         ingredientsPanel.add(fireFilter, "al right, split 2");
         ingredientsPanel.add(removeFilter, "wrap");
@@ -439,7 +439,7 @@ public class MainWindow {
         searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, customUnitTableSorter));
 
-        panel.add(searchBar, "grow, height 72, wrap, gapright 70%");
+        panel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, wrap");
         panel.add(customUnitScroll, " grow, height 99%");
         return panel;
     }
@@ -450,7 +450,7 @@ public class MainWindow {
         searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, categoryTableSorter));
 
-        panel.add(searchBar, "grow, height 72, wrap, gapright 70%");
+        panel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, wrap");
         panel.add(categoryScroll, " grow, height 99%");
         return panel;
     }
