@@ -37,7 +37,7 @@ public final class AddAction extends ContextAction {
     ) {
         super(recipeTable, ingredientTable, unitsTable, categoryTable, "", Icons.ADD_ICON);
         this.commonDependencyProvider = commonDependencyProvider;
-        putValue(SHORT_DESCRIPTION, "Adds new recipe");
+        putValue(SHORT_DESCRIPTION, "Adds new item");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
     }

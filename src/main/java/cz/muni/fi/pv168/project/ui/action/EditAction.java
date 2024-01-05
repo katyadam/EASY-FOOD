@@ -35,7 +35,7 @@ public final class EditAction extends ContextAction {
     ) {
         super(recipeTable, ingredientTable, unitsTable, categoryTable, "", Icons.EDIT_ICON);
         this.commonDependencyProvider = commonDependencyProvider;
-        putValue(SHORT_DESCRIPTION, "Edits selected recipe");
+        putValue(SHORT_DESCRIPTION, "Edits selected items");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
     }

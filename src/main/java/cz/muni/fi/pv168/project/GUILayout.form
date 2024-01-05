@@ -62,7 +62,7 @@
           <component id="b461d" class="javax.swing.JLabel">
             <constraints/>
             <properties>
-              <text value="        "/>
+              <text value="      "/>
             </properties>
           </component>
           <component id="3150f" class="javax.swing.JButton" binding="editButton">
@@ -84,7 +84,7 @@
           <component id="d8c62" class="javax.swing.JLabel">
             <constraints/>
             <properties>
-              <text value="        "/>
+              <text value="      "/>
             </properties>
           </component>
           <component id="21398" class="javax.swing.JButton" binding="deleteButton">
@@ -105,7 +105,7 @@
           <component id="aa7ff" class="javax.swing.JLabel">
             <constraints/>
             <properties>
-              <text value="        "/>
+              <text value="      "/>
             </properties>
           </component>
           <component id="dc44d" class="javax.swing.JButton" binding="showRecipeButton">
