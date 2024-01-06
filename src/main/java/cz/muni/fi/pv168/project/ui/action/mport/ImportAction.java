@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.GenericExportService;
 import cz.muni.fi.pv168.project.business.service.export.GenericImportService;
+import cz.muni.fi.pv168.project.business.service.export.ParallelImport;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchXmlImporter;
 
@@ -64,7 +65,10 @@ public class ImportAction extends AbstractAction {
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            BatchXmlImporter xmlImporter = new BatchXmlImporter();
+            ParallelImport importer = new ParallelImport(selectedFile,callback,importType);
+            importer.execute();
+
+            /*BatchXmlImporter xmlImporter = new BatchXmlImporter();
             GenericImportService genericImportService = new GenericImportService(
                     recipeCrudService,
                     ingredientCrudService,
@@ -83,7 +87,7 @@ public class ImportAction extends AbstractAction {
             callback.run();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 
-            JOptionPane.showMessageDialog(null, "Import has successfully finished.");
+            JOptionPane.showMessageDialog(null, "Import has successfully finished.");*/
         }
     }
 }
