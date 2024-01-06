@@ -1,13 +1,11 @@
 package cz.muni.fi.pv168.project.business.model;
 
 import cz.muni.fi.pv168.project.ui.MainWindow;
-import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import java.util.List;
 
 public class Ingredient extends Entity {
     private int nutritionalValue;
-    private int usage = 0;
 
     public Ingredient() {
     }
@@ -41,9 +39,8 @@ public class Ingredient extends Entity {
         return name;
     }
 
-    public void calculateUsage() {
-        CommonDependencyProvider dependencyProvider = MainWindow.commonDependencyProvider;
-        for ( Recipe recipe : dependencyProvider.getRecipeCrudService().findAll()) {
+    /*public void calculateUsage(List<Recipe> recipes) {
+        for ( Recipe recipe : recipes) {
             for (AddedIngredient addedIngredient : recipe.getAddedIngredients()) {
                 if (addedIngredient.getIngredient().equals(this)) {
                     usage++;
@@ -51,7 +48,7 @@ public class Ingredient extends Entity {
                 }
             }
         }
-    }
+    }*/
 
     public static boolean contains(List<AddedIngredient> addedIngredients, Ingredient ingredient) {
         boolean flag = false;
@@ -65,9 +62,16 @@ public class Ingredient extends Entity {
     }
 
     public int getUsage() {
+        int usage = 0;
+        for ( Recipe recipe : MainWindow.commonDependencyProvider.getRecipeCrudService().findAll()) {
+            for (AddedIngredient addedIngredient : recipe.getAddedIngredients()) {
+                if (addedIngredient.getIngredient().equals(this)) {
+                    usage++;
+                    break;
+                }
+            }
+        }
         return usage;
     }
-    public void setUsage(int i) {
-        usage = i;
-    }
+
 }

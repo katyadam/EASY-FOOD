@@ -41,15 +41,12 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
                 amount.setValue(1.0);
                 return;
             }
-            Ingredient ingredient = (Ingredient) ingredients.getSelectedItem();
-            if ( ingredient == null || units.getSelectedItem() == null) {
+            if (ingredients.getSelectedItem() == null || units.getSelectedItem() == null) {
                 return;
             }
-            if (Ingredient.contains(addedIngredientsTableModel.getEntities(),ingredient)) {
-                ingredient.setUsage(ingredient.getUsage() + 1);
-            }
+
             AddedIngredient newIngredient = new AddedIngredient(
-                    ingredient,
+                    (Ingredient) ingredients.getSelectedItem(),
                     (double) amount.getValue(),
                     (Unit) units.getSelectedItem());
             if (entity.getGuid() != null) {
@@ -73,10 +70,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
                                 AddedIngredient entityToDelete = addedIngredientsTableModel.getEntity(rowIndex);
                                 entity.removeIngredient(entityToDelete);
                                 addedIngredientsTableModel.deleteRow(rowIndex);
-                                if(!Ingredient.contains(addedIngredientsTableModel.getEntities(),entityToDelete.getIngredient())) {
-                                    entityToDelete.getIngredient().setUsage(entityToDelete.getIngredient().getUsage() - 1);
-                                }
-
                             }
                     );
         }

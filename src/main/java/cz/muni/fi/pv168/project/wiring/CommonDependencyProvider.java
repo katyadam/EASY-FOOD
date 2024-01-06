@@ -119,10 +119,6 @@ public class CommonDependencyProvider implements DependencyProvider {
         addedIngredientCrudService = new AddedIngredientCrudService(addedIngredients, addedIngredientValidator, guidProvider);
         recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider, addedIngredientCrudService);
 
-        for (Ingredient ingredient: ingredients.findAll()) {
-            ingredient.calculateUsage();
-        }
-
 //        exportService = new GenericExportService(employeeCrudService, departmentCrudService,
 //                List.of(new BatchCsvExporter()));
 //        importService = new GenericImportService(employeeCrudService, departmentCrudService,
