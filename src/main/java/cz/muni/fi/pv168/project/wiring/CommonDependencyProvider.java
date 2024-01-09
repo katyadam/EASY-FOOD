@@ -4,7 +4,11 @@ import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.crud.*;
 import cz.muni.fi.pv168.project.business.service.export.ExportService;
+import cz.muni.fi.pv168.project.business.service.export.GenericExportService;
+import cz.muni.fi.pv168.project.business.service.export.GenericImportService;
 import cz.muni.fi.pv168.project.business.service.export.ImportService;
+import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
+import cz.muni.fi.pv168.project.business.service.export.importer.BatchXmlImporter;
 import cz.muni.fi.pv168.project.business.service.validation.*;
 import cz.muni.fi.pv168.project.storage.sql.*;
 import cz.muni.fi.pv168.project.storage.sql.dao.*;
@@ -12,9 +16,14 @@ import cz.muni.fi.pv168.project.storage.sql.db.DatabaseConnection;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseInitializer;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
+import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutorImpl;
+import cz.muni.fi.pv168.project.storage.sql.db.TransactionManagerImpl;
+import cz.muni.fi.pv168.project.storage.sql.db.TransactionalImportService;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.*;
+import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import java.sql.Connection;
+import java.util.List;
 
 /**
  * Common dependency provider for both production and test environment.
@@ -43,6 +52,9 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final CategoryUsageValidator categoryUsageValidator;
 
     private static final DatabaseConnection CONNECTION = new DatabaseConnection();
+    private final DatabaseManager databaseManager;
+    private final TransactionExecutorImpl transactionExecutor;
+    private final TransactionalImportService transactionalImportService;
 
     public CommonDependencyProvider() {
 
@@ -55,10 +67,6 @@ public class CommonDependencyProvider implements DependencyProvider {
         addedIngredientValidator = new AddedIngredientValidator();
 
         var guidProvider = new UuidGuidProvider();
-
-//        var transactionManager = new TransactionManagerImpl(databaseManager);
-//        this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
-//        var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
         //var baseUnitMapper = new BaseUnitMapper();
         //var baseUnitDao = new BaseUnitDao(connection);
@@ -119,17 +127,31 @@ public class CommonDependencyProvider implements DependencyProvider {
         addedIngredientCrudService = new AddedIngredientCrudService(addedIngredients, addedIngredientValidator, guidProvider);
         recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider, addedIngredientCrudService);
 
-//        exportService = new GenericExportService(employeeCrudService, departmentCrudService,
-//                List.of(new BatchCsvExporter()));
-//        importService = new GenericImportService(employeeCrudService, departmentCrudService,
-//                List.of(new BatchCsvImporter()), transactionExecutor);
-        //TODO import export
+        BatchXmlImporter xmlImporter = new BatchXmlImporter();
+        GenericImportService genericImportService = new GenericImportService(
+                getRecipeCrudService(),
+                getIngredientCrudService(),
+                getCustomUnitCrudService(),
+                getCategoryCrudService(),
+                List.of(xmlImporter),
+                new GenericExportService(
+                        getRecipeCrudService(),
+                        getIngredientCrudService(),
+                        getCustomUnitCrudService(),
+                        getCategoryCrudService(),
+                        List.of(new BatchXmlExporter())
+                )
+        );
+        this.databaseManager = new DatabaseManager(CONNECTION.getConnectionString());
+        var transactionManager = new TransactionManagerImpl(getDatabaseManager());
+        this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
+        this.transactionalImportService = new TransactionalImportService(genericImportService, transactionExecutor);
 
     }
 
     @Override
     public DatabaseManager getDatabaseManager() {
-        throw new UnsupportedOperationException();
+        return databaseManager;
     }
 
     @Override
@@ -155,7 +177,7 @@ public class CommonDependencyProvider implements DependencyProvider {
 
     @Override
     public TransactionExecutor getTransactionExecutor() {
-        throw new UnsupportedOperationException();
+        return transactionExecutor;
     }
 
     @Override
@@ -187,6 +209,9 @@ public class CommonDependencyProvider implements DependencyProvider {
     @Override
     public ImportService getImportService() {
         throw new UnsupportedOperationException();
+    }
+    public TransactionalImportService getTransactionalImportService() {
+        return transactionalImportService;
     }
 
     @Override

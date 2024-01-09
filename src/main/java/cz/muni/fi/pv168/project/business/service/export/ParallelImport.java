@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Filip Skvara
  */
-public class ParallelImport extends SwingWorker<Void,Object> {
+public class ParallelImport extends SwingWorker<Void, Object> {
     private final File file;
     private final Runnable callback;
     private final ImportType importType;
@@ -27,25 +27,8 @@ public class ParallelImport extends SwingWorker<Void,Object> {
 
     @Override
     protected Void doInBackground() {
-
-
-
-        BatchXmlImporter xmlImporter = new BatchXmlImporter();
-        GenericImportService genericImportService = new GenericImportService(
-                MainWindow.commonDependencyProvider.getRecipeCrudService(),
-                MainWindow.commonDependencyProvider.getIngredientCrudService(),
-                MainWindow.commonDependencyProvider.getCustomUnitCrudService(),
-                MainWindow.commonDependencyProvider.getCategoryCrudService(),
-                List.of(xmlImporter),
-                new GenericExportService(
-                        MainWindow.commonDependencyProvider.getRecipeCrudService(),
-                        MainWindow.commonDependencyProvider.getIngredientCrudService(),
-                        MainWindow.commonDependencyProvider.getCustomUnitCrudService(),
-                        MainWindow.commonDependencyProvider.getCategoryCrudService(),
-                        List.of(new BatchXmlExporter())
-                )
-        );
-        genericImportService.importData(file.getAbsolutePath(), importType);
+        MainWindow.commonDependencyProvider.getTransactionalImportService()
+                .importData(file.getAbsolutePath(), importType);
         callback.run();
         System.out.println("Selected file: " + file.getAbsolutePath());
 
