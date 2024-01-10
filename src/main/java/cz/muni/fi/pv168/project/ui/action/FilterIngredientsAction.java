@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 
 public class FilterIngredientsAction extends AbstractAction {
 
+    public static final String FILTER_TAG = "Filter";
+    public static final String REMOVE_FILTER_TAG = "Remove filter";
+
     private final TableRowSorter<IngredientTableModel> ingredientTableSorter;
     private final JSpinner caloriesMinFilter;
     private final JSpinner caloriesMaxFilter;
@@ -28,6 +31,8 @@ public class FilterIngredientsAction extends AbstractAction {
         this.ingredientTableSorter = ingredientTableSorter;
         this.caloriesMinFilter = caloriesMinFilter;
         this.caloriesMaxFilter = caloriesMaxFilter;
+
+        putValue(Action.SHORT_DESCRIPTION, FILTER_TAG);
     }
 
     @Override
@@ -41,10 +46,12 @@ public class FilterIngredientsAction extends AbstractAction {
             ingredientTableSorter.setRowFilter(new IngredientRowFilter(attributes));
             isFilterApplied = true;
             putValue(Action.SMALL_ICON, pressedIcon);
+            putValue(Action.SHORT_DESCRIPTION, REMOVE_FILTER_TAG);
         } else {
             ingredientTableSorter.setRowFilter(null);
             isFilterApplied = false;
             putValue(Action.SMALL_ICON, defaultIcon);
+            putValue(Action.SHORT_DESCRIPTION, FILTER_TAG);
         }
         StatisticsUpdater.reload();
     }

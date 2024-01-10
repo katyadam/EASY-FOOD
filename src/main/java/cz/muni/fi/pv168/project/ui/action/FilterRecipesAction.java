@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 
 public class FilterRecipesAction extends AbstractAction {
 
+    public static final String FILTER_TAG = "Filter";
+    public static final String REMOVE_FILTER_TAG = "Remove filter";
     private final TableRowSorter<RecipeTableModel> recipeTableRowSorter;
     private final MultiSelectCombobox<Ingredient> ingredientFilter;
     private final MultiSelectCombobox<Category> categoryFilter;
@@ -49,7 +51,7 @@ public class FilterRecipesAction extends AbstractAction {
         this.recipeTable = recipeTable;
         this.recipeTableRowSorter = recipeTableRowSorter;
 
-        putValue(SHORT_DESCRIPTION, "Filter recipes");
+        putValue(Action.SHORT_DESCRIPTION, FILTER_TAG);
     }
 
 
@@ -69,10 +71,12 @@ public class FilterRecipesAction extends AbstractAction {
             recipeTableRowSorter.setRowFilter(new RecipeRowFilter(attributes, false));
             isFilterApplied = true;
             putValue(Action.SMALL_ICON, pressedIcon);
+            putValue(Action.SHORT_DESCRIPTION, REMOVE_FILTER_TAG);
         } else {
             recipeTableRowSorter.setRowFilter(null);
             isFilterApplied = false;
             putValue(Action.SMALL_ICON, defaultIcon);
+            putValue(Action.SHORT_DESCRIPTION, FILTER_TAG);
         }
         StatisticsUpdater.reload();
     }
