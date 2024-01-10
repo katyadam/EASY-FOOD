@@ -15,6 +15,9 @@ public class FilterIngredientsAction extends AbstractAction {
     private final TableRowSorter<IngredientTableModel> ingredientTableSorter;
     private final JSpinner caloriesMinFilter;
     private final JSpinner caloriesMaxFilter;
+    private boolean isFilterApplied = false;
+    private final Icon defaultIcon = Icons.FILTER_ICON;
+    private final Icon pressedIcon = Icons.PRESSED_ICON;
 
     public FilterIngredientsAction(
             TableRowSorter<IngredientTableModel> ingredientTableSorter,
@@ -29,12 +32,20 @@ public class FilterIngredientsAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IngredientFilterAttributes attributes = new IngredientFilterAttributes(
-                (Integer) caloriesMinFilter.getValue(),
-                (Integer) caloriesMaxFilter.getValue()
-        );
+        if (!isFilterApplied) {
+            IngredientFilterAttributes attributes = new IngredientFilterAttributes(
+                    (Integer) caloriesMinFilter.getValue(),
+                    (Integer) caloriesMaxFilter.getValue()
+            );
 
-        ingredientTableSorter.setRowFilter(new IngredientRowFilter(attributes));
+            ingredientTableSorter.setRowFilter(new IngredientRowFilter(attributes));
+            isFilterApplied = true;
+            putValue(Action.SMALL_ICON, pressedIcon);
+        } else {
+            ingredientTableSorter.setRowFilter(null);
+            isFilterApplied = false;
+            putValue(Action.SMALL_ICON, defaultIcon);
+        }
         StatisticsUpdater.reload();
     }
 }

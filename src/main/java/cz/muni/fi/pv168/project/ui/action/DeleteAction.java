@@ -17,7 +17,7 @@ public final class DeleteAction extends ContextAction {
 
 
     public DeleteAction(JTable recipeTable, JTable ingredientTable, JTable unitsTable, JTable categoryTable) {
-        super(recipeTable, ingredientTable, unitsTable, categoryTable, "Delete", Icons.DELETE_ICON);
+        super(recipeTable, ingredientTable, unitsTable, categoryTable, "", Icons.DELETE_ICON);
 
         putValue(SHORT_DESCRIPTION, "Deletes selected items");
         putValue(MNEMONIC_KEY, KeyEvent.VK_D);
