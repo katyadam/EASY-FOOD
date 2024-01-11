@@ -41,6 +41,10 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
                 amount.setValue(1.0);
                 return;
             }
+            if (ingredients.getSelectedItem() == null || units.getSelectedItem() == null) {
+                return;
+            }
+
             AddedIngredient newIngredient = new AddedIngredient(
                     (Ingredient) ingredients.getSelectedItem(),
                     (double) amount.getValue(),

@@ -98,6 +98,10 @@ public class MainWindow {
         this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
         this.unitService = commonDependencyProvider.getCustomUnitCrudService();
 
+       /* for (Ingredient ingredient: ingredientCrudService.findAll()) {
+            ingredient.calculateUsage(recipeCrudService.findAll());
+        }*/
+
         this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
         this.customUnitTableModel = new CustomUnitTableModel(unitService);
         this.categoryTableModel = new CategoryTableModel(categoryCrudService);
@@ -107,6 +111,7 @@ public class MainWindow {
         this.ingredientTableSorter = new TableRowSorter<>(ingredientTableModel);
         this.customUnitTableSorter = new TableRowSorter<>(customUnitTableModel);
         this.categoryTableSorter = new TableRowSorter<>(categoryTableModel);
+
 
         createTables();
         createScrollPanes();

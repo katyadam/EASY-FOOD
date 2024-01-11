@@ -15,10 +15,12 @@ public class DatabaseConnection {
     public static final String PROJECT_NAME = "EASY-FOOD";
     private static final String DB_PROPERTIES_STRING = "DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false";
     private final Connection connection;
+    private final String connectionString;
+
 
     public DatabaseConnection() {
-        String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
-        Connection newCon = null;
+        this.connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
+        Connection newCon;
 
         try {
             newCon = DriverManager.getConnection(connectionString);
@@ -53,6 +55,9 @@ public class DatabaseConnection {
     }
 
 
+    public String getConnectionString() {
+        return connectionString;
+    }
 }
 
 

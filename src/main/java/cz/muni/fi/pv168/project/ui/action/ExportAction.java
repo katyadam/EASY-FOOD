@@ -5,8 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.service.crud.*;
-import cz.muni.fi.pv168.project.business.service.export.batch.Batch;
-import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
+import cz.muni.fi.pv168.project.business.service.export.ParallelExport;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -45,18 +44,18 @@ public class ExportAction extends AbstractAction {
         fileChooser.getChoosableFileFilters();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(null);
-        Batch batch = new Batch(this.recipeCrudService.findAll(),
-                this.ingredientCrudService.findAll(),
-                this.unitService.findAll(),
-                this.categoryCrudService.findAll());
+
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
+            ParallelExport export = new ParallelExport(selectedFile);
+            export.execute();
+            /*
             BatchXmlExporter exportBatch = new BatchXmlExporter();
             exportBatch.exportBatch(batch, selectedFile.getAbsolutePath() + ".xml");
             System.out.println("Selected file: " + selectedFile.getAbsolutePath() + ".xml");
 
-            JOptionPane.showMessageDialog(null, "Export has successfully finished.");
+            JOptionPane.showMessageDialog(null, "Export has successfully finished.");*/
         }
 
     }
