@@ -1,34 +1,35 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.BaseUnit;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 
 import javax.swing.*;
 
 public class CustomUnitDialog extends EntityDialog<CustomUnit> {
 
-    private CustomUnit customUnit;
 
     private final JTextField customUnitNameField = new JTextField();
     private final JTextField customUnitAbbreviationField = new JTextField();
     private final JSpinner customUnitAmount = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 50000.0, 1.0));
-    private final JComboBox<BaseUnits> units = new JComboBox<>(BaseUnits.values());
+    private final JComboBox<BaseUnit> units = new JComboBox<>(BaseUnit.values());
 
-    public CustomUnitDialog(CustomUnit customUnit) {
-        this.customUnit = customUnit;
+    public CustomUnitDialog(CustomUnit unit, CustomUnitTableModel unitTableModel) {
+        super(unit, unitTableModel.getEntities());
 
-        if (customUnit != null) {
+        if (unit != null) {
             setValues();
         } else {
-            this.customUnit = new CustomUnit(null, null, 0, null);
+            entity = new CustomUnit(null, null, 0, null);
         }
         addFields();
     }
 
     private void setValues() {
-        customUnitNameField.setText(customUnit.getFullName());
-        customUnitAbbreviationField.setText(customUnit.getAbbreviation());
-        customUnitAmount.setValue(Double.parseDouble(customUnit.getBaseAmountNumber()));
+        customUnitNameField.setText(entity.getName());
+        customUnitAbbreviationField.setText(entity.getAbbreviation());
+        customUnitAmount.setValue(Double.parseDouble(entity.getBaseAmountNumber()));
+        units.setSelectedIndex(entity.getBaseUnit().getIndex());
     }
 
     private void addFields() {
@@ -40,10 +41,12 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
 
     @Override
     CustomUnit getEntity() {
-        customUnit.setUnitName(customUnitNameField.getText());
-        customUnit.setAbbreviation(customUnitAbbreviationField.getText());
-        customUnit.setAmount((double) customUnitAmount.getValue());
-        customUnit.setBaseUnit((BaseUnits) units.getSelectedItem());
-        return customUnit;
+        CustomUnit setEntity = new CustomUnit();
+        setEntity.setGuid(entity.getGuid());
+        setEntity.setName(customUnitNameField.getText());
+        setEntity.setAbbreviation(customUnitAbbreviationField.getText());
+        setEntity.setAmount((double) customUnitAmount.getValue());
+        setEntity.setBaseUnit((BaseUnit) units.getSelectedItem());
+        return setEntity;
     }
 }

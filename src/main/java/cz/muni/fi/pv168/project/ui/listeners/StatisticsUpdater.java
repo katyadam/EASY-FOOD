@@ -1,25 +1,39 @@
 package cz.muni.fi.pv168.project.ui.listeners;
 
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
+
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
-public class StatisticsUpdater implements TableModelListener {
+public class StatisticsUpdater {
     private JTable table;
-    private int componentIndex;
     private String text;
-    private JToolBar statistics;
+    private static JLabel statistics;
 
-    public StatisticsUpdater(JTable table, int componentIndex, String text, JToolBar statistics) {
-        this.table = table;
-        this.componentIndex = componentIndex;
-        this.text = text;
-        this.statistics = statistics;
+    public static void reload() {
+        String text;
+        switch (TabbedPanelContext.getActiveTab()) {
+            case 0:
+                text = "Showing recipes ";
+                break;
+            case 1:
+                text = "Showing ingredients ";
+                break;
+            case 2:
+                text = "Showing units ";
+                break;
+            default:
+                text = "Showing categories ";
+        }
+        JTable table = TabbedPanelContext.getActiveTable();
+        StringBuilder builder = new StringBuilder()
+                .append(text)
+                .append(table.getRowCount())
+                .append(" out of ")
+                .append(table.getModel().getRowCount());
+        statistics.setText(builder.toString());
     }
 
-    @Override
-    public void tableChanged(TableModelEvent e) {
-        ((JLabel) statistics.getComponent(componentIndex))
-                .setText(text + table.getModel().getRowCount());
+    public static void setLabel(JLabel label) {
+        statistics = label;
     }
 }

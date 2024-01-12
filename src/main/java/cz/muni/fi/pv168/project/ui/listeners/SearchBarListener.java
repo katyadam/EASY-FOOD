@@ -27,5 +27,6 @@ public class SearchBarListener<TABLE_MODEL extends TableModel> extends KeyAdapte
                 searchBar.getText(),
                 searchBar.getText().isEmpty()
         ));
+        StatisticsUpdater.reload();
     }
 }

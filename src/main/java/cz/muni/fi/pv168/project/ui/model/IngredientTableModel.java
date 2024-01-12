@@ -1,19 +1,23 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 
 import java.util.List;
 
 public class IngredientTableModel extends AbstractEntityTableModel<Ingredient> {
-    public IngredientTableModel(List<Ingredient> ingredients) {
+    private final CrudService<Ingredient> ingredientCrudService;
+
+    public IngredientTableModel(CrudService<Ingredient> ingredientCrudService) {
         super(List.of(
                 Column.readonly("Ingredient name", String.class, Ingredient::getName),
-                Column.readonly("Nutritional value", int.class, Ingredient::getNutritionalValue),
-                Column.readonly("Abbreviation", String.class, Ingredient::getUnitAbbreviation)
-        ), ingredients);
+                Column.readonly("Nutritional value [KCAL]", int.class, Ingredient::getNutritionalValue)
+        ), ingredientCrudService.findAll(), ingredientCrudService);
+        this.ingredientCrudService = ingredientCrudService;
     }
 
-    public Ingredient[] toArray() {
-        return data.toArray(new Ingredient[data.size()]);
+    public Ingredient[] getArrayOfIngredients() {
+        return ingredientCrudService.findAll().toArray(new Ingredient[0]);
     }
+
 }

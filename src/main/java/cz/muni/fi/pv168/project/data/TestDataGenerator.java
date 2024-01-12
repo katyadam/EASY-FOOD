@@ -1,17 +1,10 @@
 package cz.muni.fi.pv168.project.data;
 
 
-import cz.muni.fi.pv168.project.model.BaseUnits;
-import cz.muni.fi.pv168.project.model.Category;
-import cz.muni.fi.pv168.project.model.CustomUnit;
-import cz.muni.fi.pv168.project.model.Ingredient;
-import cz.muni.fi.pv168.project.model.PreparationTime;
-import cz.muni.fi.pv168.project.model.Recipe;
-import cz.muni.fi.pv168.project.model.Unit;
+import cz.muni.fi.pv168.project.business.model.*;
 
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,7 +14,7 @@ import java.util.stream.Stream;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public final class TestDataGenerator {
-
+    private final GuidProvider uuidProvider = new UuidGuidProvider();
     private static final List<String> RECIPE_NAMES = List.of("Smažák", "Pizza", "Vývar", "Guláš", "Mýchané vajíčka",
             "Hranolky", "Řízek", "Americké brambory", "Pečené kuře", "Grilled cheese");
 
@@ -37,22 +30,27 @@ public final class TestDataGenerator {
 
     private static final List<String> CUSTOM_UNIT_NAMES = new ArrayList<>();
     private static final List<String> CUSTOM_UNIT_ABBREVIATIONS = new ArrayList<>();
+    private final List<Category> categories;
+    private final List<CustomUnit> units;
+    private final List<Ingredient> ingredients;
+    private final List<Recipe> recipes;
 
-    public List<BaseUnits> getBaseUnits() {
-        return baseUnits;
-    }
-
-    public List<CustomUnit> getTestCustomUnits() {
-        return testCustomUnits;
-    }
-
-    public List<Category> getTestCategories() {
-        List<Category> categories = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            categories.add(createTestCategory());
-        }
+    public List<Category> getCategories() {
         return categories;
     }
+
+    public List<CustomUnit> getCustomUnits() {
+        return units;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
 
     static {
         CUSTOM_UNIT_NAMES.add("pinch");
@@ -74,16 +72,14 @@ public final class TestDataGenerator {
         // Add more custom units as needed
     }
 
-    private final List<Recipe> testRecipes;
-    private final List<Ingredient> testIngredients;
-    private final List<BaseUnits> baseUnits = BaseUnits.getBaseUnitList();
-    private final List<CustomUnit> testCustomUnits;
+    //private final BaseUnits baseUnits = new BaseUnits();
 
 
     public TestDataGenerator() {
-        this.testCustomUnits = createTestCustomUnits(5);
-        this.testIngredients = createTestIngredients(10);
-        this.testRecipes = createTestRecipes(10);
+        this.categories = createTestCategories();
+        this.units = createTestCustomUnits(5);
+        this.ingredients = createTestIngredients(10);
+        this.recipes = createTestRecipes(10);
     }
 
 
@@ -91,6 +87,14 @@ public final class TestDataGenerator {
 //    private static final LocalDate MAX_BIRTH_DATE = LocalDate.of(2002, DECEMBER, 31);
 
     private final Random random = new Random(2L);
+
+    public List<Category> createTestCategories() {
+        List<Category> categories = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            categories.add(createTestCategory());
+        }
+        return categories;
+    }
 
     private List<Recipe> createTestRecipes(int count) {
         return Stream
@@ -120,24 +124,43 @@ public final class TestDataGenerator {
         String customUnitName = CUSTOM_UNIT_NAMES.get(position);
         String customUnitAbbreviation = CUSTOM_UNIT_ABBREVIATIONS.get(position);
         double amount = random.nextDouble() * 100;
-        BaseUnits baseUnit = selectRandom(baseUnits);
-
-        return new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
+        BaseUnit baseUnit = selectRandom(List.of(BaseUnit.values()));
+        CustomUnit unit = new CustomUnit(customUnitName, customUnitAbbreviation, amount, baseUnit);
+        unit.setGuid(uuidProvider.newGuid());
+        return unit;
     }
 
+    //    String guid,
+//    String recipeName,
+//    Category category,
+//    PreparationTime preparationTime,
+//    int nutritionalValue,
+//    int portions,
+//    String description
     public Recipe createTestRecipe() {
 
         String recipeName = selectRandom(RECIPE_NAMES);
-        PreparationTime preparationTime = new PreparationTime(LocalTime.now().getHour(), LocalTime.now().getMinute());
         int portions = random.nextInt(10);
-        return new Recipe(recipeName, createTestCategory(), 0, portions, preparationTime);
+        Recipe recipe = new Recipe(
+                uuidProvider.newGuid(),
+                recipeName,
+                categories.get(random.nextInt(categories.size())),
+                20,
+                portions,
+                "desc"
+        );
+
+        recipe.setGuid(uuidProvider.newGuid());
+        recipe.setCategory(categories.get(random.nextInt(categories.size())));
+        return recipe;
     }
 
     private Ingredient createTestIngredient() {
         String ingredientName = selectRandom(INGREDIENT_NAMES);
         int nutritionalValue = random.nextInt(10000);
-        Unit unit = selectRandom(testCustomUnits);
-        return new Ingredient(ingredientName, nutritionalValue, unit);
+        Ingredient ingredient = new Ingredient(ingredientName, nutritionalValue);
+        ingredient.setGuid(uuidProvider.newGuid());
+        return ingredient;
     }
 
     private Category createTestCategory() {
@@ -146,7 +169,9 @@ public final class TestDataGenerator {
         ALL_CATEGORIES.addAll(FOOD_CATEGORIES);
         String categoryName = selectRandom(ALL_CATEGORIES);
         Color categoryColor = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-        return new Category(categoryName, categoryColor);
+        Category category = new Category(categoryName, categoryColor);
+        category.setGuid(uuidProvider.newGuid());
+        return category;
     }
 
 
@@ -160,14 +185,5 @@ public final class TestDataGenerator {
         int days = random.nextInt(maxDays);
         return min.plusDays(days);
     }
-
-    public List<Recipe> getTestRecipes() {
-        return testRecipes;
-    }
-
-    public List<Ingredient> getTestIngredients() {
-        return testIngredients;
-    }
-
 
 }

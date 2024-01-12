@@ -13,7 +13,6 @@ public class SearchBarRowFilter<T extends TableModel> extends RowFilter<T, Integ
         this.removeActive = removeActive;
     }
 
-
     @Override
     public boolean include(Entry<? extends T, ? extends Integer> entry) {
         if (removeActive) {
