@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 
 import javax.swing.*;
+import java.util.Collection;
 import java.util.List;
 
 public class RecipeCrudService implements CrudService<Recipe> {
@@ -73,12 +74,18 @@ public class RecipeCrudService implements CrudService<Recipe> {
         int confirm = JOptionPane.showOptionDialog(TabbedPanelContext.getActiveTable(),
                 "Confirm",
                 "Delete confirmation",
-                JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,
-                null,null,null);
-        if ( confirm != JOptionPane.OK_OPTION) {
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, null, null);
+        if (confirm != JOptionPane.OK_OPTION) {
             return ValidationResult.failed("denied");
         }
         recipeRepository.deleteByGuid(guid);
+        return ValidationResult.success();
+    }
+
+    @Override
+    public ValidationResult deleteMultipleByGuids(Collection<String> guids) {
+        guids.forEach(recipeRepository::deleteByGuid);
         return ValidationResult.success();
     }
 

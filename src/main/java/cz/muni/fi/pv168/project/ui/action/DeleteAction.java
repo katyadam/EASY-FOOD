@@ -1,15 +1,14 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 
-import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
-import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -36,8 +35,16 @@ public final class DeleteAction extends ContextAction {
                 .boxed()
                 .sorted(Comparator.reverseOrder())
                 .toList();
-        for (Integer i : indexes) {
-            tableModel.deleteRow(i);
+
+        // empty indexes should not exist, due to delete button inactivity during zero selected rows
+        if (indexes.size() > 1) {
+            tableModel.deleteMultipleRows(indexes);
+        } else {
+            tableModel.deleteRow(indexes.get(0));
         }
+    }
+
+    private void deleteMultipleEntities(Collection<Integer> indices) {
+        ;
     }
 }

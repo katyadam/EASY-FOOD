@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.model;
 
 import javax.swing.table.TableModel;
+import java.util.Collection;
 
 /**
  * The {@link EntityTableModel} interface provides an ability to get the actual entity at a certain index.
@@ -18,6 +19,7 @@ public interface EntityTableModel<E> extends TableModel {
     E getEntity(int rowIndex);
 
     void deleteRow(int rowIndex);
+    void deleteMultipleRows(Collection<Integer> rowIndices);
 
     void addRow(E entity);
 

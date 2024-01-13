@@ -3,12 +3,11 @@ package cz.muni.fi.pv168.project.ui.model;
 import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
-import cz.muni.fi.pv168.project.business.service.validation.Validator;
-import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public abstract class AbstractEntityTableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
@@ -60,7 +59,7 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
         columns.get(columnIndex).setValue(value, entity);
     }
 
-
+    @Override
     public void deleteRow(int rowIndex) {
         T entity = getEntity(rowIndex);
         ValidationResult validationResult = crudService.deleteByGuid(entity.getGuid(), false);
@@ -68,6 +67,23 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
             entities.remove(rowIndex);
             fireTableRowsDeleted(rowIndex, rowIndex);
         }
+    }
+
+    @Override
+    public void deleteMultipleRows(Collection<Integer> rowIndices) {
+        var guids = rowIndices.stream()
+                .map(i -> getEntity(i).getGuid())
+                .toList();
+        ValidationResult validationResult = crudService.deleteMultipleByGuids(guids);
+
+        if (validationResult.isValid()) {
+            rowIndices.forEach(
+                    i -> {
+                        entities.remove(i);
+                    }
+            );
+        }
+        refresh();
     }
 
     public void addRow(T entity) {

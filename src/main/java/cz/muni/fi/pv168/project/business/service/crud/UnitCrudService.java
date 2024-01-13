@@ -1,15 +1,15 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.storage.DataStorageException;
-import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
+import cz.muni.fi.pv168.project.ui.dialog.DeletePopupDialog;
 
-import javax.swing.*;
+import java.util.Collection;
 import java.util.List;
 
 public class UnitCrudService implements CrudService<CustomUnit> {
@@ -74,33 +74,40 @@ public class UnitCrudService implements CrudService<CustomUnit> {
     public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
         CustomUnit toDelete = unitRepository.findByGuid(guid)
                 .orElseThrow(
-                        () -> new DataStorageException("Unit with guid: " + guid + "not found!")
+                        () -> new DataStorageException("Custom unit with guid: " + guid + "not found!")
                 );
         ValidationResult validationResult = unitUsageValidator.validate(toDelete);
-        if (validationResult.isValid() || userAgreed) {
-            int confirm = JOptionPane.showOptionDialog(TabbedPanelContext.getActiveTable(),
-                    "Confirm",
-                    "Delete confirmation",
-                    JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,
-                    null,null,null);
-            if ( confirm != JOptionPane.OK_OPTION) {
-                return ValidationResult.failed("denied");
-            }
-            unitRepository.deleteByGuid(guid);
-        } else {
-            int option = JOptionPane.showConfirmDialog(
-                    new JPanel(),
-                    validationResult + "Unit will be deleted from all recipes.",
-                    "Are you sure you want to delete?",
-                    JOptionPane.YES_NO_OPTION
-            );
 
-            if (option == JOptionPane.YES_OPTION) {
-                unitRepository.deleteByGuid(guid);
-                return ValidationResult.success();
-            }
+        DeletePopupDialog deletePopupDialog = new DeletePopupDialog(
+                validationResult.isValid() ? List.of() : List.of(validationResult.toString())
+        );
+
+        if (deletePopupDialog.show().isValid()) {
+            unitRepository.deleteByGuid(guid);
+            return ValidationResult.success();
         }
-        return validationResult;
+        return ValidationResult.failed("denied");
+    }
+
+    @Override
+    public ValidationResult deleteMultipleByGuids(Collection<String> guids) {
+        List<String> invalidValResults = guids.stream()
+                .map(guid -> unitRepository.findByGuid(guid)
+                        .orElseThrow(
+                                () -> new DataStorageException("Custom unit with guid: " + guid + "not found!"))
+                )
+                .map(unitUsageValidator::validate)
+                .filter(valResult -> !valResult.isValid())
+                .map(ValidationResult::toString)
+                .toList();
+
+        DeletePopupDialog deletePopupDialog = new DeletePopupDialog(invalidValResults);
+
+        if (deletePopupDialog.show().isValid()) {
+            guids.forEach(unitRepository::deleteByGuid);
+            return ValidationResult.success();
+        }
+        return ValidationResult.failed("denied");
     }
 
     @Override
