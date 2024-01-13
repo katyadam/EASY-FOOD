@@ -35,7 +35,7 @@ public class DeletePopupDialog {
         } else {
             int option = JOptionPane.showConfirmDialog(
                     new JPanel(),
-                    String.join("\n", invalidValidationResults) + "All recipes with this category will be deleted.",
+                    String.join("\n", invalidValidationResults),
                     "Are you sure you want to delete?",
                     JOptionPane.YES_NO_OPTION
             );
