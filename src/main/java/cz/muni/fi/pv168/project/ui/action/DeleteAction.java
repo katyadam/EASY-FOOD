@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 
+import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
@@ -42,9 +43,6 @@ public final class DeleteAction extends ContextAction {
         } else {
             tableModel.deleteRow(indexes.get(0));
         }
-    }
-
-    private void deleteMultipleEntities(Collection<Integer> indices) {
-        ;
+        StatisticsUpdater.reload();
     }
 }
