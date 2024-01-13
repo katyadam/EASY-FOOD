@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 
 import javax.swing.*;
 import java.io.File;
@@ -38,6 +39,7 @@ public class ParallelImport extends SwingWorker<Void, Object> {
     @Override
     protected void done() {
         JOptionPane.showMessageDialog(null, "Import has successfully finished.");
+        StatisticsUpdater.reload();
         super.done();
     }
 }
