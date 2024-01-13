@@ -7,7 +7,9 @@ import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.storage.DataStorageException;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 
+import javax.swing.*;
 import java.util.List;
 
 public class IngredientCrudService implements CrudService<Ingredient> {
@@ -72,8 +74,27 @@ public class IngredientCrudService implements CrudService<Ingredient> {
                         () -> new DataStorageException("Ingredient with guid: " + guid + "not found!")
                 );
         ValidationResult validationResult = ingredientUsageValidator.validate(toDelete);
-        if (validationResult.isValid() || userAgreed) {
+        if (validationResult.isValid()) {
+            int confirm = JOptionPane.showOptionDialog(TabbedPanelContext.getActiveTable(),
+                    "Confirm",
+                    "Delete confirmation",
+                    JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,
+                    null,null,null);
+            if ( confirm != JOptionPane.OK_OPTION) {
+                 return ValidationResult.failed("denied");
+            }
             ingredientRepository.deleteByGuid(guid);
+        } else {
+            int option = JOptionPane.showConfirmDialog(
+                    new JPanel(),
+                    validationResult + "Ingredient will be deleted from all recipes.",
+                    "Are you sure you want to delete?",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (option == JOptionPane.YES_OPTION) {
+                ingredientRepository.deleteByGuid(guid);
+                return ValidationResult.success();
+            }
         }
         return validationResult;
     }

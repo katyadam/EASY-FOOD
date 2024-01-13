@@ -64,18 +64,6 @@ public class Recipe extends Entity {
     }
 
 
-    public void destroy() {
-        if (category != null) {
-            category.removeRecipe(this);
-        }
-        for (AddedIngredient addedIngredient : addedIngredients) {
-            addedIngredient.getIngredient().removeRecipe(this);
-            if (addedIngredient.getUnit() instanceof Entity) {
-                ((Entity) addedIngredient.getUnit()).removeRecipe(this);
-            }
-        }
-    }
-
     public int getPortions() {
         return portions;
     }

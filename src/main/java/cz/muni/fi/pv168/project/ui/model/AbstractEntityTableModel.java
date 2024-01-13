@@ -3,6 +3,8 @@ package cz.muni.fi.pv168.project.ui.model;
 import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
+import cz.muni.fi.pv168.project.business.service.validation.Validator;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -65,18 +67,6 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
         if (validationResult.isValid()) {
             entities.remove(rowIndex);
             fireTableRowsDeleted(rowIndex, rowIndex);
-        } else {
-            int option = JOptionPane.showConfirmDialog(
-                    new JPanel(),
-                    validationResult,
-                    "Are you sure you want to delete?",
-                    JOptionPane.YES_NO_OPTION
-            );
-            if (option == 0) {
-                crudService.deleteByGuid(entity.getGuid(), true);
-                entities.remove(rowIndex);
-                fireTableRowsDeleted(rowIndex, rowIndex);
-            }
         }
     }
 
