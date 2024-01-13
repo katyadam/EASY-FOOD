@@ -85,6 +85,14 @@ public class RecipeCrudService implements CrudService<Recipe> {
 
     @Override
     public ValidationResult deleteMultipleByGuids(Collection<String> guids) {
+        int confirm = JOptionPane.showOptionDialog(TabbedPanelContext.getActiveTable(),
+                "Confirm",
+                "Delete confirmation",
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, null, null);
+        if (confirm != JOptionPane.OK_OPTION) {
+            return ValidationResult.failed("denied");
+        }
         guids.forEach(recipeRepository::deleteByGuid);
         return ValidationResult.success();
     }
