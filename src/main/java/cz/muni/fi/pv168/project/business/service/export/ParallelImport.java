@@ -32,13 +32,12 @@ public class ParallelImport extends SwingWorker<Void, Object> {
                 .importData(file.getAbsolutePath(), importType);
         callback.run();
         System.out.println("Selected file: " + file.getAbsolutePath());
-
         return null;
     }
 
     @Override
     protected void done() {
-        JOptionPane.showMessageDialog(null, "Import has successfully finished.");
+//        JOptionPane.showMessageDialog(null, "Import has successfully finished.");
         StatisticsUpdater.reload();
         super.done();
     }
