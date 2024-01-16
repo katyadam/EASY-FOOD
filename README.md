@@ -7,7 +7,7 @@
 
 | Seminar Group |     Team    |
 |-------------- | ------------|
-| PV168/10      |      1      |
+| PV168/10      | optional    |
 
 ### Members
 
