@@ -2,17 +2,16 @@ package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
 import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
-import cz.muni.fi.pv168.project.ui.action.RemoveRecipesFilterAction;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
@@ -33,7 +32,9 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -262,6 +263,15 @@ public class MainWindow {
         return frame;
     }
 
+    public static void centerColumns(JTable table, int[] columnsToCenter) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
+
+        for (int column : columnsToCenter) {
+            table.getColumnModel().getColumn(column).setCellRenderer(renderer);
+        }
+    }
+
     private JTable createRecipeTable() {
         JTable table = new JTable(this.recipeTableModel);
         table.setAutoCreateRowSorter(true);
@@ -270,10 +280,8 @@ public class MainWindow {
         table.getColumnModel().getColumn(2).setMaxWidth(50);
         TableColumn colorColumn = table.getColumnModel().getColumn(2);
         colorColumn.setCellRenderer(new ColorRenderer());
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        renderer.setHorizontalAlignment(JLabel.LEFT);
-        table.getColumnModel().getColumn(5).setCellRenderer(renderer);
-        table.getColumnModel().getColumn(3).setCellRenderer(renderer);
+        int[] columnsToCenter = {0, 1, 3, 4, 5};
+        centerColumns(table, columnsToCenter);
         return table;
     }
 
@@ -282,6 +290,8 @@ public class MainWindow {
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setRowSorter(customUnitTableSorter);
+        int[] columnsToCenter = {0, 1, 2};
+        centerColumns(table, columnsToCenter);
         return table;
     }
 
@@ -292,7 +302,8 @@ public class MainWindow {
         table.setRowSorter(categoryTableSorter);
         TableColumn colorColumn = table.getColumnModel().getColumn(1);
         colorColumn.setCellRenderer(new ColorRenderer());
-
+        int[] columnsToCenter = {0};
+        centerColumns(table, columnsToCenter);
         return table;
     }
 
@@ -301,6 +312,8 @@ public class MainWindow {
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setRowSorter(ingredientTableSorter);
+        int[] columnsToCenter = {0, 1};
+        centerColumns(table, columnsToCenter);
         return table;
     }
 
