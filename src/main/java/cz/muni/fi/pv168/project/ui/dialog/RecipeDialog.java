@@ -152,9 +152,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
     @Override
     Recipe getEntity() {
-//        instead of getting entity(Recipe) which is from UI table,
-//        setting new entity(Recipe) same as original entity from UI table,
-//        this will prevent to overwriting UI entity when it is set...
         Recipe setEntity = new Recipe();
         setEntity.setGuid(entity.getGuid());
         setEntity.setName(recipeNameField.getText());

@@ -3,10 +3,8 @@ package cz.muni.fi.pv168.project.ui;
 import cz.muni.fi.pv168.project.GUILayout;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ExportAction;
@@ -77,9 +75,6 @@ public class MainWindow {
     private final TableRowSorter<CustomUnitTableModel> customUnitTableSorter;
     private final TableRowSorter<CategoryTableModel> categoryTableSorter;
 
-    // GuidProviders
-    private final GuidProvider uuidProvider = new UuidGuidProvider();
-
 
     // CRUD services
     private final CrudService<Recipe> recipeCrudService;
@@ -98,10 +93,6 @@ public class MainWindow {
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
         this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
         this.unitService = commonDependencyProvider.getCustomUnitCrudService();
-
-       /* for (Ingredient ingredient: ingredientCrudService.findAll()) {
-            ingredient.calculateUsage(recipeCrudService.findAll());
-        }*/
 
         this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
         this.customUnitTableModel = new CustomUnitTableModel(unitService);
@@ -131,15 +122,6 @@ public class MainWindow {
         setStatistics();
         setButtonListeners();
         setPopUpMenus();
-
-        // removes text from Search Bar after typing
-        //JTextField searchBar = layout.getSearchRecipesTextField();
-        /*
-        seachBar.addFocusListener(new ClearTextFieldKeyListener(seachBar));
-        seachBar.addKeyListener(new SearchBarListener<>(seachBar, recipeTableSorter));
-        seachBar.addKeyListener(new SearchBarListener<>(seachBar, ingredientTableSorter));
-        seachBar.addKeyListener(new SearchBarListener<>(seachBar, customUnitTableSorter));
-        seachBar.addKeyListener(new SearchBarListener<>(seachBar, categoryTableSorter));*/
 
     }
 
@@ -339,41 +321,12 @@ public class MainWindow {
         editMenu.add(actions.getQuitAction());
 
         JMenu filesMenu = new JMenu("Files");
-        // TODO import export
-//        filesMenu.add(new ImportAction(
-//                "Import",
-//                categoryCrudService,
-//                unitService,
-//                ingredientCrudService,
-//                recipeCrudService,
-//                this::refresh
-//        ));
-//        filesMenu.addSeparator();
-//        filesMenu.add(new ExportAction("Export",
-//                categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
         var importMenu = new JMenu("Import");
-        importMenu.add(new ImportAction(
-                "Append new data",
-                categoryCrudService,
-                unitService,
-                ingredientCrudService,
-                recipeCrudService,
-                this::refresh,
-                ImportType.APPEND
-        ));
-        importMenu.add(new ImportAction(
-                "Overwrite all data",
-                categoryCrudService,
-                unitService,
-                ingredientCrudService,
-                recipeCrudService,
-                this::refresh,
-                ImportType.OVERWRITE
-        ));
+        importMenu.add(new ImportAction("Append new data", categoryCrudService, unitService, ingredientCrudService, recipeCrudService, this::refresh, ImportType.APPEND));
+        importMenu.add(new ImportAction("Overwrite all data", categoryCrudService, unitService, ingredientCrudService, recipeCrudService, this::refresh, ImportType.OVERWRITE));
         filesMenu.add(importMenu);
         filesMenu.addSeparator();
-        filesMenu.add(new ExportAction("Export",
-                categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
+        filesMenu.add(new ExportAction("Export", categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
 
         menuBar.add(editMenu);
         menuBar.add(filesMenu);
@@ -397,16 +350,7 @@ public class MainWindow {
         JTextField searchBar = new JTextField("Search...");
         searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, recipeTableSorter));
-        JButton fireFilter = new JButton(new FilterRecipesAction(
-                ingredientsFilter,
-                categoriesFilter,
-                caloriesMinFilter,
-                caloriesMaxFilter,
-                portionsMinFilter,
-                portionsMaxFilter,
-                recipeTable,
-                recipeTableSorter)
-        );
+        JButton fireFilter = new JButton(new FilterRecipesAction(ingredientsFilter, categoriesFilter, caloriesMinFilter, caloriesMaxFilter, portionsMinFilter, portionsMaxFilter, recipeTable, recipeTableSorter));
         //JButton removeFilter = new JButton(new RemoveRecipesFilterAction(recipeTableSorter));
         recipePanel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, gap 0px 10px, split 11");
         recipePanel.add(ingredientsFilter, " left, hmin 30, gap 0px 10px");
@@ -420,8 +364,6 @@ public class MainWindow {
         recipePanel.add(sep2, "left");
         recipePanel.add(portionsMaxFilter, "wmax 70, hmin 30");
         recipePanel.add(fireFilter, "al right, split 2, wrap");
-        //recipePanel.add(fireFilter, "al right, split 2");
-        //recipePanel.add(removeFilter, " wrap");
         recipePanel.add(recipeScroll, "span 9, grow, height 99% ");
         return recipePanel;
     }
@@ -435,20 +377,13 @@ public class MainWindow {
         JTextField searchBar = new JTextField("Search...");
         searchBar.addFocusListener(new ClearTextFieldKeyListener(searchBar));
         searchBar.addKeyListener(new SearchBarListener<>(searchBar, ingredientTableSorter));
-        JButton fireFilter = new JButton(new FilterIngredientsAction(
-                ingredientTableSorter,
-                caloriesMinFilter,
-                caloriesMaxFilter
-        ));
-        //JButton removeFilter = new JButton(new RemoveRecipesFilterAction(ingredientTableSorter));
+        JButton fireFilter = new JButton(new FilterIngredientsAction(ingredientTableSorter, caloriesMinFilter, caloriesMaxFilter));
         ingredientsPanel.add(searchBar, "left, grow, wmin 70, hmin 30, wmax 230, gap 0px 10px, split 5");
         ingredientsPanel.add(caloriesText, "left");
         ingredientsPanel.add(caloriesMinFilter, "left, hmin 30");
         ingredientsPanel.add(sep, "left");
         ingredientsPanel.add(caloriesMaxFilter, "left, gapright push, hmin 30");
         ingredientsPanel.add(fireFilter, "al right, split 2, wrap");
-        //ingredientsPanel.add(fireFilter, "al right, split 2");
-        //ingredientsPanel.add(removeFilter, "wrap");
         ingredientsPanel.add(ingredientScroll, "span 3, grow, height 99%");
         return ingredientsPanel;
     }
@@ -474,53 +409,6 @@ public class MainWindow {
         panel.add(categoryScroll, " grow, height 99%");
         return panel;
     }
-
-   /* private JComponent createMultiselectComboBox() {
-        JPopupMenu menu = new JPopupMenu();
-        JButton button = new JButton("Ingredients");
-        for (Ingredient ingredient : ingredientList) {
-            menu.add(new SelectedIngredientAction(ingredient, menu, button));
-        }
-        button.addActionListener(e -> {
-            if (!menu.isVisible()) {
-                Point p = button.getLocationOnScreen();
-                menu.setInvoker(button);
-                menu.setLocation((int) p.getX(),
-                        (int) p.getY() + button.getHeight());
-                menu.setVisible(true);
-            } else {
-                menu.setVisible(false);
-            }
-
-        });
-        return button;
-    }
-    private class SelectedIngredientAction extends AbstractAction {
-
-        private final Ingredient ingredient;
-        private final JPopupMenu menu;
-        private final JButton button;
-
-        private boolean selected = false;
-        public SelectedIngredientAction( Ingredient ingredient, JPopupMenu menu, JButton button) {
-            super(ingredient.getName());
-            this.ingredient = ingredient;
-            this.menu = menu;
-            this.button = button;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            menu.show(button, 0, button.getHeight());
-            if ( selected ) {
-                putValue(Action.SMALL_ICON, null);
-                selected = false;
-            } else {
-                putValue(Action.SMALL_ICON, Icons.SELECTED_ICON);
-                selected = true;
-            }
-        }
-    }*/
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         return;
