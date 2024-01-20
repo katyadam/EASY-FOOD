@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface CrudService<T> {
@@ -24,6 +25,8 @@ public interface CrudService<T> {
      * Delete entity with given guid.
      */
     ValidationResult deleteByGuid(String guid, boolean userAgreed);
+
+    ValidationResult deleteMultipleByGuids(Collection<String> guids);
 
     /**
      * Delete all entities.

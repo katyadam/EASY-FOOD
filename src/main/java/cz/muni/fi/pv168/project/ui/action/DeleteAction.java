@@ -1,15 +1,15 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 
-import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
-import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -28,12 +28,7 @@ public final class DeleteAction extends ContextAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JTable activeTable = TabbedPanelContext.getActiveTable();
-        int confirm = JOptionPane.showOptionDialog(activeTable,"Confirm",
-                "Delete confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE,null,null,null);
-        if ( confirm != JOptionPane.OK_OPTION) {
-            return;
-        }
-        System.out.println(activeTable.getRowCount());
+        //System.out.println(activeTable.getRowCount());
         AbstractEntityTableModel tableModel = (AbstractEntityTableModel) activeTable.getModel();
         List<Integer> indexes = Arrays.stream(activeTable.getSelectedRows())
                 // view row index must be converted to model row index
@@ -41,26 +36,13 @@ public final class DeleteAction extends ContextAction {
                 .boxed()
                 .sorted(Comparator.reverseOrder())
                 .toList();
-        if (tableModel instanceof RecipeTableModel) {
-            for (Integer i : indexes) {
-                ((Recipe) tableModel.getEntity(i)).destroy();
-                tableModel.deleteRow(i);
-            }
-        } else {
-        StringBuilder builder = new StringBuilder();
-        for (Integer i : indexes) {
-            if (tableModel.getEntity(i).usedCount() > 0) {
-                builder.append("Deletion denied for ")
-                        .append(tableModel.getEntity(i).getName())
-                        .append(" used in recipes:\n");
-                tableModel.getEntity(i.intValue()).getRecipes().stream().forEach(y -> builder.append(" -> ").append(y).append(System.lineSeparator()));
-                JOptionPane.showMessageDialog(activeTable, builder.toString());
 
-                builder.setLength(0);
-            } else {
-                tableModel.deleteRow(i);
-            }
+        // empty indexes should not exist, due to delete button inactivity during zero selected rows
+        if (indexes.size() > 1) {
+            tableModel.deleteMultipleRows(indexes);
+        } else {
+            tableModel.deleteRow(indexes.get(0));
         }
-        }
+        StatisticsUpdater.reload();
     }
 }

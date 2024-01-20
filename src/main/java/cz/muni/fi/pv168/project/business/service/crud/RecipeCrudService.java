@@ -6,7 +6,10 @@ import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 
+import javax.swing.*;
+import java.util.Collection;
 import java.util.List;
 
 public class RecipeCrudService implements CrudService<Recipe> {
@@ -50,7 +53,7 @@ public class RecipeCrudService implements CrudService<Recipe> {
 //            Creating added ingredient via their service
             newEntity.getAddedIngredients().forEach(addedIngredientCrudService::create);
 //            adding recipe to usedIn list in category, later should decline deleting this category
-            newEntity.getCategory().addRecipe(newEntity);
+            //newEntity.getCategory().addRecipe(newEntity);
         }
 
         return validationResult;
@@ -68,7 +71,29 @@ public class RecipeCrudService implements CrudService<Recipe> {
 
     @Override
     public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
+        int confirm = JOptionPane.showOptionDialog(TabbedPanelContext.getActiveTable(),
+                "Confirm",
+                "Delete confirmation",
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, null, null);
+        if (confirm != JOptionPane.OK_OPTION) {
+            return ValidationResult.failed("denied");
+        }
         recipeRepository.deleteByGuid(guid);
+        return ValidationResult.success();
+    }
+
+    @Override
+    public ValidationResult deleteMultipleByGuids(Collection<String> guids) {
+        int confirm = JOptionPane.showOptionDialog(TabbedPanelContext.getActiveTable(),
+                "Confirm",
+                "Delete confirmation",
+                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, null, null);
+        if (confirm != JOptionPane.OK_OPTION) {
+            return ValidationResult.failed("denied");
+        }
+        guids.forEach(recipeRepository::deleteByGuid);
         return ValidationResult.success();
     }
 

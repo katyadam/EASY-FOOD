@@ -9,7 +9,9 @@ import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.storage.DataStorageException;
+import cz.muni.fi.pv168.project.ui.dialog.DeletePopupDialog;
 
+import java.util.Collection;
 import java.util.List;
 
 public class CategoryCrudService implements CrudService<Category> {
@@ -75,11 +77,39 @@ public class CategoryCrudService implements CrudService<Category> {
                 .orElseThrow(
                         () -> new DataStorageException("Category with guid: " + guid + "not found!")
                 );
+
         ValidationResult validationResult = usageValidator.validate(toDelete);
-        if (validationResult.isValid() || userAgreed) {
+
+        DeletePopupDialog deletePopupDialog = new DeletePopupDialog(
+                validationResult.isValid() ? List.of() : List.of(validationResult.toString())
+        );
+
+        if (deletePopupDialog.show().isValid()) {
             categoryRepository.deleteByGuid(guid);
+            return ValidationResult.success();
         }
-        return validationResult;
+        return ValidationResult.failed("denied");
+    }
+
+    @Override
+    public ValidationResult deleteMultipleByGuids(Collection<String> guids) {
+        List<String> invalidValResults = guids.stream()
+                .map(guid -> categoryRepository.findByGuid(guid)
+                        .orElseThrow(
+                                () -> new DataStorageException("Category with guid: " + guid + "not found!"))
+                )
+                .map(usageValidator::validate)
+                .filter(valResult -> !valResult.isValid())
+                .map(ValidationResult::toString)
+                .toList();
+
+        DeletePopupDialog deletePopupDialog = new DeletePopupDialog(invalidValResults);
+
+        if (deletePopupDialog.show().isValid()) {
+            guids.forEach(categoryRepository::deleteByGuid);
+            return ValidationResult.success();
+        }
+        return ValidationResult.failed("denied");
     }
 
     @Override

@@ -65,9 +65,8 @@ public class ImportAction extends AbstractAction {
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            ParallelImport importer = new ParallelImport(selectedFile,callback,importType);
+            ParallelImport importer = new ParallelImport(selectedFile, callback, importType);
             importer.execute();
-
             /*BatchXmlImporter xmlImporter = new BatchXmlImporter();
             GenericImportService genericImportService = new GenericImportService(
                     recipeCrudService,

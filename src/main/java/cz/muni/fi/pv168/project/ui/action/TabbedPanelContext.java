@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
@@ -8,9 +7,6 @@ import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
 
-/**
- * @author Filip Skvara
- */
 public class TabbedPanelContext {
     private static int activeTab = 0;
     private static JTable recipeTable;

@@ -12,9 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Adam Juhas
- */
 public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntity> {
 
     private final Connection con;
@@ -42,8 +39,11 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
             statement.setString(1, newAddedIngredient.guid());
             statement.setLong(2, newAddedIngredient.ingredientId());
             statement.setLong(3, newAddedIngredient.recipeId());
-            if ( newAddedIngredient.unitId() == -1 ){statement.setNull(4, Types.BIGINT);}
-            else {statement.setLong(4, newAddedIngredient.unitId()); }
+            if (newAddedIngredient.unitId() == -1) {
+                statement.setNull(4, Types.BIGINT);
+            } else {
+                statement.setLong(4, newAddedIngredient.unitId());
+            }
             //newAddedIngredient.unitId() == -1 ? statement.setNull(4, Types.BIGINT) : statement.setLong(4, newAddedIngredient.unitId());
             statement.setDouble(5, newAddedIngredient.quantity());
             statement.setInt(6, newAddedIngredient.baseUnit());
@@ -205,12 +205,14 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
             statement.setString(1, entity.guid());
             statement.setLong(2, entity.ingredientId());
             statement.setLong(3, entity.recipeId());
-            if ( entity.unitId() == -1 ) {
-                statement.setNull(4, Types.BIGINT);}
-            else {statement.setLong(4, entity.unitId()); }
+            if (entity.unitId() == -1) {
+                statement.setNull(4, Types.BIGINT);
+            } else {
+                statement.setLong(4, entity.unitId());
+            }
             statement.setLong(4, entity.unitId() == -1 ? null : entity.unitId());
             statement.setDouble(5, entity.quantity());
-            statement.setInt(6,entity.baseUnit());
+            statement.setInt(6, entity.baseUnit());
             statement.executeUpdate();
 
             int rowsUpdated = statement.executeUpdate();

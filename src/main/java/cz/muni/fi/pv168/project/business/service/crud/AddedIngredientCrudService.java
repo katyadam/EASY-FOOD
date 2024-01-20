@@ -1,11 +1,12 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.storage.sql.AddedIngredientSqlRepository;
 
+import java.util.Collection;
 import java.util.List;
 
 public class AddedIngredientCrudService implements CrudService<AddedIngredient> {
@@ -65,6 +66,12 @@ public class AddedIngredientCrudService implements CrudService<AddedIngredient> 
     @Override
     public ValidationResult deleteByGuid(String guid, boolean userAgreed) {
         addedIngredientRepository.deleteByGuid(guid);
+        return ValidationResult.success();
+    }
+
+    @Override
+    public ValidationResult deleteMultipleByGuids(Collection<String> guids) {
+        guids.forEach(addedIngredientRepository::deleteByGuid);
         return ValidationResult.success();
     }
 

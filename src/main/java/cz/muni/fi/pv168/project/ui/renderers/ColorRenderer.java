@@ -12,7 +12,6 @@ public class ColorRenderer extends DefaultTableCellRenderer {
         if (value instanceof Color) {
             Color color = (Color) value;
             c.setBackground(color);
-            // Remove text rendering
             setText("");
         }
 

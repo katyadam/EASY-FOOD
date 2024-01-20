@@ -5,8 +5,6 @@ import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import javax.swing.*;
 
 public class StatisticsUpdater {
-    private JTable table;
-    private String text;
     private static JLabel statistics;
 
     public static void reload() {

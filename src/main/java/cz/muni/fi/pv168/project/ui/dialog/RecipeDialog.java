@@ -1,9 +1,18 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 
-import cz.muni.fi.pv168.project.business.model.*;
+import cz.muni.fi.pv168.project.business.model.AddedIngredient;
+import cz.muni.fi.pv168.project.business.model.BaseUnit;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Ingredient;
+import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.Unit;
 import cz.muni.fi.pv168.project.ui.MainWindow;
-import cz.muni.fi.pv168.project.ui.model.*;
+import cz.muni.fi.pv168.project.ui.model.AddedIngredientsTableModel;
+import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
+import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
+import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -143,9 +152,6 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
 
     @Override
     Recipe getEntity() {
-//        instead of getting entity(Recipe) which is from UI table,
-//        setting new entity(Recipe) same as original entity from UI table,
-//        this will prevent to overwriting UI entity when it is set...
         Recipe setEntity = new Recipe();
         setEntity.setGuid(entity.getGuid());
         setEntity.setName(recipeNameField.getText());
