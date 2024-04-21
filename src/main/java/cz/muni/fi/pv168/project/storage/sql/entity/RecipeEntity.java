@@ -7,7 +7,8 @@ public record RecipeEntity(
         String recipeName,
         int prepMinutes,
         int portions,
-        String description) {
+        String description,
+        Long userID) {
     public RecipeEntity(
             Long id,
             String guid,
@@ -15,7 +16,8 @@ public record RecipeEntity(
             String recipeName,
             int prepMinutes,
             int portions,
-            String description
+            String description,
+            Long userID
     ) {
         this.id = id;
         this.guid = guid;
@@ -24,10 +26,11 @@ public record RecipeEntity(
         this.prepMinutes = prepMinutes;
         this.portions = portions;
         this.description = description;
+        this.userID = userID;
     }
 
     public RecipeEntity(String guid, long categoryId, String recipeName,
-                        int prepMinutes, int portions, String description) {
-        this(null, guid, categoryId, recipeName, prepMinutes, portions, description);
+                        int prepMinutes, int portions, String description, Long userID) {
+        this(null, guid, categoryId, recipeName, prepMinutes, portions, description,userID);
     }
 }

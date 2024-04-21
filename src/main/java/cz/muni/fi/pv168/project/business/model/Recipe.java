@@ -18,6 +18,8 @@ public class Recipe extends Entity {
 
     private int prepMinutes;
 
+    private RegisteredUser user;
+
     public Recipe() {
     }
 
@@ -27,7 +29,8 @@ public class Recipe extends Entity {
             Category category,
             int prepMinutes,
             int portions,
-            String description
+            String description,
+            RegisteredUser user
     ) {
         super(guid);
         this.name = recipeName;
@@ -35,6 +38,7 @@ public class Recipe extends Entity {
         this.prepMinutes = prepMinutes;
         this.portions = portions;
         this.description = description;
+        this.user = user;
     }
 
     public String getRecipeName() {
@@ -115,5 +119,12 @@ public class Recipe extends Entity {
     @Override
     public String toString() {
         return name;
+    }
+
+    public RegisteredUser getUser() {
+        return user;
+    }
+    public void setUser(RegisteredUser user) {
+        this.user = user;
     }
 }

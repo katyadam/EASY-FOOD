@@ -5,6 +5,7 @@ public class CustomUnit extends Entity implements Unit {
     private String abbreviation;
     private double amount;
     private BaseUnit baseUnit;
+    private RegisteredUser user;
 
     public double getAmount() {
         return amount;
@@ -18,7 +19,8 @@ public class CustomUnit extends Entity implements Unit {
             String unitName,
             String abbreviation,
             double amount,
-            BaseUnit baseUnit
+            BaseUnit baseUnit,
+            RegisteredUser user
     ) {
         super(guid);
         this.unitName = unitName;
@@ -26,6 +28,7 @@ public class CustomUnit extends Entity implements Unit {
         this.abbreviation = abbreviation;
         this.amount = amount;
         this.baseUnit = baseUnit;
+        this.user = user;
     }
 
     public CustomUnit(String unitName, String abbreviation, double amount, BaseUnit baseUnit) {
@@ -79,5 +82,12 @@ public class CustomUnit extends Entity implements Unit {
     @Override
     public String toString() {
         return unitName;
+    }
+
+    public RegisteredUser getUser() {
+        return user;
+    }
+    public void setUser(RegisteredUser user) {
+        this.user = user;
     }
 }

@@ -89,6 +89,35 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
             throw new DataStorageException("Failed to load all units", ex);
         }
     }
+    @Override
+    public Collection<UnitEntity> findAll(Long userId) {
+        var sql = """
+                SELECT id,
+                    guid,
+                    unitName,
+                    abbreviation,
+                    amount,
+                    baseUnitId
+                FROM Unit
+                WHERE userId = ?
+                """;
+        try (
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            statement.setLong(1, userId);
+            List<UnitEntity> units = new ArrayList<>();
+            try (var resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    var unit = unitFromResultSet(resultSet);
+                    units.add(unit);
+                }
+            }
+
+            return units;
+        } catch (SQLException ex) {
+            throw new DataStorageException("Failed to load all units", ex);
+        }
+    }
 
     @Override
     public Optional<UnitEntity> findById(long id) {
@@ -238,7 +267,8 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                 resultSet.getString("unitName"),
                 resultSet.getString("abbreviation"),
                 resultSet.getDouble("amount"),
-                resultSet.getInt("baseUnitId")
+                resultSet.getInt("baseUnitId"),
+                resultSet.getLong("userId")
         );
     }
 

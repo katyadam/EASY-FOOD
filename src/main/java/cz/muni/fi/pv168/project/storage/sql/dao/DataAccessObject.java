@@ -29,6 +29,8 @@ public interface DataAccessObject<E> {
      */
     Collection<E> findAll();
 
+    Collection<E> findAll(Long userId);
+
     /**
      * Finds entity by ID.
      *

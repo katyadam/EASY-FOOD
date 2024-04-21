@@ -1,6 +1,19 @@
 // PRESERVE ORDER
 
 --
+-- User table definition
+--
+CREATE TABLE IF NOT EXISTS "User"
+(
+    `id`           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    `guid`         VARCHAR      NOT NULL UNIQUE,
+    `name`         VARCHAR(150) NOT NULL,
+    `password`     VARCHAR(150) NOT NULL,
+    `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+--
 -- Category table definition
 --
 CREATE TABLE IF NOT EXISTS "Category"
@@ -9,7 +22,8 @@ CREATE TABLE IF NOT EXISTS "Category"
     `guid`         VARCHAR      NOT NULL UNIQUE,
     `categoryName` VARCHAR(150) NOT NULL,
     `color`        INT          NOT NULL,
-    `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `userId`       BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE,
 );
 
 --
@@ -34,7 +48,8 @@ CREATE TABLE IF NOT EXISTS "Unit"
     `abbreviation` VARCHAR(150) NOT NULL,
     `amount`       DOUBLE       NOT NULL,
     `baseUnitId`   INT          NOT NUll,
-    `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `userId`       BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE,
 );
 
 --
@@ -46,7 +61,8 @@ CREATE TABLE IF NOT EXISTS "Ingredient"
     `guid`             VARCHAR      NOT NULL UNIQUE,
     `ingredientName`   VARCHAR(150) NOT NULL,
     `nutritionalValue` INT          NOT NULL,
-    `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `userId`           BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE,
 );
 
 --
@@ -61,7 +77,8 @@ CREATE TABLE IF NOT EXISTS "Recipe"
     `portions`         INT          NOT NULL,
     `categoryId`       BIGINT REFERENCES "Category" (`id`) ON DELETE CASCADE,
     `description`      VARCHAR(255)          DEFAULT 'No recipe description',
-    `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `userId`           BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE,
 );
 
 CREATE TABLE IF NOT EXISTS "AddedIngredient"

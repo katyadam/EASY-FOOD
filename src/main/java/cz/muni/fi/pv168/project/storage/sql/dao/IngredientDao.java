@@ -84,6 +84,34 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     }
 
     @Override
+    public Collection<IngredientEntity> findAll(Long userId) {
+        var sql = """
+                SELECT id,
+                    guid,
+                    ingredientName,
+                    nutritionalValue
+                FROM Ingredient
+                WHERE userId = ?
+                """;
+        try (
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            statement.setLong(1, userId);
+            List<IngredientEntity> ingredients = new ArrayList<>();
+            try (var resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    var ingredient = recipeFromResultSet(resultSet);
+                    ingredients.add(ingredient);
+                }
+            }
+
+            return ingredients;
+        } catch (SQLException ex) {
+            throw new DataStorageException("Failed to load all ingredients", ex);
+        }
+    }
+
+    @Override
     public Optional<IngredientEntity> findById(long id) {
         var sql = """
                 SELECT id,
@@ -222,7 +250,8 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("ingredientName"),
-                resultSet.getInt("nutritionalValue")
+                resultSet.getInt("nutritionalValue"),
+                resultSet.getLong("userId")
         );
     }
 }

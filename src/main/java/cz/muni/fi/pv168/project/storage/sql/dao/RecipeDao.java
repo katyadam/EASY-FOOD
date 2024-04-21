@@ -29,7 +29,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                     prepMinutes,
                     portions,
                     categoryId,
-                    description
+                    description,
+                    userId
                 )
                 VALUES (?, ?, ?, ?, ?, ?);
                 """;
@@ -42,6 +43,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
             statement.setInt(4, newRecipe.portions());
             statement.setLong(5, newRecipe.categoryId());
             statement.setString(6, newRecipe.description());
+            statement.setLong(7,newRecipe.userID());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -72,13 +74,46 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                     prepMinutes,
                     portions,
                     categoryId,
-                    description
+                    description,
+                    userId,
                 FROM Recipe
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
 
+            List<RecipeEntity> recipes = new ArrayList<>();
+            try (var resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    var recipe = recipeFromResultSet(resultSet);
+                    recipes.add(recipe);
+                }
+            }
+
+            return recipes;
+        } catch (SQLException ex) {
+            throw new DataStorageException("Failed to load all employees", ex);
+        }
+    }
+
+    @Override
+    public Collection<RecipeEntity> findAll(Long userId) {
+        var sql = """
+                SELECT id,
+                    guid,
+                    recipeName,
+                    prepMinutes,
+                    portions,
+                    categoryId,
+                    description,
+                    userId,
+                FROM Recipe
+                WHERE userId = ?
+                """;
+        try (
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            statement.setLong(1, userId);
             List<RecipeEntity> recipes = new ArrayList<>();
             try (var resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -102,7 +137,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                     prepMinutes,
                     portions,
                     categoryId,
-                    description
+                    description,
+                    userId
                 FROM Recipe
                 WHERE id = ?
                 """;
@@ -246,7 +282,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                 resultSet.getString("recipeName"),
                 resultSet.getInt("prepMinutes"),
                 resultSet.getInt("portions"),
-                resultSet.getString("description")
+                resultSet.getString("description"),
+                resultSet.getLong("userId")
         );
     }
 }

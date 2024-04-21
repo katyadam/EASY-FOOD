@@ -84,6 +84,34 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     }
 
     @Override
+    public Collection<CategoryEntity> findAll(Long userId) {
+        var sql = """
+                SELECT id,
+                    guid,
+                    categoryName,
+                    color
+                FROM Category
+                WHERE userId = ?
+                """;
+        try (
+                var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            statement.setLong(1, userId);
+            List<CategoryEntity> categories = new ArrayList<>();
+            try (var resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    var category = categoryFromResultSet(resultSet);
+                    categories.add(category);
+                }
+            }
+
+            return categories;
+        } catch (SQLException ex) {
+            throw new DataStorageException("Failed to load all categories", ex);
+        }
+    }
+
+    @Override
     public Optional<CategoryEntity> findById(long id) {
         var sql = """
                 SELECT id,
@@ -221,7 +249,8 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("categoryName"),
-                new Color(resultSet.getInt("color"))
+                new Color(resultSet.getInt("color")),
+                resultSet.getLong("userId")
         );
     }
 }

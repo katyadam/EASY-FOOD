@@ -33,11 +33,7 @@ import cz.muni.fi.pv168.project.storage.sql.CategorySqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.IngredientSqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.RecipeSqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.UnitSqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.dao.AddedIngredientDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.CategoryDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.IngredientDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.RecipeDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.UnitDao;
+import cz.muni.fi.pv168.project.storage.sql.dao.*;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseConnection;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseInitializer;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
@@ -92,20 +88,17 @@ public class CommonDependencyProvider implements DependencyProvider {
 
         var guidProvider = new UuidGuidProvider();
 
-        var unitMapper = new UnitMapper();
+        var userDao = new UserDao(connection);
         var unitDao = new UnitDao(connection);
-
-        var categoryMapper = new CategoryMapper();
         var categoryDao = new CategoryDao(connection);
-
-        var ingredientMapper = new IngredientMapper(unitDao, unitMapper);
         var ingredientDao = new IngredientDao(connection);
-
         var addedIngredientDao = new AddedIngredientDao(connection);
-
-        var recipeMapper = new RecipeMapper(categoryDao, categoryMapper);
         var recipeDao = new RecipeDao(connection);
 
+        var unitMapper = new UnitMapper();
+        var categoryMapper = new CategoryMapper();
+        var ingredientMapper = new IngredientMapper(unitDao, unitMapper);
+        var recipeMapper = new RecipeMapper(categoryDao, categoryMapper,userDao);
         var addedIngredientMapper = new AddedIngredientMapper(recipeDao, recipeMapper, ingredientDao, ingredientMapper, unitDao, unitMapper);
 
         this.addedIngredients = new AddedIngredientSqlRepository(

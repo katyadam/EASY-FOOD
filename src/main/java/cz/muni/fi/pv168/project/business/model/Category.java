@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class Category extends Entity {
     private Color color;
+    private RegisteredUser user;
 
     public Category() {
     }
@@ -11,11 +12,13 @@ public class Category extends Entity {
     public Category(
             String guid,
             String categoryName,
-            Color color
+            Color color,
+            RegisteredUser user
     ) {
         super(guid);
         this.name = categoryName;
         this.color = color;
+        this.user = user;
     }
 
     public Category(String name, Color color) {
@@ -37,5 +40,12 @@ public class Category extends Entity {
     @Override
     public String toString() {
         return name;
+    }
+
+    public RegisteredUser getUser() {
+        return user;
+    }
+    public void setUser(RegisteredUser user) {
+        this.user = user;
     }
 }
