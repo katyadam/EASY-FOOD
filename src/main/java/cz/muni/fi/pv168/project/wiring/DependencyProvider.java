@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.crud.AddedIngredientCrudService;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
@@ -29,6 +30,8 @@ public interface DependencyProvider {
 
     Repository<Ingredient> getIngredientRepository();
 
+    Repository<RegisteredUser> getUserRepository();
+
     TransactionExecutor getTransactionExecutor();
 
     CrudService<Recipe> getRecipeCrudService();
@@ -39,6 +42,8 @@ public interface DependencyProvider {
 
     CrudService<Ingredient> getIngredientCrudService();
     AddedIngredientCrudService getAddedIngredientCrudService();
+
+    CrudService<RegisteredUser> getUserCrudService();
 
 
     ImportService getImportService();
@@ -53,5 +58,7 @@ public interface DependencyProvider {
 
     Validator<Ingredient> getIngredientValidator();
     Validator<AddedIngredient> getAddedIngredientValidator();
+
+    Validator<RegisteredUser> getUserValidator();
 }
 

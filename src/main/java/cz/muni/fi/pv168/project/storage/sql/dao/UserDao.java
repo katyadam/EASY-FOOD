@@ -222,6 +222,23 @@ public class UserDao implements DataAccessObject<UserEntity>{
         }
     }
 
+    public boolean existsByUsername(String username) {
+        var sql = """
+                SELECT id
+                FROM User
+                WHERE name = ?
+                """;
+        try (
+                var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            statement.setString(1, username);
+            var resultSet = statement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException ex) {
+            throw new DataStorageException("Failed to check if user exists by name: " + username, ex);
+        }
+    }
+
     public boolean existsByLogin(String name, String password) {
         var sql = """
                 SELECT id

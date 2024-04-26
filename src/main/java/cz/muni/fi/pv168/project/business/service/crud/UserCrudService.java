@@ -31,6 +31,9 @@ public class UserCrudService implements CrudService<RegisteredUser> {
         this.duplicityValidator = new DuplicateValidator<>(userRepository);
     }
 
+    public boolean usernameExists(String username) {
+        return userRepository.existsByName(username);
+    }
 
     @Override
     public List<RegisteredUser> findAll() {

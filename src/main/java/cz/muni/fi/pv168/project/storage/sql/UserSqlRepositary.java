@@ -2,7 +2,6 @@ package cz.muni.fi.pv168.project.storage.sql;
 
 import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.dao.UserDao;
 import cz.muni.fi.pv168.project.storage.sql.entity.UserEntity;
@@ -71,10 +70,7 @@ public class UserSqlRepositary implements Repository<RegisteredUser> {
     }
 
     @Override
-    public boolean existsByName(String name) {
-        return false;
-    }
-
+    public boolean existsByName(String name) {return userDao.existsByUsername(name);}
     public boolean existByLogin(String name, String password) {
         return userDao.existsByLogin(name, password);
     }

@@ -1,7 +1,8 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.AccountManager;
-import cz.muni.fi.pv168.project.User;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
+
 
 public class LoginAction {
     private AccountManager accountManager;
@@ -15,7 +16,7 @@ public class LoginAction {
         String hashedPassword = hashPassword(password);
 
         // Load the user from the database
-        User user = accountManager.loadUserByUsername(username);
+        RegisteredUser user = accountManager.loadUserByUsername(username);
 
         // Check if the user exists and compare passwords
         if (user != null && comparePasswords(hashedPassword, user.getPassword())) {
