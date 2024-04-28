@@ -1,5 +1,8 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.ui.action.RegisterAction;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,8 +14,11 @@ public class RegisterDialog extends JDialog {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    public RegisterDialog(Frame owner) {
+    private CommonDependencyProvider commonDependencyProvider;
+
+    public RegisterDialog(Frame owner, CommonDependencyProvider commonDependencyProvider) {
         super(owner, "Register", true);
+        this.commonDependencyProvider = commonDependencyProvider;
         setLayout(new GridLayout(4, 2));
 
         JLabel usernameLabel = new JLabel("Username:");
@@ -26,15 +32,12 @@ public class RegisterDialog extends JDialog {
         add(passwordField);
 
         JButton registerButton = new JButton("Register");
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                char[] password = passwordField.getPassword();
-                // TODO: Process the registration credentials
-                dispose();
-            }
-        });
+        registerButton.addActionListener(new RegisterAction(
+                    commonDependencyProvider,
+                    usernameField,
+                    passwordField
+                )
+        );
         add(registerButton);
 
         pack();

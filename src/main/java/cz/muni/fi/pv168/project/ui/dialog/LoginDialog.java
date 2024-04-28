@@ -1,4 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,8 +13,11 @@ public class LoginDialog extends JDialog {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    public LoginDialog(Frame owner) {
+    private CommonDependencyProvider commonDependencyProvider;
+
+    public LoginDialog(Frame owner, CommonDependencyProvider commonDependencyProvider) {
         super(owner, "Login", true);
+        this.commonDependencyProvider = commonDependencyProvider;
         setLayout(new GridLayout(4, 2)); // Increase the grid layout to accommodate the new button
 
         JLabel usernameLabel = new JLabel("Username:");
@@ -41,7 +46,8 @@ public class LoginDialog extends JDialog {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Handle the Register button action
+                    RegisterDialog registerDialog = new RegisterDialog(owner, commonDependencyProvider);
+                    registerDialog.setVisible(true);
             }
         });
         add(registerButton);

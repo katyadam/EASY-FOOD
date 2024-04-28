@@ -22,42 +22,57 @@ import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.Optional;
 
 
 public class RegisterAction extends AbstractAction{
 
+    private final JPasswordField passwordField;
+    private final JTextField usernameField;
     private CommonDependencyProvider commonDependencyProvider;
     private final CrudService<RegisteredUser> userCrudService;
 
-    public RegisterAction(CommonDependencyProvider commonDependencyProvider) {
-        super("Quit", Icons.QUIT_ICON);
+    public RegisterAction
+            (CommonDependencyProvider commonDependencyProvider,
+             JTextField usernameField,
+             JPasswordField passwordField
+             ) {
+        super("Register");
+        this.usernameField = usernameField;
+        this.passwordField = passwordField;
         this.commonDependencyProvider = commonDependencyProvider;
         this.userCrudService = commonDependencyProvider.getUserCrudService();
-        putValue(SHORT_DESCRIPTION, "Terminates the application");
-        putValue(MNEMONIC_KEY, KeyEvent.VK_Q);
+        putValue(SHORT_DESCRIPTION, "Tries to register a user");
     }
 
 
-    public void register(String name, String password) {
+    public boolean register(String name, char[] password) {
         if (commonDependencyProvider.getUserRepository().existsByName(name)) {
             System.out.println("Username already exists in the database.");
-            return;
+            return false;
         }
 
         if (!isStrongPassword(password)) {
             System.out.println("Password is not strong enough.");
-            return;
+            return false;
         }
 
         // Create a new account in the database
-        userCrudService.create(new RegisteredUser( null, name, password));
-        // TODO mayby not null
+        // TODO need to hash pw
+        try {
+            userCrudService.create(new RegisteredUser( null, name, Arrays.toString(password)));
+        }
+        catch (Exception e) {
+            System.out.println("Account GUUID already exists.");
+            return false;
+        }
         System.out.println("Account created successfully.");
+        return true;
     }
 
-    private boolean isStrongPassword(String password) {
-        if (password.length() <= 8) {
+    private boolean isStrongPassword(char[] password) {
+        if (password.length <= 8) {
             return false;
         }
         //TODO regex check for some upper case letter and numbers
@@ -66,7 +81,10 @@ public class RegisterAction extends AbstractAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        var res = register(usernameField.getText(), passwordField.getPassword());
+        if (res) {
 
+        }
     }
 }
 

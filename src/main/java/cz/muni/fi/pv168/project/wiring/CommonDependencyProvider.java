@@ -159,7 +159,7 @@ public class CommonDependencyProvider implements DependencyProvider {
         addedIngredientCrudService = new AddedIngredientCrudService(addedIngredients, addedIngredientValidator, guidProvider);
         recipeCrudService = new RecipeCrudService(recipes, recipeValidator, guidProvider, addedIngredientCrudService);
 
-        userCrudService = new UserCrudService(users, userValidator, guidProvider);
+        userCrudService = new UserCrudService((UserSqlRepositary) users, userValidator, guidProvider);
 
         BatchXmlImporter xmlImporter = new BatchXmlImporter();
         GenericImportService genericImportService = new GenericImportService(

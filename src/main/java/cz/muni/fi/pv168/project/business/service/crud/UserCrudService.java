@@ -7,21 +7,24 @@ import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.storage.DataStorageException;
+import cz.muni.fi.pv168.project.storage.sql.UserSqlRepositary;
 import cz.muni.fi.pv168.project.ui.dialog.DeletePopupDialog;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 
 public class UserCrudService implements CrudService<RegisteredUser> {
 
-    private final Repository<RegisteredUser> userRepository;
+    private final UserSqlRepositary userRepository;
     private final Validator<RegisteredUser> userValidator;
     private final GuidProvider guidProvider;
 
     private final DuplicateValidator<RegisteredUser> duplicityValidator;
 
     public UserCrudService(
-            Repository<RegisteredUser> userRepository,
+            UserSqlRepositary userRepository,
             Validator<RegisteredUser> userValidator,
             GuidProvider guidProvider
     ) {
@@ -33,6 +36,11 @@ public class UserCrudService implements CrudService<RegisteredUser> {
 
     public boolean usernameExists(String username) {
         return userRepository.existsByName(username);
+    }
+
+    public boolean login(String username, String password) {
+        String hashedPassword = UserCrudService.hashPassword(password);
+        return userRepository.existByLogin(username, hashedPassword);
     }
 
     @Override
@@ -55,6 +63,8 @@ public class UserCrudService implements CrudService<RegisteredUser> {
 
         if (validationResult.isValid()) {
             newEntity.setGuid(guidProvider.newGuid());
+            var pass = newEntity.getPassword();
+            newEntity.setPassword(hashPassword(pass));
             userRepository.create(newEntity);
         }
 
@@ -111,5 +121,29 @@ public class UserCrudService implements CrudService<RegisteredUser> {
     @Override
     public void deleteAll() {
         userRepository.deleteAll();
+    }
+
+    public static String hashPassword(String password)  {
+        String generatedPassword = null;
+        try
+        {
+            // NO SALT HASHING = not that secure
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            md.update(password.getBytes());
+
+            byte[] bytes = md.digest();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return generatedPassword;
     }
 }
