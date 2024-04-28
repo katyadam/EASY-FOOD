@@ -14,6 +14,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class UserCrudService implements CrudService<RegisteredUser> {
 
@@ -38,9 +39,10 @@ public class UserCrudService implements CrudService<RegisteredUser> {
         return userRepository.existsByName(username);
     }
 
-    public boolean login(String username, String password) {
+    public Optional<RegisteredUser> login(String username, String password) {
         String hashedPassword = UserCrudService.hashPassword(password);
         return userRepository.existByLogin(username, hashedPassword);
+
     }
 
     @Override

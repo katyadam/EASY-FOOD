@@ -1,8 +1,12 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.business.service.crud.UserCrudService;
+import cz.muni.fi.pv168.project.ui.dialog.LoginDialog;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 public class ActionFactory {
     private final AddAction addAction;
@@ -10,7 +14,11 @@ public class ActionFactory {
     private final EditAction editAction;
     private final QuitAction quitAction;
     private final ShowAction showAction;
+
+    private final LoginAction loginAction;
     private final CommonDependencyProvider commonDependencyProvider;
+
+    private final LogoutAction logoutAction;
 
     public ActionFactory(
             JTable recipeTable,
@@ -25,6 +33,10 @@ public class ActionFactory {
         this.editAction = new EditAction(recipeTable, ingredientsTable, unitsTable, categoryTable, commonDependencyProvider);
         this.showAction = new ShowAction(recipeTable, ingredientsTable, unitsTable, categoryTable);
         this.quitAction = new QuitAction();
+        this.loginAction =  new LoginAction(commonDependencyProvider);
+        this.logoutAction = new LogoutAction(commonDependencyProvider);
+        // TODO
+
     }
 
     public AddAction getAddAction() {
@@ -45,5 +57,27 @@ public class ActionFactory {
 
     public ShowAction getShowAction() {
         return showAction;
+    }
+
+    public LoginAction getLoginAction() {
+        return loginAction;
+    }
+
+    public LogoutAction getLogoutAction() {
+        return logoutAction;
+    }
+
+    public void setLogged(boolean logged) {
+        addAction.setEnabled(logged);
+        editAction.setEnabled(logged);
+        deleteAction.setEnabled(logged);
+        if (logged)  {
+            loginAction.setEnabled(false);
+            logoutAction.setEnabled(true);
+        }
+        else {
+            loginAction.setEnabled(true);
+            logoutAction.setEnabled(false);
+        }
     }
 }

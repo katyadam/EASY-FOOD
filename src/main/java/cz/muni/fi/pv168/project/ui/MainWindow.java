@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ExportAction;
@@ -24,6 +25,7 @@ import cz.muni.fi.pv168.project.ui.renderers.ColorRenderer;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 import cz.muni.fi.pv168.project.ui.specialComponents.MultiSelectCombobox;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
+import cz.muni.fi.pv168.project.wiring.Session;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -41,6 +43,7 @@ import java.util.List;
 
 public class MainWindow {
 
+    private Session session;
     private final JFrame frame;
     private final GUILayout layout;
 
@@ -88,6 +91,7 @@ public class MainWindow {
     public static final CommonDependencyProvider commonDependencyProvider = new CommonDependencyProvider();
 
     public MainWindow() {
+        this.session = commonDependencyProvider.getSession();
 
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
@@ -122,6 +126,7 @@ public class MainWindow {
         setStatistics();
         setButtonListeners();
         setPopUpMenus();
+
 
     }
 
@@ -319,6 +324,9 @@ public class MainWindow {
         editMenu.add(actions.getDeleteAction());
         editMenu.addSeparator();
         editMenu.add(actions.getQuitAction());
+        // LOGIN
+        editMenu.addSeparator();
+        editMenu.add(actions.getLoginAction());
 
         JMenu filesMenu = new JMenu("Files");
         var importMenu = new JMenu("Import");

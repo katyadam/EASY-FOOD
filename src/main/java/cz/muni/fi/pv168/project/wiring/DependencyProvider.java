@@ -60,5 +60,7 @@ public interface DependencyProvider {
     Validator<AddedIngredient> getAddedIngredientValidator();
 
     Validator<RegisteredUser> getUserValidator();
+
+    Session getSession();
 }
 

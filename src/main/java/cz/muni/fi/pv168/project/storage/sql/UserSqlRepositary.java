@@ -71,7 +71,8 @@ public class UserSqlRepositary implements Repository<RegisteredUser> {
 
     @Override
     public boolean existsByName(String name) {return userDao.existsByUsername(name);}
-    public boolean existByLogin(String name, String password) {
-        return userDao.existsByLogin(name, password);
+
+    public Optional<RegisteredUser> existByLogin(String name, String password) {
+        return userDao.existsByLogin(name, password).map(userMapper::mapToBusiness);
     }
 }

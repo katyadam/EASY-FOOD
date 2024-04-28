@@ -239,9 +239,12 @@ public class UserDao implements DataAccessObject<UserEntity>{
         }
     }
 
-    public boolean existsByLogin(String name, String password) {
+    public Optional<UserEntity> existsByLogin(String name, String password) {
         var sql = """
-                SELECT id
+                SELECT id,
+                    guid,
+                    name,
+                    password,
                 FROM User
                 WHERE name = ? AND password = ?
                 """;
@@ -251,7 +254,11 @@ public class UserDao implements DataAccessObject<UserEntity>{
             statement.setString(1, name);
             statement.setString(2, password);
             var resultSet = statement.executeQuery();
-            return resultSet.next();
+            if (resultSet.next()) {
+                return Optional.of(userFromResultSet(resultSet));
+            } else {
+                return Optional.empty();
+            }
         } catch (SQLException ex) {
             throw new DataStorageException("Failed to check if user exists login ", ex);
         }

@@ -85,6 +85,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final DatabaseManager databaseManager;
     private final TransactionExecutorImpl transactionExecutor;
     private final TransactionalImportService transactionalImportService;
+    private Session session;
 
     public CommonDependencyProvider() {
 
@@ -180,6 +181,8 @@ public class CommonDependencyProvider implements DependencyProvider {
         var transactionManager = new TransactionManagerImpl(getDatabaseManager());
         this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
         this.transactionalImportService = new TransactionalImportService(genericImportService, transactionExecutor);
+
+        this.session = new Session();
 
     }
 
@@ -290,4 +293,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     public Validator<AddedIngredient> getAddedIngredientValidator() {
         return addedIngredientValidator;
     }
+
+    @Override
+    public Session getSession() { return session; }
 }
