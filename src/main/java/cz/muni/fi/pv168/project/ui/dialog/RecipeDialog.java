@@ -13,6 +13,7 @@ import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 import cz.muni.fi.pv168.project.ui.model.IngredientTableModel;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
+import cz.muni.fi.pv168.project.wiring.Session;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -89,7 +90,8 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
             RecipeTableModel recipeTableModel,
             IngredientTableModel ingredientTableModel,
             CategoryTableModel categoryTableModel,
-            CustomUnitTableModel unitTableModel
+            CustomUnitTableModel unitTableModel,
+            Session session
     ) {
         super(recipe, recipeTableModel.getEntities());
         setTwoPanels();
@@ -108,7 +110,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            entity = new Recipe(null, null, null, 30, 0, "");
+            entity = new Recipe(null, null, null, 30, 0, "", session.getLoggedUser());
         }
         timeSpinner.setValue(entity.getPrepMinutes());
 

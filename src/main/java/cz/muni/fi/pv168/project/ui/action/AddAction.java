@@ -51,7 +51,9 @@ public final class AddAction extends ContextAction {
                         (RecipeTableModel) recipeTable.getModel(),
                         (IngredientTableModel) ingredientTable.getModel(),
                         (CategoryTableModel) categoryTable.getModel(),
-                        (CustomUnitTableModel) unitsTable.getModel());
+                        (CustomUnitTableModel) unitsTable.getModel(),
+                        commonDependencyProvider.getSession()
+                );
                 Optional<Recipe> newRecipe = recipeDialog.show(recipeTable, "Add Recipe", new RecipeValidator());
                 if (newRecipe.isPresent()) {
                     Recipe recipe = newRecipe.get();

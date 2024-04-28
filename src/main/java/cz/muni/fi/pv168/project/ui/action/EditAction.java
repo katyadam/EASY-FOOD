@@ -60,7 +60,9 @@ public final class EditAction extends ContextAction {
                         (RecipeTableModel) recipeTable.getModel(),
                         (IngredientTableModel) ingredientTable.getModel(),
                         (CategoryTableModel) categoryTable.getModel(),
-                        (CustomUnitTableModel) unitsTable.getModel());
+                        (CustomUnitTableModel) unitsTable.getModel(),
+                        commonDependencyProvider.getSession()
+                );
                 Optional<Recipe> optionalRecipe = dialog.show(recipeTable, "Edit Recipe", new RecipeValidator());
                 if (optionalRecipe.isPresent()) {
                     Recipe newRecipe = optionalRecipe.get();
