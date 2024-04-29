@@ -32,6 +32,15 @@ public class RecipeSqlRepository implements Repository<Recipe> {
     }
 
     @Override
+    public List<Recipe> findAll(Long userId) {
+        return recipeDao
+                .findAll(userId)
+                .stream()
+                .map(recipeMapper::mapToBusiness)
+                .toList();
+    }
+
+    @Override
     public void create(Recipe newEntity) {
         recipeDao.create(recipeMapper.mapNewEntityToDatabase(newEntity));
     }

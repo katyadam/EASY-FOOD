@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.data;
+/*package cz.muni.fi.pv168.project.data;
 
 
 import cz.muni.fi.pv168.project.business.model.*;
@@ -187,3 +187,4 @@ public final class TestDataGenerator {
     }
 
 }
+*/

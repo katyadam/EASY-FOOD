@@ -21,9 +21,10 @@ public class Category extends Entity {
         this.user = user;
     }
 
-    public Category(String name, Color color) {
+    public Category(String name, Color color,RegisteredUser user) {
         this.name = name;
         this.color = color;
+        this.user = user;
     }
 
     public String getColorCode() {

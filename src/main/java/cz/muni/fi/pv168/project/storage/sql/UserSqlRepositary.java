@@ -30,6 +30,10 @@ public class UserSqlRepositary implements Repository<RegisteredUser> {
                 map(userMapper::mapToBusiness).
                 toList();
     }
+    @Override
+    public List<RegisteredUser> findAll(Long userId) {
+        return List.of();
+    }
 
     @Override
     public Optional<RegisteredUser> findByGuid(String guid) {

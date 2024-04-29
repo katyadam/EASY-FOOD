@@ -37,6 +37,9 @@ public class AddedIngredientSqlRepository implements Repository<AddedIngredient>
                 .map(addedIngredientMapper::mapToBusiness)
                 .toList();
     }
+    public List<AddedIngredient> findAll(Long userId) {
+        return List.of();
+    }
 
     public List<AddedIngredient> findByRecipeGuid(String recipeGuid) {
         if (recipeGuid == null) {

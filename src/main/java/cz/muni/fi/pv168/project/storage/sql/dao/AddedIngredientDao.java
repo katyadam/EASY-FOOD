@@ -129,6 +129,11 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     }
 
     @Override
+    public Collection<AddedIngredientEntity> findAll(Long userId) {
+        return List.of();
+    }
+
+    @Override
     public Optional<AddedIngredientEntity> findById(long id) {
         var sql = """
                 SELECT id,

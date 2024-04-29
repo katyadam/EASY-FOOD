@@ -30,6 +30,14 @@ public class IngredientSqlRepository implements Repository<Ingredient> {
                 .map(ingredientMapper::mapToBusiness)
                 .toList();
     }
+    @Override
+    public List<Ingredient> findAll(Long userId) {
+        return ingredientDao
+                .findAll(userId)
+                .stream()
+                .map(ingredientMapper::mapToBusiness)
+                .toList();
+    }
 
     @Override
     public void create(Ingredient newEntity) {

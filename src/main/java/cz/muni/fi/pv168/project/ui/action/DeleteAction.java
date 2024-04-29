@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
@@ -27,6 +28,9 @@ public final class DeleteAction extends ContextAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(MainWindow.commonDependencyProvider.getSession().getLoggedUser() == null) {
+            throw new IllegalStateException("You need to login first!");
+        }
         JTable activeTable = TabbedPanelContext.getActiveTable();
         //System.out.println(activeTable.getRowCount());
         AbstractEntityTableModel tableModel = (AbstractEntityTableModel) activeTable.getModel();

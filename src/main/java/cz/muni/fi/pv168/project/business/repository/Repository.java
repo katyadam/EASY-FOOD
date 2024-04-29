@@ -15,6 +15,7 @@ public interface Repository<T> {
      * Find all entities.
      */
     List<T> findAll();
+    List<T> findAll(Long userId);
 
     /**
      * Find entity by its guid, if exists

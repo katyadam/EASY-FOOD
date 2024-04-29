@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 
 import javax.swing.*;
@@ -24,7 +25,7 @@ public class CategoryDialog extends EntityDialog<Category> {
         if (category != null) {
             setValues();
         } else {
-            entity = new Category(null, null);
+            entity = new Category(null, null, MainWindow.commonDependencyProvider.getSession().getLoggedUser());
         }
         addFields();
     }

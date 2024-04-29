@@ -31,6 +31,14 @@ public class CategorySqlRepository implements Repository<Category> {
                 .map(categoryMapper::mapToBusiness)
                 .toList();
     }
+    @Override
+    public List<Category> findAll(Long userId) {
+        return categoryDao
+                .findAll(userId)
+                .stream()
+                .map(categoryMapper::mapToBusiness)
+                .toList();
+    }
 
     @Override
     public void create(Category newEntity) {

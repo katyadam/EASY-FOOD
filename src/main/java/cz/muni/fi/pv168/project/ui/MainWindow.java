@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
+import cz.muni.fi.pv168.project.business.service.validation.UserValidator;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
@@ -14,6 +15,7 @@ import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+import cz.muni.fi.pv168.project.ui.dialog.LoginDialog;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -92,6 +94,8 @@ public class MainWindow {
 
     public MainWindow() {
         this.session = commonDependencyProvider.getSession();
+        LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
+        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());
 
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();

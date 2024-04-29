@@ -7,8 +7,7 @@ public record AddedIngredientEntity(
         Long recipeId,
         Long unitId,
         Double quantity,
-        Integer baseUnit,
-        String userID) {
+        Integer baseUnit) {
 
     public AddedIngredientEntity(
             Long id,
@@ -17,8 +16,7 @@ public record AddedIngredientEntity(
             Long recipeId,
             Long unitId,
             Double quantity,
-            Integer baseUnit,
-            String userID
+            Integer baseUnit
     ) {
         this.id = id;
         this.recipeId = recipeId;
@@ -27,6 +25,5 @@ public record AddedIngredientEntity(
         this.unitId = unitId;
         this.quantity = quantity;
         this.baseUnit= baseUnit;
-        this.userID = userID;
     }
 }

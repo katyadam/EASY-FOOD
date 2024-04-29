@@ -31,12 +31,13 @@ public class CustomUnit extends Entity implements Unit {
         this.user = user;
     }
 
-    public CustomUnit(String unitName, String abbreviation, double amount, BaseUnit baseUnit) {
+    public CustomUnit(String unitName, String abbreviation, double amount, BaseUnit baseUnit,RegisteredUser user) {
         this.unitName = unitName;
         this.name = unitName;
         this.abbreviation = abbreviation;
         this.amount = amount;
         this.baseUnit = baseUnit;
+        this.user = user;
     }
 
     @Override

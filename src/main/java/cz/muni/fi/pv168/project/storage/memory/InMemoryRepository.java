@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.storage.memory;
+/*package cz.muni.fi.pv168.project.storage.memory;
 
 import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.repository.Repository;
@@ -7,14 +7,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Optional;*/
 
 /**
  * Generic implementation of {@link Repository} which persists entities in memory.
  *
  * @param <T> entity type
  */
-public class InMemoryRepository<T extends Entity> implements Repository<T> {
+/*public class InMemoryRepository<T extends Entity> implements Repository<T> {
 
     private Map<String, T> data = new HashMap<>();
 
@@ -86,4 +86,4 @@ public class InMemoryRepository<T extends Entity> implements Repository<T> {
     public boolean existsByName(String name) {
         return false;
     }
-}
+}*/

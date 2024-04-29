@@ -18,9 +18,10 @@ public class Ingredient extends Entity {
         this.user = user;
     }
 
-    public Ingredient(String name, int nutritionalValue) {
+    public Ingredient(String name, int nutritionalValue, RegisteredUser user) {
         this.name = name;
         this.nutritionalValue = nutritionalValue;
+        this.user = user;
     }
 
     public void setNutritionalValue(int nutritionalValue) {

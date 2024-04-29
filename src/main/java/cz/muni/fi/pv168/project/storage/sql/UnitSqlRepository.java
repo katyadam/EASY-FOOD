@@ -32,6 +32,15 @@ public class UnitSqlRepository implements Repository<CustomUnit> {
     }
 
     @Override
+    public List<CustomUnit> findAll(Long userId) {
+        return customUnitDao
+                .findAll(userId)
+                .stream()
+                .map(customUnitMapper::mapToBusiness)
+                .toList();
+    }
+
+    @Override
     public void create(CustomUnit newEntity) {
         customUnitDao.create(customUnitMapper.mapNewEntityToDatabase(newEntity));
     }

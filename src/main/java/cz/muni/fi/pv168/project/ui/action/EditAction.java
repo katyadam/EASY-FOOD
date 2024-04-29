@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
 import cz.muni.fi.pv168.project.business.service.validation.UnitValidator;
 import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
@@ -43,6 +44,9 @@ public final class EditAction extends ContextAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(MainWindow.commonDependencyProvider.getSession().getLoggedUser() == null) {
+            throw new IllegalStateException("You need to login first!");
+        }
         JTable activeTable = TabbedPanelContext.getActiveTable();
         int[] selectedRows = activeTable.getSelectedRows();
         if (selectedRows.length != 1) {

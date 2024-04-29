@@ -108,7 +108,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         if (recipe != null) {
             setValues();
         } else {
-            entity = new Recipe(null, null, null, 30, 0, "");
+            entity = new Recipe(null, null, null, 30, 0, "",MainWindow.commonDependencyProvider.getSession().getLoggedUser() );
         }
         timeSpinner.setValue(entity.getPrepMinutes());
 

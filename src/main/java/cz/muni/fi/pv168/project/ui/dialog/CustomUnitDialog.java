@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.BaseUnit;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
         if (unit != null) {
             setValues();
         } else {
-            entity = new CustomUnit(null, null, 0, null);
+            entity = new CustomUnit(null, null, 0, null, MainWindow.commonDependencyProvider.getSession().loggedUser);
         }
         addFields();
     }

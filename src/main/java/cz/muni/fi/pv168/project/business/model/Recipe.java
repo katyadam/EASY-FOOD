@@ -15,9 +15,7 @@ public class Recipe extends Entity {
             .commonDependencyProvider
             .getAddedIngredientCrudService();
     private List<AddedIngredient> addedIngredients = new ArrayList<>();
-
     private int prepMinutes;
-
     private RegisteredUser user;
 
     public Recipe() {
