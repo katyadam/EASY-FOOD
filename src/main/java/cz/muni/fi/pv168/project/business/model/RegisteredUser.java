@@ -1,21 +1,15 @@
 package cz.muni.fi.pv168.project.business.model;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 public class RegisteredUser extends Entity{
     private String password;
     private String name;
+    private final Long ID;
 
-    List<Recipe> recipes = new ArrayList<Recipe>();
-    List<Ingredient> ingredients = new ArrayList<Ingredient>();
-    List<Category> categories = new ArrayList<Category>();
-
-    public RegisteredUser( String guid, String name,  String password ) {
+    public RegisteredUser( String guid, String name,  String password, Long ID ) {
         super(guid);
         this.name = name;
         this.password = password;
+        this.ID = ID;
     }
 
     public String getPassword() {
@@ -32,34 +26,8 @@ public class RegisteredUser extends Entity{
         this.name = name;
     }
 
-    public List<Recipe> getRecipes() {
-        return recipes;
+    public Long getID() {
+        return ID;
     }
-
-    public void addRecipe(Recipe recipe) {
-        recipes.add(recipe);
-    }
-    public void removeRecipe(Recipe recipe) {
-        recipes.remove(recipe);
-    }
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-    public void addIngredient(Ingredient ingredient) {
-        ingredients.add(ingredient);
-    }
-    public void removeIngredient(Ingredient ingredient) {
-        ingredients.remove(ingredient);
-    }
-    public List<Category> getCategories() {
-        return categories;
-    }
-    public void addCategory(Category category) {
-        categories.add(category);
-    }
-    public void removeCategory(Category category) {
-        categories.remove(category);
-    }
-
 
 }

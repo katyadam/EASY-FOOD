@@ -61,7 +61,7 @@ public class RegisterAction extends AbstractAction{
         // Create a new account in the database
         // TODO need to hash pw
         try {
-            userCrudService.create(new RegisteredUser( null, name, Arrays.toString(password)));
+            userCrudService.create(new RegisteredUser( null, name, Arrays.toString(password),null));
         }
         catch (Exception e) {
             System.out.println("Account GUUID already exists.");

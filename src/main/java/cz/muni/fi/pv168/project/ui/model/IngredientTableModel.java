@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.model;
 
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
+import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ public class IngredientTableModel extends AbstractEntityTableModel<Ingredient> {
         super(List.of(
                 Column.readonly("Ingredient name", String.class, Ingredient::getName),
                 Column.readonly("Nutritional value [KCAL]", int.class, Ingredient::getNutritionalValue)
-        ), ingredientCrudService.findAll(), ingredientCrudService);
+        ), MainWindow.commonDependencyProvider.getSession().isLoggedIn() ? ingredientCrudService.findAll(MainWindow.commonDependencyProvider.getSession().getLoggedUser().getID()) : ingredientCrudService.findAll(),
+                ingredientCrudService);
         this.ingredientCrudService = ingredientCrudService;
     }
 

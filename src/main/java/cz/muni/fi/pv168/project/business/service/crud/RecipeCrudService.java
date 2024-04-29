@@ -37,6 +37,11 @@ public class RecipeCrudService implements CrudService<Recipe> {
     }
 
     @Override
+    public List<Recipe> findAll(Long userID) {
+        return recipeRepository.findAll(userID);
+    }
+
+    @Override
     public ValidationResult create(Recipe newEntity) {
         ValidationResult validationResult = recipeValidator.validate(newEntity);
         if (newEntity.getGuid() == null || newEntity.getGuid().isBlank()) {

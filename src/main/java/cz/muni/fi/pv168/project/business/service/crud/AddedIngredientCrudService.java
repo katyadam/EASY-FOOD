@@ -30,6 +30,11 @@ public class AddedIngredientCrudService implements CrudService<AddedIngredient> 
         return addedIngredientRepository.findAll();
     }
 
+    @Override
+    public List<AddedIngredient> findAll(Long userID) {
+        return List.of();
+    }
+
     public List<AddedIngredient> findByRecipeGuid(String recipeGuid) {
         return addedIngredientRepository.findByRecipeGuid(recipeGuid);
     }

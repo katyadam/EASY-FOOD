@@ -38,6 +38,11 @@ public class IngredientCrudService implements CrudService<Ingredient> {
     }
 
     @Override
+    public List<Ingredient> findAll(Long userID) {
+        return ingredientRepository.findAll(userID);
+    }
+
+    @Override
     public ValidationResult create(Ingredient newEntity) {
         ValidationResult validationResult = ingredientValidator
                 .and(duplicateValidator)

@@ -51,6 +51,11 @@ public class UserCrudService implements CrudService<RegisteredUser> {
     }
 
     @Override
+    public List<RegisteredUser> findAll(Long userID) {
+        return List.of();
+    }
+
+    @Override
     public ValidationResult create(RegisteredUser newEntity) {
         ValidationResult validationResult = userValidator
                 .and(duplicityValidator)

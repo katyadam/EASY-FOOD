@@ -19,7 +19,7 @@ public class LoginDialog extends EntityDialog<RegisteredUser> {
     private CommonDependencyProvider commonDependencyProvider;
 
     public LoginDialog( CommonDependencyProvider commonDependencyProvider) {
-        super(new RegisteredUser("", "", ""), Collections.emptyList());
+        super(new RegisteredUser("", "", "", null), Collections.emptyList());
         this.commonDependencyProvider = commonDependencyProvider;
 
         JLabel usernameLabel = new JLabel("Username:");

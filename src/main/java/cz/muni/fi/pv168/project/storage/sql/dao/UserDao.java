@@ -223,9 +223,10 @@ public class UserDao implements DataAccessObject<UserEntity>{
     }
 
     public boolean existsByUsername(String username) {
+        System.out.println(username + "\n");
         var sql = """
                 SELECT id
-                FROM User
+                FROM "User"
                 WHERE name = ?
                 """;
         try (
@@ -244,7 +245,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
                 SELECT id,
                     guid,
                     name,
-                    password,
+                    password
                 FROM User
                 WHERE name = ? AND password = ?
                 """;

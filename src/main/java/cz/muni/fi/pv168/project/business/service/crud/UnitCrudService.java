@@ -40,6 +40,11 @@ public class UnitCrudService implements CrudService<CustomUnit> {
     }
 
     @Override
+    public List<CustomUnit> findAll(Long userID) {
+        return unitRepository.findAll(userID);
+    }
+
+    @Override
     public ValidationResult create(CustomUnit newEntity) {
         ValidationResult validationResult = customUnitValidator
                 .and(duplicityValidator)

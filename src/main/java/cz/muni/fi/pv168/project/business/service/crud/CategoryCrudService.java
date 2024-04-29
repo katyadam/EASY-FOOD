@@ -41,6 +41,11 @@ public class CategoryCrudService implements CrudService<Category> {
     }
 
     @Override
+    public List<Category> findAll(Long userID) {
+        return categoryRepository.findAll(userID);
+    }
+
+    @Override
     public ValidationResult create(Category newEntity) {
         ValidationResult validationResult = categoryValidator
                 .and(duplicityValidator)

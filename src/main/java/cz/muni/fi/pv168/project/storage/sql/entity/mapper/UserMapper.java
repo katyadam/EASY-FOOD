@@ -9,8 +9,9 @@ public class UserMapper implements EntityMapper<UserEntity, RegisteredUser>{
         return new RegisteredUser(
                 entity.guid(),
                 entity.name(),
-                entity.password()
-        );
+                entity.password(),
+                entity.id()
+                );
     }
 
     @Override

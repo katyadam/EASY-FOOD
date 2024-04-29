@@ -8,6 +8,7 @@ import java.util.List;
 public interface CrudService<T> {
 
     List<T> findAll();
+    List<T> findAll(Long userID);
 
     /**
      * Validate and store the given {@code newEntity}.
