@@ -14,6 +14,8 @@ public class RegisterDialog extends JDialog {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
+    private JPasswordField confirmPasswordField;
+
     private CommonDependencyProvider commonDependencyProvider;
 
     public RegisterDialog(Frame owner, CommonDependencyProvider commonDependencyProvider) {
@@ -31,14 +33,21 @@ public class RegisterDialog extends JDialog {
         add(passwordLabel);
         add(passwordField);
 
+        JLabel confirmPasswordLabel = new JLabel("Confirm your Password:");
+        confirmPasswordField = new JPasswordField();
+        add(passwordLabel);
+        add(passwordField);
+
         JButton registerButton = new JButton("Register");
 
-        // TODO this is wrong since action call Dialog
-        // dialog should return somehow its values, idk how yet
-    //        registerButton.addActionListener(new RegisterAction(
-    //                    commonDependencyProvider)
-    //        );
-    //        add(registerButton);
+        registerButton.addActionListener(new RegisterAction(
+                    commonDependencyProvider,
+                    usernameField,
+                    passwordField,
+                    confirmPasswordField
+                )
+        );
+        add(registerButton);
 
         pack();
         setLocationRelativeTo(owner);
