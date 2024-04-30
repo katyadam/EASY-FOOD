@@ -1,12 +1,10 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.ui.action.RegisterAction;
+import cz.muni.fi.pv168.project.ui.action.accountActions.RegisterAction;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class RegisterDialog extends JDialog {

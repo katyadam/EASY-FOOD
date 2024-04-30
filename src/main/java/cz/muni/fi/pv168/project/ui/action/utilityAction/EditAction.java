@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.utilityAction;
 
 import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
@@ -6,6 +6,8 @@ import cz.muni.fi.pv168.project.business.service.validation.UnitValidator;
 import cz.muni.fi.pv168.project.business.service.validation.IngredientValidator;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.ui.MainWindow;
+import cz.muni.fi.pv168.project.ui.action.ContextAction;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;

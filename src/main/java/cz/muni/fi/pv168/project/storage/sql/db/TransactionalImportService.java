@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.storage.sql.db;
 import cz.muni.fi.pv168.project.business.service.export.DataManipulationException;
 import cz.muni.fi.pv168.project.business.service.export.ImportService;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
-import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+import cz.muni.fi.pv168.project.ui.action.importAction.ImportType;
 
 import javax.swing.*;
 import java.util.Collection;

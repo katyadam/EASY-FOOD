@@ -1,22 +1,17 @@
-package cz.muni.fi.pv168.project.ui.action.mport;
+package cz.muni.fi.pv168.project.ui.action.importAction;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.service.crud.*;
-import cz.muni.fi.pv168.project.business.service.export.GenericExportService;
-import cz.muni.fi.pv168.project.business.service.export.GenericImportService;
 import cz.muni.fi.pv168.project.business.service.export.ParallelImport;
-import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
-import cz.muni.fi.pv168.project.business.service.export.importer.BatchXmlImporter;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.List;
 
 public class ImportAction extends AbstractAction {
 

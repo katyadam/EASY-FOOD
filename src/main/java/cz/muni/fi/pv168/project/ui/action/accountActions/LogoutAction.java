@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.accountActions;
 
 import cz.muni.fi.pv168.project.business.model.Recipe;
 import cz.muni.fi.pv168.project.business.model.RegisteredUser;

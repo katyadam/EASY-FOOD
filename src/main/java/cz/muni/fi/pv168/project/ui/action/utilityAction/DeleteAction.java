@@ -1,7 +1,9 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.utilityAction;
 
 
 import cz.muni.fi.pv168.project.ui.MainWindow;
+import cz.muni.fi.pv168.project.ui.action.ContextAction;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.AbstractEntityTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
