@@ -11,6 +11,7 @@ import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.dialog.CustomUnitDialog;
 import cz.muni.fi.pv168.project.ui.dialog.IngredientDialog;
 import cz.muni.fi.pv168.project.ui.dialog.RecipeDialog;
+import cz.muni.fi.pv168.project.ui.dialog.RegisterDialog;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 import cz.muni.fi.pv168.project.ui.model.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.CustomUnitTableModel;
@@ -27,27 +28,22 @@ import java.util.Optional;
 
 
 public class RegisterAction extends AbstractAction{
-
-    private final JPasswordField passwordField;
-    private final JTextField usernameField;
     private CommonDependencyProvider commonDependencyProvider;
     private final CrudService<RegisteredUser> userCrudService;
 
     public RegisterAction
-            (CommonDependencyProvider commonDependencyProvider,
-             JTextField usernameField,
-             JPasswordField passwordField
+            (CommonDependencyProvider commonDependencyProvider
+
              ) {
         super("Register");
-        this.usernameField = usernameField;
-        this.passwordField = passwordField;
+
         this.commonDependencyProvider = commonDependencyProvider;
         this.userCrudService = commonDependencyProvider.getUserCrudService();
         putValue(SHORT_DESCRIPTION, "Tries to register a user");
     }
 
 
-    public boolean register(String name, char[] password) {
+    public boolean register(String name, String password) {
         if (commonDependencyProvider.getUserRepository().existsByName(name)) {
             System.out.println("Username already exists in the database.");
             return false;
@@ -61,7 +57,7 @@ public class RegisterAction extends AbstractAction{
         // Create a new account in the database
         // TODO need to hash pw
         try {
-            userCrudService.create(new RegisteredUser( null, name, Arrays.toString(password),null));
+            userCrudService.create(new RegisteredUser( null, name, password,null));
         }
         catch (Exception e) {
             System.out.println("Account GUUID already exists.");
@@ -71,8 +67,8 @@ public class RegisterAction extends AbstractAction{
         return true;
     }
 
-    private boolean isStrongPassword(char[] password) {
-        if (password.length <= 8) {
+    private boolean isStrongPassword(String password) {
+        if (password.length() <= 8) {
             return false;
         }
         //TODO regex check for some upper case letter and numbers
@@ -81,10 +77,14 @@ public class RegisterAction extends AbstractAction{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var res = register(usernameField.getText(), passwordField.getPassword());
-        if (res) {
+        //var openRegisterDialog();
+        var regDialog = new RegisterDialog(null, commonDependencyProvider);
+        regDialog.show();
+        var username = "";
+        var password = "";
+        // TODO get register info from dialog
+        var res = register(username, password);
 
-        }
     }
 }
 

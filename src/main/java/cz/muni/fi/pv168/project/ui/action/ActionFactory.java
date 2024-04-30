@@ -16,9 +16,13 @@ public class ActionFactory {
     private final ShowAction showAction;
 
     private final LoginAction loginAction;
-    private final CommonDependencyProvider commonDependencyProvider;
+
 
     private final LogoutAction logoutAction;
+    private final RegisterAction registerAction;
+    private final ChangePasswordAction changePasswordAction;
+
+    private final CommonDependencyProvider commonDependencyProvider;
 
     public ActionFactory(
             JTable recipeTable,
@@ -35,6 +39,8 @@ public class ActionFactory {
         this.quitAction = new QuitAction();
         this.loginAction =  new LoginAction(commonDependencyProvider);
         this.logoutAction = new LogoutAction(commonDependencyProvider);
+        this.registerAction = new RegisterAction(commonDependencyProvider);
+        this.changePasswordAction = new ChangePasswordAction(commonDependencyProvider)
         // TODO
 
     }
@@ -79,5 +85,13 @@ public class ActionFactory {
             loginAction.setEnabled(true);
             logoutAction.setEnabled(false);
         }
+    }
+
+    public RegisterAction getRegisterAction() {
+        return null;
+    }
+
+    public ChangePasswordAction getChangePasswordAction() {
+        return null;
     }
 }

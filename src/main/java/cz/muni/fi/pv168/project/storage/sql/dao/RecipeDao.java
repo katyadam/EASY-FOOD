@@ -3,12 +3,14 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 import cz.muni.fi.pv168.project.business.model.PreparationTime;
 import cz.muni.fi.pv168.project.storage.sql.entity.RecipeEntity;
 
+import java.io.Console;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,7 +94,10 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
 
             return recipes;
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load all employees", ex);
+
+            //throw new DataStorageException("Failed to load all employees", ex);
+            // TODO
+            return Collections.emptyList();
         }
     }
 

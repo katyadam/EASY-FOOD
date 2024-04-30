@@ -6,13 +6,13 @@ public class UserValidator implements  Validator<RegisteredUser>{
 
     @Override
     public ValidationResult validate(RegisteredUser model) {
-        // TODO better validation
-        if(model.getName().isEmpty()) {
-            return ValidationResult.failed("Empty username");
-        }
-        if (model.getPassword().isEmpty()) {
-            return ValidationResult.failed("Empty password");
-        }
+        // future validator
+//        if(model.getName().isEmpty()) {
+//            return ValidationResult.failed("Empty username");
+//        }
+//        if (model.getPassword().isEmpty()) {
+//            return ValidationResult.failed("Empty password");
+//        }
         return ValidationResult.success();
     }
 }

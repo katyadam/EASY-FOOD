@@ -94,8 +94,8 @@ public class MainWindow {
 
     public MainWindow() {
         this.session = commonDependencyProvider.getSession();
-        LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
-        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());
+        //LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
+        //loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());
 
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
@@ -194,6 +194,13 @@ public class MainWindow {
             TabbedPanelContext.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
             ButtonLocker.reload(actions, TabbedPanelContext.getActiveTable());
             StatisticsUpdater.reload();
+            var session = commonDependencyProvider.getSession();
+            if (session.isLoggedIn()) {
+                var user = session.getLoggedUser();
+                ingredientsFilter.reload(ingredientCrudService.findAll(user.getID()));
+                categoriesFilter.reload(categoryCrudService.findAll(user.getID()));
+                return;
+            }
             ingredientsFilter.reload(ingredientCrudService.findAll());
             categoriesFilter.reload(categoryCrudService.findAll());
         }
@@ -336,12 +343,20 @@ public class MainWindow {
         var importMenu = new JMenu("Import");
         importMenu.add(new ImportAction("Append new data", categoryCrudService, unitService, ingredientCrudService, recipeCrudService, this::refresh, ImportType.APPEND));
         importMenu.add(new ImportAction("Overwrite all data", categoryCrudService, unitService, ingredientCrudService, recipeCrudService, this::refresh, ImportType.OVERWRITE));
+
         filesMenu.add(importMenu);
         filesMenu.addSeparator();
         filesMenu.add(new ExportAction("Export", categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
 
+        JMenu accountMenu = new JMenu("Account");
+        accountMenu.add(actions.getLoginAction());
+        accountMenu.add(actions.getLogoutAction());
+        accountMenu.add(actions.getRegisterAction());
+        accountMenu.add(actions.getChangePasswordAction());
+
         menuBar.add(editMenu);
         menuBar.add(filesMenu);
+        menuBar.add(accountMenu);
 
         return menuBar;
     }

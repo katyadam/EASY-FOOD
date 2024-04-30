@@ -32,13 +32,13 @@ public class RegisterDialog extends JDialog {
         add(passwordField);
 
         JButton registerButton = new JButton("Register");
-        registerButton.addActionListener(new RegisterAction(
-                    commonDependencyProvider,
-                    usernameField,
-                    passwordField
-                )
-        );
-        add(registerButton);
+
+        // TODO this is wrong since action call Dialog
+        // dialog should return somehow its values, idk how yet
+    //        registerButton.addActionListener(new RegisterAction(
+    //                    commonDependencyProvider)
+    //        );
+    //        add(registerButton);
 
         pack();
         setLocationRelativeTo(owner);
