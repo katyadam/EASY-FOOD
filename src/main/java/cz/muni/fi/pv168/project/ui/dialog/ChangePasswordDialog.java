@@ -5,7 +5,7 @@ import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 
-public class ChangePasswordDialog implements JDialog>{
+public class ChangePasswordDialog extends JDialog{
     public ChangePasswordDialog(CommonDependencyProvider commonDependencyProvider)   {
 
 
