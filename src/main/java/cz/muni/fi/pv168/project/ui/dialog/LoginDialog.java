@@ -32,14 +32,7 @@ public class LoginDialog extends EntityDialog<RegisteredUser> {
         add(passwordLabel);
         add(passwordField);
 
-        JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                entity.setName(usernameField.getText());
-                entity.setPassword(passwordField.getPassword().toString());
-            }
-        });
+        JButton loginButton = getLoginButton();
         add(loginButton);
 
         JButton registerButton = new JButton("Register"); 
@@ -49,6 +42,24 @@ public class LoginDialog extends EntityDialog<RegisteredUser> {
         });
         add(registerButton);
 
+    }
+
+    private JButton getLoginButton() {
+        JButton loginButton = new JButton("Login");
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var exists = commonDependencyProvider.getUserRepository().existByLogin(usernameField.getText(),passwordField.getPassword().toString());
+                if (exists.isPresent()) {
+                    JOptionPane.showMessageDialog(null,"No user with this login exists.","Error",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                entity.setName(usernameField.getText());
+                entity.setPassword(passwordField.getPassword().toString());
+                commonDependencyProvider.getSession().setLoggedUser(entity);
+            }
+        });
+        return loginButton;
     }
 
     @Override

@@ -17,9 +17,10 @@ public class DatabaseConnection {
     private final Connection connection;
     private final String connectionString;
 
-
+//
     public DatabaseConnection() {
         this.connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
+        System.out.println(connectionString);
         Connection newCon;
 
         try {

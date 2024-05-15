@@ -93,14 +93,17 @@ public class MainWindow {
     public static final CommonDependencyProvider commonDependencyProvider = new CommonDependencyProvider();
 
     public MainWindow() {
-        this.session = commonDependencyProvider.getSession();
+        /*this.session = commonDependencyProvider.getSession();
         LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
-        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());
+        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());*/
+        commonDependencyProvider.getUserCrudService().create(new RegisteredUser("sdaasda","sada","asdasd",null));
 
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
         this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
         this.unitService = commonDependencyProvider.getCustomUnitCrudService();
+
+        System.out.println(recipeCrudService.findAll());
 
         this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
         this.customUnitTableModel = new CustomUnitTableModel(unitService);

@@ -64,7 +64,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final Repository<Category> categories;
     private final Repository<CustomUnit> customUnits;
     private final Repository<Ingredient> ingredients;
-    private final Repository<RegisteredUser> users;
+    private final UserSqlRepositary users;
     private final AddedIngredientSqlRepository addedIngredients;
     private final CrudService<Recipe> recipeCrudService;
     private final CrudService<Ingredient> ingredientCrudService;
@@ -212,7 +212,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     }
 
     @Override
-    public Repository<RegisteredUser> getUserRepository() {
+    public UserSqlRepositary getUserRepository() {
         return users;
     }
     @Override

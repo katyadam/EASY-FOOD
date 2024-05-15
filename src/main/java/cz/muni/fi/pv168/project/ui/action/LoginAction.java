@@ -21,8 +21,10 @@ public class LoginAction extends AbstractAction {
     private CommonDependencyProvider commonDependencyProvider;
 
     public LoginAction(CommonDependencyProvider commonDependencyProvider) {
+        super("Log in");
         this.commonDependencyProvider = commonDependencyProvider;
         this.userCrudService = (UserCrudService) commonDependencyProvider.getUserCrudService();
+
     }
 
     public boolean login(String username, String password) {
@@ -43,6 +45,7 @@ public class LoginAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var dialog = new LoginDialog(commonDependencyProvider);
+        LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
+        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());
     }
 }

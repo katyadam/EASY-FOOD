@@ -6,6 +6,9 @@ public class UserValidator implements  Validator<RegisteredUser>{
 
     @Override
     public ValidationResult validate(RegisteredUser model) {
+        if(model == null) {
+            return ValidationResult.failed("Null");
+        }
         // TODO better validation
         if(model.getName().isEmpty()) {
             return ValidationResult.failed("Empty username");
