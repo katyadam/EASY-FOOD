@@ -1,6 +1,8 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.utilityAction;
 
 import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.ui.action.ContextAction;
+import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
 import cz.muni.fi.pv168.project.ui.dialog.ShowDialog;
 import cz.muni.fi.pv168.project.ui.model.RecipeTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;

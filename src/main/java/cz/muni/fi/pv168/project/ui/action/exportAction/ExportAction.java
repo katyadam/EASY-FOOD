@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.exportAction;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Ingredient;

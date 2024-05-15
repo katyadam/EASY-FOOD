@@ -5,7 +5,7 @@ package cz.muni.fi.pv168.project.business.service.export;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchOperationException;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
 
-import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+import cz.muni.fi.pv168.project.ui.action.importAction.ImportType;
 
 import java.util.Collection;
 

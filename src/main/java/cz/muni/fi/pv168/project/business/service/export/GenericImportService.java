@@ -11,7 +11,7 @@ import cz.muni.fi.pv168.project.business.service.export.format.Format;
 import cz.muni.fi.pv168.project.business.service.export.format.FormatMapping;
 import cz.muni.fi.pv168.project.business.service.export.importer.BatchImporter;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
-import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+import cz.muni.fi.pv168.project.ui.action.importAction.ImportType;
 
 import javax.swing.*;
 import java.io.IOException;

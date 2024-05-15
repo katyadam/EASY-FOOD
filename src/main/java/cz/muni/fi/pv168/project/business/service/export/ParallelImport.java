@@ -1,16 +1,11 @@
 package cz.muni.fi.pv168.project.business.service.export;
 
-import cz.muni.fi.pv168.project.business.service.export.batch.BatchXmlExporter;
-import cz.muni.fi.pv168.project.business.service.export.importer.BatchXmlImporter;
 import cz.muni.fi.pv168.project.ui.MainWindow;
-import cz.muni.fi.pv168.project.ui.action.ActionFactory;
-import cz.muni.fi.pv168.project.ui.action.mport.ImportAction;
-import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
+import cz.muni.fi.pv168.project.ui.action.importAction.ImportType;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.List;
 
 /**
  * @author Filip Skvara

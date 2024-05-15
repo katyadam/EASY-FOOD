@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.action;
+package cz.muni.fi.pv168.project.ui.action.filterACtion;
 
 import cz.muni.fi.pv168.project.ui.filters.ingredients.IngredientFilterAttributes;
 import cz.muni.fi.pv168.project.ui.filters.ingredients.IngredientRowFilter;

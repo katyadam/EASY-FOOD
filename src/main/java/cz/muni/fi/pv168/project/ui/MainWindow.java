@@ -93,17 +93,14 @@ public class MainWindow {
     public static final CommonDependencyProvider commonDependencyProvider = new CommonDependencyProvider();
 
     public MainWindow() {
-        /*this.session = commonDependencyProvider.getSession();
+        this.session = commonDependencyProvider.getSession();
         LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
-        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());*/
-        commonDependencyProvider.getUserCrudService().create(new RegisteredUser("sdaasda","sada","asdasd",null));
+        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());
 
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
         this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
         this.unitService = commonDependencyProvider.getCustomUnitCrudService();
-
-        System.out.println(recipeCrudService.findAll());
 
         this.ingredientTableModel = new IngredientTableModel(ingredientCrudService);
         this.customUnitTableModel = new CustomUnitTableModel(unitService);
@@ -197,6 +194,13 @@ public class MainWindow {
             TabbedPanelContext.setActiveTab(layout.getTabbedPanels().getSelectedIndex());
             ButtonLocker.reload(actions, TabbedPanelContext.getActiveTable());
             StatisticsUpdater.reload();
+            var session = commonDependencyProvider.getSession();
+            if (session.isLoggedIn()) {
+                var user = session.getLoggedUser();
+                ingredientsFilter.reload(ingredientCrudService.findAll(user.getID()));
+                categoriesFilter.reload(categoryCrudService.findAll(user.getID()));
+                return;
+            }
             ingredientsFilter.reload(ingredientCrudService.findAll());
             categoriesFilter.reload(categoryCrudService.findAll());
         }
@@ -339,12 +343,20 @@ public class MainWindow {
         var importMenu = new JMenu("Import");
         importMenu.add(new ImportAction("Append new data", categoryCrudService, unitService, ingredientCrudService, recipeCrudService, this::refresh, ImportType.APPEND));
         importMenu.add(new ImportAction("Overwrite all data", categoryCrudService, unitService, ingredientCrudService, recipeCrudService, this::refresh, ImportType.OVERWRITE));
+
         filesMenu.add(importMenu);
         filesMenu.addSeparator();
         filesMenu.add(new ExportAction("Export", categoryCrudService, unitService, ingredientCrudService, recipeCrudService));
 
+        JMenu accountMenu = new JMenu("Account");
+        accountMenu.add(actions.getLoginDialogAction());
+        accountMenu.add(actions.getLogoutDialogAction());
+        accountMenu.add(actions.getRegisterDialogAction());
+        accountMenu.add(actions.getChangePasswordDialogAction());
+
         menuBar.add(editMenu);
         menuBar.add(filesMenu);
+        menuBar.add(accountMenu);
 
         return menuBar;
     }
@@ -434,5 +446,6 @@ public class MainWindow {
         recipeTableModel.refresh();
         categoryTableModel.refresh();
         customUnitTableModel.refresh();
+        actions.setLogged(session.isLoggedIn());
     }
 }
