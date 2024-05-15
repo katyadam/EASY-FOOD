@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 
 public class RegisterDialogAction extends DialogAction {
     public RegisterDialogAction(CommonDependencyProvider commonDependencyProvider) {
-        super(commonDependencyProvider);
+        super(commonDependencyProvider,"Register");
     }
 
     @Override

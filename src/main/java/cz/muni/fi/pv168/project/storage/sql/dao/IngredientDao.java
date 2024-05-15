@@ -23,9 +23,9 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     public IngredientEntity create(IngredientEntity newIngredient) {
         var sql = """
                 INSERT INTO Ingredient(
-                    guid,
-                    ingredientName,
-                    nutritionalValue
+                    GUID,
+                    INGREDIENTNAME,
+                    NUTRITIONALVALUE
                 )
                 VALUES (?, ?, ?);
                 """;
@@ -59,10 +59,10 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Collection<IngredientEntity> findAll() {
         var sql = """
-                SELECT id,
-                    guid,
-                    ingredientName,
-                    nutritionalValue
+                SELECT ID,
+                    GUID,
+                    INGREDIENTNAME,
+                    NUTRITIONALVALUE
                 FROM Ingredient
                 """;
         try (
@@ -86,12 +86,12 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Collection<IngredientEntity> findAll(Long userId) {
         var sql = """
-                SELECT id,
-                    guid,
-                    ingredientName,
-                    nutritionalValue
+                SELECT ID,
+                    GUID,
+                    INGREDIENTNAME,
+                    NUTRITIONALVALUE
                 FROM Ingredient
-                WHERE userId = ?
+                WHERE USERID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -114,12 +114,12 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Optional<IngredientEntity> findById(long id) {
         var sql = """
-                SELECT id,
-                    guid,
-                    ingredientName,
-                    nutritionalValue
+                SELECT ID,
+                    GUID,
+                    INGREDIENTNAME,
+                    NUTRITIONALVALUE
                 FROM Ingredient
-                WHERE id = ?
+                WHERE ID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -140,12 +140,12 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Optional<IngredientEntity> findByGuid(String guid) {
         var sql = """
-                SELECT id,
-                    guid,
-                    ingredientName,
-                    nutritionalValue
+                SELECT ID,
+                    GUID,
+                    INGREDIENTNAME,
+                    NUTRITIONALVALUE
                 FROM Ingredient
-                WHERE guid = ?
+                WHERE GUID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -167,9 +167,9 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     public IngredientEntity update(IngredientEntity entity) {
         var sql = """
                 UPDATE Ingredient
-                SET ingredientName = ?,
-                    nutritionalValue = ?
-                WHERE id = ?
+                SET INGREDIENTNAME = ?,
+                    NUTRITIONALVALUE = ?
+                WHERE ID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -229,9 +229,9 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT id
+                SELECT ID
                 FROM Recipe
-                WHERE guid = ?
+                WHERE GUID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

@@ -104,16 +104,16 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
     @Override
     public Collection<RecipeEntity> findAll(Long userId) {
         var sql = """
-                SELECT id,
-                    guid,
-                    recipeName,
-                    prepMinutes,
-                    portions,
-                    categoryId,
-                    description,
-                    userId,
+                SELECT ID,
+                    GUID,
+                    RECIPENAME,
+                    PREPMINUTES,
+                    PORTIONS,
+                    CATEGORYID,
+                    DESCRIPTION,
+                    USERID,
                 FROM Recipe
-                WHERE userId = ?
+                WHERE USERID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -136,16 +136,16 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
     @Override
     public Optional<RecipeEntity> findById(long id) {
         var sql = """
-                SELECT id,
-                    guid,
-                    recipeName,
-                    prepMinutes,
-                    portions,
-                    categoryId,
-                    description,
-                    userId
+                SELECT ID,
+                    GUID,
+                    RECIPENAME,
+                    PREPMINUTES,
+                    PORTIONS,
+                    CATEGORYID,
+                    DESCRIPTION,
+                    USERID
                 FROM Recipe
-                WHERE id = ?
+                WHERE ID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -166,15 +166,15 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
     @Override
     public Optional<RecipeEntity> findByGuid(String guid) {
         var sql = """
-                SELECT id,
-                    guid,
-                    recipeName,
-                    prepMinutes,
-                    portions,
-                    categoryId,
-                    description
+                SELECT ID,
+                    GUID,
+                    RECIPENAME,
+                    PREPMINUTES,
+                    PORTIONS,
+                    CATEGORYID,
+                    DESCRIPTION
                 FROM Recipe
-                WHERE guid = ?
+                WHERE GUID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -196,12 +196,12 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
     public RecipeEntity update(RecipeEntity entity) {
         var sql = """
                 UPDATE Recipe
-                SET recipeName = ?,
-                    prepMinutes = ?,
-                    portions = ?,
-                    categoryId = ?,
-                    description = ?
-                WHERE id = ?
+                SET RECIPENAME = ?,
+                    PREPMINUTES = ?,
+                    PORTIONS = ?,
+                    CATEGORYID = ?,
+                    DESCRIPTION = ?
+                WHERE ID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -230,7 +230,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
 
     @Override
     public void deleteByGuid(String guid) {
-        var sql = "DELETE FROM Recipe WHERE guid = ?";
+        var sql = "DELETE FROM Recipe WHERE GUID = ?";
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -263,9 +263,9 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT id
+                SELECT ID
                 FROM Recipe
-                WHERE guid = ?
+                WHERE GUID = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

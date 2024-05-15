@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 public class LoginDialogAction extends DialogAction {
     public LoginDialogAction(CommonDependencyProvider commonDependencyProvider) {
-        super(commonDependencyProvider);
+        super(commonDependencyProvider,"Log in");
     }
 
     @Override

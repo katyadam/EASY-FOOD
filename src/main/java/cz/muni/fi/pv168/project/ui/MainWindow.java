@@ -5,17 +5,14 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.Ingredient;
 import cz.muni.fi.pv168.project.business.model.Recipe;
-import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
-import cz.muni.fi.pv168.project.business.service.validation.UserValidator;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ExportAction;
-import cz.muni.fi.pv168.project.ui.action.FilterIngredientsAction;
-import cz.muni.fi.pv168.project.ui.action.FilterRecipesAction;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
-import cz.muni.fi.pv168.project.ui.action.mport.ImportAction;
-import cz.muni.fi.pv168.project.ui.action.mport.ImportType;
-import cz.muni.fi.pv168.project.ui.dialog.LoginDialog;
+import cz.muni.fi.pv168.project.ui.action.exportAction.ExportAction;
+import cz.muni.fi.pv168.project.ui.action.filterACtion.FilterIngredientsAction;
+import cz.muni.fi.pv168.project.ui.action.filterACtion.FilterRecipesAction;
+import cz.muni.fi.pv168.project.ui.action.importAction.ImportAction;
+import cz.muni.fi.pv168.project.ui.action.importAction.ImportType;
 import cz.muni.fi.pv168.project.ui.listeners.ButtonLocker;
 import cz.muni.fi.pv168.project.ui.listeners.SearchBarListener;
 import cz.muni.fi.pv168.project.ui.listeners.StatisticsUpdater;
@@ -93,9 +90,9 @@ public class MainWindow {
     public static final CommonDependencyProvider commonDependencyProvider = new CommonDependencyProvider();
 
     public MainWindow() {
-        this.session = commonDependencyProvider.getSession();
+        /*this.session = commonDependencyProvider.getSession();
         LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
-        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());
+        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());*/
 
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
@@ -337,7 +334,7 @@ public class MainWindow {
         editMenu.add(actions.getQuitAction());
         // LOGIN
         editMenu.addSeparator();
-        editMenu.add(actions.getLoginAction());
+        editMenu.add(actions.getLoginDialogAction());
 
         JMenu filesMenu = new JMenu("Files");
         var importMenu = new JMenu("Import");
@@ -352,7 +349,7 @@ public class MainWindow {
         accountMenu.add(actions.getLoginDialogAction());
         accountMenu.add(actions.getLogoutDialogAction());
         accountMenu.add(actions.getRegisterDialogAction());
-        accountMenu.add(actions.getChangePasswordDialogAction());
+        //accountMenu.add(actions.getChangePasswordDialogAction());
 
         menuBar.add(editMenu);
         menuBar.add(filesMenu);

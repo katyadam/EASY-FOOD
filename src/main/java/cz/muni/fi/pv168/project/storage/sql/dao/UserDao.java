@@ -22,9 +22,9 @@ public class UserDao implements DataAccessObject<UserEntity>{
     public UserEntity create(UserEntity entity) {
         var sql = """
                 INSERT INTO User (
-                    guid,
-                    username,
-                    password
+                    GUID,
+                    USERNAME,
+                    PASSWORD
                 ) 
                 VALUES (?, ?, ?);
                 """;
@@ -60,10 +60,10 @@ public class UserDao implements DataAccessObject<UserEntity>{
     @Override
     public Collection<UserEntity> findAll() {
         var sql = """
-                SELECT id,
-                guid,
-                name,
-                password
+                SELECT ID,
+                GUID,
+                NAME,
+                PASSWORD
                 FROM User
                 """;
         try (
@@ -92,12 +92,12 @@ public class UserDao implements DataAccessObject<UserEntity>{
     @Override
     public Optional<UserEntity> findById(long id) {
         var sql = """
-                SELECT id,
-                    guid,
-                    name,
-                    password,
+                SELECT ID,
+                    GUID,
+                    NAME,
+                    PASSWORD,
                 FROM User
-                WHERE id = ?
+                WHERE ID = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -118,12 +118,12 @@ public class UserDao implements DataAccessObject<UserEntity>{
     @Override
     public Optional<UserEntity> findByGuid(String guid) {
         var sql = """
-                SELECT id,
-                    guid,
-                    name,
-                    password,
+                SELECT ID,
+                    GUID,
+                    NAME,
+                    PASSWORD,
                 FROM User
-                WHERE guid = ?
+                WHERE GUID = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -145,9 +145,9 @@ public class UserDao implements DataAccessObject<UserEntity>{
     public UserEntity update(UserEntity entity) {
         var sql = """
                 UPDATE User
-                SET name = ?,
-                    password = ?,
-                WHERE id = ?
+                SET NAME = ?,
+                    PASSWORD = ?
+                WHERE ID = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -173,7 +173,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
 
     @Override
     public void deleteByGuid(String guid) {
-        var sql = " DELETE FROM User WHERE guid = ? ";
+        var sql = " DELETE FROM User WHERE GUID = ? ";
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -207,9 +207,9 @@ public class UserDao implements DataAccessObject<UserEntity>{
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT id
+                SELECT ID
                 FROM User
-                WHERE guid = ?
+                WHERE GUID = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -225,9 +225,9 @@ public class UserDao implements DataAccessObject<UserEntity>{
     public boolean existsByUsername(String username) {
         System.out.println(username + "\n");
         var sql = """
-                SELECT id
+                SELECT ID
                 FROM "User"
-                WHERE name = ?
+                WHERE NAME = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -242,12 +242,12 @@ public class UserDao implements DataAccessObject<UserEntity>{
 
     public Optional<UserEntity> existsByLogin(String name, String password) {
         var sql = """
-                SELECT id,
-                    guid,
-                    name,
-                    password
+                SELECT ID,
+                    GUID,
+                    NAME,
+                    PASSWORD
                 FROM User
-                WHERE name = ? AND password = ?
+                WHERE NAME = ? AND PASSWORD = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

@@ -9,7 +9,8 @@ import javax.swing.*;
 public abstract class DialogAction extends AbstractAction {
     protected final CommonDependencyProvider commonDependencyProvider;
 
-    public DialogAction(CommonDependencyProvider commonDependencyProvider) {
+    public DialogAction(CommonDependencyProvider commonDependencyProvider, String name) {
+        super(name);
         this.commonDependencyProvider = commonDependencyProvider;
     }
 
