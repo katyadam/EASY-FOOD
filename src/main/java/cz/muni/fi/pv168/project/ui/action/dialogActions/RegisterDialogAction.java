@@ -13,7 +13,6 @@ public class RegisterDialogAction extends DialogAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var dialog = new RegisterDialog(null, commonDependencyProvider);
-        dialog.show();
+        new RegisterDialog(null, commonDependencyProvider);
     }
 }

@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.ui.action.accountActions.RegisterAction;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
@@ -7,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class RegisterDialog extends JDialog {
+public class RegisterDialog extends EntityDialog<RegisteredUser> {
 
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -16,10 +17,11 @@ public class RegisterDialog extends JDialog {
 
     private CommonDependencyProvider commonDependencyProvider;
 
+    private RegisteredUser entityUser;
+
     public RegisterDialog(Frame owner, CommonDependencyProvider commonDependencyProvider) {
-        super(owner, "Register", true);
+        super(new RegisteredUser("", "", "", null), commonDependencyProvider.getUserRepository().findAll());
         this.commonDependencyProvider = commonDependencyProvider;
-        setLayout(new GridLayout(4, 2));
 
         JLabel usernameLabel = new JLabel("Username:");
         usernameField = new JTextField();
@@ -31,24 +33,43 @@ public class RegisterDialog extends JDialog {
         add(passwordLabel);
         add(passwordField);
 
-        JLabel confirmPasswordLabel = new JLabel("Confirm your Password:");
+        JLabel confirmPasswordLabel = new JLabel("Confirm password:");
         confirmPasswordField = new JPasswordField();
-        add(passwordLabel);
-        add(passwordField);
+        add(confirmPasswordLabel);
+        add(confirmPasswordField);
 
         JButton registerButton = new JButton("Register");
-
-        registerButton.addActionListener(new RegisterAction(
-                    commonDependencyProvider,
-                    usernameField,
-                    passwordField,
-                    confirmPasswordField
-                )
-        );
+        registerButton.addActionListener(e -> registerUser());
         add(registerButton);
+        this.show(registerButton, "Registration", commonDependencyProvider.getUserValidator());
+    }
 
-        pack();
-        setLocationRelativeTo(owner);
-        setVisible(true);
+    private void registerUser() {
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+        String confirmPassword = new String(confirmPasswordField.getPassword());
+
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (commonDependencyProvider.getUserRepository().existsByName(username)) {
+            JOptionPane.showMessageDialog(null, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // TODO hash password and assign uuid? idk how ID works when we have UUID but sure
+
+        RegisteredUser newUser = new RegisteredUser(username, password, "", null);
+        commonDependencyProvider.getUserRepository().create(newUser);
+
+        JOptionPane.showMessageDialog(null, "User registered successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        usernameField.setText("");
+        passwordField.setText("");
+        confirmPasswordField.setText("");
+    }
+
+    @Override
+    RegisteredUser getEntity() {
+        return entityUser;
     }
 }
