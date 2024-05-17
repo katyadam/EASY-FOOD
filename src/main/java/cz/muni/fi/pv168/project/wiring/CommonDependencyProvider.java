@@ -184,7 +184,7 @@ public class CommonDependencyProvider implements DependencyProvider {
         this.transactionExecutor = new TransactionExecutorImpl(transactionManager::beginTransaction);
         this.transactionalImportService = new TransactionalImportService(genericImportService, transactionExecutor);
 
-        this.session = new Session();
+        this.session = new Session(this);
 
     }
 

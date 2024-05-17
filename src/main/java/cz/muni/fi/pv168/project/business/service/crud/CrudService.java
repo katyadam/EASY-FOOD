@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 
+import java.text.CollationElementIterator;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,4 +35,6 @@ public interface CrudService<T> {
      * Delete all entities.
      */
     void deleteAll();
+
+    Collection<T> getAllOfUser(RegisteredUser user);
 }

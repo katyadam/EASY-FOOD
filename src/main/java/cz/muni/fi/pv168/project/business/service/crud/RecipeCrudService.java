@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.RecipeValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
@@ -105,5 +106,10 @@ public class RecipeCrudService implements CrudService<Recipe> {
     @Override
     public void deleteAll() {
         recipeRepository.deleteAll();
+    }
+
+    @Override
+    public Collection<Recipe> getAllOfUser(RegisteredUser user) {
+        return recipeRepository.findAll(user.getID());
     }
 }

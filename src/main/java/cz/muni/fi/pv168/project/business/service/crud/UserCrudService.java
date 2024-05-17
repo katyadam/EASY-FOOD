@@ -130,6 +130,12 @@ public class UserCrudService implements CrudService<RegisteredUser> {
         userRepository.deleteAll();
     }
 
+    @Override
+    @Deprecated
+    public Collection<RegisteredUser> getAllOfUser(RegisteredUser user) {
+        return userRepository.findAll(user.getID());
+    }
+
     public static String hashPassword(String password)  {
         String generatedPassword = null;
         try
