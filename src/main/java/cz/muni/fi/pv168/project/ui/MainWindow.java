@@ -332,9 +332,7 @@ public class MainWindow {
         editMenu.add(actions.getDeleteAction());
         editMenu.addSeparator();
         editMenu.add(actions.getQuitAction());
-        // LOGIN
-        editMenu.addSeparator();
-        editMenu.add(actions.getLoginDialogAction());
+
 
         JMenu filesMenu = new JMenu("Files");
         var importMenu = new JMenu("Import");
