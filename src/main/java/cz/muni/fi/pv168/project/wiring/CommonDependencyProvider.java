@@ -51,6 +51,7 @@ import cz.muni.fi.pv168.project.storage.sql.entity.mapper.IngredientMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.RecipeMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.UnitMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.UserMapper;
+import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 
 import java.sql.Connection;
 import java.util.List;
@@ -86,6 +87,7 @@ public class CommonDependencyProvider implements DependencyProvider {
     private final TransactionExecutorImpl transactionExecutor;
     private final TransactionalImportService transactionalImportService;
     private Session session;
+    private ActionFactory actionFactory;
 
     public CommonDependencyProvider() {
 
@@ -296,4 +298,14 @@ public class CommonDependencyProvider implements DependencyProvider {
 
     @Override
     public Session getSession() { return session; }
+
+    @Override
+    public ActionFactory getActionFactory() {
+        return actionFactory;
+    }
+
+    @Override
+    public void setActionFactory(ActionFactory actions) {
+        this.actionFactory = actions;
+    }
 }

@@ -114,6 +114,7 @@ public class MainWindow {
         createScrollPanes();
 
         this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable, commonDependencyProvider);
+        commonDependencyProvider.setActionFactory(actions);
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
         this.frame = createFrame();

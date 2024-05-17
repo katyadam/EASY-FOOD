@@ -14,6 +14,7 @@ import cz.muni.fi.pv168.project.business.service.export.ImportService;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
+import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 
 /**
  * Interface for instance wirings
@@ -62,5 +63,9 @@ public interface DependencyProvider {
     Validator<RegisteredUser> getUserValidator();
 
     Session getSession();
+
+    ActionFactory getActionFactory();
+
+    void setActionFactory(ActionFactory actionFactory);
 }
 
