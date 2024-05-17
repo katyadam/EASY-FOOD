@@ -347,7 +347,7 @@ public class MainWindow {
         accountMenu.add(actions.getLoginDialogAction());
         accountMenu.add(actions.getLogoutDialogAction());
         accountMenu.add(actions.getRegisterDialogAction());
-        //accountMenu.add(actions.getChangePasswordDialogAction());
+        accountMenu.add(actions.getChangePasswordDialogAction());
 
         menuBar.add(editMenu);
         menuBar.add(filesMenu);

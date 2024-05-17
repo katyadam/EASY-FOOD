@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.ui.action.dialogActions;
 
-import cz.muni.fi.pv168.project.ui.action.accountActions.ChangePasswordAction;
 import cz.muni.fi.pv168.project.ui.dialog.ChangePasswordDialog;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
@@ -14,5 +13,9 @@ public class ChangePasswordDialogAction extends JDialog {
         this.commonDependencyProvider = commonDependencyProvider;
     }
 
+    public void actionPerformed(ActionEvent e) {
+        ChangePasswordDialog dialog = new ChangePasswordDialog(commonDependencyProvider);
+        dialog.setVisible(true);
+    }
 
 }
