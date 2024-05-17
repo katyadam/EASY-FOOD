@@ -42,22 +42,20 @@ public class LoginDialog extends EntityDialog<RegisteredUser> {
 
     private JButton getLoginButton() {
         JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var username = usernameField.getText();
-                var password = new String(passwordField.getPassword());
-                // TODO: hash password
-                var user = commonDependencyProvider.getUserRepository().existByLogin(username, password);
+        loginButton.addActionListener(e -> {
+            var username = usernameField.getText();
+            var password = new String(passwordField.getPassword());
+            // TODO: hash password
+            var user = commonDependencyProvider.getUserRepository().existByLogin(username, password);
 
-                if (!user.isPresent()) {
-                    JOptionPane.showMessageDialog(null, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                commonDependencyProvider.getSession().setLoggedUser(user.get());
-                entityUser = user.get();
+            if (!user.isPresent()) {
+                JOptionPane.showMessageDialog(null, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+                entityUser = null;
+                return;
             }
+
+            commonDependencyProvider.getSession().setLoggedUser(user.get());
+            entityUser = user.get();
         });
         return loginButton;
     }
