@@ -59,8 +59,7 @@ public class RegisterDialog extends EntityDialog<RegisteredUser> {
         }
         // TODO hash password and assign uuid? idk how ID works when we have UUID but sure
 
-        RegisteredUser newUser = new RegisteredUser(username, password, "", null);
-        commonDependencyProvider.getUserRepository().create(newUser);
+        commonDependencyProvider.getUserCrudService().create(new RegisteredUser("",username, password, null));
 
         JOptionPane.showMessageDialog(null, "User registered successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
         usernameField.setText("");
