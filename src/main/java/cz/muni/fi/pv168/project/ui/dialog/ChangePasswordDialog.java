@@ -31,28 +31,8 @@ public class ChangePasswordDialog extends JDialog{
         add(newPasswordField2);
         
         JButton changePasswordButton = new JButton("Change password");
-        changePasswordButton.addActionListener(e -> {
-            if (!newPasswordField.getText().equals(newPasswordField2.getText())) {
-            JOptionPane.showMessageDialog(null, "New passwords do not match.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            if (!commonDependencyProvider.getUserRepository().existByLogin(commonDependencyProvider.getSession().getLoggedUser().getName(), oldPasswordField.getText()).isPresent()) {
-            JOptionPane.showMessageDialog(null, "Old password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-            }
-            
-            int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to change your password?", "Confirmation", JOptionPane.YES_NO_OPTION);
-            if (confirm != JOptionPane.YES_OPTION) {
-            return;
-            }
-            
-            // need hashing
-            RegisteredUser user = commonDependencyProvider.getUserRepository().findById((commonDependencyProvider.getSession().getLoggedUser().getID())).get();
-            user.setPassword(newPasswordField.getText());
-            commonDependencyProvider.getUserRepository().update(user);
-            JOptionPane.showMessageDialog(null, "Password changed successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        });
+        changePasswordButton.addActionListener(e -> changePassword());
+
         add(changePasswordButton);
         
         JButton cancelButton = new JButton("Cancel");
@@ -60,6 +40,28 @@ public class ChangePasswordDialog extends JDialog{
         add(cancelButton);
         
         pack();
+    }
+
+    private void changePassword() {
+        String oldPassword = oldPasswordField.getText();
+        String newPassword = newPasswordField.getText();
+        String newPassword2 = newPasswordField2.getText();
+        
+        if (!newPassword.equals(newPassword2)) {
+            JOptionPane.showMessageDialog(null, "New passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        RegisteredUser user = commonDependencyProvider.getSession().getLoggedUser();
+        if (!user.getPassword().equals(oldPassword)) {
+            JOptionPane.showMessageDialog(null, "Old password is incorrect", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        user.setPassword(newPassword);
+        commonDependencyProvider.getUserRepository().update(user);
+        JOptionPane.showMessageDialog(null, "Password changed", "Success", JOptionPane.INFORMATION_MESSAGE);
+        dispose();
     }
 
 }
