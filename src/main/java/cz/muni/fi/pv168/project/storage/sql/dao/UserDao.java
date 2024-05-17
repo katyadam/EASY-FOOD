@@ -24,9 +24,10 @@ public class UserDao implements DataAccessObject<UserEntity>{
                 INSERT INTO User (
                     GUID,
                     USERNAME,
-                    PASSWORD
+                    PASSWORD,
+                    ID
                 ) 
-                VALUES (?, ?, ?);
+                VALUES (?, ?, ?, ?);
                 """;
         try(
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -34,6 +35,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
             statement.setString(1, entity.guid());
             statement.setString(2,entity.name());
             statement.setString(3,entity.password());
+            statement.setLong(4, entity.id());
             statement.execute();
             try (var keyResultSet = statement.getGeneratedKeys()) {
                 long recipeId;

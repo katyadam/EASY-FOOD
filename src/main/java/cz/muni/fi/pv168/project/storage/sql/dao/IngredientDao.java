@@ -26,8 +26,10 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                     GUID,
                     INGREDIENTNAME,
                     NUTRITIONALVALUE
+                    ID,
+                    USERID
                 )
-                VALUES (?, ?, ?);
+                VALUES (?, ?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -35,6 +37,9 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
             statement.setString(1, newIngredient.guid());
             statement.setString(2, newIngredient.ingredientName());
             statement.setInt(3, newIngredient.nutritionalValue());
+            statement.setLong(4, newIngredient.id());
+            statement.setLong(5, newIngredient.userID());
+
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -59,10 +64,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Collection<IngredientEntity> findAll() {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    INGREDIENTNAME,
-                    NUTRITIONALVALUE
+                SELECT ALL 
                 FROM Ingredient
                 """;
         try (
@@ -89,7 +91,8 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 SELECT ID,
                     GUID,
                     INGREDIENTNAME,
-                    NUTRITIONALVALUE
+                    NUTRITIONALVALUE,
+                    USERID
                 FROM Ingredient
                 WHERE USERID = ?
                 """;
@@ -114,10 +117,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Optional<IngredientEntity> findById(long id) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    INGREDIENTNAME,
-                    NUTRITIONALVALUE
+                SELECT ALL 
                 FROM Ingredient
                 WHERE ID = ?
                 """;
@@ -143,7 +143,8 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                 SELECT ID,
                     GUID,
                     INGREDIENTNAME,
-                    NUTRITIONALVALUE
+                    NUTRITIONALVALUE,
+                    USERID
                 FROM Ingredient
                 WHERE GUID = ?
                 """;

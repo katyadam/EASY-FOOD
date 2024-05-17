@@ -34,7 +34,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                     description,
                     userId
                 )
-                VALUES (?, ?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -172,7 +172,8 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                     PREPMINUTES,
                     PORTIONS,
                     CATEGORYID,
-                    DESCRIPTION
+                    DESCRIPTION,
+                    USERID
                 FROM Recipe
                 WHERE GUID = ?
                 """;
@@ -200,7 +201,7 @@ public class RecipeDao implements DataAccessObject<RecipeEntity> {
                     PREPMINUTES = ?,
                     PORTIONS = ?,
                     CATEGORYID = ?,
-                    DESCRIPTION = ?
+                    DESCRIPTION = ?,
                 WHERE ID = ?
                 """;
         try (
