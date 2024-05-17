@@ -31,7 +31,8 @@ public final class DeleteAction extends ContextAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(MainWindow.commonDependencyProvider.getSession().getLoggedUser() == null) {
-            throw new IllegalStateException("You need to login first!");
+            JOptionPane.showMessageDialog(null, "You need to be logged in to add items.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         JTable activeTable = TabbedPanelContext.getActiveTable();
         //System.out.println(activeTable.getRowCount());
