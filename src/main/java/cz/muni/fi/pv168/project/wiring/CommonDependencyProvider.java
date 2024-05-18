@@ -102,7 +102,7 @@ public class CommonDependencyProvider implements DependencyProvider {
 
         var guidProvider = new UuidGuidProvider();
 
-        var userDao = new UserDao(connection);
+        var userDao = new RegisteredUserDao(connection);
         var unitDao = new UnitDao(connection);
         var categoryDao = new CategoryDao(connection);
         var ingredientDao = new IngredientDao(connection);

@@ -66,7 +66,14 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     @Override
     public Collection<UnitEntity> findAll() {
         var sql = """
-                SELECT ALL
+                SELECT 
+                    id,
+                    guid,
+                    unitName,
+                    abbreviation,
+                    amount,
+                    baseUnitId,
+                    userId
                 FROM Unit
                 """;
         try (

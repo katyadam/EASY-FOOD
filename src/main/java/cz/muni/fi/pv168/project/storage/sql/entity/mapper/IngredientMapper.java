@@ -8,19 +8,19 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.IngredientEntity;
-import cz.muni.fi.pv168.project.storage.sql.entity.UserEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.RegisteredUserEntity;
 
 public class IngredientMapper implements EntityMapper<IngredientEntity, Ingredient> {
 
     private final DataAccessObject<UnitEntity> unitDao;
     private final EntityMapper<UnitEntity, CustomUnit> unitMapper;
-    private final DataAccessObject<UserEntity> userDao;
+    private final DataAccessObject<RegisteredUserEntity> userDao;
     private final UserMapper userMapper;
 
     public IngredientMapper(
             DataAccessObject<UnitEntity> unitDao,
             EntityMapper<UnitEntity, CustomUnit> unitMapper,
-            DataAccessObject<UserEntity> userDao,
+            DataAccessObject<RegisteredUserEntity> userDao,
             UserMapper userMapper
     ) {
         this.unitDao = unitDao;
@@ -55,7 +55,7 @@ public class IngredientMapper implements EntityMapper<IngredientEntity, Ingredie
     }
 
     private IngredientEntity getIngredientEntity(Ingredient entity, Long dbId) {
-        UserEntity userEntity = userDao
+        RegisteredUserEntity userEntity = userDao
                 .findByGuid(entity.getUser().getGuid())
                 .orElseThrow(() -> new DataStorageException("Category not found, guid: " +
                         entity.getUser().getGuid()));

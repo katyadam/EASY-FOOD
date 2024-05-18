@@ -13,6 +13,8 @@ public class RegisterDialogAction extends DialogAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new RegisterDialog(null, commonDependencyProvider);
+        var dialog = new RegisterDialog(null, commonDependencyProvider);
+        dialog.show(null, "Register Dialog", commonDependencyProvider.getUserValidator())
+                .ifPresent(user -> commonDependencyProvider.getUserCrudService().create(user));
     }
 }

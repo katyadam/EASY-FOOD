@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.RegisteredUser;
-import cz.muni.fi.pv168.project.ui.action.accountActions.RegisterAction;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
@@ -41,13 +40,22 @@ public class RegisterDialog extends EntityDialog<RegisteredUser> {
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> registerUser());
         add(registerButton);
-        this.show(registerButton, "Registration", commonDependencyProvider.getUserValidator());
     }
 
     private void registerUser() {
+        if (usernameField.getText().isEmpty() || passwordField.getPassword().length == 0 || confirmPasswordField.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(null, "Username and password and Confirm Password must not be empty", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
+
+        if (!isStrongPassword(password)) {
+            JOptionPane.showMessageDialog(null, "Password is not strong enough", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         if (!password.equals(confirmPassword)) {
             JOptionPane.showMessageDialog(null, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
@@ -57,18 +65,36 @@ public class RegisterDialog extends EntityDialog<RegisteredUser> {
             JOptionPane.showMessageDialog(null, "Username already exists", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        // TODO hash password and assign uuid? idk how ID works when we have UUID but sure
-
-        commonDependencyProvider.getUserCrudService().create(new RegisteredUser("",username, password, null));
-
-        JOptionPane.showMessageDialog(null, "User registered successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-        usernameField.setText("");
-        passwordField.setText("");
-        confirmPasswordField.setText("");
     }
 
     @Override
     RegisteredUser getEntity() {
+
+        RegisteredUser entityUser = new RegisteredUser(
+                "",
+                usernameField.getText(),
+                passwordField.getPassword().toString(),
+                0L
+        );
         return entityUser;
+    }
+
+    private boolean isStrongPassword(String password) {
+        if (password.length() < 8) {
+            return false;
+        }
+        if (!password.matches(".*[0-9].*")) {
+            return false;
+        }
+        if (!password.matches(".*[a-z].*")) {
+            return false;
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            return false;
+        }
+        if (!password.matches(".*[!@#$%^&*].*")) {
+            return false;
+        }
+        return true;
     }
 }

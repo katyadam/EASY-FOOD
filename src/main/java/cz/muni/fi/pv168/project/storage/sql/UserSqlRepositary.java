@@ -3,8 +3,8 @@ package cz.muni.fi.pv168.project.storage.sql;
 import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
-import cz.muni.fi.pv168.project.storage.sql.dao.UserDao;
-import cz.muni.fi.pv168.project.storage.sql.entity.UserEntity;
+import cz.muni.fi.pv168.project.storage.sql.dao.RegisteredUserDao;
+import cz.muni.fi.pv168.project.storage.sql.entity.RegisteredUserEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 
 import java.util.List;
@@ -12,12 +12,12 @@ import java.util.Optional;
 
 public class UserSqlRepositary implements Repository<RegisteredUser> {
 
-    private final UserDao userDao;
-    private final EntityMapper<UserEntity, RegisteredUser> userMapper;
+    private final RegisteredUserDao userDao;
+    private final EntityMapper<RegisteredUserEntity, RegisteredUser> userMapper;
 
     public UserSqlRepositary(
-            UserDao userDao,
-            EntityMapper<UserEntity, RegisteredUser> userMapper) {
+            RegisteredUserDao userDao,
+            EntityMapper<RegisteredUserEntity, RegisteredUser> userMapper) {
         this.userDao = userDao;
         this.userMapper = userMapper;
     }

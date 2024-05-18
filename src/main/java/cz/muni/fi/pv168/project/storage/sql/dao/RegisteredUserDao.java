@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
-import cz.muni.fi.pv168.project.storage.sql.entity.UserEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.RegisteredUserEntity;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,22 +11,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDao implements DataAccessObject<UserEntity>{
+public class RegisteredUserDao implements DataAccessObject<RegisteredUserEntity>{
     private final Connection connection;
 
-    public UserDao(Connection connection) {
+    public RegisteredUserDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public UserEntity create(UserEntity entity) {
+    public RegisteredUserEntity create(RegisteredUserEntity entity) {
         var sql = """
-                INSERT INTO "User" (
+                INSERT INTO RegisteredUser (
                     guid,
                     name,
-                    password,
-                ) 
-                VALUES (?, ?, ?);
+                    password
+                ) VALUES (?, ?, ?);
                 """;
         try(
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -58,16 +57,20 @@ public class UserDao implements DataAccessObject<UserEntity>{
 
 
     @Override
-    public Collection<UserEntity> findAll() {
+    public Collection<RegisteredUserEntity> findAll() {
         var sql = """
-                SELECT ALL
-                FROM "User"
+                SELECT 
+                    id,
+                    guid,
+                    name,
+                    password
+                FROM RegisteredUser
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
 
-            List<UserEntity> users = new ArrayList<>();
+            List<RegisteredUserEntity> users = new ArrayList<>();
             try (var resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     var user = userFromResultSet(resultSet);
@@ -82,15 +85,19 @@ public class UserDao implements DataAccessObject<UserEntity>{
     }
 
     @Override
-    public Collection<UserEntity> findAll(Long userId) {
+    public Collection<RegisteredUserEntity> findAll(Long userId) {
         return List.of();
     }
 
     @Override
-    public Optional<UserEntity> findById(long id) {
+    public Optional<RegisteredUserEntity> findById(long id) {
         var sql = """
-                SELECT ALL
-                FROM "User"
+                SELECT 
+                    id,
+                    guid,
+                    name,
+                    password
+                FROM RegisteredUser
                 WHERE id = ?
                 """;
         try (
@@ -110,10 +117,14 @@ public class UserDao implements DataAccessObject<UserEntity>{
     }
 
     @Override
-    public Optional<UserEntity> findByGuid(String guid) {
+    public Optional<RegisteredUserEntity> findByGuid(String guid) {
         var sql = """
-                SELECT ALL
-                FROM "User"
+                SELECT 
+                    id,
+                    guid,
+                    name,
+                    password
+                FROM RegisteredUser
                 WHERE GUID = ?
                 """;
         try (
@@ -133,9 +144,9 @@ public class UserDao implements DataAccessObject<UserEntity>{
     }
 
     @Override
-    public UserEntity update(UserEntity entity) {
+    public RegisteredUserEntity update(RegisteredUserEntity entity) {
         var sql = """
-                UPDATE "User"
+                UPDATE RegisteredUser
                 SET name = ?,
                     password = ?
                 WHERE id = ?
@@ -164,7 +175,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
 
     @Override
     public void deleteByGuid(String guid) {
-        var sql = " DELETE FROM User WHERE guid = ? ";
+        var sql = " DELETE FROM RegisteredUser WHERE guid = ? ";
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -185,7 +196,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
 
     @Override
     public void deleteAll() {
-        var sql = "DELETE FROM User";
+        var sql = "DELETE FROM RegisteredUser";
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -198,9 +209,9 @@ public class UserDao implements DataAccessObject<UserEntity>{
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT ID
-                FROM "User"
-                WHERE GUID = ?
+                SELECT id
+                FROM RegisteredUser
+                WHERE guid = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -216,8 +227,12 @@ public class UserDao implements DataAccessObject<UserEntity>{
     public boolean existsByUsername(String username) {
         System.out.println(username + "\n");
         var sql = """
-                SELECT ALL
-                FROM "User"
+                SELECT 
+                    id,
+                    guid,
+                    name,
+                    password
+                FROM RegisteredUser
                 WHERE name = ?
                 """;
         try (
@@ -231,10 +246,14 @@ public class UserDao implements DataAccessObject<UserEntity>{
         }
     }
 
-    public Optional<UserEntity> existsByLogin(String name, String password) {
+    public Optional<RegisteredUserEntity> existsByLogin(String name, String password) {
         var sql = """
-                SELECT ALL
-                FROM "User"
+                SELECT 
+                    id,
+                    guid,
+                    name,
+                    password
+                FROM RegisteredUser
                 WHERE name = ? AND password = ?
                 """;
         try (
@@ -255,8 +274,8 @@ public class UserDao implements DataAccessObject<UserEntity>{
 
 
 
-    private static UserEntity userFromResultSet(ResultSet resultSet) throws SQLException {
-        return new UserEntity(
+    private static RegisteredUserEntity userFromResultSet(ResultSet resultSet) throws SQLException {
+        return new RegisteredUserEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("name"),

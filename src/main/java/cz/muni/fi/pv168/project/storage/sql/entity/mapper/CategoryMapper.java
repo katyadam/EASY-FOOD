@@ -5,14 +5,14 @@ import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
-import cz.muni.fi.pv168.project.storage.sql.entity.UserEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.RegisteredUserEntity;
 
 public class CategoryMapper implements EntityMapper<CategoryEntity, Category> {
 
-    private final DataAccessObject<UserEntity> userDao;
+    private final DataAccessObject<RegisteredUserEntity> userDao;
     private final UserMapper userMapper;
 
-    public CategoryMapper(DataAccessObject<UserEntity> userDao, UserMapper userMapper) {
+    public CategoryMapper(DataAccessObject<RegisteredUserEntity> userDao, UserMapper userMapper) {
         this.userDao = userDao;
         this.userMapper = userMapper;
     }
@@ -43,7 +43,7 @@ public class CategoryMapper implements EntityMapper<CategoryEntity, Category> {
     }
 
     private CategoryEntity getCategoryEntity(Category entity, Long dbId) {
-        UserEntity userEntity = userDao
+        RegisteredUserEntity userEntity = userDao
                 .findByGuid(entity.getUser().getGuid())
                 .orElseThrow(() -> new DataStorageException("Category not found, guid: " +
                         entity.getUser().getGuid()));

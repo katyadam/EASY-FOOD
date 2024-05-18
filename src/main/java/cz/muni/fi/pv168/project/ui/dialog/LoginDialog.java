@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.RegisteredUser;
+import cz.muni.fi.pv168.project.business.service.crud.UserCrudService;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
@@ -45,7 +46,7 @@ public class LoginDialog extends EntityDialog<RegisteredUser> {
         loginButton.addActionListener(e -> {
             var username = usernameField.getText();
             var password = new String(passwordField.getPassword());
-            // TODO: hash password
+            var hashedPassword = ((UserCrudService)commonDependencyProvider.getUserCrudService()).hashPassword(password);
             var user = commonDependencyProvider.getUserRepository().existByLogin(username, password);
 
             if (!user.isPresent()) {
@@ -55,13 +56,18 @@ public class LoginDialog extends EntityDialog<RegisteredUser> {
             }
 
             commonDependencyProvider.getSession().setLoggedUser(user.get());
-            entityUser = user.get();
+            entity = user.get();
         });
         return loginButton;
     }
 
     @Override
     RegisteredUser getEntity() {
-        return entityUser;
+        return new RegisteredUser(
+                entity.getGuid(),
+                usernameField.getText(),
+                passwordField.getPassword().toString(),
+                entity.getID()
+        );
     }
 }

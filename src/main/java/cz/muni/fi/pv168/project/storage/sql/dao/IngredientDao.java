@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 
 import cz.muni.fi.pv168.project.storage.sql.entity.IngredientEntity;
 
+import java.io.Console;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,13 +24,12 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     public IngredientEntity create(IngredientEntity newIngredient) {
         var sql = """
                 INSERT INTO Ingredient(
-                    GUID,
-                    INGREDIENTNAME,
-                    NUTRITIONALVALUE
-                    ID,
-                    USERID
+                    guid,
+                    ingredientName,
+                    nutritionalValue,
+                    userId
                 )
-                VALUES (?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -37,8 +37,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
             statement.setString(1, newIngredient.guid());
             statement.setString(2, newIngredient.ingredientName());
             statement.setInt(3, newIngredient.nutritionalValue());
-            statement.setLong(4, newIngredient.id());
-            statement.setLong(5, newIngredient.userID());
+            statement.setLong(4, newIngredient.userID());
 
             statement.executeUpdate();
 
@@ -88,13 +87,13 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Collection<IngredientEntity> findAll(Long userId) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    INGREDIENTNAME,
-                    NUTRITIONALVALUE,
-                    USERID
+                SELECT id,
+                    guid,
+                    ingredientName,
+                    nutritionalValue,
+                    userId
                 FROM Ingredient
-                WHERE USERID = ?
+                WHERE userId = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -110,6 +109,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
 
             return ingredients;
         } catch (SQLException ex) {
+            System.out.println("Failed to load all ingredients of: " + userId);
             throw new DataStorageException("Failed to load all ingredients", ex);
         }
     }
@@ -119,7 +119,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
         var sql = """
                 SELECT ALL 
                 FROM Ingredient
-                WHERE ID = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -140,13 +140,13 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Optional<IngredientEntity> findByGuid(String guid) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    INGREDIENTNAME,
-                    NUTRITIONALVALUE,
-                    USERID
+                SELECT id,
+                    guid,
+                    ingredientName,
+                    nutritionalValue,
+                    userid
                 FROM Ingredient
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -168,9 +168,9 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     public IngredientEntity update(IngredientEntity entity) {
         var sql = """
                 UPDATE Ingredient
-                SET INGREDIENTNAME = ?,
-                    NUTRITIONALVALUE = ?
-                WHERE ID = ?
+                SET ingredientName = ?,
+                    nutritionalValue = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -226,13 +226,12 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
         }
     }
 
-    // TODO: Recipe v query ?
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT ID
+                SELECT id
                 FROM Recipe
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

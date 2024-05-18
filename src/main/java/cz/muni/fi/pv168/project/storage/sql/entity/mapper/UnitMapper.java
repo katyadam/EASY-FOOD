@@ -6,7 +6,7 @@ import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.UnitEntity;
-import cz.muni.fi.pv168.project.storage.sql.entity.UserEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.RegisteredUserEntity;
 
 /**
  * @author Adam Juhas
@@ -15,11 +15,11 @@ public class UnitMapper implements EntityMapper<UnitEntity, CustomUnit> {
 
     //private final BaseUnitDao baseUnitDao;
     //private final EntityMapper<BaseUnitEntity, BaseUnit> baseUnitMapper;
-    private final DataAccessObject<UserEntity> userDao;
+    private final DataAccessObject<RegisteredUserEntity> userDao;
     private final UserMapper userMapper;
 
     public UnitMapper(
-            DataAccessObject<UserEntity> userDao,
+            DataAccessObject<RegisteredUserEntity> userDao,
             UserMapper userMapper
     ) {
         //this.baseUnitDao = baseUnitDao;
@@ -65,7 +65,7 @@ public class UnitMapper implements EntityMapper<UnitEntity, CustomUnit> {
                 .findByGuid(entity.getBaseUnit().getGuid())
                 .orElseThrow(() -> new DataStorageException("BaseUnit not found, guid: " +
                         entity.getBaseUnit().getGuid()));*/
-        UserEntity userEntity = userDao
+        RegisteredUserEntity userEntity = userDao
                 .findByGuid(entity.getUser().getGuid())
                 .orElseThrow(() -> new DataStorageException("Category not found, guid: " +
                         entity.getUser().getGuid()));
