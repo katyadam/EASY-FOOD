@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.action.dialogActions.ChangePasswordDialogAction;
 import cz.muni.fi.pv168.project.ui.action.dialogActions.LoginDialogAction;
 import cz.muni.fi.pv168.project.ui.action.dialogActions.LogoutDialogAction;
@@ -25,22 +26,24 @@ public class ActionFactory {
     private final LogoutDialogAction logoutDialogAction;
     private final LoginDialogAction loginDialogAction;
 
+
     public ActionFactory(
             JTable recipeTable,
             JTable ingredientsTable,
             JTable unitsTable,
             JTable categoryTable,
-            CommonDependencyProvider commonDependencyProvider
+            CommonDependencyProvider commonDependencyProvider,
+            MainWindow mainWindow
     ) {
         this.addAction = new AddAction(recipeTable, ingredientsTable, unitsTable, categoryTable, commonDependencyProvider);
         this.deleteAction = new DeleteAction(recipeTable, ingredientsTable, unitsTable, categoryTable);
         this.editAction = new EditAction(recipeTable, ingredientsTable, unitsTable, categoryTable, commonDependencyProvider);
         this.showAction = new ShowAction(recipeTable, ingredientsTable, unitsTable, categoryTable);
         this.quitAction = new QuitAction();
-        this.logoutDialogAction = new LogoutDialogAction(commonDependencyProvider);
+        this.logoutDialogAction = new LogoutDialogAction(commonDependencyProvider,mainWindow);
         this.registerDialogAction = new RegisterDialogAction(commonDependencyProvider);
         this.changePasswordDialogAction = new ChangePasswordDialogAction(commonDependencyProvider);
-        this.loginDialogAction = new LoginDialogAction(commonDependencyProvider);
+        this.loginDialogAction = new LoginDialogAction(commonDependencyProvider,mainWindow);
 
     }
 

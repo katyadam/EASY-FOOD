@@ -52,10 +52,10 @@ public class RegisterDialog extends EntityDialog<RegisteredUser> {
         String password = new String(passwordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
 
-        if (!isStrongPassword(password)) {
+        /*if (!isStrongPassword(password)) {
             JOptionPane.showMessageDialog(null, "Password is not strong enough", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }
+        }*/
 
         if (!password.equals(confirmPassword)) {
             JOptionPane.showMessageDialog(null, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
@@ -73,7 +73,7 @@ public class RegisterDialog extends EntityDialog<RegisteredUser> {
         RegisteredUser entityUser = new RegisteredUser(
                 "",
                 usernameField.getText(),
-                passwordField.getPassword().toString(),
+                String.valueOf(passwordField.getPassword()),
                 0L
         );
         return entityUser;

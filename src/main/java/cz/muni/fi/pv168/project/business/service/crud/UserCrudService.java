@@ -60,8 +60,9 @@ public class UserCrudService implements CrudService<RegisteredUser> {
 
         if (validationResult.isValid()) {
             newEntity.setGuid(guidProvider.newGuid());
-            var pass = newEntity.getPassword();
-            newEntity.setPassword(hashPassword(pass));
+            //var pass = newEntity.getPassword();
+            //newEntity.setPassword(hashPassword(pass));
+
             userRepository.create(newEntity);
         }
 

@@ -76,6 +76,7 @@ public class IngredientDialog extends EntityDialog<Ingredient> {
         setEntity.setGuid(entity.getGuid());
         setEntity.setName(nameField.getText());
         setEntity.setNutritionalValue((int) nutritionalValueSpinner.getValue());
+        setEntity.setUser(MainWindow.commonDependencyProvider.getSession().getLoggedUser());
         return setEntity;
     }
 }

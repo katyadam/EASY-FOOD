@@ -87,10 +87,6 @@ public class MainWindow {
     public static final CommonDependencyProvider commonDependencyProvider = new CommonDependencyProvider();
 
     public MainWindow() {
-        /*this.session = commonDependencyProvider.getSession();
-        LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
-        loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());*/
-        commonDependencyProvider.getUserCrudService().create(new RegisteredUser("asdasd","asd","asda",15L));
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
         this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();
@@ -110,7 +106,7 @@ public class MainWindow {
         createTables();
         createScrollPanes();
 
-        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable, commonDependencyProvider);
+        this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable, commonDependencyProvider,this);
         commonDependencyProvider.setActionFactory(actions);
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
@@ -434,11 +430,11 @@ public class MainWindow {
         return;
     }
 
-    private void refresh() {
+    public void refresh() {
         ingredientTableModel.refresh();
         recipeTableModel.refresh();
         categoryTableModel.refresh();
         customUnitTableModel.refresh();
-        actions.setLogged(session.isLoggedIn());
+        actions.setLogged(commonDependencyProvider.getSession().isLoggedIn());
     }
 }

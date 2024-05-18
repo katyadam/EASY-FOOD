@@ -125,7 +125,7 @@ public class RegisteredUserDao implements DataAccessObject<RegisteredUserEntity>
                     name,
                     password
                 FROM RegisteredUser
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

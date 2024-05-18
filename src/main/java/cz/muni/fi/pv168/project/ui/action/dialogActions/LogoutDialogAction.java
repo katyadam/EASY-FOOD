@@ -1,13 +1,16 @@
 package cz.muni.fi.pv168.project.ui.action.dialogActions;
 
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class LogoutDialogAction extends DialogAction  {
-    public LogoutDialogAction(CommonDependencyProvider commonDependencyProvider) {
+    private final MainWindow mainWindow;
+    public LogoutDialogAction(CommonDependencyProvider commonDependencyProvider, MainWindow mainWindow) {
         super(commonDependencyProvider, "Log out");
+        this.mainWindow = mainWindow;
 
     }
 
@@ -17,5 +20,6 @@ public class LogoutDialogAction extends DialogAction  {
         if (result == JOptionPane.YES_OPTION) {
             commonDependencyProvider.getSession().Logout();
         }
+        mainWindow.refresh();
     }
 }

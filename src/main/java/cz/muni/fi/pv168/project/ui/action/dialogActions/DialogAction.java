@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action.dialogActions;
 
+import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 

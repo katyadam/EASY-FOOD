@@ -95,7 +95,9 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
     ) {
         super(recipe, recipeTableModel.getEntities());
         setTwoPanels();
-        ingredients = new JComboBox<>(ingredientTableModel.getArrayOfIngredients());
+        List<Ingredient> ingredientsList = new LinkedList<>();
+        ingredientsList.addAll(ingredientTableModel.getEntities());
+        ingredients = new JComboBox<>(ingredientsList.toArray(new Ingredient[0]));
 
         List<Unit> unitList = new LinkedList<>();
         unitList.addAll(unitTableModel.getEntities());
@@ -162,6 +164,7 @@ public final class RecipeDialog extends EntityDialog<Recipe> {
         setEntity.setPrepMinutes((int) timeSpinner.getValue());
         setEntity.setDescription(recipeDescriptionTextField.getText());
         entity.getAddedIngredients().forEach(setEntity::addIngredient);
+        setEntity.setUser(MainWindow.commonDependencyProvider.getSession().getLoggedUser());
         return setEntity;
     }
 }

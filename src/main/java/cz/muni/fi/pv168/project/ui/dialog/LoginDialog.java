@@ -45,8 +45,8 @@ public class LoginDialog extends EntityDialog<RegisteredUser> {
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(e -> {
             var username = usernameField.getText();
-            var password = new String(passwordField.getPassword());
-            var hashedPassword = ((UserCrudService)commonDependencyProvider.getUserCrudService()).hashPassword(password);
+            var password = String.valueOf(passwordField.getPassword());
+            //var hashedPassword = ((UserCrudService)commonDependencyProvider.getUserCrudService()).hashPassword(password);
             var user = commonDependencyProvider.getUserRepository().existByLogin(username, password);
 
             if (!user.isPresent()) {

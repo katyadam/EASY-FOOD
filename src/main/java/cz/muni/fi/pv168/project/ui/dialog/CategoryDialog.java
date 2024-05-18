@@ -46,6 +46,7 @@ public class CategoryDialog extends EntityDialog<Category> {
         setEntity.setGuid(entity.getGuid());
         setEntity.setName(categoryNameField.getText());
         setEntity.setColor(categoryColor.getColor());
+        setEntity.setUser(MainWindow.commonDependencyProvider.getSession().getLoggedUser());
         return setEntity;
     }
 }

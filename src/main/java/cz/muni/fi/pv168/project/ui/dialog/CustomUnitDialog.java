@@ -48,6 +48,7 @@ public class CustomUnitDialog extends EntityDialog<CustomUnit> {
         setEntity.setAbbreviation(customUnitAbbreviationField.getText());
         setEntity.setAmount((double) customUnitAmount.getValue());
         setEntity.setBaseUnit((BaseUnit) units.getSelectedItem());
+        setEntity.setUser(MainWindow.commonDependencyProvider.getSession().getLoggedUser());
         return setEntity;
     }
 }

@@ -24,12 +24,12 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     public AddedIngredientEntity create(AddedIngredientEntity newAddedIngredient) {
         var sql = """
                 INSERT INTO AddedIngredient(
-                    GUID,
-                    INGREDIENTID,
-                    RECIPEID,
-                    UNITID,
-                    QUANTITY,
-                    BASEUNITID
+                    guid,
+                    ingredientId,
+                    recipeId,
+                    unitId,
+                    quantity,
+                    baseUnitId
                 )
                 VALUES (?, ?, ?, ?, ?, ?);
                 """;
@@ -70,15 +70,15 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
 
     public Collection<AddedIngredientEntity> findByRecipeId(Long recipeId) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    INGREDIENTID,
-                    RECIPEID,
-                    UNITID,
-                    QUANTITY,
-                    BASEUNITID
+                SELECT id,
+                    guid,
+                    ingredientId,
+                    recipeId,
+                    unitId,
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
-                WHERE RECIPEID = ?
+                WHERE recipeId = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -101,13 +101,13 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     @Override
     public Collection<AddedIngredientEntity> findAll() {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    INGREDIENTID,
-                    RECIPEID,
-                    UNITID,
-                    QUANTITY,
-                    BASEUNITID
+                SELECT id,
+                    guid,
+                    ingredientId,
+                    recipeId,
+                    unitId,
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
                 """;
         try (
@@ -136,15 +136,15 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     @Override
     public Optional<AddedIngredientEntity> findById(long id) {
         var sql = """
-                SELECT ID,
-                        GUID,
-                        INGREDIENTID,
-                        RECIPEID,
-                        UNITID,
-                        QUANTITY,
-                        BASEUNITID
+                SELECT id,
+                    guid,
+                    ingredientId,
+                    recipeId,
+                    unitId,
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
-                WHERE ID = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -165,15 +165,15 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     @Override
     public Optional<AddedIngredientEntity> findByGuid(String guid) {
         var sql = """
-                SELECT ID,
-                        RECIPEID,
-                        GUID,
-                        INGREDIENTID,
-                        UNITID,
-                        QUANTITY,
-                        BASEUNITID,
+                SELECT id,
+                    guid,
+                    ingredientId,
+                    recipeId,
+                    unitId,
+                    quantity,
+                    baseUnitId
                 FROM AddedIngredient
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -196,13 +196,13 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     public AddedIngredientEntity update(AddedIngredientEntity entity) {
         var sql = """
                 UPDATE AddedIngredient
-                SET GUID = ?,
-                        INGREDIENTID = ?,
-                        RECIPEID = ?,
-                        UNITID = ?,
-                        QUANTITY = ?,
-                        BASEUNITID = ?
-                WHERE ID = ?
+                SET guid = ?,
+                        ingredientId = ?,
+                        recipeId = ?,
+                        unitId = ?,
+                        quantity = ?,
+                        baseUnitId = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -269,9 +269,9 @@ public class AddedIngredientDao implements DataAccessObject<AddedIngredientEntit
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT ID
+                SELECT id
                 FROM AddedIngredient
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

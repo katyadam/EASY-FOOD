@@ -63,7 +63,11 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Collection<IngredientEntity> findAll() {
         var sql = """
-                SELECT ALL 
+                SELECT id,
+                    guid,
+                    ingredientName,
+                    nutritionalValue,
+                    userId 
                 FROM Ingredient
                 """;
         try (
@@ -117,7 +121,11 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
     @Override
     public Optional<IngredientEntity> findById(long id) {
         var sql = """
-                SELECT ALL 
+                SELECT id,
+                    guid,
+                    ingredientName,
+                    nutritionalValue,
+                    userId 
                 FROM Ingredient
                 WHERE id = ?
                 """;
@@ -144,7 +152,7 @@ public class IngredientDao implements DataAccessObject<IngredientEntity> {
                     guid,
                     ingredientName,
                     nutritionalValue,
-                    userid
+                    userId
                 FROM Ingredient
                 WHERE guid = ?
                 """;

@@ -24,12 +24,12 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     public UnitEntity create(UnitEntity newUnit) {
         var sql = """
                 INSERT INTO Unit(
-                    GUID,
-                    UNITNAME,
-                    ABBREVIATION,
-                    AMOUNT,
-                    BASEUNITID,
-                    USERID
+                    guid,
+                    unitName,
+                    abbreviation,
+                    amount,
+                    baseUnitId,
+                    userId
                 )
                 VALUES (?, ?, ?, ?, ?, ?);
                 """;
@@ -96,15 +96,15 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     @Override
     public Collection<UnitEntity> findAll(Long userId) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    UNITNAME,
-                    ABBREVIATION,
-                    AMOUNT,
-                    BASEUNITID,
-                    USERID
+                SELECT id,
+                    guid,
+                    unitName,
+                    abbreviation,
+                    amount,
+                    baseUnitId,
+                    userId
                 FROM Unit
-                WHERE USERID = ?
+                WHERE userId = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -127,15 +127,15 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     @Override
     public Optional<UnitEntity> findById(long id) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    UNITNAME,
-                    ABBREVIATION,
-                    AMOUNT,
-                    BASEUNITID,
-                    USERID
+                SELECT id,
+                    guid,
+                    unitName,
+                    abbreviation,
+                    amount,
+                    baseUnitId,
+                    userId
                 FROM Unit
-                WHERE ID = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -157,14 +157,14 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     public Optional<UnitEntity> findByGuid(String guid) {
         var sql = """
                 SELECT id,
-                    GUID,
-                    UNITNAME,
-                    ABBREVIATION,
-                    AMOUNT,
-                    BASEUNITID,
-                    USERID
+                    guid,
+                    unitName,
+                    abbreviation,
+                    amount,
+                    baseUnitId,
+                    userId
                 FROM Unit
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -186,11 +186,11 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     public UnitEntity update(UnitEntity entity) {
         var sql = """
                 UPDATE Unit
-                SET UNITNAME = ?,
-                    ABBREVIATION = ?,
-                    AMOUNT = ?,
-                    BASEUNITID = ?
-                WHERE ID = ?
+                SET unitName = ?,
+                    abbreviation = ?,
+                    amount = ?,
+                    baseUnitId = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -218,7 +218,7 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
 
     @Override
     public void deleteByGuid(String guid) {
-        var sql = "DELETE FROM Unit WHERE GUID = ?";
+        var sql = "DELETE FROM Unit WHERE guid = ?";
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -251,9 +251,9 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT ID
+                SELECT id
                 FROM Unit
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

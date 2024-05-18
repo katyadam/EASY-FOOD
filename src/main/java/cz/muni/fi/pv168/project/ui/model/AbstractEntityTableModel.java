@@ -4,6 +4,8 @@ import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
+import cz.muni.fi.pv168.project.ui.MainWindow;
+import cz.muni.fi.pv168.project.wiring.CommonDependencyProvider;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -122,12 +124,13 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
     }
 
     public void refresh() {
-        if (currentUser != null) {
-            loadByUser(currentUser);
+        if (MainWindow.commonDependencyProvider.getSession().isLoggedIn()) {
+            loadByUser(MainWindow.commonDependencyProvider.getSession().loggedUser);
         } else {
             entities = new ArrayList<>(crudService.findAll());
-            fireTableDataChanged();
         }
+        fireTableDataChanged();
+
     }
 
     public void loadByUser(RegisteredUser user) {

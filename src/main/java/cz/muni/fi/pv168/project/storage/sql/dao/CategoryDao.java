@@ -23,10 +23,10 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     public CategoryEntity create(CategoryEntity newCategory) {
         var sql = """
                 INSERT INTO Category(
-                    GUID,
-                    CATEGORYNAME,
-                    COLOR,
-                    USERID
+                    guid,
+                    categoryName,
+                    color,
+                    userId
                 )
                 VALUES (?, ?, ?, ?);
                 """;
@@ -61,7 +61,11 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public Collection<CategoryEntity> findAll() {
         var sql = """
-                SELECT ALL
+                SELECT id,
+                    guid,
+                    categoryName,
+                    color,
+                    userId
                 FROM Category
                 """;
         try (
@@ -85,13 +89,13 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public Collection<CategoryEntity> findAll(Long userId) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    CATEGORYNAME,
-                    COLOR,
-                    USERID
+                SELECT id,
+                    guid,
+                    categoryName,
+                    color,
+                    userId
                 FROM Category
-                WHERE USERID = ?
+                WHERE userId = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -114,13 +118,13 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public Optional<CategoryEntity> findById(long id) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    CATEGORYNAME,
-                    COLOR,
-                    USERID
+                SELECT id,
+                    guid,
+                    categoryName,
+                    color,
+                    userId
                 FROM Category
-                WHERE ID = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -141,13 +145,13 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public Optional<CategoryEntity> findByGuid(String guid) {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    CATEGORYNAME,
-                    COLOR,
-                    USERID
+                SELECT id,
+                    guid,
+                    categoryName,
+                    color,
+                    userId
                 FROM Category
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -169,9 +173,9 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     public CategoryEntity update(CategoryEntity entity) {
         var sql = """
                 UPDATE Category
-                SET CATEGORYNAME = ?,
-                    COLOR = ?
-                WHERE ID = ?
+                SET categoryName = ?,
+                    color = ?
+                WHERE id = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -197,7 +201,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
 
     @Override
     public void deleteByGuid(String guid) {
-        var sql = "DELETE FROM Category WHERE GUID = ?";
+        var sql = "DELETE FROM Category WHERE guid = ?";
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -230,9 +234,9 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public boolean existsByGuid(String guid) {
         var sql = """
-                SELECT ID
+                SELECT id
                 FROM Category
-                WHERE GUID = ?
+                WHERE guid = ?
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

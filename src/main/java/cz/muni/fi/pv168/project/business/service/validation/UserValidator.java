@@ -13,9 +13,9 @@ public class UserValidator implements  Validator<RegisteredUser>{
         if (model.getPassword().isEmpty()) {
             return ValidationResult.failed("Empty password");
         }
-        if (!isStrongPassword(model.getPassword())) {
+        /*if (!isStrongPassword(model.getPassword())) {
             return ValidationResult.failed("Password is not strong enough");
-        }
+        }*/
         return ValidationResult.success();
     }
 
