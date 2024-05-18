@@ -14,6 +14,7 @@ public class RegisterDialogAction extends DialogAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var dialog = new RegisterDialog(null, commonDependencyProvider);
-        dialog.show();
+        dialog.show(null, "Register Dialog", commonDependencyProvider.getUserValidator())
+                .ifPresent(user -> commonDependencyProvider.getUserCrudService().create(user));
     }
 }

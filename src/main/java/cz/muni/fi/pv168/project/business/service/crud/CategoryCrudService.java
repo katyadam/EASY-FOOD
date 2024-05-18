@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.model.UuidGuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.CategoryUsageValidator;
@@ -120,5 +121,10 @@ public class CategoryCrudService implements CrudService<Category> {
     @Override
     public void deleteAll() {
         categoryRepository.deleteAll();
+    }
+
+    @Override
+    public Collection<Category> getAllOfUser(RegisteredUser user) {
+        return categoryRepository.findAll(user.getID());
     }
 }

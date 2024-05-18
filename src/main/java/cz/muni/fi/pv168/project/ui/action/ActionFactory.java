@@ -1,9 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.ui.action.accountActions.ChangePasswordAction;
-import cz.muni.fi.pv168.project.ui.action.accountActions.LoginAction;
-import cz.muni.fi.pv168.project.ui.action.accountActions.LogoutAction;
-import cz.muni.fi.pv168.project.ui.action.accountActions.RegisterAction;
+
 import cz.muni.fi.pv168.project.ui.action.dialogActions.ChangePasswordDialogAction;
 import cz.muni.fi.pv168.project.ui.action.dialogActions.LoginDialogAction;
 import cz.muni.fi.pv168.project.ui.action.dialogActions.LogoutDialogAction;

@@ -13,6 +13,7 @@ public class LoginDialogAction extends DialogAction {
     @Override
     public void actionPerformed(ActionEvent e) {
          var dialog = new LoginDialog(commonDependencyProvider);
-         dialog.show(null, "Login Dialog", commonDependencyProvider.getUserValidator());
+         dialog.show(null, "Login Dialog", commonDependencyProvider.getUserValidator())
+                 .ifPresent(user -> commonDependencyProvider.getSession().setLoggedUser(user));
     }
 }

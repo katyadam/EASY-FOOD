@@ -25,9 +25,10 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 INSERT INTO Category(
                     GUID,
                     CATEGORYNAME,
-                    COLOR
+                    COLOR,
+                    USERID
                 )
-                VALUES (?, ?, ?);
+                VALUES (?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -35,6 +36,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
             statement.setString(1, newCategory.guid());
             statement.setString(2, newCategory.categoryName());
             statement.setInt(3, newCategory.color().getRGB());
+            statement.setLong(4, newCategory.userID());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -59,10 +61,7 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public Collection<CategoryEntity> findAll() {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    CATEGORYNAME,
-                    COLOR
+                SELECT ALL
                 FROM Category
                 """;
         try (
@@ -89,7 +88,8 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 SELECT ID,
                     GUID,
                     CATEGORYNAME,
-                    COLOR
+                    COLOR,
+                    USERID
                 FROM Category
                 WHERE USERID = ?
                 """;
@@ -117,7 +117,8 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 SELECT ID,
                     GUID,
                     CATEGORYNAME,
-                    COLOR
+                    COLOR,
+                    USERID
                 FROM Category
                 WHERE ID = ?
                 """;
@@ -143,7 +144,8 @@ public class CategoryDao implements DataAccessObject<CategoryEntity> {
                 SELECT ID,
                     GUID,
                     CATEGORYNAME,
-                    COLOR
+                    COLOR,
+                    USERID
                 FROM Category
                 WHERE GUID = ?
                 """;

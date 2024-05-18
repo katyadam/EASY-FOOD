@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.model;
 
 import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 
@@ -15,6 +16,7 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
     public List<T> entities;
     private final List<Column<T, ?>> columns;
     public final CrudService<T> crudService;
+    private RegisteredUser currentUser;
 
     public AbstractEntityTableModel(List<Column<T, ?>> columns, List<T> entities, CrudService<T> crudService) {
         this.columns = columns;
@@ -120,8 +122,20 @@ public abstract class AbstractEntityTableModel<T extends Entity> extends Abstrac
     }
 
     public void refresh() {
-        this.entities = new ArrayList<>(crudService.findAll());
-        fireTableDataChanged();
+        if (currentUser != null) {
+            loadByUser(currentUser);
+        } else {
+            entities = new ArrayList<>(crudService.findAll());
+            fireTableDataChanged();
+        }
+    }
+
+    public void loadByUser(RegisteredUser user) {
+        if (user == null) {
+            entities = new ArrayList<>(crudService.findAll());
+        } else {
+            entities = new ArrayList<>(crudService.getAllOfUser(user));
+        }
     }
 
 }

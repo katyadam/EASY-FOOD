@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.AddedIngredient;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.storage.sql.AddedIngredientSqlRepository;
@@ -83,5 +84,10 @@ public class AddedIngredientCrudService implements CrudService<AddedIngredient> 
     @Override
     public void deleteAll() {
         addedIngredientRepository.deleteAll();
+    }
+
+    @Override
+    public Collection<AddedIngredient> getAllOfUser(RegisteredUser user) {
+        return addedIngredientRepository.findAll(user.getID());
     }
 }

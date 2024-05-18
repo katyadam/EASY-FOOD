@@ -28,9 +28,10 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     UNITNAME,
                     ABBREVIATION,
                     AMOUNT,
-                    BASEUNITID
+                    BASEUNITID,
+                    USERID
                 )
-                VALUES (?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?);
                 """;
         try (
                 var statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -40,6 +41,7 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
             statement.setString(3, newUnit.abbreviation());
             statement.setDouble(4, newUnit.amount());
             statement.setLong(5, newUnit.baseUnitId());
+            statement.setLong(6, newUnit.userID());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -64,12 +66,14 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
     @Override
     public Collection<UnitEntity> findAll() {
         var sql = """
-                SELECT ID,
-                    GUID,
-                    UNITNAME,
-                    ABBREVIATION,
-                    AMOUNT,
-                    BASEUNITID
+                SELECT 
+                    id,
+                    guid,
+                    unitName,
+                    abbreviation,
+                    amount,
+                    baseUnitId,
+                    userId
                 FROM Unit
                 """;
         try (
@@ -97,7 +101,8 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     UNITNAME,
                     ABBREVIATION,
                     AMOUNT,
-                    BASEUNITID
+                    BASEUNITID,
+                    USERID
                 FROM Unit
                 WHERE USERID = ?
                 """;
@@ -127,7 +132,8 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     UNITNAME,
                     ABBREVIATION,
                     AMOUNT,
-                    BASEUNITID
+                    BASEUNITID,
+                    USERID
                 FROM Unit
                 WHERE ID = ?
                 """;
@@ -155,7 +161,8 @@ public class UnitDao implements DataAccessObject<UnitEntity> {
                     UNITNAME,
                     ABBREVIATION,
                     AMOUNT,
-                    BASEUNITID
+                    BASEUNITID,
+                    USERID
                 FROM Unit
                 WHERE GUID = ?
                 """;

@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.ui.model;
 
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
+
 import javax.swing.table.TableModel;
 import java.util.Collection;
 
@@ -24,4 +26,6 @@ public interface EntityTableModel<E> extends TableModel {
     void addRow(E entity);
 
     void updateRow(E entity);
+
+    void loadByUser(RegisteredUser user);
 }

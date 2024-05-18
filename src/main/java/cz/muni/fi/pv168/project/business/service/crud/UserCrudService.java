@@ -35,16 +35,6 @@ public class UserCrudService implements CrudService<RegisteredUser> {
         this.duplicityValidator = new DuplicateValidator<>(userRepository);
     }
 
-    public boolean usernameExists(String username) {
-        return userRepository.existsByName(username);
-    }
-
-    public Optional<RegisteredUser> login(String username, String password) {
-        String hashedPassword = UserCrudService.hashPassword(password);
-        return userRepository.existByLogin(username, hashedPassword);
-
-    }
-
     @Override
     public List<RegisteredUser> findAll() {
         return userRepository.findAll();
@@ -130,7 +120,13 @@ public class UserCrudService implements CrudService<RegisteredUser> {
         userRepository.deleteAll();
     }
 
-    public static String hashPassword(String password)  {
+    @Override
+    @Deprecated
+    public Collection<RegisteredUser> getAllOfUser(RegisteredUser user) {
+        return userRepository.findAll(user.getID());
+    }
+
+    public String hashPassword(String password)  {
         String generatedPassword = null;
         try
         {

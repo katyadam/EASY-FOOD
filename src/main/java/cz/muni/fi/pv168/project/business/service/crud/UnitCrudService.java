@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.CustomUnit;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.RegisteredUser;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.DuplicateValidator;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
@@ -118,5 +119,10 @@ public class UnitCrudService implements CrudService<CustomUnit> {
     @Override
     public void deleteAll() {
         unitRepository.deleteAll();
+    }
+
+    @Override
+    public Collection<CustomUnit> getAllOfUser(RegisteredUser user) {
+        return unitRepository.findAll(user.getID());
     }
 }

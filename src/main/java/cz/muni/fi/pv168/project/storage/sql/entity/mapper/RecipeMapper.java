@@ -6,19 +6,19 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.RecipeEntity;
-import cz.muni.fi.pv168.project.storage.sql.entity.UserEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.RegisteredUserEntity;
 
 public class RecipeMapper implements EntityMapper<RecipeEntity, Recipe> {
 
     private final DataAccessObject<CategoryEntity> categoryDao;
     private final CategoryMapper categoryMapper;
-    private final DataAccessObject<UserEntity> userDao;
+    private final DataAccessObject<RegisteredUserEntity> userDao;
     private final UserMapper userMapper;
 
     public RecipeMapper(
             DataAccessObject<CategoryEntity> categoryDao,
             CategoryMapper categoryMapper,
-            DataAccessObject<UserEntity> userDao,
+            DataAccessObject<RegisteredUserEntity> userDao,
             UserMapper userMapper
     ) {
         this.categoryDao = categoryDao;

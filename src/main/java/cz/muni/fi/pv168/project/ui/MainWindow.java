@@ -111,6 +111,7 @@ public class MainWindow {
         createScrollPanes();
 
         this.actions = new ActionFactory(recipeTable, ingredientTable, customUnitTable, categoryTable, commonDependencyProvider);
+        commonDependencyProvider.setActionFactory(actions);
         this.layout = new GUILayout();
         this.menuBar = createMenuBar();
         this.frame = createFrame();
@@ -329,9 +330,7 @@ public class MainWindow {
         editMenu.add(actions.getDeleteAction());
         editMenu.addSeparator();
         editMenu.add(actions.getQuitAction());
-        // LOGIN
-        editMenu.addSeparator();
-        editMenu.add(actions.getLoginDialogAction());
+
 
         JMenu filesMenu = new JMenu("Files");
         var importMenu = new JMenu("Import");
@@ -346,7 +345,7 @@ public class MainWindow {
         accountMenu.add(actions.getLoginDialogAction());
         accountMenu.add(actions.getLogoutDialogAction());
         accountMenu.add(actions.getRegisterDialogAction());
-        //accountMenu.add(actions.getChangePasswordDialogAction());
+        accountMenu.add(actions.getChangePasswordDialogAction());
 
         menuBar.add(editMenu);
         menuBar.add(filesMenu);
