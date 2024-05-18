@@ -1,10 +1,7 @@
 package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.GUILayout;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.CustomUnit;
-import cz.muni.fi.pv168.project.business.model.Ingredient;
-import cz.muni.fi.pv168.project.business.model.Recipe;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.business.service.crud.CrudService;
 import cz.muni.fi.pv168.project.ui.action.ActionFactory;
 import cz.muni.fi.pv168.project.ui.action.TabbedPanelContext;
@@ -93,7 +90,7 @@ public class MainWindow {
         /*this.session = commonDependencyProvider.getSession();
         LoginDialog loginDialog = new LoginDialog(commonDependencyProvider);
         loginDialog.show(null,"Login",commonDependencyProvider.getUserValidator());*/
-
+        commonDependencyProvider.getUserCrudService().create(new RegisteredUser("asdasd","asd","asda",15L));
         this.recipeCrudService = commonDependencyProvider.getRecipeCrudService();
         this.categoryCrudService = commonDependencyProvider.getCategoryCrudService();
         this.ingredientCrudService = commonDependencyProvider.getIngredientCrudService();

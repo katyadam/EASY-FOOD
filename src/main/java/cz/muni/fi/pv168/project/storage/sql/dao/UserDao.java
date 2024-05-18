@@ -21,9 +21,9 @@ public class UserDao implements DataAccessObject<UserEntity>{
     @Override
     public UserEntity create(UserEntity entity) {
         var sql = """
-                INSERT INTO User (
+                INSERT INTO RegisteredUser (
                     GUID,
-                    USERNAME,
+                    NAME,
                     PASSWORD
                 ) 
                 VALUES (?, ?, ?);
@@ -64,7 +64,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
                 GUID,
                 NAME,
                 PASSWORD
-                FROM User
+                FROM RegisteredUser
                 """;
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -96,7 +96,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
                     GUID,
                     NAME,
                     PASSWORD,
-                FROM User
+                FROM RegisteredUser
                 WHERE ID = ?
                 """;
         try (
@@ -122,7 +122,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
                     GUID,
                     NAME,
                     PASSWORD,
-                FROM User
+                FROM RegisteredUser
                 WHERE GUID = ?
                 """;
         try (
@@ -144,7 +144,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
     @Override
     public UserEntity update(UserEntity entity) {
         var sql = """
-                UPDATE User
+                UPDATE RegisteredUser
                 SET NAME = ?,
                     PASSWORD = ?
                 WHERE ID = ?
@@ -194,7 +194,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
 
     @Override
     public void deleteAll() {
-        var sql = "DELETE FROM User";
+        var sql = "DELETE FROM RegisteredUser";
         try (
                 var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
@@ -208,7 +208,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
     public boolean existsByGuid(String guid) {
         var sql = """
                 SELECT ID
-                FROM User
+                FROM RegisteredUser
                 WHERE GUID = ?
                 """;
         try (
@@ -226,7 +226,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
         System.out.println(username + "\n");
         var sql = """
                 SELECT ID
-                FROM "User"
+                FROM "RegisteredUser"
                 WHERE NAME = ?
                 """;
         try (
@@ -246,7 +246,7 @@ public class UserDao implements DataAccessObject<UserEntity>{
                     GUID,
                     NAME,
                     PASSWORD
-                FROM User
+                FROM RegisteredUser
                 WHERE NAME = ? AND PASSWORD = ?
                 """;
         try (

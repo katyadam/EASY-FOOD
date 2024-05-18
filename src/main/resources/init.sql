@@ -3,7 +3,7 @@
 --
 -- User table definition
 --
-CREATE TABLE IF NOT EXISTS "User"
+CREATE TABLE IF NOT EXISTS "RegisteredUser"
 (
     `id`           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     `guid`         VARCHAR      NOT NULL UNIQUE,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "Category"
     `categoryName` VARCHAR(150) NOT NULL,
     `color`        INT          NOT NULL,
     `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `userId`       BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE
+    `userId`       BIGINT REFERENCES "RegisteredUser" (`id`) ON DELETE CASCADE
 );
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS "Unit"
     `amount`       DOUBLE       NOT NULL,
     `baseUnitId`   INT          NOT NUll,
     `createdAt`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `userId`       BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE
+    `userId`       BIGINT REFERENCES "RegisteredUser" (`id`) ON DELETE CASCADE
 );
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS "Ingredient"
     `ingredientName`   VARCHAR(150) NOT NULL,
     `nutritionalValue` INT          NOT NULL,
     `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `userId`           BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE
+    `userId`           BIGINT REFERENCES "RegisteredUser" (`id`) ON DELETE CASCADE
 );
 
 --
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS "Recipe"
     `categoryId`       BIGINT REFERENCES "Category" (`id`) ON DELETE CASCADE,
     `description`      VARCHAR(255)          DEFAULT 'No recipe description',
     `createdAt`        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `userId`           BIGINT REFERENCES "User" (`id`) ON DELETE CASCADE
+    `userId`           BIGINT REFERENCES "RegisteredUser" (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AddedIngredient"
